@@ -41,7 +41,7 @@ CREATE TABLE products (
 	product_color bigint NULL DEFAULT NULL,
 	product_height int NULL DEFAULT 0,
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	CONSTRAINT products_pkey PRIMARY KEY (id),
 	FULLTEXT INDEX fti_products_product_title (product_title),
 	FULLTEXT INDEX fti_products_description (description),
@@ -54,7 +54,7 @@ CREATE TABLE images (
 	image_name VARCHAR(255) NOT NULL,
 	main_image BIT(1) NULL DEFAULT 0,
 	image_url TEXT NOT NULL,
-   image_url_small TEXT NOT NULL,
+    image_url_small TEXT NOT NULL,
 	CONSTRAINT images_pkey PRIMARY KEY (id),
 	CONSTRAINT images_fk_products FOREIGN KEY (product_id) REFERENCES products(id)
 );
