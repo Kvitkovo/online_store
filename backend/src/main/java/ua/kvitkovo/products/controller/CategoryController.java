@@ -15,4 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/v1/categories")
 public class CategoryController {
+
 }
