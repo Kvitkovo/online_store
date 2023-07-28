@@ -35,7 +35,7 @@ public class TransliterateUtils {
         inputString = inputString.replaceAll("є", "e");
         inputString = inputString.replaceAll("Є", "E");
         inputString = inputString.replaceAll("ї", "i");
-        inputString = inputString.replaceAll("Ї", "I");
+        inputString = inputString.replaceAll("Ї", "Yi");
         inputString = inputString.replaceAll("ь", "");
         inputString = inputString.replaceAll("Ъ", "");
         inputString = inputString.replaceAll("ъ", "");
@@ -46,8 +46,12 @@ public class TransliterateUtils {
         inputString = inputString.replaceAll("Ч", "CH");
         inputString = inputString.replaceAll("ш", "sh");
         inputString = inputString.replaceAll("Ш", "SH");
-        inputString = inputString.replaceAll("щ", "sch");
-        inputString = inputString.replaceAll("Щ", "SCH");
+        inputString = inputString.replaceAll("щ", "shch");
+        inputString = inputString.replaceAll("Щ", "SHCH");
+        inputString = inputString.replaceAll("ж", "zh");
+        inputString = inputString.replaceAll("Ж", "ZH");
+        inputString = inputString.replaceAll("Ю", "YU");
+        inputString = inputString.replaceAll("Ю", "yu");
         String transliterateString = getTransliterate(inputString);
         String result = transliterateString.replaceAll("[^A-Za-zА-Яа-я0-9]", "-");
         while (checkAlias(table, result)) {

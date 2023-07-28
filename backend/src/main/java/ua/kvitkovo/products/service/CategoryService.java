@@ -3,24 +3,22 @@ package ua.kvitkovo.products.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
+import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.products.converter.CategoryConverter;
 import ua.kvitkovo.products.dto.CategoryRequestDto;
 import ua.kvitkovo.products.dto.CategoryResponseDto;
 import ua.kvitkovo.products.entity.Category;
 import ua.kvitkovo.products.repository.CategoryRepository;
-//import ua.kvitkovo.products.validator.CategoryDefaults;
-//import ua.kvitkovo.products.validator.CategoryDtoValidator;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
-import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.products.validator.CategoryDefaults;
 import ua.kvitkovo.products.validator.CategoryDtoValidator;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,7 +39,7 @@ public class CategoryService {
     private final CategoryDefaults categoryDefaults;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
-//
+
     public Collection<CategoryResponseDto> getAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
@@ -80,12 +78,12 @@ public class CategoryService {
     @Transactional
     public CategoryResponseDto updateCategory(Long id, CategoryRequestDto dto, BindingResult bindingResult) {
         CategoryResponseDto categoryResponseDto = findById(id);
-        if (!Objects.equals(dto.getName(), categoryResponseDto.getName())){
+        if (!Objects.equals(dto.getName(), categoryResponseDto.getName())) {
             categoryResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, categoryResponseDto, Helper.getNullPropertyNames(dto));
 
-        if (dto.getParentId()==0){
+        if (dto.getParentId() == 0) {
             categoryResponseDto.setParent(null);
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
