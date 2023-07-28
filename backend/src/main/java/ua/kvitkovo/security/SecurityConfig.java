@@ -50,7 +50,9 @@ public class SecurityConfig {
             "/v1/products/**",
             "/v1/users/**",
             "/v1/shops/**",
-            "/v1/orders/**"
+            "/v1/orders/**",
+            "/v1/colors/**",
+            "/v1/sizes/**"
     };
 
     private final JwtTokenProvider jwtTokenProvider;
