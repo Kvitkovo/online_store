@@ -64,6 +64,15 @@ public class ColorService {
 
     @Transactional
     public ColorResponseDto addColor(ColorRequestDto dto, BindingResult bindingResult) {
+        try {
+            ColorResponseDto byName = findByName(dto.getName());
+            if(byName!=null){
+                throw new ItemNotCreatedException("The color is already in the database");
+            }
+        } catch (ItemNotFoundException e){
+            //nop
+        }
+
         colorDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));

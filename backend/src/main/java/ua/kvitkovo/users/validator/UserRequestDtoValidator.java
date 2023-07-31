@@ -9,6 +9,7 @@ import ua.kvitkovo.users.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ua.kvitkovo.utils.Helper;
 
 
 /**
@@ -39,6 +40,13 @@ public class UserRequestDtoValidator implements Validator {
         }
         if (StringUtils.isBlank(dto.getPassword())) {
             errors.rejectValue("password", "", "is blank!");
+        }
+
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
+        if (!Helper.patternMatches(dto.getEmail(), regexPattern)) {
+            errors.rejectValue("email", "", "invalid format!");
         }
     }
 }
