@@ -8,6 +8,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Andriy Gaponov
@@ -36,5 +37,11 @@ public class Helper {
             sb.append(str.charAt(number));
         }
         return sb.toString();
+    }
+
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
     }
 }

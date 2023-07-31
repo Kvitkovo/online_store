@@ -17,31 +17,31 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
-import ua.kvitkovo.products.dto.ColorRequestDto;
-import ua.kvitkovo.products.dto.ColorResponseDto;
-import ua.kvitkovo.products.service.ColorService;
+import ua.kvitkovo.products.dto.*;
+import ua.kvitkovo.products.service.SizeService;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Colors")
+@Tag(name = "Sizes")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/colors")
-public class ColorController {
+@RequestMapping(value = "/v1/sizes")
+public class SizeController {
 
-    private final ColorService colorService;
+    private final SizeService sizeService;
 
-    @Operation(summary = "Get all Colors.")
+    @Operation(summary = "Get all Sizes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
                     @Content(
                             mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = ColorResponseDto.class))
+                            array = @ArraySchema(schema = @Schema(implementation = SizeResponseDto.class))
                     )
             }),
             @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
@@ -55,64 +55,70 @@ public class ColorController {
     })
     @GetMapping
     @ResponseBody
-    public ResponseEntity<Collection<ColorResponseDto>> getAll() {
-        log.info("Received request to get all Colors.");
-        Collection<ColorResponseDto> colorResponseDtos = colorService.getAll();
-        if (colorResponseDtos.isEmpty()) {
-            log.info("Colors are absent.");
+    public ResponseEntity<Collection<SizeResponseDto>> getAll() {
+        log.info("Received request to get all Sizes.");
+        Collection<SizeResponseDto> sizeResponseDtos = sizeService.getAll();
+        if (sizeResponseDtos.isEmpty()) {
+            log.info("Sizes are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.info("All Colors were retrieved - {}.", colorResponseDtos);
-        return ResponseEntity.ok().body(colorResponseDtos);
+        log.info("All Sizes were retrieved - {}.", sizeResponseDtos);
+        return ResponseEntity.ok().body(sizeResponseDtos);
     }
 
-    @Operation(summary = "Get Color by ID")
+    @Operation(summary = "Get Size by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
                     @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ColorResponseDto.class))
+                    @Schema(implementation = SizeResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Color not found", content = {
+            @ApiResponse(responseCode = "404", description = "Size not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
     })
     @GetMapping("/{id}")
     @ResponseBody
-    public ColorResponseDto getColorById(@PathVariable Long id) {
-        log.info("Received request to get the Color with id - {}.", id);
-        ColorResponseDto colorResponseDto = colorService.findById(id);
-        log.info("the Color with id - {} was retrieved - {}.", id, colorResponseDto);
-        return colorResponseDto;
+    public SizeResponseDto getSizeById(@PathVariable Long id) {
+        log.info("Received request to get the Size with id - {}.", id);
+        SizeResponseDto sizeResponseDto = sizeService.findById(id);
+        log.info("the Size with id - {} was retrieved - {}.", id, sizeResponseDto);
+        return sizeResponseDto;
     }
 
-    @Operation(summary = "Get Color by Name")
+    @Operation(summary = "Get Sizes by Product ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ColorResponseDto.class))
+                    @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = SizeResponseDto.class))
+                    )
             }),
-            @ApiResponse(responseCode = "404", description = "Color not found", content = {
+            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @GetMapping("/findByName/{name}")
+    @GetMapping("/findByProduct/{id}")
     @ResponseBody
-    public ColorResponseDto getColorByName(@PathVariable String name) {
-        log.info("Received request to get the Color with name - {}.", name);
-        ColorResponseDto colorResponseDto = colorService.findByName(name);
-        log.info("the Color with name - {} was retrieved - {}.", name, colorResponseDto);
-        return colorResponseDto;
+    public List<SizeResponseDto> getSizeByProductId(@PathVariable Long id) {
+        log.info("Received request to get the Size with id - {}.", id);
+        List<SizeResponseDto> sizeResponseDtos = sizeService.findByProductId(id);
+        log.info("the Size with name - {} was retrieved - {}.", id, sizeResponseDtos);
+        return sizeResponseDtos;
     }
 
-    @Operation(summary = "Create a new Color")
+    @Operation(summary = "Create a new Size")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
                     @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ColorResponseDto.class))
+                    @Schema(implementation = SizeResponseDto.class))
             }),
-            @ApiResponse(responseCode = "400", description = "The Color has already been added " +
+            @ApiResponse(responseCode = "400", description = "The Size has already been added " +
                     "or some data is missing", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
@@ -121,7 +127,7 @@ public class ColorController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Color not found", content = {
+            @ApiResponse(responseCode = "404", description = "Size not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -129,17 +135,17 @@ public class ColorController {
     @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
-    public ColorResponseDto addColor(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ColorRequestDto request, BindingResult bindingResult) {
-        log.info("Received request to create Color - {}.", request);
-        return colorService.addColor(request, bindingResult);
+    public SizeResponseDto addSize(
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request, BindingResult bindingResult) {
+        log.info("Received request to create Size - {}.", request);
+        return sizeService.addSize(request, bindingResult);
     }
 
-    @Operation(summary = "Update Color by ID")
+    @Operation(summary = "Update Size by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
                     @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ColorResponseDto.class))
+                    @Schema(implementation = SizeResponseDto.class))
             }),
             @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
                     @Content(mediaType = "application/json", schema =
@@ -149,7 +155,7 @@ public class ColorController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Color not found", content = {
+            @ApiResponse(responseCode = "404", description = "Size not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -157,20 +163,20 @@ public class ColorController {
     @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
-    public ColorResponseDto updateColor(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ColorRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Color - {} with id {}.", request, id);
-        return colorService.updateColor(id, request, bindingResult);
+    public SizeResponseDto updateSize(
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
+        log.info("Received request to update Size - {} with id {}.", request, id);
+        return sizeService.updateSize(id, request, bindingResult);
     }
 
-    @Operation(summary = "Delete Color by ID")
+    @Operation(summary = "Delete Size by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Color not found", content = {
+            @ApiResponse(responseCode = "404", description = "Size not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -178,10 +184,10 @@ public class ColorController {
     @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteColor(@PathVariable Long id) {
-        log.info("Received request to delete Color with id - {}.", id);
-        colorService.deleteColor(id);
-        log.info("the Color with id - {} was deleted.", id);
+    public ResponseEntity<Void> deleteSize(@PathVariable Long id) {
+        log.info("Received request to delete Size with id - {}.", id);
+        sizeService.deleteSize(id);
+        log.info("the Size with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
