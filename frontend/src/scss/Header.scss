@@ -4,8 +4,10 @@ header {
   .container-top {
     display: flex;
     justify-content: space-between;
-    
+    align-items: center;
+    margin-bottom: 10px;
   }
+
   ul {
     display: flex;
     justify-content: flex-end;
@@ -16,46 +18,60 @@ header {
     list-style: none;
     padding: 8px;
   }
-  .link {
+
+  .links {
     text-decoration: none;
     color: black;
   }
   .logo {
     margin-left: 80px;
+    cursor: pointer;
   }
 
   .city {
     font-size: 20px;
   }
+
   .vertical-line {
     border-left: 1px solid #6cc25e;
     height: 40px;
   }
-  .city-icon {
+
+  .text-icon {
     display: flex;
+    align-items: center;
     gap: 10px;
-  }
-  .access-icon {
-    margin-right: 80px;
+    cursor: pointer;
   }
 
-  .container-bottom{
+  .btn-language {
+    margin-right: 80px;
+    border-radius: 20px;
+    border: 1px solid #f1ffef;
+    background-color: white;
+  }
+
+  .container-bottom {
     display: flex;
     justify-content: space-evenly;
   }
-  .btn-catalogue{
+
+  .btn-catalogue {
     border-radius: 8px;
-    background-color: #6CC25E;
+    background-color: #6cc25e;
     color: white;
     border: none;
     padding: 12px 25px;
+    cursor: pointer;
   }
-.search {
+
+  .search {
     display: flex;
     flex-direction: row;
-    border: 1px solid  #979797;
-    
+    border: 1px solid #979797;
+    border-radius: 8px;
   }
+
   .search-field {
     padding: 4px;
     border: none;
@@ -64,21 +80,21 @@ header {
     width: 526px;
     height: 44px;
   }
+
   .search-button {
     background: transparent;
     border: none;
     outline: none;
     margin-left: -33px;
   }
+
   .search-icon {
     width: 20px;
     height: 20px;
     margin-left: 50px;
-    
   }
-  .bouquet{
-    display: flex;
-    align-items: center;
-    gap: 8px;
+
+  .cart {
+    cursor: pointer;
   }
 }

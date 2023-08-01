@@ -7,8 +7,11 @@ const Header = () => {
   return (
     <header>
       <div className="container-top">
-        <img className="logo" src={logo} alt="логотип магазину 'Квітково'" />
-        <div className="city-icon">
+        <NavLink to="/">
+          <img className="logo" src={logo} alt="логотип магазину 'Квітково'" />
+        </NavLink>
+
+        <div className="text-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -33,29 +36,49 @@ const Header = () => {
           </svg>
           <p className="city">Київ</p>
         </div>
+        <div>
+          <a className="links text-icon" href="tel: (093) 777-77-77">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M21.9999 19.92V16.92C22.0121 16.4296 21.8436 15.9518 21.5265 15.5775C21.2093 15.2032 20.7657 14.9585 20.2799 14.89C19.3199 14.7634 18.3772 14.5285 17.4699 14.19C17.112 14.0554 16.723 14.0263 16.3491 14.1061C15.9751 14.1858 15.6318 14.3711 15.3599 14.64L14.0899 15.91C11.5864 14.4864 9.51349 12.4135 8.08993 9.90997L9.35993 8.63998C9.6288 8.36809 9.81408 8.02482 9.89384 7.65086C9.9736 7.27689 9.94448 6.8879 9.80993 6.52997C9.47138 5.6227 9.23656 4.68004 9.10993 3.71997C9.04201 3.23942 8.80166 2.79996 8.43369 2.48351C8.06572 2.16705 7.59524 1.9952 7.10993 1.99997H4.10993C3.83227 2.00024 3.55771 2.05831 3.30372 2.1705C3.04974 2.28268 2.82189 2.44653 2.6347 2.6516C2.4475 2.85666 2.30506 3.09846 2.21643 3.3616C2.12781 3.62474 2.09494 3.90344 2.11993 4.17997C2.44818 7.27097 3.49991 10.2412 5.18993 12.85C6.72527 15.2661 8.77376 17.3146 11.1899 18.85C13.7869 20.5341 16.7428 21.5856 19.8199 21.92C20.0973 21.945 20.3769 21.9119 20.6407 21.8227C20.9045 21.7335 21.1468 21.5901 21.352 21.4018C21.5572 21.2136 21.7209 20.9845 21.8324 20.7293C21.944 20.4741 22.0011 20.1985 21.9999 19.92Z"
+                stroke="#6CC25E"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <p>(093) 777-77-77</p>
+          </a>
+        </div>
         <ul>
           <li>
-            <NavLink to="/promotions" className="link">
+            <NavLink className="links" to="/promotions">
               Акції
             </NavLink>
           </li>
           <li>
-            <NavLink to="/about" className="link">
+            <NavLink className="links" to="/about">
               Про нас
             </NavLink>
           </li>
           <li>
-            <NavLink to="/shops" className="link">
+            <NavLink className="links" to="/shops">
               Магазини
             </NavLink>
           </li>
           <li>
-            <NavLink to="/delivery" className="link">
+            <NavLink className="links" to="/delivery">
               Доставка та оплата
             </NavLink>
           </li>
           <li>
-            <NavLink to="/handling" className="link">
+            <NavLink className="links" to="/handling">
               Догляд за квітами
             </NavLink>
           </li>
@@ -74,11 +97,14 @@ const Header = () => {
               />
             </svg>
           </li>
+          <li>
+            <button className="btn-language">Укр</button>
+          </li>
         </ul>
       </div>
 
       <div className="container-bottom">
-        <button className='btn-catalogue'>Каталог товарів</button>
+        <button className="btn-catalogue">Каталог товарів</button>
 
         <div className="search">
           <button type="submit" className="search-button">
@@ -110,7 +136,7 @@ const Header = () => {
           <input className="search-field" type="search" placeholder="Пошук" />
         </div>
 
-        <div className="bouquet">
+        <div className="text-icon">
           <p>Зібрати букет</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +163,7 @@ const Header = () => {
             </defs>
           </svg>
         </div>
-        <div className="bouquet">
+        <div className="text-icon">
           <p>Увійти</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -162,11 +188,36 @@ const Header = () => {
             />
           </svg>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="29" viewBox="0 0 32 29" fill="none">
-<path d="M9 28C9.55228 28 10 27.5523 10 27C10 26.4477 9.55228 26 9 26C8.44772 26 8 26.4477 8 27C8 27.5523 8.44772 28 9 28Z" stroke="#6CC25E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20 28C20.5523 28 21 27.5523 21 27C21 26.4477 20.5523 26 20 26C19.4477 26 19 26.4477 19 27C19 27.5523 19.4477 28 20 28Z" stroke="#6CC25E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1 7H5L7.68 20.39C7.77144 20.8504 8.02191 21.264 8.38755 21.5583C8.75318 21.8526 9.2107 22.009 9.68 22H19.4C19.8693 22.009 20.3268 21.8526 20.6925 21.5583C21.0581 21.264 21.3086 20.8504 21.4 20.39L23 12H6" stroke="#6CC25E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+        <svg
+          className="cart"
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="29"
+          viewBox="0 0 32 29"
+          fill="none"
+        >
+          <path
+            d="M9 28C9.55228 28 10 27.5523 10 27C10 26.4477 9.55228 26 9 26C8.44772 26 8 26.4477 8 27C8 27.5523 8.44772 28 9 28Z"
+            stroke="#6CC25E"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M20 28C20.5523 28 21 27.5523 21 27C21 26.4477 20.5523 26 20 26C19.4477 26 19 26.4477 19 27C19 27.5523 19.4477 28 20 28Z"
+            stroke="#6CC25E"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M1 7H5L7.68 20.39C7.77144 20.8504 8.02191 21.264 8.38755 21.5583C8.75318 21.8526 9.2107 22.009 9.68 22H19.4C19.8693 22.009 20.3268 21.8526 20.6925 21.5583C21.0581 21.264 21.3086 20.8504 21.4 20.39L23 12H6"
+            stroke="#6CC25E"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </div>
     </header>
   )
