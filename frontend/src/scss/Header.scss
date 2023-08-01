@@ -1,0 +1,84 @@
+header {
+  margin: 30px 20px;
+
+  .container-top {
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  li {
+    list-style: none;
+    padding: 8px;
+  }
+  .link {
+    text-decoration: none;
+    color: black;
+  }
+  .logo {
+    margin-left: 80px;
+  }
+
+  .city {
+    font-size: 20px;
+  }
+  .vertical-line {
+    border-left: 1px solid #6cc25e;
+    height: 40px;
+  }
+  .city-icon {
+    display: flex;
+    gap: 10px;
+  }
+  .access-icon {
+    margin-right: 80px;
+  }
+
+  .container-bottom{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .btn-catalogue{
+    border-radius: 8px;
+    background-color: #6CC25E;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+  }
+.search {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid  #979797;
+    
+  }
+  .search-field {
+    padding: 4px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    width: 526px;
+    height: 44px;
+  }
+  .search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: -33px;
+  }
+  .search-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 50px;
+    
+  }
+  .bouquet{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
