@@ -93,7 +93,7 @@ public class ProductConverter {
                 .status(dto.getStatus())
                 .category(categoryConverter.convertToEntity(categoryService.findById(dto.getCategoryId())))
                 .color(colorConverter.convertToEntity(colorService.findById(dto.getColorId())))
-                .size(sizeConverter.convertToEntity(sizeService.findById(dto.getSizeId())))
+                .size(sizeConverter.convertToEntity(sizeService.findByProductByHeight(dto.getHeight())))
                 .build();
     }
 }

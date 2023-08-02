@@ -5,13 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ua.kvitkovo.products.entity.Size;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
  */
 public interface SizeRepository extends JpaRepository<Size, Long> {
 
-    @Query("FROM Size s WHERE s.min >= :minLength AND s.max <= :maxLength")
-    List<Size> findAllBetweenMinMax(@Param("minLength") int min, @Param("maxLength") int max);
+    @Query(nativeQuery = true, value = "select * FROM sizes s WHERE :height >= s.size_min AND :height <= s.size_max limit 1")
+    Optional<Size> findFirstSizeByHeight(@Param("height") int height);
 }

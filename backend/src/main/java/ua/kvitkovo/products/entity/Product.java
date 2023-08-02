@@ -77,9 +77,6 @@ public class Product {
     @JoinColumn(name = "product_height", nullable = true)
     private Size size;
 
-    @ManyToMany
-    private Set<Image> images;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

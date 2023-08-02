@@ -54,19 +54,12 @@ public class SizeService {
         return sizeConverter.convertToDto(optional.get());
     }
 
-    public List<SizeResponseDto> findByMinMax(int min, int max) throws ItemNotFoundException {
-        List<Size> sizes = sizeRepository.findAllBetweenMinMax(min, max);
-        return sizes.stream()
-                .map(sizeConverter::convertToDto)
-                .toList();
-    }
-
-    public List<SizeResponseDto> findByProductId(long id) throws ItemNotFoundException {
-        //TODO get product by id
-        List<Size> sizes = sizeRepository.findAllBetweenMinMax(0, 1000);
-        return sizes.stream()
-                .map(sizeConverter::convertToDto)
-                .toList();
+    public SizeResponseDto findByProductByHeight(int height) throws ItemNotFoundException {
+        Optional<Size> optional = sizeRepository.findFirstSizeByHeight(height);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        return sizeConverter.convertToDto(optional.get());
     }
 
     @Transactional

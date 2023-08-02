@@ -47,6 +47,15 @@ public class ImageService {
     @Value("${aws.s3.catalog.products}")
     private String catalogName;
 
+    @Value("${image.small.size.width}")
+    private int smallImageWidth;
+    @Value("${image.small.size.width}")
+    private int smallImageHeight;
+    @Value("${image.big.size.width}")
+    private int bigImageWidth;
+    @Value("${image.big.size.height}")
+    private int bigImageHeight;
+
     public ImageResponseDto findById(long id) throws ItemNotFoundException {
         Optional<Image> optional = imageRepository.findById(id);
         if (optional.isEmpty()) {
@@ -69,8 +78,8 @@ public class ImageService {
         try {
             Image image = imageConverter.convertToEntity(dto);
             image.setName(image.getProduct().getTitle() + " image");
-            image.setUrl(resizeAndSendImage(dto, 800, 800, "b"));
-            image.setUrlSmall(resizeAndSendImage(dto, 200, 200, "s"));
+            image.setUrl(resizeAndSendImage(dto, bigImageWidth, bigImageHeight, "b"));
+            image.setUrlSmall(resizeAndSendImage(dto, smallImageWidth, smallImageHeight, "s"));
             Image savedImage = imageRepository.save(image);
             imageResponseDto = imageConverter.convertToDto(savedImage);
 

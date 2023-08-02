@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
@@ -112,5 +113,56 @@ public class ProductController {
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductRequestDto request, BindingResult bindingResult) {
         log.info("Received request to create Product - {}.", request);
         return productService.addProduct(request, bindingResult);
+    }
+
+    @Operation(summary = "Update Product by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ProductResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @Secured({"ROLE_ADMIN"})
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ProductResponseDto updateProduct(
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
+        log.info("Received request to update Product - {} with id {}.", request, id);
+        return productService.updateProduct(id, request, bindingResult);
+    }
+
+    @Operation(summary = "Delete Product by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @Secured({"ROLE_ADMIN"})
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        log.info("Received request to delete Product with id - {}.", id);
+        productService.deleteProduct(id);
+        log.info("the Product with id - {} was deleted.", id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

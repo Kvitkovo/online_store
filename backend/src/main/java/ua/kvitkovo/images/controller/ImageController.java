@@ -29,7 +29,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/products/images")
+@RequestMapping(value = "/v1/products")
 public class ImageController {
 
     private final ImageService imageService;
@@ -45,7 +45,7 @@ public class ImageController {
             @Schema(implementation = ErrorResponse.class))
         })
     })
-    @GetMapping("/{id}")
+    @GetMapping("/images/{id}")
     @ResponseBody
     public ImageResponseDto getImageById(@PathVariable Long id) {
         log.info("Received request to get the Image with id - {}.", id);
@@ -67,7 +67,7 @@ public class ImageController {
             @Schema(implementation = ErrorResponse.class))
         })
     })
-    @GetMapping(path = "/all/{id}")
+    @GetMapping(path = "/{id}/images")
     @ResponseBody
     public List<ImageResponseDto> getAllImagesByProductId(@PathVariable Long id) {
         return imageService.getImagesByProductId(id);
@@ -90,7 +90,7 @@ public class ImageController {
         })
     })
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(path = "/uploadImage",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseBody
     public ImageResponseDto addImage(
         @RequestParam("id") long id,
@@ -119,7 +119,7 @@ public class ImageController {
         })
     })
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/images/{id}/deleteImage")
     @ResponseBody
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         log.info("Received request to delete Image with id - {}.", id);
@@ -142,7 +142,7 @@ public class ImageController {
         })
     })
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @DeleteMapping("/all/{id}")
+    @DeleteMapping("/{id}/images/deleteAllImages")
     @ResponseBody
     public ResponseEntity<Void> deleteImagesByProductId(@PathVariable Long id) {
         log.info("Received request to delete Image with id - {}.", id);
@@ -163,7 +163,7 @@ public class ImageController {
         })
     })
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PutMapping("/main/{id}")
+    @PutMapping("/{id}/images/setMain")
     @ResponseBody
     public ImageResponseDto setMainImage(@PathVariable Long id) {
         log.info("Received request to set main Image with id {}.", id);

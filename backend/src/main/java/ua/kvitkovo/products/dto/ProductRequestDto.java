@@ -23,5 +23,5 @@ public class ProductRequestDto {
     private ProductStatus status;
     private long categoryId;
     private long colorId;
-    private long sizeId;
+    private int height;
 }
