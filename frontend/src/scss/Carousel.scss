@@ -1,0 +1,40 @@
+@import '../variables';
+
+.carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .slide {
+    width: 100%;
+    height: 100%;
+  }
+  .arrow {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .arrow:hover {
+    cursor: pointer;
+  }
+  .arrow-left {
+    left: 1rem;
+  }
+  .arrow-right {
+    right: 1rem;
+  }
+  .indicators {
+    display: flex;
+    position: absolute;
+    bottom: 1rem;
+  }
+  .indicator {
+    background-color: $gray-dots-color;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    border: none;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+}
