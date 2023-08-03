@@ -11,12 +11,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
+import ua.kvitkovo.products.dto.FilterRequestDto;
 import ua.kvitkovo.products.dto.ProductRequestDto;
 import ua.kvitkovo.products.dto.ProductResponseDto;
 import ua.kvitkovo.products.service.ProductService;
@@ -84,6 +88,39 @@ public class ProductController {
         ProductResponseDto productResponseDto = productService.findById(id);
         log.info("the Product with id - {} was retrieved - {}.", id, productResponseDto);
         return productResponseDto;
+    }
+
+    @Operation(summary = "Get Products by Category ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful loaded"),
+            @ApiResponse(responseCode = "400", description = "Category or Products not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @GetMapping(path = "/category")
+    public Page<ProductResponseDto> getAllProductsByCategory(@RequestParam(defaultValue = "1") int page,
+                                                             @RequestParam(defaultValue = "12") int size,
+                                                             @RequestParam long categoryId) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return productService.getAllByCategory(pageable, categoryId);
+    }
+
+    @Operation(summary = "Get Products by filter")
+    @ApiResponse(responseCode = "200", description = "Successful loaded")
+    @GetMapping(path = "/filter")
+    public Page<ProductResponseDto> getAllProductsByFilter(@RequestParam(defaultValue = "1") int page,
+                                                           @RequestParam(defaultValue = "30") int size,
+                                                           @RequestParam(required = false, defaultValue = "0") String priceFrom,
+                                                           @RequestParam(required = false, defaultValue = "500") String priceTo,
+                                                           @RequestParam(required = false) String title) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        FilterRequestDto filter = FilterRequestDto.builder()
+                .priceFrom(priceFrom)
+                .priceTo(priceTo)
+                .title(title)
+                .build();
+        return productService.getAllByFilter(filter, pageable);
     }
 
     @Operation(summary = "Create a new Product")
