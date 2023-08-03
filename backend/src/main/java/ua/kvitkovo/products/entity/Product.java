@@ -46,6 +46,12 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "price_with_discount")
+    private BigDecimal priceWithDiscount;
+
+    @Column(name = "discount")
+    private BigDecimal discount;
+
     @Column(name = "meta_description")
     private String metaDescription;
 
@@ -70,9 +76,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_height", nullable = true)
     private Size size;
-
-    @ManyToMany
-    private Set<Image> images;
 
     @Override
     public boolean equals(Object o) {

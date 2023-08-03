@@ -165,5 +165,4 @@ public class CategoryController {
         log.info("the Category with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
 }

@@ -86,32 +86,6 @@ public class SizeController {
         return sizeResponseDto;
     }
 
-    @Operation(summary = "Get Sizes by Product ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                    @Content(
-                            mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SizeResponseDto.class))
-                    )
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
-    })
-    @GetMapping("/findByProduct/{id}")
-    @ResponseBody
-    public List<SizeResponseDto> getSizeByProductId(@PathVariable Long id) {
-        log.info("Received request to get the Size with id - {}.", id);
-        List<SizeResponseDto> sizeResponseDtos = sizeService.findByProductId(id);
-        log.info("the Size with name - {} was retrieved - {}.", id, sizeResponseDtos);
-        return sizeResponseDtos;
-    }
-
     @Operation(summary = "Create a new Size")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
