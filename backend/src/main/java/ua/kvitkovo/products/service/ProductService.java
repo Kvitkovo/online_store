@@ -106,9 +106,9 @@ public class ProductService {
                 findById(categoryId).
                 orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
-        Page<Product> advertisements = productRepository.findAllByCategoryId(pageable, category.getId());
-        if (advertisements.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return advertisements.map(productConverter::convertToDto);
+        Page<Product> products = productRepository.findAllByCategoryId(pageable, category.getId());
+        if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
+        return products.map(productConverter::convertToDto);
     }
 
     public Page<ProductResponseDto> getAllByFilter(FilterRequestDto filter, Pageable pageable) {
@@ -129,6 +129,12 @@ public class ProductService {
         });
         Page<Product> products = productRepository.findAll(where, pageable);
 
+        if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
+        return products.map(productConverter::convertToDto);
+    }
+
+    public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
+        Page<Product> products = productRepository.findAllByDiscountGreaterThan(pageable, BigDecimal.valueOf(0));
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
         return products.map(productConverter::convertToDto);
     }
