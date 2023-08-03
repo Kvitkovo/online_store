@@ -90,10 +90,25 @@ public class ProductController {
         return productResponseDto;
     }
 
+    @Operation(summary = "Get discounted products")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful loaded"),
+            @ApiResponse(responseCode = "404", description = "Products not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @GetMapping(path = "/discounted")
+    public Page<ProductResponseDto> getDiscountedProducts(@RequestParam(defaultValue = "1") int page,
+                                                          @RequestParam(defaultValue = "12") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return productService.getDiscounted(pageable);
+    }
+
     @Operation(summary = "Get Products by Category ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful loaded"),
-            @ApiResponse(responseCode = "400", description = "Category or Products not found", content = {
+            @ApiResponse(responseCode = "404", description = "Category or Products not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })

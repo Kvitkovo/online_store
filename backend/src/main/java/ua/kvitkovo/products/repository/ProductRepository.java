@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ua.kvitkovo.products.entity.Product;
 
+import java.math.BigDecimal;
+
 /**
  * @author Andriy Gaponov
  */
@@ -12,4 +14,5 @@ import ua.kvitkovo.products.entity.Product;
 public interface ProductRepository extends ProductRepositoryBasic {
 
     Page<Product> findAllByCategoryId(Pageable pageable, Long id);
+    Page<Product> findAllByDiscountGreaterThan(Pageable pageable, BigDecimal discount);
 }
