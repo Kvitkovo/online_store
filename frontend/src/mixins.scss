@@ -1,0 +1,15 @@
+@import 'variables';
+
+// Small devices
+@mixin sm {
+  @media screen and (max-width: #{$breakpoint-sm}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media screen and (max-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
