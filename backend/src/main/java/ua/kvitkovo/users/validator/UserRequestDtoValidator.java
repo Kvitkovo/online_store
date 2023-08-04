@@ -49,7 +49,7 @@ public class UserRequestDtoValidator implements Validator {
         }
 
         String passwordRegexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$";
-        if (!Helper.patternMatches(dto.getEmail(), emailRegexPattern)) {
+        if (!Helper.patternMatches(dto.getEmail(), passwordRegexPattern)) {
             errors.rejectValue("password", "", "invalid format!");
         }
     }
