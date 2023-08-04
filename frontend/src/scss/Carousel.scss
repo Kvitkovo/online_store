@@ -49,6 +49,11 @@
   }
 }
 
+@include md {
+  .carousel {
+    margin: 0 48px;
+  }
+}
 @include sm {
   .carousel {
     margin: 0 16px;
