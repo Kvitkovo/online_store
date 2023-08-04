@@ -19,6 +19,7 @@ import ua.kvitkovo.products.dto.ProductRequestDto;
 import ua.kvitkovo.products.dto.ProductResponseDto;
 import ua.kvitkovo.products.entity.Category;
 import ua.kvitkovo.products.entity.Product;
+import ua.kvitkovo.products.entity.ProductStatus;
 import ua.kvitkovo.products.repository.CategoryRepository;
 import ua.kvitkovo.products.repository.ProductRepository;
 import ua.kvitkovo.products.validator.ProductDtoValidator;
@@ -106,7 +107,7 @@ public class ProductService {
                 findById(categoryId).
                 orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
-        Page<Product> products = productRepository.findAllByCategoryId(pageable, category.getId());
+        Page<Product> products = productRepository.findAllByCategoryIdAndStatusEquals(pageable, category.getId(), ProductStatus.ACTIVE);
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
         return products.map(productConverter::convertToDto);
     }
@@ -124,6 +125,7 @@ public class ProductService {
             if (filter.getTitle() != null) {
                 predicates.add(criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
             }
+            predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
         });
@@ -134,8 +136,30 @@ public class ProductService {
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
-        Page<Product> products = productRepository.findAllByDiscountGreaterThan(pageable, BigDecimal.valueOf(0));
+        Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(pageable, BigDecimal.valueOf(0), ProductStatus.ACTIVE);
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
         return products.map(productConverter::convertToDto);
+    }
+
+    public ProductResponseDto enableProduct(Long id) {
+        ProductResponseDto productResponseDto = findById(id);
+
+        Product product = productConverter.convertToEntity(productResponseDto);
+        product.setId(id);
+        product.setStatus(ProductStatus.ACTIVE);
+
+        productRepository.save(product);
+        return findById(id);
+    }
+
+    public ProductResponseDto disableProduct(Long id) {
+        ProductResponseDto productResponseDto = findById(id);
+
+        Product product = productConverter.convertToEntity(productResponseDto);
+        product.setId(id);
+        product.setStatus(ProductStatus.NO_ACTIVE);
+
+        productRepository.save(product);
+        return findById(id);
     }
 }

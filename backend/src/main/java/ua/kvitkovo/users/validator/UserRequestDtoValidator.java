@@ -30,6 +30,7 @@ public class UserRequestDtoValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UserRequestDto dto = (UserRequestDto) target;
+
         if (StringUtils.isBlank(dto.getEmail())) {
             errors.rejectValue("email", "", "is blank!");
         } else {
@@ -42,11 +43,14 @@ public class UserRequestDtoValidator implements Validator {
             errors.rejectValue("password", "", "is blank!");
         }
 
-        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-
-        if (!Helper.patternMatches(dto.getEmail(), regexPattern)) {
+        String emailRegexPattern = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$";
+        if (!Helper.patternMatches(dto.getEmail(), emailRegexPattern)) {
             errors.rejectValue("email", "", "invalid format!");
+        }
+
+        String passwordRegexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$";
+        if (!Helper.patternMatches(dto.getEmail(), passwordRegexPattern)) {
+            errors.rejectValue("password", "", "invalid format!");
         }
     }
 }
