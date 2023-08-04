@@ -58,13 +58,13 @@ const Carousel = () => {
       <span className="indicators">
         {data.map((item, index) => {
           return (
-            <button
+            <div
               key={index}
               onClick={() => setSlide(index)}
               className={
                 slide === index ? 'indicator' : 'indicator indicator-inactive'
               }
-            ></button>
+            ></div>
           )
         })}
       </span>

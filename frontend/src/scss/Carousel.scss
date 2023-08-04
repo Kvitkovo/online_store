@@ -1,4 +1,5 @@
 @import '../variables';
+@import '../mixins.scss';
 
 .carousel {
   position: relative;
@@ -45,5 +46,22 @@
   }
   .indicator-inactive {
     background-color: $gray-dots-color;
+  }
+}
+
+@include sm {
+  .carousel {
+    margin: 0 16px;
+
+    .arrow {
+      display: none;
+    }
+    .indicators {
+      bottom: -24px;
+    }
+    .indicator {
+      width: 8px;
+      height: 8px;
+    }
   }
 }
