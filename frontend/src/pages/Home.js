@@ -1,8 +1,12 @@
-function Home() {
+import '../scss/Home.scss'
+import Carousel from '../components/Carousel'
+
+const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="home">
+      <Carousel />
     </div>
   )
 }
+
 export default Home
