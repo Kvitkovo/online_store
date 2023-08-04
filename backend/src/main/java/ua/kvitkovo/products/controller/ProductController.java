@@ -217,4 +217,52 @@ public class ProductController {
         log.info("the Product with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "Enable Product by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @Secured({"ROLE_ADMIN"})
+    @PutMapping("/{id}/enable")
+    @ResponseBody
+    public ProductResponseDto enableProduct(@PathVariable Long id) {
+        log.info("Received request to enable Product with id {}.", id);
+        return productService.enableProduct(id);
+    }
+
+    @Operation(summary = "Disable Product by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @Secured({"ROLE_ADMIN"})
+    @PutMapping("/{id}/disable")
+    @ResponseBody
+    public ProductResponseDto disableProduct(@PathVariable Long id) {
+        log.info("Received request to disable Product with id {}.", id);
+        return productService.disableProduct(id);
+    }
 }
