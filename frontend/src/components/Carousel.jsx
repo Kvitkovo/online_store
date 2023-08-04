@@ -1,5 +1,5 @@
 import '../scss/Carousel.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Carousel = () => {
   const data = [
@@ -10,12 +10,27 @@ const Carousel = () => {
 
   const [slide, setSlide] = useState(0)
 
+  useEffect(() => {
+    let slider = setInterval(
+      () =>
+        setSlide((prevState) =>
+          slide === data.length - 1 ? 0 : prevState + 1
+        ),
+      8000
+    )
+    return () => {
+      clearInterval(slider)
+    }
+  })
+
   const nextSlide = () => {
     setSlide(slide === data.length - 1 ? 0 : slide + 1)
   }
+
   const prevSlide = () => {
     setSlide(slide === 0 ? data.length - 1 : slide - 1)
   }
+
   return (
     <div className="carousel">
       <img

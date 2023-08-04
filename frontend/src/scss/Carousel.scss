@@ -5,6 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
 
   .slide {
     width: 100%;
@@ -16,6 +18,7 @@
   .arrow {
     position: absolute;
     border-radius: 50%;
+    opacity: 0.5;
   }
   .arrow:hover {
     cursor: pointer;
