@@ -48,11 +48,6 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink className="links" to="/shops">
-              Магазини
-            </NavLink>
-          </li>
-          <li>
             <NavLink className="links" to="/delivery">
               Доставка та оплата
             </NavLink>
