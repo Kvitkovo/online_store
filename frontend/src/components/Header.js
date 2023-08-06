@@ -35,7 +35,10 @@ const Header = () => {
         </div>
         <div className="text-icon">
           <img src="images/phone-icon.svg" alt="phone reciever" />
-          <a className='links' href="tel:(093) 777-77-77">(093) 777-77-77</a>
+          <a className="links" href="tel:(093) 777-77-77">
+            {' '}
+            (093) 777-77-77{' '}
+          </a>
         </div>
         <ul>
           <li>
