@@ -25,6 +25,7 @@ public class ProductResponseDto {
     private String metaDescription;
     private String metaKeywords;
     private String description;
+    private boolean allowAddToConstructor;
     private ProductStatus status;
     private CategoryResponseDto category;
     private ColorResponseDto color;

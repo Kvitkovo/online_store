@@ -5,11 +5,9 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ua.kvitkovo.images.entity.Image;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -76,6 +74,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_height", nullable = true)
     private Size size;
+
+    @Column(name = "allow_add_to_constructor")
+    private boolean allowAddToConstructor;
 
     @Override
     public boolean equals(Object o) {

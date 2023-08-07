@@ -69,7 +69,7 @@ public class SizeService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         Size size = sizeConverter.convertToEntity(dto);
-        size.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        size.setAlias(transliterateUtils.getAlias(Size.class.getSimpleName(), dto.getName()));
         sizeRepository.save(size);
         log.info("The Size was created");
         return findById(size.getId());

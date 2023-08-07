@@ -78,7 +78,7 @@ public class ColorService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         Color color = colorConverter.convertToEntity(dto);
-        color.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        color.setAlias(transliterateUtils.getAlias(Color.class.getSimpleName(), dto.getName()));
         colorRepository.save(color);
         log.info("The Color was created");
         return findById(color.getId());

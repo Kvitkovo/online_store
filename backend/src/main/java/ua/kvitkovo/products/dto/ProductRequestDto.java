@@ -24,4 +24,5 @@ public class ProductRequestDto {
     private long categoryId;
     private long colorId;
     private int height;
+    private boolean allowAddToConstructor;
 }
