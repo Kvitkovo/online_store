@@ -1,0 +1,72 @@
+@import '../variables';
+@import '../mixins.scss';
+
+.carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  .slide {
+    width: 100%;
+    height: 100%;
+  }
+  .slide-hidden {
+    display: none;
+  }
+  .arrow {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .arrow:hover {
+    cursor: pointer;
+  }
+  .arrow-left {
+    left: 1rem;
+  }
+  .arrow-right {
+    right: 1rem;
+  }
+  .indicators {
+    display: flex;
+    position: absolute;
+    bottom: 1rem;
+  }
+  .indicator {
+    background-color: $green-dark-dots-color;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    border: none;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+  .indicator-inactive {
+    background-color: $gray-dots-color;
+  }
+}
+
+@include md {
+  .carousel {
+    margin: 0 48px;
+  }
+}
+@include sm {
+  .carousel {
+    margin: 0 16px;
+
+    .arrow {
+      display: none;
+    }
+    .indicators {
+      bottom: -24px;
+    }
+    .indicator {
+      width: 8px;
+      height: 8px;
+    }
+  }
+}
