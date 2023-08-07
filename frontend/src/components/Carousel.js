@@ -62,7 +62,7 @@ const Carousel = () => {
       onTouchEnd={onTouchEnd}
     >
       <img
-        src="http://localhost:3000/images/button_left.jpg"
+        src="./images/button_left.jpg"
         alt="стрілка ліворуч"
         className="arrow arrow-left"
         onClick={prevSlide}
