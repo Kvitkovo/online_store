@@ -33,11 +33,5 @@ public class SizeDtoValidator implements Validator {
         if (dto.getMin()> dto.getMax()) {
             errors.rejectValue("min", "", "> max");
         }
-        if (dto.getMax()<0) {
-            errors.rejectValue("max", "", "< 0");
-        }
-        if (dto.getMax() < dto.getMin()) {
-            errors.rejectValue("max", "", "< min");
-        }
     }
 }
