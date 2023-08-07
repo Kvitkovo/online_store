@@ -51,6 +51,7 @@ public class ProductConverter {
                 .metaKeywords(entity.getMetaKeywords())
                 .metaDescription(entity.getMetaDescription())
                 .category(categoryConverter.convertToDto(entity.getCategory()))
+                .allowAddToConstructor(entity.isAllowAddToConstructor())
                 .build();
     }
 
@@ -74,6 +75,7 @@ public class ProductConverter {
                 .metaKeywords(dto.getMetaKeywords())
                 .metaDescription(dto.getMetaDescription())
                 .category(categoryConverter.convertToEntity(dto.getCategory()))
+                .allowAddToConstructor(dto.isAllowAddToConstructor())
                 .build();
     }
 
@@ -94,6 +96,7 @@ public class ProductConverter {
                 .category(categoryConverter.convertToEntity(categoryService.findById(dto.getCategoryId())))
                 .color(colorConverter.convertToEntity(colorService.findById(dto.getColorId())))
                 .size(sizeConverter.convertToEntity(sizeService.findByProductByHeight(dto.getHeight())))
+                .allowAddToConstructor(dto.isAllowAddToConstructor())
                 .build();
     }
 }
