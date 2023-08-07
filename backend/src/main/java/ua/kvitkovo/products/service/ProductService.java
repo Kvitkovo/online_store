@@ -68,7 +68,7 @@ public class ProductService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         Product product = productConverter.convertToEntity(dto);
-        product.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
+        product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
         log.info("The Product was created");
         return findById(product.getId());
