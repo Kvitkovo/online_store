@@ -6,6 +6,11 @@
   background-color: white;
   border-radius: 8px;
   position: relative;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    box-shadow: 0px 2px 10px 0px rgba(151, 207, 142, 0.44);
+  }
 
   h3 {
     font-size: 20px;
