@@ -48,6 +48,10 @@ public class UserRequestDtoValidator implements Validator {
             errors.rejectValue("email", "", "invalid format!");
         }
 
+        if (dto.getEmail().endsWith(".ru")) {
+            errors.rejectValue("email", "", "invalid format!");
+        }
+
         String passwordRegexPattern = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})";
         if (!Helper.patternMatches(dto.getPassword(), passwordRegexPattern)) {
             errors.rejectValue("password", "", "invalid format!");
