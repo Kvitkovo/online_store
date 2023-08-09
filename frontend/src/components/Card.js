@@ -4,21 +4,25 @@ const Card = () => {
     <div className="card">
       <img src="./images/bouquet.jpg" alt="букет" />
       <h3>Букет “101 троянда”</h3>
-      <span>15%</span>
+      <div className="discount">15%</div>
       <div className="card-info">
-        <div>
-          <p>Ціна</p>
-          <p>
-            4864 <span>грн</span>
-          </p>
-        </div>
-        <div className="card-flex">
-          <p>
-            4864 <span>грн</span>
-          </p>
-          <div>
-            <img src="./images/bouquet-card.svg" alt="додати в букет" />
-            <img src="./images/cart-card.svg" alt="додати в корзину" />
+        <p>Ціна</p>
+        <div className="old-price">4864 грн</div>
+        <div className="card-flex-bottom">
+          <div className="actual-price">
+            4864<span>грн</span>
+          </div>
+          <div className="icons">
+            <img
+              src="./images/bouquet-card.svg"
+              alt="додати в букет"
+              className="bouquet"
+            />
+            <img
+              src="./images/cart-card.svg"
+              alt="додати в корзину"
+              className="cart"
+            />
           </div>
         </div>
       </div>

@@ -1,0 +1,77 @@
+@import '../_variables.scss';
+
+.card {
+  width: 280px;
+  height: 474px;
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+
+  h3 {
+    font-size: 20px;
+    line-height: 24px;
+    padding: 16px 12px 0;
+  }
+  .discount {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+    background-color: #de5f38;
+    padding: 4px 8px;
+    border-radius: 24px 0px 0px 24px;
+  }
+  .card-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      font-size: 14px;
+      line-height: 24px;
+      padding: 16px 0 14px;
+    }
+
+    .old-price {
+      font-size: 18px;
+      line-height: 24px;
+      text-decoration: line-through;
+    }
+
+    .card-flex-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .actual-price {
+        font-size: 24px;
+        font-weight: 700;
+        color: $accent-color;
+
+        span {
+          font-weight: 400;
+          font-size: 20px;
+          color: $accent-color;
+          padding-left: 4px;
+        }
+      }
+      .icons {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .bouquet {
+          padding-right: 6px;
+        }
+        .cart {
+          border-radius: 8px;
+          border: 1px solid #e1c429;
+          padding: 6px;
+        }
+      }
+    }
+  }
+}
