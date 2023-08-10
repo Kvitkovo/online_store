@@ -1,12 +1,12 @@
 package ua.kvitkovo.images.converter;
 
 import lombok.AllArgsConstructor;
-import ua.kvitkovo.products.converter.ProductConverter;
+import ua.kvitkovo.catalog.converter.ProductConverter;
 import ua.kvitkovo.images.dto.ImageRequestDto;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import org.springframework.stereotype.Service;
-import ua.kvitkovo.products.service.ProductService;
+import ua.kvitkovo.catalog.service.ProductService;
 
 /**
  * @author Andriy Gaponov

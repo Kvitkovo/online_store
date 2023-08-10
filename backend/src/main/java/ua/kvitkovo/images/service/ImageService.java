@@ -15,8 +15,8 @@ import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
 import ua.kvitkovo.images.validator.ImageDtoValidator;
-import ua.kvitkovo.products.dto.ProductResponseDto;
-import ua.kvitkovo.products.service.ProductService;
+import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 

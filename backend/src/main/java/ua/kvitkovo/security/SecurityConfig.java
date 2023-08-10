@@ -52,7 +52,8 @@ public class SecurityConfig {
             "/v1/shops/**",
             "/v1/orders/**",
             "/v1/colors/**",
-            "/v1/sizes/**"
+            "/v1/sizes/**",
+            "/v1/filter/**",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
