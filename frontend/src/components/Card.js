@@ -9,7 +9,7 @@ const Card = (props) => {
       </div>
       <div className="card-info">
         <p>Ціна</p>
-        <div className={props.discount === 0 ? 'hide' : 'old-price'}>
+        <div className={props.discount === 0 ? 'hide-price' : 'old-price'}>
           {props.oldPrice} грн
         </div>
         <div className="card-flex-bottom">
