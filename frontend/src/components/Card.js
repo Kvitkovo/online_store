@@ -4,10 +4,14 @@ const Card = (props) => {
     <div className="card">
       <img src={props.image} alt="букет" />
       <h3>{props.title}</h3>
-      <div className="discount">{props.discount}%</div>
+      <div className={props.discount === 0 ? 'hide' : 'discount'}>
+        {props.discount}%
+      </div>
       <div className="card-info">
         <p>Ціна</p>
-        <div className="old-price">{props.oldPrice} грн</div>
+        <div className={props.discount === 0 ? 'hide' : 'old-price'}>
+          {props.oldPrice} грн
+        </div>
         <div className="card-flex-bottom">
           <div className="actual-price">
             {props.price}
@@ -17,7 +21,7 @@ const Card = (props) => {
             <img
               src="./images/bouquet-card.svg"
               alt="додати в букет"
-              className="bouquet"
+              className={props.bouquet === false ? 'hide' : 'bouquet'}
             />
             <img
               src="./images/cart-card.svg"

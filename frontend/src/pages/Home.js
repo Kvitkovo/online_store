@@ -31,6 +31,7 @@ const Home = () => {
         {data &&
           data.map((card) => (
             <Card
+              bouquet={card.allowAddToConstructor}
               image={card.images[0].urlSmall}
               title={card.title}
               discount={card.discount}
