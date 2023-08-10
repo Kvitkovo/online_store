@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.aws.AwsService;
+import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.images.converter.ImageConverter;
@@ -15,8 +17,6 @@ import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
 import ua.kvitkovo.images.validator.ImageDtoValidator;
-import ua.kvitkovo.catalog.dto.ProductResponseDto;
-import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 

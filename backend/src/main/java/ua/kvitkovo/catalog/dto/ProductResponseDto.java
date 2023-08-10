@@ -3,9 +3,11 @@ package ua.kvitkovo.catalog.dto;
 import lombok.Builder;
 import lombok.Data;
 import ua.kvitkovo.catalog.entity.ProductStatus;
+import ua.kvitkovo.images.dto.ImageResponseDto;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -31,4 +33,5 @@ public class ProductResponseDto {
     private ProductTypeResponseDto productType;
     private ColorResponseDto color;
     private SizeResponseDto size;
+    private List<ImageResponseDto> images;
 }

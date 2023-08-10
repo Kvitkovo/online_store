@@ -10,6 +10,13 @@ import ua.kvitkovo.catalog.service.CategoryService;
 import ua.kvitkovo.catalog.service.ColorService;
 import ua.kvitkovo.catalog.service.ProductTypeService;
 import ua.kvitkovo.catalog.service.SizeService;
+import ua.kvitkovo.images.converter.ImageConverter;
+import ua.kvitkovo.images.dto.ImageResponseDto;
+import ua.kvitkovo.images.entity.Image;
+import ua.kvitkovo.images.service.ImageService;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -36,6 +43,18 @@ public class ProductConverter {
         if (entity == null) {
             return null;
         }
+
+        Set<Image> images = entity.getImages();
+        List<ImageResponseDto> imageResponseDtos = images.stream().map(image -> ImageResponseDto.builder()
+                .id(image.getId())
+                .name(image.getName())
+                .productId(image.getProduct().getId())
+                .mainImage(image.isMainImage())
+                .url(image.getUrl())
+                .urlSmall(image.getUrlSmall())
+                .build()
+        ).toList();
+
         return ProductResponseDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -54,6 +73,7 @@ public class ProductConverter {
                 .category(categoryConverter.convertToDto(entity.getCategory()))
                 .allowAddToConstructor(entity.isAllowAddToConstructor())
                 .productType(productTypeConverter.convertToDto(entity.getProductType()))
+                .images(imageResponseDtos)
                 .build();
     }
 

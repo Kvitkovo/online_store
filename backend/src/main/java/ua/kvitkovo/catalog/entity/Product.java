@@ -5,9 +5,11 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import ua.kvitkovo.images.entity.Image;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -81,6 +83,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_type")
     private ProductType productType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<Image> images;
 
     @Override
     public boolean equals(Object o) {
