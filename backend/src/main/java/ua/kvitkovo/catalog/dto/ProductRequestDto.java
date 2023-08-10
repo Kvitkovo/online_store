@@ -22,6 +22,7 @@ public class ProductRequestDto {
     private String description;
     private ProductStatus status;
     private long categoryId;
+    private long productTypeId;
     private long colorId;
     private int height;
     private boolean allowAddToConstructor;

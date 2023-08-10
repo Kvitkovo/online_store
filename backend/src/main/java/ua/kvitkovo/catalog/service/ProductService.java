@@ -10,9 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
-import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.catalog.converter.ProductConverter;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
@@ -23,6 +20,9 @@ import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.catalog.repository.CategoryRepository;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.validator.ProductDtoValidator;
+import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
+import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
@@ -45,6 +45,7 @@ public class ProductService {
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
     private final SizeService sizeService;
+    private final ProductTypeService productTypeService;
 
     public Collection<ProductResponseDto> getAll() {
         List<Product> products = productRepository.findAll();
@@ -81,7 +82,14 @@ public class ProductService {
             productResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
         }
         BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
-        productResponseDto.setSize(sizeService.findByProductByHeight(dto.getHeight()));
+
+        if (dto.getHeight() > 0) {
+            productResponseDto.setSize(sizeService.findByProductByHeight(dto.getHeight()));
+        }
+
+        if (dto.getProductTypeId() > 0) {
+            productResponseDto.setProductType(productTypeService.findById(dto.getProductTypeId()));
+        }
 
         Product product = productConverter.convertToEntity(productResponseDto);
 

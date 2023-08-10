@@ -28,6 +28,7 @@ public class ProductResponseDto {
     private boolean allowAddToConstructor;
     private ProductStatus status;
     private CategoryResponseDto category;
+    private ProductTypeResponseDto productType;
     private ColorResponseDto color;
     private SizeResponseDto size;
 }

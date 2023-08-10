@@ -5,9 +5,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
-import ua.kvitkovo.catalog.entity.Product;
+import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.service.CategoryService;
 import ua.kvitkovo.catalog.service.ColorService;
+import ua.kvitkovo.catalog.service.ProductTypeService;
 import ua.kvitkovo.catalog.service.SizeService;
 
 /**
@@ -20,9 +21,12 @@ public class ProductConverter {
     private final SizeConverter sizeConverter;
     private final ColorConverter colorConverter;
     private final CategoryConverter categoryConverter;
+    private final ProductTypeConverter productTypeConverter;
 
     @Lazy
     private CategoryService categoryService;
+    @Lazy
+    private ProductTypeService productTypeService;
     @Lazy
     private ColorService colorService;
     @Lazy
@@ -49,6 +53,7 @@ public class ProductConverter {
                 .metaDescription(entity.getMetaDescription())
                 .category(categoryConverter.convertToDto(entity.getCategory()))
                 .allowAddToConstructor(entity.isAllowAddToConstructor())
+                .productType(productTypeConverter.convertToDto(entity.getProductType()))
                 .build();
     }
 
@@ -73,6 +78,7 @@ public class ProductConverter {
                 .metaDescription(dto.getMetaDescription())
                 .category(categoryConverter.convertToEntity(dto.getCategory()))
                 .allowAddToConstructor(dto.isAllowAddToConstructor())
+                .productType(productTypeConverter.convertToEntity(dto.getProductType()))
                 .build();
     }
 
@@ -80,6 +86,27 @@ public class ProductConverter {
         if (dto == null) {
             return null;
         }
+
+        ProductStatus productStatus = ProductStatus.ACTIVE;
+        if (dto.getStatus() != null) {
+            productStatus = dto.getStatus();
+        }
+
+        Color color = null;
+        if (dto.getColorId() > 0) {
+            color = colorConverter.convertToEntity(colorService.findById(dto.getColorId()));
+        }
+
+        Size size = null;
+        if (dto.getHeight() > 0) {
+            size = sizeConverter.convertToEntity(sizeService.findByProductByHeight(dto.getHeight()));
+        }
+
+        ProductType type = null;
+        if (dto.getProductTypeId() > 0) {
+            type = productTypeConverter.convertToEntity(productTypeService.findById(dto.getProductTypeId()));
+        }
+
         return Product.builder()
                 .title(dto.getTitle())
                 .price(dto.getPrice())
@@ -89,11 +116,12 @@ public class ProductConverter {
                 .description(dto.getDescription())
                 .metaKeywords(dto.getMetaKeywords())
                 .metaDescription(dto.getMetaDescription())
-                .status(dto.getStatus())
+                .status(productStatus)
                 .category(categoryConverter.convertToEntity(categoryService.findById(dto.getCategoryId())))
-                .color(colorConverter.convertToEntity(colorService.findById(dto.getColorId())))
-                .size(sizeConverter.convertToEntity(sizeService.findByProductByHeight(dto.getHeight())))
+                .color(color)
+                .size(size)
                 .allowAddToConstructor(dto.isAllowAddToConstructor())
+                .productType(type)
                 .build();
     }
 }
