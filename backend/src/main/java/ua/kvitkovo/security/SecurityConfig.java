@@ -54,6 +54,7 @@ public class SecurityConfig {
             "/v1/colors/**",
             "/v1/sizes/**",
             "/v1/filter/**",
+            "/v1/types/**",
     };
 
     private final JwtTokenProvider jwtTokenProvider;

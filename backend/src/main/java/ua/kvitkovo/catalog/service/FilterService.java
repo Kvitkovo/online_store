@@ -36,7 +36,7 @@ public class FilterService {
 
         colors.forEach(color -> colorResult.put(color.getId(), color.getName()));
         sizes.forEach(size -> sizeResult.put(size.getId(), size.getName()));
-        types.forEach(type -> sizeResult.put(type.getId(), type.getName()));
+        types.forEach(type -> typeResult.put(type.getId(), type.getName()));
 
         Map<String, Map<Long, ?>> map = new HashMap<>();
         map.put("Size", sizeResult);
