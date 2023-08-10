@@ -1,16 +1,17 @@
 import '../scss/Card.scss'
-const Card = () => {
+const Card = (props) => {
   return (
     <div className="card">
-      <img src="./images/bouquet.jpg" alt="букет" />
-      <h3>Букет “101 троянда”</h3>
-      <div className="discount">15%</div>
+      <img src={props.image} alt="букет" />
+      <h3>{props.tile}</h3>
+      <div className="discount">{props.discount}%</div>
       <div className="card-info">
         <p>Ціна</p>
-        <div className="old-price">4864 грн</div>
+        <div className="old-price">{props.oldPrice} грн</div>
         <div className="card-flex-bottom">
           <div className="actual-price">
-            4864<span>грн</span>
+            {props.price}
+            <span>грн</span>
           </div>
           <div className="icons">
             <img

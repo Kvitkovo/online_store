@@ -13,7 +13,13 @@ const Home = () => {
         <DiscountPrice oldPrice="2000" actualPrice="1500" />
         <DiscountPrice oldPrice="2000" actualPrice="2000" />
       </div>
-      <Card />
+      <Card
+        image="./images/bouquet.jpg"
+        title="Букет “101 троянда”"
+        discount="15"
+        oldPrice="2456"
+        price="1234"
+      />
     </div>
   );
 };
