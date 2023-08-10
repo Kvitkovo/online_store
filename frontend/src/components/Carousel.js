@@ -1,13 +1,7 @@
 import '../scss/Carousel.scss';
 import React, { useEffect, useState } from 'react';
 
-const Carousel = () => {
-  const data = [
-    { src: './images/banner-01.jpg', alt: 'перший банер' },
-    { src: './images/banner-02.jpg', alt: 'другий банер' },
-    { src: './images/banner-03.jpg', alt: 'третій банер' },
-  ];
-
+const Carousel = ({ data }) => {
   const [slide, setSlide] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);

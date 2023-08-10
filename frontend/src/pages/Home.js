@@ -4,11 +4,12 @@ import Carousel from '../components/Carousel';
 import IconButton from '../components/ui-kit/components/IconButton';
 import { ICONS } from '../components/ui-kit/icons';
 import Discount from '../components/ui-kit/components/Discount';
+import data from '../data/carouselData.json';
 
 const Home = () => {
   return (
     <div className="home">
-      <Carousel />
+      <Carousel data={data.slides} />
       <Discount discount={15} />
       <Discount discount={15} isBigCard={true} />
       <IconButton icon={<ICONS.CartIcon />} isBorderYellow={true} />
