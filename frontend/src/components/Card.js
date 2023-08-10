@@ -3,7 +3,7 @@ const Card = (props) => {
   return (
     <div className="card">
       <img src={props.image} alt="букет" />
-      <h3>{props.tile}</h3>
+      <h3>{props.title}</h3>
       <div className="discount">{props.discount}%</div>
       <div className="card-info">
         <p>Ціна</p>
