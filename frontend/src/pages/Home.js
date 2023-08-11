@@ -40,6 +40,15 @@ const Home = () => {
               key={card.id}
             />
           ))}
+        <Card
+          status="NO_ACTIVE"
+          bouquet={false}
+          image="./images/bouquet.jpg"
+          title="Букет “101 троянда”"
+          discount={0}
+          oldPrice="1234"
+          price="1234"
+        />
       </div>
     </div>
   );

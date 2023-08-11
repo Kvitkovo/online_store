@@ -1,7 +1,7 @@
 import '../scss/Card.scss'
 const Card = (props) => {
   return (
-    <div className="card">
+    <div className={props.status === 'NO_ACTIVE' ? 'card inactive' : 'card'}>
       <img src={props.image} alt="букет" />
       <h3>{props.title}</h3>
       <div className={props.discount === 0 ? 'hide' : 'discount'}>
@@ -17,7 +17,7 @@ const Card = (props) => {
             {props.price}
             <span>грн</span>
           </div>
-          <div className="icons">
+          <div className={props.status === 'NO_ACTIVE' ? 'hide' : 'icons'}>
             <img
               src="./images/bouquet-card.svg"
               alt="додати в букет"
