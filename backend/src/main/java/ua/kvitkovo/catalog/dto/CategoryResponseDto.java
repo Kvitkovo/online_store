@@ -1,7 +1,9 @@
 package ua.kvitkovo.catalog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
 /**
@@ -9,6 +11,8 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryResponseDto {
 
     private Long id;

@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.catalog.converter.ColorMapper;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.catalog.converter.ColorConverter;
 import ua.kvitkovo.catalog.dto.ColorRequestDto;
 import ua.kvitkovo.catalog.dto.ColorResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
@@ -34,7 +34,7 @@ import java.util.Optional;
 public class ColorService {
 
     private final ColorRepository colorRepository;
-    private final ColorConverter colorConverter;
+    private final ColorMapper colorMapper;
     private final ColorDtoValidator colorDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -42,7 +42,7 @@ public class ColorService {
     public Collection<ColorResponseDto> getAll() {
         List<Color> colors = colorRepository.findAll();
         return colors.stream()
-                .map(colorConverter::convertToDto)
+                .map(colorMapper::convertToDto)
                 .toList();
     }
 
@@ -51,7 +51,7 @@ public class ColorService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Color not found");
         }
-        return colorConverter.convertToDto(optional.get());
+        return colorMapper.convertToDto(optional.get());
     }
 
     public ColorResponseDto findByName(String name) throws ItemNotFoundException {
@@ -59,7 +59,7 @@ public class ColorService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Color not found");
         }
-        return colorConverter.convertToDto(optional.get());
+        return colorMapper.convertToDto(optional.get());
     }
 
     @Transactional
@@ -77,7 +77,7 @@ public class ColorService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        Color color = colorConverter.convertToEntity(dto);
+        Color color = colorMapper.convertToEntity(dto);
         color.setAlias(transliterateUtils.getAlias(Color.class.getSimpleName(), dto.getName()));
         colorRepository.save(color);
         log.info("The Color was created");
@@ -92,7 +92,7 @@ public class ColorService {
         }
         BeanUtils.copyProperties(dto, colorResponseDto, Helper.getNullPropertyNames(dto));
 
-        Color color = colorConverter.convertToEntity(colorResponseDto);
+        Color color = colorMapper.convertToEntity(colorResponseDto);
         color.setId(id);
 
         colorDtoValidator.validate(dto, bindingResult);

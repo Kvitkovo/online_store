@@ -1,7 +1,9 @@
 package ua.kvitkovo.catalog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 
@@ -14,6 +16,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductResponseDto {
 
     private Long id;

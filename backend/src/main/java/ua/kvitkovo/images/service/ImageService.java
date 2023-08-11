@@ -5,19 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.aws.AwsService;
+import ua.kvitkovo.catalog.converter.ProductMapper;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.images.converter.ImageConverter;
+import ua.kvitkovo.images.converter.ImageMapper;
 import ua.kvitkovo.images.converter.ImageResizer;
 import ua.kvitkovo.images.converter.WebpHandler;
 import ua.kvitkovo.images.dto.ImageRequestDto;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
-import ua.kvitkovo.images.validator.ImageDtoValidator;
-import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 
 import java.io.File;
@@ -38,11 +37,10 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final ProductService productService;
     private final AwsService awsService;
-    private final ImageConverter imageConverter;
+    private final ImageMapper imageMapper;
+    private final ProductMapper productMapper;
     private final ImageResizer imageResizer;
     private final WebpHandler webpHandler;
-    private final ImageDtoValidator imageDtoValidator;
-    private final ErrorUtils errorUtils;
 
     @Value("${aws.s3.catalog.products}")
     private String catalogName;
@@ -61,13 +59,13 @@ public class ImageService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Image not found");
         }
-        return imageConverter.convertToDto(optional.get());
+        return imageMapper.convertToDto(optional.get());
     }
 
     public List<ImageResponseDto> getImagesByProductId(long productId) {
         List<Image> images = imageRepository.findAllByProductIdOrderByMainImageDesc(productId);
         if (images.isEmpty()) throw new ItemNotFoundException("Images not found");
-        return images.stream().map(imageConverter::convertToDto).collect(Collectors.toList());
+        return images.stream().map(imageMapper::convertToDto).collect(Collectors.toList());
     }
 
     public ImageResponseDto addImageToProduct(ImageRequestDto dto) {
@@ -76,12 +74,13 @@ public class ImageService {
 
         ImageResponseDto imageResponseDto = null;
         try {
-            Image image = imageConverter.convertToEntity(dto);
+            Image image = imageMapper.convertToEntity(dto);
+            image.setProduct(productMapper.convertToEntity(productResponseDto));
             image.setName(image.getProduct().getTitle() + " image");
             image.setUrl(resizeAndSendImage(dto, bigImageWidth, bigImageHeight, "b"));
             image.setUrlSmall(resizeAndSendImage(dto, smallImageWidth, smallImageHeight, "s"));
             Image savedImage = imageRepository.save(image);
-            imageResponseDto = imageConverter.convertToDto(savedImage);
+            imageResponseDto = imageMapper.convertToDto(savedImage);
 
             List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
             if (images.size() == 1) {
@@ -105,7 +104,7 @@ public class ImageService {
         awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrl()));
         awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrlSmall()));
 
-        imageRepository.delete(imageConverter.convertToEntity(imageResponseDto));
+        imageRepository.delete(imageMapper.convertToEntity(imageResponseDto));
     }
 
     public void deleteImagesByProductId(long productId) {
@@ -124,7 +123,7 @@ public class ImageService {
         List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
         for (ImageResponseDto image : images) {
             image.setMainImage(Objects.equals(image.getId(), id));
-            imageRepository.save(imageConverter.convertToEntity(image));
+            imageRepository.save(imageMapper.convertToEntity(image));
         }
         return findById(id);
     }
@@ -136,7 +135,7 @@ public class ImageService {
         if (images.size() > 0) {
             ImageResponseDto imageResponseDto = images.get(0);
             imageResponseDto.setMainImage(true);
-            imageRepository.save(imageConverter.convertToEntity(imageResponseDto));
+            imageRepository.save(imageMapper.convertToEntity(imageResponseDto));
         }
     }
 

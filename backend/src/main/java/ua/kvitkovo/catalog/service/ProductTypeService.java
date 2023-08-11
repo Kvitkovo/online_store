@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.ProductTypeConverter;
+import ua.kvitkovo.catalog.converter.ProductTypeMapper;
 import ua.kvitkovo.catalog.dto.ProductTypeRequestDto;
 import ua.kvitkovo.catalog.dto.ProductTypeResponseDto;
 import ua.kvitkovo.catalog.entity.ProductType;
@@ -33,7 +33,7 @@ import java.util.Optional;
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
-    private final ProductTypeConverter productTypeConverter;
+    private final ProductTypeMapper productTypeMapper;
     private final ProductTypeDtoValidator productTypeDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -41,7 +41,7 @@ public class ProductTypeService {
     public Collection<ProductTypeResponseDto> getAll() {
         List<ProductType> types = productTypeRepository.findAll();
         return types.stream()
-                .map(productTypeConverter::convertToDto)
+                .map(productTypeMapper::convertToDto)
                 .toList();
     }
 
@@ -50,7 +50,7 @@ public class ProductTypeService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Product type not found");
         }
-        return productTypeConverter.convertToDto(optional.get());
+        return productTypeMapper.convertToDto(optional.get());
     }
 
     @Transactional
@@ -59,7 +59,7 @@ public class ProductTypeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ProductType type = productTypeConverter.convertToEntity(dto);
+        ProductType type = productTypeMapper.convertToEntity(dto);
         type.setAlias(transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
         productTypeRepository.save(type);
         log.info("The Product type was created");
@@ -74,7 +74,7 @@ public class ProductTypeService {
         }
         BeanUtils.copyProperties(dto, productTypeResponseDto, Helper.getNullPropertyNames(dto));
 
-        ProductType type = productTypeConverter.convertToEntity(productTypeResponseDto);
+        ProductType type = productTypeMapper.convertToEntity(productTypeResponseDto);
         type.setId(id);
 
         productTypeDtoValidator.validate(dto, bindingResult);

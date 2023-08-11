@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.SizeConverter;
+import ua.kvitkovo.catalog.converter.SizeMapper;
 import ua.kvitkovo.catalog.dto.SizeRequestDto;
 import ua.kvitkovo.catalog.dto.SizeResponseDto;
 import ua.kvitkovo.catalog.entity.Size;
@@ -33,7 +33,7 @@ import java.util.Optional;
 public class SizeService {
 
     private final SizeRepository sizeRepository;
-    private final SizeConverter sizeConverter;
+    private final SizeMapper sizeMapper;
     private final SizeDtoValidator sizeDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -41,7 +41,7 @@ public class SizeService {
     public Collection<SizeResponseDto> getAll() {
         List<Size> sizes = sizeRepository.findAll();
         return sizes.stream()
-                .map(sizeConverter::convertToDto)
+                .map(sizeMapper::convertToDto)
                 .toList();
     }
 
@@ -50,7 +50,7 @@ public class SizeService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Size not found");
         }
-        return sizeConverter.convertToDto(optional.get());
+        return sizeMapper.convertToDto(optional.get());
     }
 
     public SizeResponseDto findByProductByHeight(int height) throws ItemNotFoundException {
@@ -58,7 +58,7 @@ public class SizeService {
         if (optional.isEmpty()) {
             return null;
         }
-        return sizeConverter.convertToDto(optional.get());
+        return sizeMapper.convertToDto(optional.get());
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class SizeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        Size size = sizeConverter.convertToEntity(dto);
+        Size size = sizeMapper.convertToEntity(dto);
         size.setAlias(transliterateUtils.getAlias(Size.class.getSimpleName(), dto.getName()));
         sizeRepository.save(size);
         log.info("The Size was created");
@@ -82,7 +82,7 @@ public class SizeService {
         }
         BeanUtils.copyProperties(dto, sizeResponseDto, Helper.getNullPropertyNames(dto));
 
-        Size size = sizeConverter.convertToEntity(sizeResponseDto);
+        Size size = sizeMapper.convertToEntity(sizeResponseDto);
         size.setId(id);
 
         sizeDtoValidator.validate(dto, bindingResult);

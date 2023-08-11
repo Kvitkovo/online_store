@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.catalog.converter.CategoryMapper;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.catalog.converter.CategoryConverter;
 import ua.kvitkovo.catalog.dto.CategoryRequestDto;
 import ua.kvitkovo.catalog.dto.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
@@ -34,7 +34,7 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final CategoryConverter categoryConverter;
+    private final CategoryMapper categoryMapper;
     private final CategoryDtoValidator categoryDtoValidator;
     private final CategoryDefaults categoryDefaults;
     private final ErrorUtils errorUtils;
@@ -43,7 +43,7 @@ public class CategoryService {
     public Collection<CategoryResponseDto> getAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(categoryConverter::convertToDto)
+                .map(categoryMapper::convertToDto)
                 .toList();
     }
 
@@ -52,7 +52,7 @@ public class CategoryService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Category not found");
         }
-        return categoryConverter.convertToDto(optional.get());
+        return categoryMapper.convertToDto(optional.get());
     }
 
     @Transactional
@@ -62,7 +62,7 @@ public class CategoryService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         categoryDefaults.fillDefaultValues(dto);
-        Category category = categoryConverter.convertToEntity(dto, this);
+        Category category = categoryMapper.convertToEntity(dto);
         category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         categoryRepository.save(category);
         log.info("The Category was created");
@@ -88,7 +88,7 @@ public class CategoryService {
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
         }
-        Category category = categoryConverter.convertToEntity(categoryResponseDto);
+        Category category = categoryMapper.convertToEntity(categoryResponseDto);
         category.setId(id);
 
         categoryDtoValidator.validate(dto, bindingResult);

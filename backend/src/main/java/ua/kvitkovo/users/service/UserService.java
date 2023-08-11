@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.security.jwt.JwtUser;
-import ua.kvitkovo.users.converter.UserConverter;
+import ua.kvitkovo.users.converter.UserMapper;
 import ua.kvitkovo.users.dto.UserRequestDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.Role;
@@ -33,7 +33,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserConverter userConverter;
+    private final UserMapper userMapper;
     private final UserRequestDtoValidator userRequestDtoValidator;
     private final ErrorUtils errorUtils;
     private BCryptPasswordEncoder passwordEncoder;
@@ -49,7 +49,7 @@ public class UserService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        User user = userConverter.convertToEntity(userRequestDto);
+        User user = userMapper.convertToEntity(userRequestDto);
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -64,7 +64,9 @@ public class UserService {
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
-        return userConverter.convertToDto(registeredUser);
+        UserResponseDto userResponseDto = userMapper.convertToDto(registeredUser);
+        userResponseDto.setAdmin(user.getRoles().contains(roleRepository.findByName("ROLE_ADMIN")));
+        return userResponseDto;
     }
 
     public List<User> getAll() {
