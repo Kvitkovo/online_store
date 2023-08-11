@@ -35,7 +35,7 @@ const Header = () => {
         </div>
         <div className="text-icon">
           <img src="images/phone-icon.svg" alt="phone reciever" />
-          <p>(093) 777-77-77</p>
+          <a className='links' href="tel:(093) 777-77-77">(093) 777-77-77</a>
         </div>
         <ul>
           <li>
