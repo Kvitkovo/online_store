@@ -4,6 +4,7 @@ import '../scss/Header.scss'
 
 const Header = () => {
   const [sticky, setSticky] = useState(false)
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
@@ -17,6 +18,9 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+
+
   return (
     <header>
       <div className="container-top">
@@ -34,7 +38,7 @@ const Header = () => {
         </div>
         <div className="text-icon">
           <img src="images/phone-icon.svg" alt="phone reciever" />
-          <p>(093) 777-77-77</p>
+          <a className='links' href="tel:(093) 777-77-77">(093) 777-77-77</a>
         </div>
         <ul>
           <li>
