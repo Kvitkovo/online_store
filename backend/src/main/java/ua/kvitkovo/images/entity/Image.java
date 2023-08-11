@@ -2,7 +2,7 @@ package ua.kvitkovo.images.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ua.kvitkovo.products.entity.Product;
+import ua.kvitkovo.catalog.entity.Product;
 
 /**
  * @author Andriy Gaponov

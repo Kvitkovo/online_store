@@ -1,5 +1,6 @@
 package ua.kvitkovo.images.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class ImageRequestDto {
 
+    @NotBlank
     private long productId;
+    @NotBlank
     private MultipartFile file;
 }

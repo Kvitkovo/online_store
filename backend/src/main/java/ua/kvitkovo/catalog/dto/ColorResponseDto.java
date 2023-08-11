@@ -1,4 +1,4 @@
-package ua.kvitkovo.shop.dto;
+package ua.kvitkovo.catalog.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +10,11 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ShopResponseDto {
+@NoArgsConstructor
+public class ColorResponseDto {
 
     private Long id;
+    private String name;
     private String alias;
-    private String title;
-    private String email;
-    private String phone;
-    private String city;
-    private String address;
 }

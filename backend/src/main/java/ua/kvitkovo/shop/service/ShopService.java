@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.shop.converter.ShopConverter;
+import ua.kvitkovo.shop.converter.ShopMapper;
 import ua.kvitkovo.shop.dto.ShopRequestDto;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
 import ua.kvitkovo.shop.entity.Shop;
@@ -31,7 +31,7 @@ import java.util.Optional;
 public class ShopService {
 
     private final ShopRepository shopRepository;
-    private final ShopConverter shopConverter;
+    private final ShopMapper shopMapper;
     private final ShopDtoValidator shopDtoValidator;
     private final TransliterateUtils transliterateUtils;
     private final ErrorUtils errorUtils;
@@ -41,7 +41,7 @@ public class ShopService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Shop not found");
         }
-        return shopConverter.convertToDto(optional.get());
+        return shopMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -51,8 +51,10 @@ public class ShopService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
 
-        Shop shop = shopConverter.convertToEntity(dto);
+        ShopResponseDto shopResponseDto = shopMapper.mapDtoRequestToDto(dto);
+        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
         shop.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
+        shop.setId(null);
         shopRepository.save(shop);
         log.info("The Shop was created");
         return findById(shop.getId());
@@ -65,8 +67,7 @@ public class ShopService {
         }
         BeanUtils.copyProperties(dto, shopResponseDto, Helper.getNullPropertyNames(dto));
 
-        Shop shop = shopConverter.convertToEntity(shopResponseDto);
-        shop.setId(id);
+        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
         shopDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
