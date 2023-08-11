@@ -1,21 +1,37 @@
 package ua.kvitkovo.catalog.converter;
 
-import org.mapstruct.Mapper;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.SizeRequestDto;
 import ua.kvitkovo.catalog.dto.SizeResponseDto;
 import ua.kvitkovo.catalog.entity.Size;
+import ua.kvitkovo.utils.Mapper;
 
 /**
  * @author Andriy Gaponov
  */
-@Mapper(componentModel = "spring")
-public interface SizeMapper {
+@Service
+public class SizeMapper implements Mapper<Size, SizeResponseDto, SizeRequestDto> {
 
-    SizeResponseDto convertToDto(Size size);
+    @Autowired
+    private ModelMapper modelMapper;
 
-    SizeResponseDto dtoToDto(SizeRequestDto dto);
+    @Override
+    public SizeResponseDto mapEntityToDto(Size source) throws RuntimeException {
+        SizeResponseDto responseDto = modelMapper.map(source, SizeResponseDto.class);
+        return responseDto;
+    }
 
-    Size convertToEntity(SizeRequestDto dto);
+    @Override
+    public Size mapDtoToEntity(SizeResponseDto source) throws RuntimeException {
+        Size entity = modelMapper.map(source, Size.class);
+        return entity;
+    }
 
-    Size convertToEntity(SizeResponseDto dto);
+    @Override
+    public SizeResponseDto mapDtoRequestToDto(SizeRequestDto source) throws RuntimeException {
+        SizeResponseDto responseDto = modelMapper.map(source, SizeResponseDto.class);
+        return responseDto;
+    }
 }

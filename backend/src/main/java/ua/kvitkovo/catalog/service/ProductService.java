@@ -51,9 +51,7 @@ public class ProductService {
 
     public Collection<ProductResponseDto> getAll() {
         List<Product> products = productRepository.findAll();
-        return products.stream()
-                .map(productMapper::convertToDto)
-                .toList();
+        return productMapper.mapEntityToDto(products);
     }
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
@@ -61,7 +59,7 @@ public class ProductService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Product not found");
         }
-        return productMapper.convertToDto(optional.get());
+        return productMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -70,11 +68,9 @@ public class ProductService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ProductResponseDto productResponseDto = productMapper.dtoToDto(dto);
-        productResponseDto.setCategory(categoryService.findById(dto.getCategoryId()));
-        addDefaultValuesToDto(dto, productResponseDto);
+        ProductResponseDto productResponseDto = productMapper.mapDtoRequestToDto(dto);
 
-        Product product = productMapper.convertToEntity(productResponseDto);
+        Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
         log.info("The Product was created");
@@ -93,26 +89,12 @@ public class ProductService {
         }
 
         BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
-        addDefaultValuesToDto(dto, productResponseDto);
 
-        Product product = productMapper.convertToEntity(productResponseDto);
+        Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setId(id);
 
         productRepository.save(product);
         return findById(id);
-    }
-
-    private void addDefaultValuesToDto(ProductRequestDto dto, ProductResponseDto productResponseDto){
-        productResponseDto.setCategory(categoryService.findById(dto.getCategoryId()));
-        if (dto.getHeight() > 0) {
-            productResponseDto.setSize(sizeService.findByProductByHeight(dto.getHeight()));
-        }
-        if (dto.getProductTypeId() > 0) {
-            productResponseDto.setProductType(productTypeService.findById(dto.getProductTypeId()));
-        }
-        if (dto.getColorId() > 0) {
-            productResponseDto.setColor(colorService.findById(dto.getColorId()));
-        }
     }
 
     @Transactional
@@ -128,7 +110,7 @@ public class ProductService {
 
         Page<Product> products = productRepository.findAllByCategoryIdAndStatusEquals(pageable, category.getId(), ProductStatus.ACTIVE);
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::convertToDto);
+        return products.map(productMapper::mapEntityToDto);
     }
 
     public Page<ProductResponseDto> getAllByFilter(FilterRequestDto filter, Pageable pageable) {
@@ -151,20 +133,19 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(where, pageable);
 
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::convertToDto);
+        return products.map(productMapper::mapEntityToDto);
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
         Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(pageable, BigDecimal.valueOf(0), ProductStatus.ACTIVE);
         if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::convertToDto);
+        return products.map(productMapper::mapEntityToDto);
     }
 
     public ProductResponseDto enableProduct(Long id) {
         ProductResponseDto productResponseDto = findById(id);
 
-        Product product = productMapper.convertToEntity(productResponseDto);
-        product.setId(id);
+        Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setStatus(ProductStatus.ACTIVE);
 
         productRepository.save(product);
@@ -174,8 +155,7 @@ public class ProductService {
     public ProductResponseDto disableProduct(Long id) {
         ProductResponseDto productResponseDto = findById(id);
 
-        Product product = productMapper.convertToEntity(productResponseDto);
-        product.setId(id);
+        Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setStatus(ProductStatus.NO_ACTIVE);
 
         productRepository.save(product);

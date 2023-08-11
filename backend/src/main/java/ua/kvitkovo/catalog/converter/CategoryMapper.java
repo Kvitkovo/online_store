@@ -1,21 +1,37 @@
 package ua.kvitkovo.catalog.converter;
 
-import org.mapstruct.Mapper;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.CategoryRequestDto;
 import ua.kvitkovo.catalog.dto.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.utils.Mapper;
 
 /**
  * @author Andriy Gaponov
  */
-@Mapper(componentModel = "spring")
-public interface CategoryMapper {
+@Service
+public class CategoryMapper implements Mapper<Category, CategoryResponseDto, CategoryRequestDto> {
 
-    CategoryResponseDto convertToDto(Category category);
+    @Autowired
+    private ModelMapper modelMapper;
 
-    CategoryResponseDto dtoToDto(CategoryRequestDto dto);
+    @Override
+    public CategoryResponseDto mapEntityToDto(Category source) throws RuntimeException {
+        CategoryResponseDto responseDto = modelMapper.map(source, CategoryResponseDto.class);
+        return responseDto;
+    }
 
-    Category convertToEntity(CategoryRequestDto dto);
+    @Override
+    public Category mapDtoToEntity(CategoryResponseDto source) throws RuntimeException {
+        Category entity = modelMapper.map(source, Category.class);
+        return entity;
+    }
 
-    Category convertToEntity(CategoryResponseDto dto);
+    @Override
+    public CategoryResponseDto mapDtoRequestToDto(CategoryRequestDto source) throws RuntimeException {
+        CategoryResponseDto responseDto = modelMapper.map(source, CategoryResponseDto.class);
+        return responseDto;
+    }
 }

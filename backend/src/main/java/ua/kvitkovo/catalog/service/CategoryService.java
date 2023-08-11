@@ -42,9 +42,7 @@ public class CategoryService {
 
     public Collection<CategoryResponseDto> getAll() {
         List<Category> categories = categoryRepository.findAll();
-        return categories.stream()
-                .map(categoryMapper::convertToDto)
-                .toList();
+        return categoryMapper.mapEntityToDto(categories);
     }
 
     public CategoryResponseDto findById(long id) throws ItemNotFoundException {
@@ -52,7 +50,7 @@ public class CategoryService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Category not found");
         }
-        return categoryMapper.convertToDto(optional.get());
+        return categoryMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -62,8 +60,14 @@ public class CategoryService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         categoryDefaults.fillDefaultValues(dto);
-        Category category = categoryMapper.convertToEntity(dto);
-        category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        CategoryResponseDto categoryResponseDto = categoryMapper.mapDtoRequestToDto(dto);
+        categoryResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        if (dto.getParentId() > 0){
+            categoryResponseDto.setParent(findById(dto.getParentId()));
+        }
+
+        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
+        category.setId(null);
         categoryRepository.save(category);
         log.info("The Category was created");
         return findById(category.getId());
@@ -88,8 +92,7 @@ public class CategoryService {
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
         }
-        Category category = categoryMapper.convertToEntity(categoryResponseDto);
-        category.setId(id);
+        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
 
         categoryDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {

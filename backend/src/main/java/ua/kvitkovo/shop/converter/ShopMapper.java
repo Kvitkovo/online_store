@@ -1,21 +1,37 @@
 package ua.kvitkovo.shop.converter;
 
-import org.mapstruct.Mapper;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.kvitkovo.shop.dto.ShopRequestDto;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
 import ua.kvitkovo.shop.entity.Shop;
+import ua.kvitkovo.utils.Mapper;
 
 /**
  * @author Andriy Gaponov
  */
-@Mapper(componentModel = "spring")
-public interface ShopMapper {
+@Service
+public class ShopMapper implements Mapper<Shop, ShopResponseDto, ShopRequestDto> {
 
-    ShopResponseDto convertToDto(Shop shop);
+    @Autowired
+    private ModelMapper modelMapper;
 
-    ShopResponseDto dtoToDto(ShopRequestDto dto);
+    @Override
+    public ShopResponseDto mapEntityToDto(Shop source) throws RuntimeException {
+        ShopResponseDto responseDto = modelMapper.map(source, ShopResponseDto.class);
+        return responseDto;
+    }
 
-    Shop convertToEntity(ShopRequestDto dto);
+    @Override
+    public Shop mapDtoToEntity(ShopResponseDto source) throws RuntimeException {
+        Shop entity = modelMapper.map(source, Shop.class);
+        return entity;
+    }
 
-    Shop convertToEntity(ShopResponseDto dto);
+    @Override
+    public ShopResponseDto mapDtoRequestToDto(ShopRequestDto source) throws RuntimeException {
+        ShopResponseDto responseDto = modelMapper.map(source, ShopResponseDto.class);
+        return responseDto;
+    }
 }

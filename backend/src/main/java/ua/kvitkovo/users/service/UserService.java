@@ -2,6 +2,11 @@ package ua.kvitkovo.users.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.security.jwt.JwtUser;
 import ua.kvitkovo.users.converter.UserMapper;
@@ -14,11 +19,6 @@ import ua.kvitkovo.users.repository.RoleRepository;
 import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.validator.UserRequestDtoValidator;
 import ua.kvitkovo.utils.ErrorUtils;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,8 @@ public class UserService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        User user = userMapper.convertToEntity(userRequestDto);
+        UserResponseDto userResponseDto = userMapper.mapDtoRequestToDto(userRequestDto);
+        User user = userMapper.mapDtoToEntity(userResponseDto);
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -59,12 +60,13 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setId(null);
 
         User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
 
-        UserResponseDto userResponseDto = userMapper.convertToDto(registeredUser);
+        userResponseDto = userMapper.mapEntityToDto(registeredUser);
         userResponseDto.setAdmin(user.getRoles().contains(roleRepository.findByName("ROLE_ADMIN")));
         return userResponseDto;
     }

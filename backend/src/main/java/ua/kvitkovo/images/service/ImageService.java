@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Andriy Gaponov
@@ -59,13 +58,13 @@ public class ImageService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Image not found");
         }
-        return imageMapper.convertToDto(optional.get());
+        return imageMapper.mapEntityToDto(optional.get());
     }
 
     public List<ImageResponseDto> getImagesByProductId(long productId) {
         List<Image> images = imageRepository.findAllByProductIdOrderByMainImageDesc(productId);
         if (images.isEmpty()) throw new ItemNotFoundException("Images not found");
-        return images.stream().map(imageMapper::convertToDto).collect(Collectors.toList());
+        return imageMapper.mapEntityToDto(images);
     }
 
     public ImageResponseDto addImageToProduct(ImageRequestDto dto) {
@@ -74,13 +73,17 @@ public class ImageService {
 
         ImageResponseDto imageResponseDto = null;
         try {
-            Image image = imageMapper.convertToEntity(dto);
-            image.setProduct(productMapper.convertToEntity(productResponseDto));
+            imageResponseDto = imageMapper.mapDtoRequestToDto(dto);
+            Image image = imageMapper.mapDtoToEntity(imageResponseDto);
+
+            image.setProduct(productMapper.mapDtoToEntity(productResponseDto));
             image.setName(image.getProduct().getTitle() + " image");
             image.setUrl(resizeAndSendImage(dto, bigImageWidth, bigImageHeight, "b"));
             image.setUrlSmall(resizeAndSendImage(dto, smallImageWidth, smallImageHeight, "s"));
+            image.setId(null);
             Image savedImage = imageRepository.save(image);
-            imageResponseDto = imageMapper.convertToDto(savedImage);
+
+            imageResponseDto = imageMapper.mapEntityToDto(savedImage);
 
             List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
             if (images.size() == 1) {
@@ -104,7 +107,7 @@ public class ImageService {
         awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrl()));
         awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrlSmall()));
 
-        imageRepository.delete(imageMapper.convertToEntity(imageResponseDto));
+        imageRepository.delete(imageMapper.mapDtoToEntity(imageResponseDto));
     }
 
     public void deleteImagesByProductId(long productId) {
@@ -123,7 +126,7 @@ public class ImageService {
         List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
         for (ImageResponseDto image : images) {
             image.setMainImage(Objects.equals(image.getId(), id));
-            imageRepository.save(imageMapper.convertToEntity(image));
+            imageRepository.save(imageMapper.mapDtoToEntity(image));
         }
         return findById(id);
     }
@@ -135,7 +138,7 @@ public class ImageService {
         if (images.size() > 0) {
             ImageResponseDto imageResponseDto = images.get(0);
             imageResponseDto.setMainImage(true);
-            imageRepository.save(imageMapper.convertToEntity(imageResponseDto));
+            imageRepository.save(imageMapper.mapDtoToEntity(imageResponseDto));
         }
     }
 

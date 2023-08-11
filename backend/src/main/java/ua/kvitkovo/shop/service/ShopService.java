@@ -41,7 +41,7 @@ public class ShopService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Shop not found");
         }
-        return shopMapper.convertToDto(optional.get());
+        return shopMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -51,8 +51,10 @@ public class ShopService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
 
-        Shop shop = shopMapper.convertToEntity(dto);
+        ShopResponseDto shopResponseDto = shopMapper.mapDtoRequestToDto(dto);
+        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
         shop.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
+        shop.setId(null);
         shopRepository.save(shop);
         log.info("The Shop was created");
         return findById(shop.getId());
@@ -65,8 +67,7 @@ public class ShopService {
         }
         BeanUtils.copyProperties(dto, shopResponseDto, Helper.getNullPropertyNames(dto));
 
-        Shop shop = shopMapper.convertToEntity(shopResponseDto);
-        shop.setId(id);
+        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
         shopDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));

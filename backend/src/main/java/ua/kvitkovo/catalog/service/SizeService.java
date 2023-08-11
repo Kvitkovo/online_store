@@ -40,9 +40,7 @@ public class SizeService {
 
     public Collection<SizeResponseDto> getAll() {
         List<Size> sizes = sizeRepository.findAll();
-        return sizes.stream()
-                .map(sizeMapper::convertToDto)
-                .toList();
+        return sizeMapper.mapEntityToDto(sizes);
     }
 
     public SizeResponseDto findById(long id) throws ItemNotFoundException {
@@ -50,7 +48,7 @@ public class SizeService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Size not found");
         }
-        return sizeMapper.convertToDto(optional.get());
+        return sizeMapper.mapEntityToDto(optional.get());
     }
 
     public SizeResponseDto findByProductByHeight(int height) throws ItemNotFoundException {
@@ -58,7 +56,7 @@ public class SizeService {
         if (optional.isEmpty()) {
             return null;
         }
-        return sizeMapper.convertToDto(optional.get());
+        return sizeMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -67,8 +65,10 @@ public class SizeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        Size size = sizeMapper.convertToEntity(dto);
+        SizeResponseDto sizeResponseDto = sizeMapper.mapDtoRequestToDto(dto);
+        Size size = sizeMapper.mapDtoToEntity(sizeResponseDto);
         size.setAlias(transliterateUtils.getAlias(Size.class.getSimpleName(), dto.getName()));
+        size.setId(null);
         sizeRepository.save(size);
         log.info("The Size was created");
         return findById(size.getId());
@@ -82,9 +82,7 @@ public class SizeService {
         }
         BeanUtils.copyProperties(dto, sizeResponseDto, Helper.getNullPropertyNames(dto));
 
-        Size size = sizeMapper.convertToEntity(sizeResponseDto);
-        size.setId(id);
-
+        Size size = sizeMapper.mapDtoToEntity(sizeResponseDto);
         sizeDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));

@@ -40,9 +40,7 @@ public class ProductTypeService {
 
     public Collection<ProductTypeResponseDto> getAll() {
         List<ProductType> types = productTypeRepository.findAll();
-        return types.stream()
-                .map(productTypeMapper::convertToDto)
-                .toList();
+        return productTypeMapper.mapEntityToDto(types);
     }
 
     public ProductTypeResponseDto findById(long id) throws ItemNotFoundException {
@@ -50,7 +48,7 @@ public class ProductTypeService {
         if (optional.isEmpty()) {
             throw new ItemNotFoundException("Product type not found");
         }
-        return productTypeMapper.convertToDto(optional.get());
+        return productTypeMapper.mapEntityToDto(optional.get());
     }
 
     @Transactional
@@ -59,8 +57,10 @@ public class ProductTypeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ProductType type = productTypeMapper.convertToEntity(dto);
+        ProductTypeResponseDto productTypeResponseDto = productTypeMapper.mapDtoRequestToDto(dto);
+        ProductType type = productTypeMapper.mapDtoToEntity(productTypeResponseDto);
         type.setAlias(transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
+        type.setId(null);
         productTypeRepository.save(type);
         log.info("The Product type was created");
         return findById(type.getId());
@@ -74,9 +74,7 @@ public class ProductTypeService {
         }
         BeanUtils.copyProperties(dto, productTypeResponseDto, Helper.getNullPropertyNames(dto));
 
-        ProductType type = productTypeMapper.convertToEntity(productTypeResponseDto);
-        type.setId(id);
-
+        ProductType type = productTypeMapper.mapDtoToEntity(productTypeResponseDto);
         productTypeDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
