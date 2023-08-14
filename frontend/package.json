@@ -20,7 +20,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "prepare": "cd .. && husky install frontend/.husky"
   },
   "browserslist": {
     "production": [
@@ -42,6 +43,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "prettier": "3.0.0"
   }
 }
