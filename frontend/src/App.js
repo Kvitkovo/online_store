@@ -1,13 +1,13 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Promotions from './pages/Promotions'
-import About from './pages/About'
-import Shops from './pages/Shops'
-import Delivery from './pages/Delivery'
-import Handling from './pages/Handling'
-import './App.scss'
-import Header from './components/Header'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Promotions from './pages/Promotions';
+import About from './pages/About';
+import Shops from './pages/Shops';
+import Delivery from './pages/Delivery';
+import Handling from './pages/Handling';
+import './App.scss';
+import Header from './components/Header';
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         </div>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
