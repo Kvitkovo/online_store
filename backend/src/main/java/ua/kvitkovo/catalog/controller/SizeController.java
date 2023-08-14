@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
-import ua.kvitkovo.catalog.dto.*;
+import ua.kvitkovo.catalog.dto.SizeRequestDto;
+import ua.kvitkovo.catalog.dto.SizeResponseDto;
 import ua.kvitkovo.catalog.service.SizeService;
+import ua.kvitkovo.errorhandling.ErrorResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -101,7 +101,6 @@ public class SizeController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public SizeResponseDto addSize(
@@ -129,7 +128,6 @@ public class SizeController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public SizeResponseDto updateSize(
@@ -150,7 +148,6 @@ public class SizeController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteSize(@PathVariable Long id) {

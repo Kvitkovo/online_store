@@ -16,14 +16,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.service.ProductService;
+import ua.kvitkovo.errorhandling.ErrorResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -158,7 +157,6 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public ProductResponseDto addProduct(
@@ -186,7 +184,6 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public ProductResponseDto updateProduct(
@@ -208,7 +205,6 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
@@ -234,7 +230,6 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}/enable")
     @ResponseBody
     public ProductResponseDto enableProduct(@PathVariable Long id) {
@@ -258,7 +253,6 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}/disable")
     @ResponseBody
     public ProductResponseDto disableProduct(@PathVariable Long id) {

@@ -13,13 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.catalog.dto.ColorRequestDto;
 import ua.kvitkovo.catalog.dto.ColorResponseDto;
 import ua.kvitkovo.catalog.service.ColorService;
+import ua.kvitkovo.errorhandling.ErrorResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -126,7 +125,6 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public ColorResponseDto addColor(
@@ -154,7 +152,6 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public ColorResponseDto updateColor(
@@ -175,7 +172,6 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteColor(@PathVariable Long id) {
