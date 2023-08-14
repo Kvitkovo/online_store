@@ -37,7 +37,7 @@ public class CategoryResponseDto {
         return alias;
     }
 
-    @Schema(example = "Buketi", description = "Parent category or null", implementation = CategoryResponseDto.class)
+    @Schema(example = "Buketi", description = "Parent category or null")
     public CategoryResponseDto getParent() {
         return parent;
     }

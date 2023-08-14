@@ -23,7 +23,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -45,31 +44,23 @@ public class ColorService {
     }
 
     public ColorResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Color> optional = colorRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Color not found");
-        }
-        return colorMapper.mapEntityToDto(optional.get());
+        return colorRepository.findById(id)
+                .map(colorMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Color not found"));
     }
 
     public ColorResponseDto findByName(String name) throws ItemNotFoundException {
-        Optional<Color> optional = colorRepository.findByName(name);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Color not found");
-        }
-        return colorMapper.mapEntityToDto(optional.get());
+        return colorRepository.findByName(name)
+                .map(colorMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Color not found"));
     }
 
     @Transactional
     public ColorResponseDto addColor(ColorRequestDto dto, BindingResult bindingResult) {
-        try {
-            ColorResponseDto byName = findByName(dto.getName());
-            if (byName != null) {
-                throw new ItemNotCreatedException("The color is already in the database");
-            }
-        } catch (ItemNotFoundException e) {
-            //nop
-        }
+        colorRepository.findByName(dto.getName())
+                .ifPresent(color -> {
+                    throw new ItemNotCreatedException("The color is already in the database");
+                });
 
         colorDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -81,7 +72,7 @@ public class ColorService {
         color.setId(null);
         colorRepository.save(color);
         log.info("The Color was created");
-        return findById(color.getId());
+        return colorMapper.mapEntityToDto(color);
     }
 
     @Transactional
@@ -99,7 +90,7 @@ public class ColorService {
         }
 
         colorRepository.save(color);
-        return findById(id);
+        return colorMapper.mapEntityToDto(color);
     }
 
     @Transactional
