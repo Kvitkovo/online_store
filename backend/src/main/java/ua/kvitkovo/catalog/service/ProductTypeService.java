@@ -22,7 +22,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -44,11 +43,10 @@ public class ProductTypeService {
     }
 
     public ProductTypeResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<ProductType> optional = productTypeRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Product type not found");
-        }
-        return productTypeMapper.mapEntityToDto(optional.get());
+        return productTypeRepository.findById(id)
+                .map(productTypeMapper::mapEntityToDto).orElseThrow(() -> {
+                    throw new ItemNotFoundException("Product type not found");
+                });
     }
 
     @Transactional
@@ -63,7 +61,7 @@ public class ProductTypeService {
         type.setId(null);
         productTypeRepository.save(type);
         log.info("The Product type was created");
-        return findById(type.getId());
+        return productTypeMapper.mapEntityToDto(type);
     }
 
     @Transactional
@@ -81,7 +79,7 @@ public class ProductTypeService {
         }
 
         productTypeRepository.save(type);
-        return findById(id);
+        return productTypeMapper.mapEntityToDto(type);
     }
 
     @Transactional
