@@ -44,6 +44,15 @@
     "eslint-plugin-react": "^7.33.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
     "prettier": "3.0.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx,json}": [
+      "eslint --fix --max-warnings 0"
+    ]
   }
 }
