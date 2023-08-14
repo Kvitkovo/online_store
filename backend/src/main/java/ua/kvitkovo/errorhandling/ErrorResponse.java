@@ -15,7 +15,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
 
-    @Schema(example = "Item not found", description = "Опис помилки")
+    @Schema(example = "Error message", description = "Опис помилки")
     private String message;
     @Schema(example = "1691750778972", description = "Час помилки в мілісекундах")
     private long timestamp;
