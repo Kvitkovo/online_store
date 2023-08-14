@@ -106,7 +106,6 @@ public class CategoryController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public CategoryResponseDto addCategory(
@@ -134,7 +133,6 @@ public class CategoryController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public CategoryResponseDto updateCategory(
@@ -156,7 +154,6 @@ public class CategoryController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
