@@ -106,6 +106,9 @@ public class ShopController {
     @ResponseBody
     public ShopResponseDto updateCategory(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ShopRequestDto request,
+            @Parameter(description = "The ID of the shop to update", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
             @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update Shop - {} with id {}.", request, id);
         return shopService.updateShop(id, request, bindingResult);

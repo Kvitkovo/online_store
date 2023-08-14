@@ -1,15 +1,13 @@
 package ua.kvitkovo.catalog.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
 /**
  * @author Andriy Gaponov
  */
-@Data
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +21,44 @@ public class CategoryResponseDto {
     private String metaKeywords;
     private String description;
     private CategoryStatus status;
+
+    @Schema(example = "1", description = "ID category")
+    public Long getId() {
+        return id;
+    }
+
+    @Schema(example = "Букети", description = "Category name")
+    public String getName() {
+        return name;
+    }
+
+    @Schema(example = "Buketi", description = "Category alias")
+    public String getAlias() {
+        return alias;
+    }
+
+    @Schema(example = "Buketi", description = "Parent category or null", implementation = CategoryResponseDto.class)
+    public CategoryResponseDto getParent() {
+        return parent;
+    }
+
+    @Schema(example = "Купити букети в Києві", description = "Category meta description (for seo optimization)")
+    public String getMetaDescription() {
+        return metaDescription;
+    }
+
+    @Schema(example = "купити букет, квіти, квіти на замовлення", description = "Category meta keywords (for seo optimization)")
+    public String getMetaKeywords() {
+        return metaKeywords;
+    }
+
+    @Schema(example = "ВЕСІЛЬНІ БУКЕТИ, БУКЕТИ ДЛЯ НАРЕЧЕНОЇ, БУТОНЬЄРКИ, БУКЕТИ ДЛЯ ГОСТЕЙ НА ВЕСІЛЛЯ - У КИЄВІ.", description = "Category description")
+    public String getDescription() {
+        return description;
+    }
+
+    @Schema(example = "ACTIVE", description = "Category status (ACTIVE, NO_ACTIVE)")
+    public CategoryStatus getStatus() {
+        return status;
+    }
 }

@@ -1,6 +1,7 @@
 package ua.kvitkovo.catalog.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +27,7 @@ import java.util.Collections;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Categories")
+@Tag(name = "Categories", description = "the category API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -37,19 +38,11 @@ public class CategoryController {
 
     @Operation(summary = "Get all Categories.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(
                             mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = CategoryResponseDto.class))
                     )
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
             })
     })
     @GetMapping
@@ -67,7 +60,7 @@ public class CategoryController {
 
     @Operation(summary = "Get Category by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = CategoryResponseDto.class))
             }),
@@ -78,7 +71,11 @@ public class CategoryController {
     })
     @GetMapping("/{id}")
     @ResponseBody
-    public CategoryResponseDto getCategoryById(@PathVariable Long id) {
+    public CategoryResponseDto getCategoryById(
+            @Parameter(description = "The ID of the category to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to get the Category with id - {}.", id);
         CategoryResponseDto categoryResponseDto = categoryService.findById(id);
         log.info("the Category with id - {} was retrieved - {}.", id, categoryResponseDto);
@@ -87,7 +84,7 @@ public class CategoryController {
 
     @Operation(summary = "Create a new Category")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = CategoryResponseDto.class))
             }),
@@ -96,11 +93,15 @@ public class CategoryController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Category not found", content = {
+            @ApiResponse(responseCode = "404", description = "Parent category not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -115,7 +116,7 @@ public class CategoryController {
 
     @Operation(summary = "Update Category by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = CategoryResponseDto.class))
             }),
@@ -123,11 +124,15 @@ public class CategoryController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Category not found", content = {
+            @ApiResponse(responseCode = "404", description = "Parent category not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -135,15 +140,22 @@ public class CategoryController {
     @PutMapping("/{id}")
     @ResponseBody
     public CategoryResponseDto updateCategory(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
+            @Parameter(description = "The ID of the category to update", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update Category - {} with id {}.", request, id);
         return categoryService.updateCategory(id, request, bindingResult);
     }
 
     @Operation(summary = "Delete Category by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
@@ -155,7 +167,11 @@ public class CategoryController {
     })
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(
+            @Parameter(description = "The ID of the category to delete", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to deleteCategory the Category with id - {}.", id);
         categoryService.deleteCategory(id);
         log.info("the Category with id - {} was deleted.", id);

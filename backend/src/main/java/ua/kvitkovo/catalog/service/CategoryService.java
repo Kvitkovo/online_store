@@ -47,7 +47,7 @@ public class CategoryService {
 
     public CategoryResponseDto findById(long id) throws ItemNotFoundException {
         return categoryRepository.findById(id)
-                .map(entity -> categoryMapper.mapEntityToDto(entity))
+                .map(categoryMapper::mapEntityToDto)
                 .orElseThrow(() -> new ItemNotFoundException("Category not found"));
     }
 

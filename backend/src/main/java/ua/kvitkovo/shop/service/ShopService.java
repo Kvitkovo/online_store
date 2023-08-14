@@ -20,7 +20,6 @@ import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -37,11 +36,8 @@ public class ShopService {
     private final ErrorUtils errorUtils;
 
     public ShopResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Shop> optional = shopRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Shop not found");
-        }
-        return shopMapper.mapEntityToDto(optional.get());
+        return shopRepository.findById(id).map(shopMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Shop not found"));
     }
 
     @Transactional
@@ -57,12 +53,12 @@ public class ShopService {
         shop.setId(null);
         shopRepository.save(shop);
         log.info("The Shop was created");
-        return findById(shop.getId());
+        return shopMapper.mapEntityToDto(shop);
     }
 
     public ShopResponseDto updateShop(Long id, ShopRequestDto dto, BindingResult bindingResult) {
         ShopResponseDto shopResponseDto = findById(id);
-        if (!Objects.equals(dto.getTitle(), shopResponseDto.getTitle())){
+        if (!Objects.equals(dto.getTitle(), shopResponseDto.getTitle())) {
             shopResponseDto.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
         }
         BeanUtils.copyProperties(dto, shopResponseDto, Helper.getNullPropertyNames(dto));
@@ -74,6 +70,6 @@ public class ShopService {
         }
 
         shopRepository.save(shop);
-        return findById(id);
+        return shopMapper.mapEntityToDto(shop);
     }
 }
