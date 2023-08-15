@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Product images")
+@Tag(name = "Product images", description = "the images API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -36,7 +36,7 @@ public class ImageController {
 
     @Operation(summary = "Get Image by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ImageResponseDto.class))
             }),
@@ -60,7 +60,7 @@ public class ImageController {
 
     @Operation(summary = "Get Images by Product ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(
                             mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = ImageResponseDto.class))
@@ -83,7 +83,7 @@ public class ImageController {
 
     @Operation(summary = "Add a new Image")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ImageResponseDto.class))
             }),
@@ -92,7 +92,15 @@ public class ImageController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -104,9 +112,6 @@ public class ImageController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @RequestParam("id") long id,
-            @Parameter(description = "Image file in jpg format", required = true,
-                    schema = @Schema(type = "string", format = "binary")
-            )
             @RequestParam("file") MultipartFile file) {
         log.info("Received request to create Image");
         ImageRequestDto imageRequestDto = ImageRequestDto.builder()
@@ -120,12 +125,16 @@ public class ImageController {
 
     @Operation(summary = "Delete Image by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
-            @ApiResponse(responseCode = "404", description = "Image not found", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Image not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -145,12 +154,16 @@ public class ImageController {
 
     @Operation(summary = "Delete Images by Product ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation"),
-            @ApiResponse(responseCode = "400", description = "Image not found", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
@@ -170,18 +183,30 @@ public class ImageController {
 
     @Operation(summary = "Set main image by Image ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ImageResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Image not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
             })
     })
-    @PutMapping("/{id}/images/setMain")
+    @PutMapping("/images/{id}/setMain")
     @ResponseBody
-    public ImageResponseDto setMainImage(@PathVariable Long id) {
+    public ImageResponseDto setMainImage(
+            @Parameter(description = "The ID of the image to be set main", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to set main Image with id {}.", id);
         return imageService.setMainImage(id);
     }

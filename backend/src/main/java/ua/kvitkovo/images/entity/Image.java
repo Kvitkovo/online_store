@@ -2,6 +2,8 @@ package ua.kvitkovo.images.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ua.kvitkovo.catalog.entity.Product;
 
 /**

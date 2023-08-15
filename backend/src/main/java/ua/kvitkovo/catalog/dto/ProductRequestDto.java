@@ -3,6 +3,7 @@ package ua.kvitkovo.catalog.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Setter;
 import ua.kvitkovo.catalog.entity.ProductStatus;
@@ -28,7 +29,7 @@ public class ProductRequestDto {
     private String metaKeywords;
     private String description;
     private ProductStatus status;
-    @NotBlank
+    @NotNull
     private long categoryId;
     private long productTypeId;
     private long colorId;

@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Filter", description = "the api API")
+@Tag(name = "Filter", description = "the filter API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController

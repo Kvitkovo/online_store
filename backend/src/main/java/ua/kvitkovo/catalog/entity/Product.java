@@ -84,7 +84,7 @@ public class Product {
     @JoinColumn(name = "product_type")
     private ProductType productType;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Image> images;
 
     @Override
