@@ -22,7 +22,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -46,7 +45,7 @@ public class SizeService {
     public SizeResponseDto findById(long id) throws ItemNotFoundException {
         return sizeRepository.findById(id)
                 .map(sizeMapper::mapEntityToDto)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     throw new ItemNotFoundException("Size not found");
                 });
     }

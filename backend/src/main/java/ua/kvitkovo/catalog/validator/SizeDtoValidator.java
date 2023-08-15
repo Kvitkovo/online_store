@@ -27,10 +27,10 @@ public class SizeDtoValidator implements Validator {
         if (StringUtils.isBlank(dto.getName())) {
             errors.rejectValue("name", "", "is blank!");
         }
-        if (dto.getMin()<0) {
+        if (dto.getMin() < 0) {
             errors.rejectValue("min", "", "< 0");
         }
-        if (dto.getMin()> dto.getMax()) {
+        if (dto.getMin() > dto.getMax()) {
             errors.rejectValue("min", "", "> max");
         }
     }
