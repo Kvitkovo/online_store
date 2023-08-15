@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import '../scss/Header.scss'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import '../scss/Header.scss';
 
 const Header = () => {
-  const [sticky, setSticky] = useState(false)
+  const [sticky, setSticky] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
-        setSticky(true)
+        setSticky(true);
       } else {
-        setSticky(false)
+        setSticky(false);
       }
-    }
-    window.addEventListener('scroll', handleScroll)
+    };
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <header>
       <div className="container-top">
@@ -111,6 +111,6 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
-export default Header
+  );
+};
+export default Header;
