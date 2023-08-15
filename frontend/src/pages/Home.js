@@ -1,8 +1,13 @@
-function Home() {
+import React from 'react';
+import '../scss/Home.scss';
+import Carousel from '../components/Carousel';
+
+const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="home">
+      <Carousel />
     </div>
-  )
-}
-export default Home
+  );
+};
+
+export default Home;

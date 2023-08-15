@@ -52,7 +52,9 @@ public class SecurityConfig {
             "/v1/shops/**",
             "/v1/orders/**",
             "/v1/colors/**",
-            "/v1/sizes/**"
+            "/v1/sizes/**",
+            "/v1/filter/**",
+            "/v1/types/**",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -72,7 +74,7 @@ public class SecurityConfig {
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, ENDPOINTS).permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().hasRole("ADMIN"))
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPointJwt)
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
