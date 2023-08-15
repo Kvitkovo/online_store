@@ -66,7 +66,22 @@ public class ProductService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ProductResponseDto productResponseDto = productMapper.mapDtoRequestToDto(dto);
+
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
+
+        productResponseDto.setCategory(categoryService.findById(dto.getCategoryId()));
+        if (dto.getHeight() > 0) {
+            productResponseDto.setSize(sizeService.findByProductByHeight(dto.getHeight()));
+        }
+        if (dto.getProductTypeId() > 0) {
+            productResponseDto.setProductType(productTypeService.findById(dto.getProductTypeId()));
+        }
+        if (dto.getColorId() > 0) {
+            productResponseDto.setColor(colorService.findById(dto.getColorId()));
+        }
+
+        //ProductResponseDto productResponseDto = productMapper.mapDtoRequestToDto(dto);
 
         Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));

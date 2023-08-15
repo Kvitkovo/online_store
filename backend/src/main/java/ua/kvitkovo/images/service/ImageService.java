@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import ua.kvitkovo.aws.AwsService;
 import ua.kvitkovo.catalog.converter.ProductMapper;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.entity.Product;
+import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -35,6 +38,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final ProductService productService;
+    private final ProductRepository productRepository;
     private final AwsService awsService;
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
@@ -54,16 +58,18 @@ public class ImageService {
     private int bigImageHeight;
 
     public ImageResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Image> optional = imageRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Image not found");
-        }
-        return imageMapper.mapEntityToDto(optional.get());
+        return imageRepository.findById(id)
+                .map(imageMapper::mapEntityToDto)
+                .orElseThrow(()->{
+                    throw new ItemNotFoundException("Image not found");
+                });
     }
 
     public List<ImageResponseDto> getImagesByProductId(long productId) {
         List<Image> images = imageRepository.findAllByProductIdOrderByMainImageDesc(productId);
-        if (images.isEmpty()) throw new ItemNotFoundException("Images not found");
+        if (images.isEmpty()) {
+            throw new ItemNotFoundException("Images not found");
+        }
         return imageMapper.mapEntityToDto(images);
     }
 
@@ -93,52 +99,61 @@ public class ImageService {
         } catch (IOException e) {
             throw new ItemNotCreatedException("Failed add image");
         }
-        return findById(imageResponseDto.getId());
+        return imageResponseDto;
     }
 
     public void deleteImageById(long imageId) {
-        ImageResponseDto imageResponseDto = findById(imageId);
-        ProductResponseDto productResponseDto = productService.findById(imageResponseDto.getProductId());
+        Image image = imageRepository.findById(imageId).orElseThrow(() -> {
+            throw new ItemNotFoundException("Image not found");
+        });
 
-        if (imageResponseDto.isMainImage()) {
-            setFirstImageAsMain(productResponseDto.getId());
+        awsService.deleteFile(catalogName, getFileNameAws(image.getUrl()));
+        awsService.deleteFile(catalogName, getFileNameAws(image.getUrlSmall()));
+
+        imageRepository.delete(image);
+
+        if (image.isMainImage()) {
+            setFirstImageAsMain(image.getProduct().getId());
         }
-
-        awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrl()));
-        awsService.deleteFile(catalogName, getFileNameAws(imageResponseDto.getUrlSmall()));
-
-        imageRepository.delete(imageMapper.mapDtoToEntity(imageResponseDto));
     }
 
     public void deleteImagesByProductId(long productId) {
-        ProductResponseDto productResponseDto = productService.findById(productId);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
-        List<ImageResponseDto> images = getImagesByProductId(productId);
+        List<ImageResponseDto> images = product.getImages()
+                .stream()
+                .map(imageMapper::mapEntityToDto)
+                .toList();
         for (ImageResponseDto image : images) {
             deleteImageById(image.getId());
         }
     }
 
-    public ImageResponseDto setMainImage(Long id) {
-        ImageResponseDto imageResponseDto = findById(id);
-        ProductResponseDto productResponseDto = productService.findById(imageResponseDto.getProductId());
+    public ImageResponseDto setMainImage(Long imageId) {
+        Image image = imageRepository.findById(imageId).orElseThrow(() -> {
+            throw new ItemNotFoundException("Image not found");
+        });
 
-        List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
-        for (ImageResponseDto image : images) {
-            image.setMainImage(Objects.equals(image.getId(), id));
-            imageRepository.save(imageMapper.mapDtoToEntity(image));
+        List<Image> allProductImages = image.getProduct().getImages().stream().toList();
+        for (Image productImage : allProductImages) {
+            productImage.setMainImage(Objects.equals(productImage.getId(), imageId));
+            imageRepository.save(productImage);
         }
-        return findById(id);
+
+        image.setMainImage(true);
+        return imageMapper.mapEntityToDto(image);
     }
 
-    private void setFirstImageAsMain(Long id) {
-        ProductResponseDto productResponseDto = productService.findById(id);
+    private void setFirstImageAsMain(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
-        List<ImageResponseDto> images = getImagesByProductId(productResponseDto.getId());
-        if (images.size() > 0) {
-            ImageResponseDto imageResponseDto = images.get(0);
-            imageResponseDto.setMainImage(true);
-            imageRepository.save(imageMapper.mapDtoToEntity(imageResponseDto));
+        List<Image> allProductImages = product.getImages().stream().toList();
+        if (allProductImages.size() > 0) {
+            Image firstImage = allProductImages.get(0);
+            firstImage.setMainImage(true);
+            imageRepository.save(firstImage);
         }
     }
 
