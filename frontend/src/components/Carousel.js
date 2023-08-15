@@ -1,5 +1,5 @@
 import '../scss/Carousel.scss';
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Carousel = () => {
   const data = [
