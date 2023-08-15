@@ -131,14 +131,14 @@ public class ProductController {
             @Parameter(description = "The size of the page to be returned", required = true,
                     schema = @Schema(type = "integer", defaultValue = "30")
             ) @RequestParam(defaultValue = "30") int size,
-            @Parameter(description = "Get products whose price is equal to or higher than the specified price", required = true,
+            @Parameter(description = "Get products whose price is equal to or higher than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "0")
             ) @RequestParam(required = false, defaultValue = "0") String priceFrom,
-            @Parameter(description = "Get products whose price is equal to or less than the specified price", required = true,
+            @Parameter(description = "Get products whose price is equal to or less than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "500")
             ) @RequestParam(required = false, defaultValue = "500") String priceTo,
-            @Parameter(description = "Get products whose name is similar to the specified term", required = true,
-                    schema = @Schema(type = "integer", defaultValue = "500")
+            @Parameter(description = "Get products whose name is similar to the specified term",
+                    schema = @Schema(type = "string")
             ) @RequestParam(required = false) String title) {
         Pageable pageable = PageRequest.of(page - 1, size);
         FilterRequestDto filter = FilterRequestDto.builder()
