@@ -55,11 +55,9 @@ public class ProductService {
     }
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Product> optional = productRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Product not found");
-        }
-        return productMapper.mapEntityToDto(optional.get());
+        return productRepository.findById(id)
+                .map(productMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 
     @Transactional
@@ -74,7 +72,7 @@ public class ProductService {
         product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
         log.info("The Product was created");
-        return findById(product.getId());
+        return productMapper.mapEntityToDto(product);
     }
 
     @Transactional
@@ -94,7 +92,7 @@ public class ProductService {
         product.setId(id);
 
         productRepository.save(product);
-        return findById(id);
+        return productMapper.mapEntityToDto(product);
     }
 
     @Transactional
@@ -109,8 +107,11 @@ public class ProductService {
                 orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
         Page<Product> products = productRepository.findAllByCategoryIdAndStatusEquals(pageable, category.getId(), ProductStatus.ACTIVE);
-        if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::mapEntityToDto);
+        if (products.isEmpty()) {
+            return Page.empty();
+        } else {
+            return products.map(productMapper::mapEntityToDto);
+        }
     }
 
     public Page<ProductResponseDto> getAllByFilter(FilterRequestDto filter, Pageable pageable) {
@@ -132,33 +133,37 @@ public class ProductService {
         });
         Page<Product> products = productRepository.findAll(where, pageable);
 
-        if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::mapEntityToDto);
+        if (products.isEmpty()) {
+            return Page.empty();
+        } else {
+            return products.map(productMapper::mapEntityToDto);
+        }
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
-        Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(pageable, BigDecimal.valueOf(0), ProductStatus.ACTIVE);
-        if (products.isEmpty()) throw new ItemNotFoundException("Product not found");
-        return products.map(productMapper::mapEntityToDto);
+        Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(pageable, BigDecimal.ZERO, ProductStatus.ACTIVE);
+        if (products.isEmpty()) {
+            return Page.empty();
+        } else {
+            return products.map(productMapper::mapEntityToDto);
+        }
     }
 
     public ProductResponseDto enableProduct(Long id) {
-        ProductResponseDto productResponseDto = findById(id);
-
-        Product product = productMapper.mapDtoToEntity(productResponseDto);
+        Product product = productRepository.findById(id).orElseThrow(() -> {
+            throw new ItemNotFoundException("Product not found");
+        });
         product.setStatus(ProductStatus.ACTIVE);
-
         productRepository.save(product);
-        return findById(id);
+        return productMapper.mapEntityToDto(product);
     }
 
     public ProductResponseDto disableProduct(Long id) {
-        ProductResponseDto productResponseDto = findById(id);
-
-        Product product = productMapper.mapDtoToEntity(productResponseDto);
+        Product product = productRepository.findById(id).orElseThrow(() -> {
+            throw new ItemNotFoundException("Product not found");
+        });
         product.setStatus(ProductStatus.NO_ACTIVE);
-
         productRepository.save(product);
-        return findById(id);
+        return productMapper.mapEntityToDto(product);
     }
 }

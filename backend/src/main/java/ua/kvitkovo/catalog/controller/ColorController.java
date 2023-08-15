@@ -1,6 +1,7 @@
 package ua.kvitkovo.catalog.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,13 +14,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.catalog.dto.ColorRequestDto;
 import ua.kvitkovo.catalog.dto.ColorResponseDto;
 import ua.kvitkovo.catalog.service.ColorService;
+import ua.kvitkovo.errorhandling.ErrorResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +27,7 @@ import java.util.Collections;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Colors")
+@Tag(name = "Colors", description = "the colors API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -38,19 +38,11 @@ public class ColorController {
 
     @Operation(summary = "Get all Colors.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(
                             mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = ColorResponseDto.class))
                     )
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
             })
     })
     @GetMapping
@@ -68,7 +60,7 @@ public class ColorController {
 
     @Operation(summary = "Get Color by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ColorResponseDto.class))
             }),
@@ -79,7 +71,11 @@ public class ColorController {
     })
     @GetMapping("/{id}")
     @ResponseBody
-    public ColorResponseDto getColorById(@PathVariable Long id) {
+    public ColorResponseDto getColorById(
+            @Parameter(description = "The ID of the color to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to get the Color with id - {}.", id);
         ColorResponseDto colorResponseDto = colorService.findById(id);
         log.info("the Color with id - {} was retrieved - {}.", id, colorResponseDto);
@@ -88,7 +84,7 @@ public class ColorController {
 
     @Operation(summary = "Get Color by Name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ColorResponseDto.class))
             }),
@@ -99,7 +95,11 @@ public class ColorController {
     })
     @GetMapping("/findByName/{name}")
     @ResponseBody
-    public ColorResponseDto getColorByName(@PathVariable String name) {
+    public ColorResponseDto getColorByName(
+            @Parameter(description = "The name of the color to retrieve", required = true,
+                    schema = @Schema(type = "string")
+            )
+            @PathVariable String name) {
         log.info("Received request to get the Color with name - {}.", name);
         ColorResponseDto colorResponseDto = colorService.findByName(name);
         log.info("the Color with name - {} was retrieved - {}.", name, colorResponseDto);
@@ -108,12 +108,16 @@ public class ColorController {
 
     @Operation(summary = "Create a new Color")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ColorResponseDto.class))
             }),
             @ApiResponse(responseCode = "400", description = "The Color has already been added " +
                     "or some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
@@ -126,7 +130,6 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public ColorResponseDto addColor(
@@ -137,7 +140,7 @@ public class ColorController {
 
     @Operation(summary = "Update Color by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ColorResponseDto.class))
             }),
@@ -145,6 +148,10 @@ public class ColorController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
@@ -154,18 +161,25 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public ColorResponseDto updateColor(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ColorRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ColorRequestDto request,
+            @Parameter(description = "The ID of the color to update", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update Color - {} with id {}.", request, id);
         return colorService.updateColor(id, request, bindingResult);
     }
 
     @Operation(summary = "Delete Color by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
@@ -175,10 +189,13 @@ public class ColorController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteColor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteColor(
+            @Parameter(description = "The ID of the color to delete", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to delete Color with id - {}.", id);
         colorService.deleteColor(id);
         log.info("the Color with id - {} was deleted.", id);

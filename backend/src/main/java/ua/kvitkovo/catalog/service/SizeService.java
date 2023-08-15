@@ -22,7 +22,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -44,19 +43,17 @@ public class SizeService {
     }
 
     public SizeResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Size> optional = sizeRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Size not found");
-        }
-        return sizeMapper.mapEntityToDto(optional.get());
+        return sizeRepository.findById(id)
+                .map(sizeMapper::mapEntityToDto)
+                .orElseThrow(() -> {
+                    throw new ItemNotFoundException("Size not found");
+                });
     }
 
     public SizeResponseDto findByProductByHeight(int height) throws ItemNotFoundException {
-        Optional<Size> optional = sizeRepository.findFirstSizeByHeight(height);
-        if (optional.isEmpty()) {
-            return null;
-        }
-        return sizeMapper.mapEntityToDto(optional.get());
+        return sizeRepository.findFirstSizeByHeight(height)
+                .map(sizeMapper::mapEntityToDto)
+                .orElse(null);
     }
 
     @Transactional
@@ -71,7 +68,7 @@ public class SizeService {
         size.setId(null);
         sizeRepository.save(size);
         log.info("The Size was created");
-        return findById(size.getId());
+        return sizeMapper.mapEntityToDto(size);
     }
 
     @Transactional
@@ -89,7 +86,7 @@ public class SizeService {
         }
 
         sizeRepository.save(size);
-        return findById(id);
+        return sizeMapper.mapEntityToDto(size);
     }
 
     @Transactional

@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Filter")
+@Tag(name = "Filter", description = "the api API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -27,8 +27,7 @@ public class FilterController {
 
     @Operation(summary = "Get list for filter settings")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful loaded"),
-            @ApiResponse(responseCode = "500", description = "")
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
     @GetMapping(path = "/")
     public Map<String, Map<Long, ?>> getFilter() {

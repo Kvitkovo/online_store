@@ -46,11 +46,9 @@ public class CategoryService {
     }
 
     public CategoryResponseDto findById(long id) throws ItemNotFoundException {
-        Optional<Category> optional = categoryRepository.findById(id);
-        if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Category not found");
-        }
-        return categoryMapper.mapEntityToDto(optional.get());
+        return categoryRepository.findById(id)
+                .map(categoryMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
     }
 
     @Transactional
@@ -70,7 +68,7 @@ public class CategoryService {
         category.setId(null);
         categoryRepository.save(category);
         log.info("The Category was created");
-        return findById(category.getId());
+        return categoryMapper.mapEntityToDto(category);
     }
 
     @Transactional
@@ -100,6 +98,6 @@ public class CategoryService {
         }
 
         categoryRepository.save(category);
-        return findById(id);
+        return categoryMapper.mapEntityToDto(category);
     }
 }

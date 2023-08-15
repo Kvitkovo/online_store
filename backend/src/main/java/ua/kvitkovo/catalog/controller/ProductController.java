@@ -1,6 +1,7 @@
 package ua.kvitkovo.catalog.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,14 +17,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.service.ProductService;
+import ua.kvitkovo.errorhandling.ErrorResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +31,7 @@ import java.util.Collections;
 /**
  * @author Andriy Gaponov
  */
-@Tag(name = "Products")
+@Tag(name = "Products", description = "the products API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -42,19 +42,11 @@ public class ProductController {
 
     @Operation(summary = "Get all Products.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(
                             mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = ProductResponseDto.class))
                     )
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
             })
     })
     @GetMapping
@@ -72,7 +64,7 @@ public class ProductController {
 
     @Operation(summary = "Get Product by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ProductResponseDto.class))
             }),
@@ -83,7 +75,11 @@ public class ProductController {
     })
     @GetMapping("/{id}")
     @ResponseBody
-    public ProductResponseDto getProductById(@PathVariable Long id) {
+    public ProductResponseDto getProductById(
+            @Parameter(description = "The ID of the product to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to get the Product with id - {}.", id);
         ProductResponseDto productResponseDto = productService.findById(id);
         log.info("the Product with id - {} was retrieved - {}.", id, productResponseDto);
@@ -92,43 +88,58 @@ public class ProductController {
 
     @Operation(summary = "Get discounted products")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful loaded"),
-            @ApiResponse(responseCode = "404", description = "Products not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
     @GetMapping(path = "/discounted")
-    public Page<ProductResponseDto> getDiscountedProducts(@RequestParam(defaultValue = "1") int page,
-                                                          @RequestParam(defaultValue = "12") int size) {
+    public Page<ProductResponseDto> getDiscountedProducts(
+            @Parameter(description = "Number of page (1..N)", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "1")
+            ) @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "The size of the page to be returned", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "12")
+            ) @RequestParam(defaultValue = "12") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
         return productService.getDiscounted(pageable);
     }
 
     @Operation(summary = "Get Products by Category ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful loaded"),
-            @ApiResponse(responseCode = "404", description = "Category or Products not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
     @GetMapping(path = "/category")
-    public Page<ProductResponseDto> getAllProductsByCategory(@RequestParam(defaultValue = "1") int page,
-                                                             @RequestParam(defaultValue = "12") int size,
-                                                             @RequestParam long categoryId) {
+    public Page<ProductResponseDto> getAllProductsByCategory(
+            @Parameter(description = "Number of page (1..N)", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "1")
+            ) @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "The size of the page to be returned", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "12")
+            ) @RequestParam(defaultValue = "12") int size,
+            @Parameter(description = "ID of the category of which the products will be returned", required = true,
+                    schema = @Schema(type = "integer")
+            ) @RequestParam long categoryId) {
         Pageable pageable = PageRequest.of(page - 1, size);
         return productService.getAllByCategory(pageable, categoryId);
     }
 
     @Operation(summary = "Get Products by filter")
-    @ApiResponse(responseCode = "200", description = "Successful loaded")
+    @ApiResponse(responseCode = "200", description = "Successful operation")
     @GetMapping(path = "/filter")
-    public Page<ProductResponseDto> getAllProductsByFilter(@RequestParam(defaultValue = "1") int page,
-                                                           @RequestParam(defaultValue = "30") int size,
-                                                           @RequestParam(required = false, defaultValue = "0") String priceFrom,
-                                                           @RequestParam(required = false, defaultValue = "500") String priceTo,
-                                                           @RequestParam(required = false) String title) {
+    public Page<ProductResponseDto> getAllProductsByFilter(
+            @Parameter(description = "Number of page (1..N)", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "1")
+            ) @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "The size of the page to be returned", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "30")
+            ) @RequestParam(defaultValue = "30") int size,
+            @Parameter(description = "Get products whose price is equal to or higher than the specified price", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "0")
+            ) @RequestParam(required = false, defaultValue = "0") String priceFrom,
+            @Parameter(description = "Get products whose price is equal to or less than the specified price", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "500")
+            ) @RequestParam(required = false, defaultValue = "500") String priceTo,
+            @Parameter(description = "Get products whose name is similar to the specified term", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "500")
+            ) @RequestParam(required = false) String title) {
         Pageable pageable = PageRequest.of(page - 1, size);
         FilterRequestDto filter = FilterRequestDto.builder()
                 .priceFrom(priceFrom)
@@ -140,7 +151,7 @@ public class ProductController {
 
     @Operation(summary = "Create a new Product")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ProductResponseDto.class))
             }),
@@ -149,16 +160,19 @@ public class ProductController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+            @ApiResponse(responseCode = "404", description = "Some dependencies were not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseBody
     public ProductResponseDto addProduct(
@@ -169,7 +183,7 @@ public class ProductController {
 
     @Operation(summary = "Update Product by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ProductResponseDto.class))
             }),
@@ -177,28 +191,38 @@ public class ProductController {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+            @ApiResponse(responseCode = "404", description = "Product or some dependencies not found", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     @ResponseBody
     public ProductResponseDto updateProduct(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductRequestDto request, @PathVariable Long id, BindingResult bindingResult) {
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductRequestDto request,
+            @Parameter(description = "The ID of the product to update", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update Product - {} with id {}.", request, id);
         return productService.updateProduct(id, request, bindingResult);
     }
 
     @Operation(summary = "Delete Product by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
@@ -208,10 +232,13 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(
+            @Parameter(description = "The ID of the product to delete", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to delete Product with id - {}.", id);
         productService.deleteProduct(id);
         log.info("the Product with id - {} was deleted.", id);
@@ -220,8 +247,8 @@ public class ProductController {
 
     @Operation(summary = "Enable Product by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
@@ -234,18 +261,21 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}/enable")
     @ResponseBody
-    public ProductResponseDto enableProduct(@PathVariable Long id) {
+    public ProductResponseDto enableProduct(
+            @Parameter(description = "The ID of the product to enable", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to enable Product with id {}.", id);
         return productService.enableProduct(id);
     }
 
     @Operation(summary = "Disable Product by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
                     @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class))
             }),
@@ -258,10 +288,13 @@ public class ProductController {
                     @Schema(implementation = ErrorResponse.class))
             })
     })
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}/disable")
     @ResponseBody
-    public ProductResponseDto disableProduct(@PathVariable Long id) {
+    public ProductResponseDto disableProduct(
+            @Parameter(description = "The ID of the product to disable", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to disable Product with id {}.", id);
         return productService.disableProduct(id);
     }
