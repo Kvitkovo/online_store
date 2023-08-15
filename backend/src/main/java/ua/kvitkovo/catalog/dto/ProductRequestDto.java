@@ -20,7 +20,9 @@ public class ProductRequestDto {
     private String title;
     @Min(value = 0, message = "The value must be positive")
     private BigDecimal price;
+    @Min(value = 0, message = "The value must be positive")
     private BigDecimal priceWithDiscount;
+    @Min(value = 0, message = "The value must be positive")
     private BigDecimal discount;
     private String metaDescription;
     private String metaKeywords;
