@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.ColorMapper;
+import ua.kvitkovo.catalog.converter.ColorDtoMapper;
 import ua.kvitkovo.catalog.dto.ColorRequestDto;
 import ua.kvitkovo.catalog.dto.ColorResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
@@ -33,7 +33,7 @@ import java.util.Objects;
 public class ColorService {
 
     private final ColorRepository colorRepository;
-    private final ColorMapper colorMapper;
+    private final ColorDtoMapper colorMapper;
     private final ColorDtoValidator colorDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -66,8 +66,7 @@ public class ColorService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ColorResponseDto colorResponseDto = colorMapper.mapDtoRequestToDto(dto);
-        Color color = colorMapper.mapDtoToEntity(colorResponseDto);
+        Color color = colorMapper.mapDtoRequestToEntity(dto);
         color.setAlias(transliterateUtils.getAlias(Color.class.getSimpleName(), dto.getName()));
         color.setId(null);
         colorRepository.save(color);

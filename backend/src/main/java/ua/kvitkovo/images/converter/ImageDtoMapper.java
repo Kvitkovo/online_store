@@ -3,7 +3,7 @@ package ua.kvitkovo.images.converter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.kvitkovo.catalog.converter.ProductMapper;
+import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.images.dto.ImageRequestDto;
 import ua.kvitkovo.images.dto.ImageResponseDto;
@@ -20,7 +20,7 @@ public abstract class ImageDtoMapper {
     @Autowired
     protected ProductService productService;
     @Autowired
-    protected ProductMapper productMapper;
+    protected ProductDtoMapper productMapper;
 
     @Mapping(target = "productId", source = "product.id")
     public abstract ImageResponseDto mapEntityToDto(Image entity);

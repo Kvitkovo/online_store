@@ -10,15 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.ProductMapper;
+import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.entity.ProductStatus;
-import ua.kvitkovo.catalog.repository.CategoryRepository;
-import ua.kvitkovo.catalog.repository.ProductRepository;
+import ua.kvitkovo.catalog.repository.*;
 import ua.kvitkovo.catalog.validator.ProductDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -28,7 +27,10 @@ import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Andriy Gaponov
@@ -40,14 +42,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final CategoryService categoryService;
-    private final ColorService colorService;
+    private final SizeRepository sizeRepository;
+    private final ColorRepository colorRepository;
+    private final ProductTypeRepository productTypeRepository;
     private final ProductDtoValidator productDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
-    private final SizeService sizeService;
-    private final ProductTypeService productTypeService;
-    private final ProductMapper productMapper;
+    private final ProductDtoMapper productMapper;
 
     public Collection<ProductResponseDto> getAll() {
         List<Product> products = productRepository.findAll();
@@ -67,25 +68,30 @@ public class ProductService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
 
-        ProductResponseDto productResponseDto = new ProductResponseDto();
-        BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
+        Product product = productMapper.mapDtoRequestToEntity(dto);
 
-        productResponseDto.setCategory(categoryService.findById(dto.getCategoryId()));
+        product.setCategory(
+                categoryRepository.findById(dto.getCategoryId()).
+                        orElseThrow(() -> new ItemNotFoundException("Category not found"))
+        );
         if (dto.getHeight() > 0) {
-            productResponseDto.setSize(sizeService.findByProductByHeight(dto.getHeight()));
+            product.setSize(
+                    sizeRepository.findFirstSizeByHeight(dto.getHeight()).orElse(null)
+            );
         }
         if (dto.getProductTypeId() > 0) {
-            productResponseDto.setProductType(productTypeService.findById(dto.getProductTypeId()));
+            product.setProductType(
+                    productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
+            );
         }
         if (dto.getColorId() > 0) {
-            productResponseDto.setColor(colorService.findById(dto.getColorId()));
+            product.setColor(
+                    colorRepository.findById(dto.getColorId()).orElse(null)
+            );
         }
-
-        //ProductResponseDto productResponseDto = productMapper.mapDtoRequestToDto(dto);
-
-        Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
+
         log.info("The Product was created");
         return productMapper.mapEntityToDto(product);
     }

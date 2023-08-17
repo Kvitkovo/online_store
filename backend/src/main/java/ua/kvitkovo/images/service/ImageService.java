@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.aws.AwsService;
-import ua.kvitkovo.catalog.converter.ProductMapper;
+import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
@@ -39,7 +39,7 @@ public class ImageService {
     private final ProductRepository productRepository;
     private final AwsService awsService;
     private final ImageDtoMapper imageMapper;
-    private final ProductMapper productMapper;
+    private final ProductDtoMapper productMapper;
     private final ImageResizer imageResizer;
     private final WebpHandler webpHandler;
 
