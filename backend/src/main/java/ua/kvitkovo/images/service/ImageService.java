@@ -12,7 +12,7 @@ import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.images.converter.ImageMapper;
+import ua.kvitkovo.images.converter.ImageDtoMapper;
 import ua.kvitkovo.images.converter.ImageResizer;
 import ua.kvitkovo.images.converter.WebpHandler;
 import ua.kvitkovo.images.dto.ImageRequestDto;
@@ -25,8 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -40,7 +38,7 @@ public class ImageService {
     private final ProductService productService;
     private final ProductRepository productRepository;
     private final AwsService awsService;
-    private final ImageMapper imageMapper;
+    private final ImageDtoMapper imageMapper;
     private final ProductMapper productMapper;
     private final ImageResizer imageResizer;
     private final WebpHandler webpHandler;
@@ -60,7 +58,7 @@ public class ImageService {
     public ImageResponseDto findById(long id) throws ItemNotFoundException {
         return imageRepository.findById(id)
                 .map(imageMapper::mapEntityToDto)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     throw new ItemNotFoundException("Image not found");
                 });
     }
@@ -79,9 +77,7 @@ public class ImageService {
 
         ImageResponseDto imageResponseDto = null;
         try {
-            imageResponseDto = imageMapper.mapDtoRequestToDto(dto);
-            Image image = imageMapper.mapDtoToEntity(imageResponseDto);
-
+            Image image = imageMapper.mapDtoRequestToDto(dto);
             image.setProduct(productMapper.mapDtoToEntity(productResponseDto));
             image.setName(image.getProduct().getTitle() + " image");
             image.setUrl(resizeAndSendImage(dto, bigImageWidth, bigImageHeight, "b"));
