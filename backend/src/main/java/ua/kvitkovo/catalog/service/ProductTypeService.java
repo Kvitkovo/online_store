@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.ProductTypeMapper;
+import ua.kvitkovo.catalog.converter.ProductTypeDtoMapper;
 import ua.kvitkovo.catalog.dto.ProductTypeRequestDto;
 import ua.kvitkovo.catalog.dto.ProductTypeResponseDto;
 import ua.kvitkovo.catalog.entity.ProductType;
@@ -32,7 +32,7 @@ import java.util.Objects;
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
-    private final ProductTypeMapper productTypeMapper;
+    private final ProductTypeDtoMapper productTypeMapper;
     private final ProductTypeDtoValidator productTypeDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -55,8 +55,7 @@ public class ProductTypeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        ProductTypeResponseDto productTypeResponseDto = productTypeMapper.mapDtoRequestToDto(dto);
-        ProductType type = productTypeMapper.mapDtoToEntity(productTypeResponseDto);
+        ProductType type = productTypeMapper.mapDtoRequestToEntity(dto);
         type.setAlias(transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
         type.setId(null);
         productTypeRepository.save(type);

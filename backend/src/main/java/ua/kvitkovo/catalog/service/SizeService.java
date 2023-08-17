@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.SizeMapper;
+import ua.kvitkovo.catalog.converter.SizeDtoMapper;
 import ua.kvitkovo.catalog.dto.SizeRequestDto;
 import ua.kvitkovo.catalog.dto.SizeResponseDto;
 import ua.kvitkovo.catalog.entity.Size;
@@ -32,7 +32,7 @@ import java.util.Objects;
 public class SizeService {
 
     private final SizeRepository sizeRepository;
-    private final SizeMapper sizeMapper;
+    private final SizeDtoMapper sizeMapper;
     private final SizeDtoValidator sizeDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
@@ -62,8 +62,7 @@ public class SizeService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        SizeResponseDto sizeResponseDto = sizeMapper.mapDtoRequestToDto(dto);
-        Size size = sizeMapper.mapDtoToEntity(sizeResponseDto);
+        Size size = sizeMapper.mapDtoRequestToEntity(dto);
         size.setAlias(transliterateUtils.getAlias(Size.class.getSimpleName(), dto.getName()));
         size.setId(null);
         sizeRepository.save(size);

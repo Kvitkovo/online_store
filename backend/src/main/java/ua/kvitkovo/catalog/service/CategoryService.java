@@ -6,16 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.CategoryMapper;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
-import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
+import ua.kvitkovo.catalog.converter.CategoryDtoMapper;
 import ua.kvitkovo.catalog.dto.CategoryRequestDto;
 import ua.kvitkovo.catalog.dto.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
 import ua.kvitkovo.catalog.repository.CategoryRepository;
 import ua.kvitkovo.catalog.validator.CategoryDefaults;
 import ua.kvitkovo.catalog.validator.CategoryDtoValidator;
+import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
+import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
@@ -23,7 +23,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Andriy Gaponov
@@ -34,7 +33,7 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
+    private final CategoryDtoMapper categoryMapper;
     private final CategoryDtoValidator categoryDtoValidator;
     private final CategoryDefaults categoryDefaults;
     private final ErrorUtils errorUtils;
@@ -58,13 +57,11 @@ public class CategoryService {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
         categoryDefaults.fillDefaultValues(dto);
-        CategoryResponseDto categoryResponseDto = categoryMapper.mapDtoRequestToDto(dto);
-        categoryResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
-        if (dto.getParentId() > 0){
-            categoryResponseDto.setParent(findById(dto.getParentId()));
+        Category category = categoryMapper.mapDtoRequestToEntity(dto);
+        category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        if (dto.getParentId() > 0) {
+            category.setParent(categoryMapper.mapDtoToEntity(findById(dto.getParentId())));
         }
-
-        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
         category.setId(null);
         categoryRepository.save(category);
         log.info("The Category was created");
@@ -90,13 +87,13 @@ public class CategoryService {
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
         }
-        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
 
         categoryDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
 
+        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
         categoryRepository.save(category);
         return categoryMapper.mapEntityToDto(category);
     }
