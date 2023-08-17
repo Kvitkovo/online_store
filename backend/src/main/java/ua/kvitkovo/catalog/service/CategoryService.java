@@ -87,13 +87,13 @@ public class CategoryService {
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
         }
-        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
 
         categoryDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
 
+        Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);
         categoryRepository.save(category);
         return categoryMapper.mapEntityToDto(category);
     }
