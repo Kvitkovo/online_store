@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.security.jwt.JwtUser;
-import ua.kvitkovo.users.converter.UserMapper;
+import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserRequestDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.Role;
@@ -33,7 +33,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserMapper userMapper;
+    private final UserDtoMapper userMapper;
     private final UserRequestDtoValidator userRequestDtoValidator;
     private final ErrorUtils errorUtils;
     private BCryptPasswordEncoder passwordEncoder;
@@ -49,8 +49,7 @@ public class UserService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        UserResponseDto userResponseDto = userMapper.mapDtoRequestToDto(userRequestDto);
-        User user = userMapper.mapDtoToEntity(userResponseDto);
+        User user = userMapper.mapDtoRequestToDto(userRequestDto);
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -65,10 +64,7 @@ public class UserService {
         User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
-
-        userResponseDto = userMapper.mapEntityToDto(registeredUser);
-        userResponseDto.setAdmin(user.getRoles().contains(roleRepository.findByName("ROLE_ADMIN")));
-        return userResponseDto;
+        return userMapper.mapEntityToDto(registeredUser);
     }
 
     public List<User> getAll() {
