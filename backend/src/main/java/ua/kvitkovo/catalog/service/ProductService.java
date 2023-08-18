@@ -2,6 +2,7 @@ package ua.kvitkovo.catalog.service;
 
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -15,8 +16,11 @@ import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.catalog.entity.Color;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.entity.ProductStatus;
+import ua.kvitkovo.catalog.entity.ProductType;
+import ua.kvitkovo.catalog.entity.Size;
 import ua.kvitkovo.catalog.repository.*;
 import ua.kvitkovo.catalog.validator.ProductDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
@@ -186,5 +190,49 @@ public class ProductService {
         product.setStatus(ProductStatus.NO_ACTIVE);
         productRepository.save(product);
         return productMapper.mapEntityToDto(product);
+    }
+
+    public List<Color> getAllColorsIdByCategory(long categoryId) {
+        Category category = categoryRepository.
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
+
+        List<Color> colors = productRepository.findColorByCategoryIdAndStatus(
+            category.getId(), ProductStatus.ACTIVE);
+        if (colors.isEmpty()) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return colors;
+        }
+    }
+
+    public List<Size> getAllSizesIdByCategory(long categoryId) {
+        Category category = categoryRepository.
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
+
+        List<Size> sizes = productRepository.findSizeByCategoryIdAndStatus(
+            category.getId(), ProductStatus.ACTIVE
+        );
+        if (sizes.isEmpty()) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return sizes;
+        }
+    }
+
+    public List<ProductType> getAllProductTypesIdByCategory(long categoryId) {
+        Category category = categoryRepository.
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
+
+        List<ProductType> types = productRepository.findProductTypesByCategoryIdAndStatus(
+            category.getId(), ProductStatus.ACTIVE
+        );
+        if (types.isEmpty()) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return types;
+        }
     }
 }
