@@ -2,7 +2,12 @@ package ua.kvitkovo.catalog.service;
 
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +26,11 @@ import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.catalog.entity.ProductType;
 import ua.kvitkovo.catalog.entity.Size;
-import ua.kvitkovo.catalog.repository.*;
+import ua.kvitkovo.catalog.repository.CategoryRepository;
+import ua.kvitkovo.catalog.repository.ColorRepository;
+import ua.kvitkovo.catalog.repository.ProductRepository;
+import ua.kvitkovo.catalog.repository.ProductTypeRepository;
+import ua.kvitkovo.catalog.repository.SizeRepository;
 import ua.kvitkovo.catalog.validator.ProductDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -29,12 +38,6 @@ import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Andriy Gaponov
@@ -61,8 +64,8 @@ public class ProductService {
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
         return productRepository.findById(id)
-                .map(productMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
+            .map(productMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 
     @Transactional
@@ -75,25 +78,26 @@ public class ProductService {
         Product product = productMapper.mapDtoRequestToEntity(dto);
 
         product.setCategory(
-                categoryRepository.findById(dto.getCategoryId()).
-                        orElseThrow(() -> new ItemNotFoundException("Category not found"))
+            categoryRepository.findById(dto.getCategoryId()).
+                orElseThrow(() -> new ItemNotFoundException("Category not found"))
         );
         if (dto.getHeight() > 0) {
             product.setSize(
-                    sizeRepository.findFirstSizeByHeight(dto.getHeight()).orElse(null)
+                sizeRepository.findFirstSizeByHeight(dto.getHeight()).orElse(null)
             );
         }
         if (dto.getProductTypeId() > 0) {
             product.setProductType(
-                    productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
+                productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
             );
         }
         if (dto.getColorId() > 0) {
             product.setColor(
-                    colorRepository.findById(dto.getColorId()).orElse(null)
+                colorRepository.findById(dto.getColorId()).orElse(null)
             );
         }
-        product.setAlias(transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
+        product.setAlias(
+            transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
 
         log.info("The Product was created");
@@ -101,10 +105,12 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponseDto updateProduct(Long id, ProductRequestDto dto, BindingResult bindingResult) {
+    public ProductResponseDto updateProduct(Long id, ProductRequestDto dto,
+        BindingResult bindingResult) {
         ProductResponseDto productResponseDto = findById(id);
         if (!Objects.equals(dto.getTitle(), productResponseDto.getTitle())) {
-            productResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
+            productResponseDto.setAlias(
+                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
         }
         productDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -128,10 +134,11 @@ public class ProductService {
 
     public Page<ProductResponseDto> getAllByCategory(Pageable pageable, long categoryId) {
         Category category = categoryRepository.
-                findById(categoryId).
-                orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
-        Page<Product> products = productRepository.findAllByCategoryIdAndStatusEquals(pageable, category.getId(), ProductStatus.ACTIVE);
+        Page<Product> products = productRepository.findAllByCategoryIdAndStatusEquals(pageable,
+            category.getId(), ProductStatus.ACTIVE);
         if (products.isEmpty()) {
             return Page.empty();
         } else {
@@ -144,13 +151,16 @@ public class ProductService {
             List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getPriceFrom() != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), new BigDecimal(filter.getPriceFrom())));
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
+                    new BigDecimal(filter.getPriceFrom())));
             }
             if (filter.getPriceTo() != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), new BigDecimal(filter.getPriceTo())));
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
+                    new BigDecimal(filter.getPriceTo())));
             }
             if (filter.getTitle() != null) {
-                predicates.add(criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
+                predicates.add(
+                    criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
             }
             predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
 
@@ -166,7 +176,8 @@ public class ProductService {
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
-        Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(pageable, BigDecimal.ZERO, ProductStatus.ACTIVE);
+        Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(
+            pageable, BigDecimal.ZERO, ProductStatus.ACTIVE);
         if (products.isEmpty()) {
             return Page.empty();
         } else {
