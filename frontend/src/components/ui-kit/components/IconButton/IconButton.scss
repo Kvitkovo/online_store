@@ -1,0 +1,19 @@
+@import '../../../../_variables.scss';
+
+.icon-border {
+  border-radius: 8px;
+  border: 1px solid #e1c429;
+  padding: 6px;
+
+  &:hover {
+    border: 1px solid $accent-color;
+    background-color: #fffdf2;
+    cursor: pointer;
+  }
+}
+
+.icon {
+  &:hover {
+    cursor: pointer;
+  }
+}
