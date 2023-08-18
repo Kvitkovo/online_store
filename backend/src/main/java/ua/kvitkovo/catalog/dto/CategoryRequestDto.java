@@ -2,7 +2,9 @@ package ua.kvitkovo.catalog.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
@@ -11,6 +13,8 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
  */
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryRequestDto {
 
     @NotBlank
