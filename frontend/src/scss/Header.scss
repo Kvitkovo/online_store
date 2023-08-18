@@ -80,19 +80,6 @@ header {
     background-color: white;
   }
 
-  .btn-catalogue {
-    border-radius: 8px;
-    background-color: #6cc25e;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-  .btn-catalogue:hover {
-    opacity: 0.5;
-  }
-
   .search {
     display: flex;
     flex-direction: row;
