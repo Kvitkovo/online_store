@@ -1,9 +1,11 @@
 package ua.kvitkovo.catalog.service;
 
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -162,6 +164,25 @@ public class ProductService {
                 predicates.add(
                     criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
             }
+            if (filter.getCategoryId() != null) {
+                Category category = categoryRepository.findById(filter.getCategoryId())
+                    .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+                predicates.add(
+                    criteriaBuilder.equal(root.get("category"), category));
+            }
+            if (filter.getDiscount() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
+            }
+            if (filter.getColors() != null) {
+                Expression<String> inExpression = root.get("color");
+                List<Color> colorsList = getIdsFromString(
+                    filter.getColors()).stream()
+                    .map(i -> colorRepository.findById(i)
+                        .orElseThrow(() -> new ItemNotFoundException("Category not found")))
+                    .toList();
+                Predicate inPredicate = inExpression.in(colorsList);
+                predicates.add(inPredicate);
+            }
             predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
@@ -173,6 +194,12 @@ public class ProductService {
         } else {
             return products.map(productMapper::mapEntityToDto);
         }
+    }
+
+    private List<Long> getIdsFromString(String idsString){
+        String ids = idsString.replaceAll(" ", "");
+        String[] idsStrings = ids.split(",");
+        return Arrays.stream(idsStrings).map(s->Long.valueOf(s)).toList();
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {

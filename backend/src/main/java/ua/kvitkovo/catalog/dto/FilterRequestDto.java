@@ -17,4 +17,9 @@ public class FilterRequestDto {
     private String title;
     private String priceFrom;
     private String priceTo;
+    private Long categoryId;
+    private String colors;
+    private String sizes;
+    private String productTypes;
+    private Boolean discount;
 }
