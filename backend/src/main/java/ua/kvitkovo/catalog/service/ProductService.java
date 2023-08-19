@@ -1,7 +1,9 @@
 package ua.kvitkovo.catalog.service;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -152,38 +154,13 @@ public class ProductService {
         Specification<Object> where = Specification.where((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (filter.getPriceFrom() != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
-                    new BigDecimal(filter.getPriceFrom())));
-            }
-            if (filter.getPriceTo() != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
-                    new BigDecimal(filter.getPriceTo())));
-            }
-            if (filter.getTitle() != null) {
-                predicates.add(
-                    criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
-            }
-            if (filter.getCategoryId() != null) {
-                Category category = categoryRepository.findById(filter.getCategoryId())
-                    .orElseThrow(() -> new ItemNotFoundException("Category not found"));
-                predicates.add(
-                    criteriaBuilder.equal(root.get("category"), category));
-            }
-            if (filter.getDiscount() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
-            }
-            if (filter.getColors() != null) {
-                Expression<String> inExpression = root.get("color");
-                List<Color> colorsList = getIdsFromString(
-                    filter.getColors()).stream()
-                    .map(i -> colorRepository.findById(i)
-                        .orElseThrow(() -> new ItemNotFoundException("Category not found")))
-                    .toList();
-                Predicate inPredicate = inExpression.in(colorsList);
-                predicates.add(inPredicate);
-            }
-            predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
+            addPriceFromFilter(filter, root, predicates, criteriaBuilder);
+            addPriceToFilter(filter, root, predicates, criteriaBuilder);
+            addTitleFilter(filter, root, predicates, criteriaBuilder);
+            addCategoryFilter(filter, root, predicates, criteriaBuilder);
+            addDiscountFilter(filter, root, predicates, criteriaBuilder);
+            addColorFilter(filter, root, predicates);
+            addStatusFilter(filter, root, predicates, criteriaBuilder);
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
         });
@@ -196,10 +173,71 @@ public class ProductService {
         }
     }
 
-    private List<Long> getIdsFromString(String idsString){
+    private void addTitleFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        if (filter.getTitle() != null) {
+            predicates.add(
+                criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
+        }
+    }
+
+    private void addPriceToFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        if (filter.getPriceTo() != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
+                new BigDecimal(filter.getPriceTo())));
+        }
+    }
+
+    private void addPriceFromFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        if (filter.getPriceFrom() != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
+                new BigDecimal(filter.getPriceFrom())));
+        }
+    }
+
+    private void addCategoryFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        if (filter.getCategoryId() != null) {
+            Category category = categoryRepository.findById(filter.getCategoryId())
+                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            predicates.add(
+                criteriaBuilder.equal(root.get("category"), category));
+        }
+    }
+
+    private void addStatusFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
+    }
+
+    private void addDiscountFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        if (filter.getDiscount() != null) {
+            predicates.add(
+                criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
+        }
+    }
+
+    private void addColorFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates) {
+        if (filter.getColors() != null) {
+            Expression<String> inExpression = root.get("color");
+            List<Color> colorsList = getIdsFromString(
+                filter.getColors()).stream()
+                .map(i -> colorRepository.findById(i)
+                    .orElseThrow(() -> new ItemNotFoundException("Color not found")))
+                .toList();
+            Predicate inPredicate = inExpression.in(colorsList);
+            predicates.add(inPredicate);
+        }
+    }
+
+    private List<Long> getIdsFromString(String idsString) {
         String ids = idsString.replaceAll(" ", "");
         String[] idsStrings = ids.split(",");
-        return Arrays.stream(idsStrings).map(s->Long.valueOf(s)).toList();
+        return Arrays.stream(idsStrings).map(s -> Long.valueOf(s)).toList();
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
