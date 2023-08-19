@@ -160,6 +160,8 @@ public class ProductService {
             addCategoryFilter(filter, root, predicates, criteriaBuilder);
             addDiscountFilter(filter, root, predicates, criteriaBuilder);
             addColorFilter(filter, root, predicates);
+            addSizesFilter(filter, root, predicates);
+            addProductTypesFilter(filter, root, predicates);
             addStatusFilter(filter, root, predicates, criteriaBuilder);
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
@@ -171,6 +173,34 @@ public class ProductService {
         } else {
             return products.map(productMapper::mapEntityToDto);
         }
+    }
+
+    private void addProductTypesFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates) {
+        if (filter.getProductTypes() != null) {
+            Expression<String> inExpression = root.get("productType");
+            List<ProductType> typeList = getIdsFromString(
+                filter.getProductTypes()).stream()
+                .map(i -> productTypeRepository.findById(i)
+                    .orElseThrow(() -> new ItemNotFoundException("Product type not found")))
+                .toList();
+            Predicate inPredicate = inExpression.in(typeList);
+            predicates.add(inPredicate);
+        }
+    }
+
+    private void addSizesFilter(FilterRequestDto filter, Root<Object> root,
+        List<Predicate> predicates) {
+            if (filter.getSizes() != null) {
+                Expression<String> inExpression = root.get("size");
+                List<Size> sizeList = getIdsFromString(
+                    filter.getSizes()).stream()
+                    .map(i -> sizeRepository.findById(i)
+                        .orElseThrow(() -> new ItemNotFoundException("Size not found")))
+                    .toList();
+                Predicate inPredicate = inExpression.in(sizeList);
+                predicates.add(inPredicate);
+            }
     }
 
     private void addTitleFilter(FilterRequestDto filter, Root<Object> root,
