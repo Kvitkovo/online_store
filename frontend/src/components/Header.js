@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../scss/Header.scss';
-import Button from './ui-kit/components/Button/Button';
+import Button from './ui-kit/components/Button';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);

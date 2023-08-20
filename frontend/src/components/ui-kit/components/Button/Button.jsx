@@ -1,24 +1,20 @@
 import React from 'react';
-import './Button.scss';
+import styles from './Button.module.scss';
 
-const Button = ({ label, variant, icon, onClick }) => {
-  const buttonClass = ['button'];
-
-  if (variant === 'primary') {
-    buttonClass.push('primary');
-  } else if (variant === 'secondary') {
-    buttonClass.push('secondary');
-  }
-
+const Button = ({
+  label,
+  variant = 'primary',
+  type = 'button',
+  icon,
+  onClick,
+}) => {
   return (
-    <button className={buttonClass.join(' ')} onClick={onClick}>
-      {label}{' '}
-      {icon && (
-        <span className="icon">
-          {' '}
-          <img src={icon} alt="icon" />{' '}
-        </span>
-      )}
+    <button
+      className={`${styles.button} ${styles[variant]}`}
+      type={type}
+      onClick={onClick}
+    >
+      {label} {icon && <span className={styles.icon}> {icon} </span>}
     </button>
   );
 };

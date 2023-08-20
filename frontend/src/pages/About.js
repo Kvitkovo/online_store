@@ -1,6 +1,6 @@
 import React from 'react';
-import { iconAdd, iconCart, iconCheck } from '../components/ui-kit/icons';
-import Button from '../components/ui-kit/components/Button/Button';
+import { ICONS } from '../components/ui-kit/icons';
+import Button from '../components/ui-kit/components/Button';
 
 function About() {
   return (
@@ -8,20 +8,27 @@ function About() {
       <Button
         variant="secondary"
         label="Додати компонент"
-        icon={iconAdd}
+        icon={<ICONS.addComponent />}
         onClick={() => alert('clicked add')}
       />
       <Button
         variant="primary"
         label="Додати у кошик"
-        icon={iconCart}
+        icon={<ICONS.toCart />}
         onClick={() => alert('clicked cart')}
       />
+
       <Button
         variant="primary"
         label="У кошику"
-        icon={iconCheck}
+        icon={<ICONS.cartChecked />}
         onClick={() => alert('clicked added')}
+      />
+      <Button
+        variant="boquete"
+        label="Додати до букету"
+        icon={<ICONS.toBouquet />}
+        onClick={() => alert('clicked bouquete')}
       />
     </div>
   );
