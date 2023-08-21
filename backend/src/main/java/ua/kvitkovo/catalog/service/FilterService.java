@@ -1,14 +1,19 @@
 package ua.kvitkovo.catalog.service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.kvitkovo.catalog.dto.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.Color;
+import ua.kvitkovo.catalog.entity.Product;
+import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.catalog.entity.ProductType;
 import ua.kvitkovo.catalog.entity.Size;
 import ua.kvitkovo.catalog.repository.ColorRepository;
+import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.repository.ProductTypeRepository;
 import ua.kvitkovo.catalog.repository.SizeRepository;
 
@@ -22,6 +27,7 @@ public class FilterService {
     private final ColorRepository colorRepository;
     private final SizeRepository sizeRepository;
     private final ProductTypeRepository productTypeRepository;
+    private final ProductRepository productRepository;
     private final ProductService productService;
 
     public Map<String, Map<Long, ?>> getFilter() {
@@ -72,5 +78,24 @@ public class FilterService {
             map.put("Types", typeResult);
         }
         return map;
+    }
+
+    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
+        Product minPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(
+            categoryId, ProductStatus.ACTIVE);
+        Product maxPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(
+            categoryId, ProductStatus.ACTIVE);
+        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
+        if (minPriceProduct == null) {
+            result.setMinPrice(BigDecimal.ZERO);
+        } else {
+            result.setMinPrice(minPriceProduct.getPrice());
+        }
+        if (maxPriceProduct == null) {
+            result.setMaxPrice(BigDecimal.ZERO);
+        } else {
+            result.setMaxPrice(maxPriceProduct.getPrice());
+        }
+        return result;
     }
 }

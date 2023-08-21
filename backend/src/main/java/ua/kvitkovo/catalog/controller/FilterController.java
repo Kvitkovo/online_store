@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ua.kvitkovo.catalog.dto.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.service.FilterService;
 
 /**
@@ -47,5 +49,18 @@ public class FilterController {
         )
         @PathVariable Long id) {
         return filterService.getFilterOnlyActiveProductByCategoryId(id);
+    }
+
+    @Operation(summary = "Get the minimum and maximum price of goods in the category")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Successful operation")
+    })
+    @GetMapping(path = "/minMaxPrices")
+    public FilterPricesIntervalResponseDto getMinMaxPricesInterval(
+        @Parameter(description = "ID of the category of which the products will be returned",
+            schema = @Schema(type = "integer")
+        ) @RequestParam(required = false) Long categoryId
+    ){
+        return filterService.getMinMaxPricesProductsInCategory(categoryId);
     }
 }
