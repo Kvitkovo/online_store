@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import '../scss/Home.scss';
 import Carousel from '../components/Carousel';
 import Discount from '../components/ui-kit/components/Discount';
