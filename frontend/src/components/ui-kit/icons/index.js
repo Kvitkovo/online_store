@@ -10,6 +10,7 @@ import { ReactComponent as ArrowLeftIcon } from './button_left.svg';
 import { ReactComponent as ArrowRightIcon } from './button_right.svg';
 import { ReactComponent as QuestionIcon } from './question.svg';
 import { ReactComponent as MessageIcon } from './message.svg';
+import { ReactComponent as PhoneIcon } from './phone.svg';
 
 export const ICONS = {
   addComponent,
@@ -24,4 +25,5 @@ export const ICONS = {
   ArrowRightIcon,
   QuestionIcon,
   MessageIcon,
+  PhoneIcon,
 };
