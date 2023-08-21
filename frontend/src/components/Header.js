@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../scss/Header.scss';
+import Button from './ui-kit/components/Button';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -76,8 +77,11 @@ const Header = () => {
       </div>
 
       <div className={`container-bottom ${sticky ? 'sticky' : ''}`}>
-        <button className="btn-catalogue">Каталог товарів</button>
-
+        <Button
+          variant="primary"
+          label="Каталог товарів"
+          onClick={() => alert('clicked primary')}
+        />
         <div className="search">
           <button type="submit" className="search-button">
             <img
