@@ -6,6 +6,10 @@ import { ReactComponent as CartIcon } from './cart.svg';
 import { ReactComponent as BouquetIcon } from './bouquet.svg';
 import { ReactComponent as TrashIcon } from './trash.svg';
 import { ReactComponent as CloseIcon } from './close.svg';
+import { ReactComponent as ArrowLeftIcon } from './button_left.svg';
+import { ReactComponent as ArrowRightIcon } from './button_right.svg';
+import { ReactComponent as QuestionIcon } from './question.svg';
+import { ReactComponent as MessageIcon } from './message.svg';
 
 export const ICONS = {
   addComponent,
@@ -16,4 +20,8 @@ export const ICONS = {
   BouquetIcon,
   TrashIcon,
   CloseIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  QuestionIcon,
+  MessageIcon,
 };
