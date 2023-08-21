@@ -7,7 +7,6 @@ import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -179,8 +178,7 @@ public class ProductService {
         List<Predicate> predicates) {
         if (filter.getProductTypes() != null) {
             Expression<String> inExpression = root.get("productType");
-            List<ProductType> typeList = getIdsFromString(
-                filter.getProductTypes()).stream()
+            List<ProductType> typeList = filter.getProductTypes().stream()
                 .map(i -> productTypeRepository.findById(i)
                     .orElseThrow(() -> new ItemNotFoundException("Product type not found")))
                 .toList();
@@ -191,16 +189,16 @@ public class ProductService {
 
     private void addSizesFilter(FilterRequestDto filter, Root<Object> root,
         List<Predicate> predicates) {
-            if (filter.getSizes() != null) {
-                Expression<String> inExpression = root.get("size");
-                List<Size> sizeList = getIdsFromString(
-                    filter.getSizes()).stream()
+        if (filter.getSizes() != null) {
+            Expression<String> inExpression = root.get("size");
+            List<Size> sizeList =
+                filter.getSizes().stream()
                     .map(i -> sizeRepository.findById(i)
                         .orElseThrow(() -> new ItemNotFoundException("Size not found")))
                     .toList();
-                Predicate inPredicate = inExpression.in(sizeList);
-                predicates.add(inPredicate);
-            }
+            Predicate inPredicate = inExpression.in(sizeList);
+            predicates.add(inPredicate);
+        }
     }
 
     private void addTitleFilter(FilterRequestDto filter, Root<Object> root,
@@ -254,20 +252,13 @@ public class ProductService {
         List<Predicate> predicates) {
         if (filter.getColors() != null) {
             Expression<String> inExpression = root.get("color");
-            List<Color> colorsList = getIdsFromString(
-                filter.getColors()).stream()
+            List<Color> colorsList = filter.getColors().stream()
                 .map(i -> colorRepository.findById(i)
                     .orElseThrow(() -> new ItemNotFoundException("Color not found")))
                 .toList();
             Predicate inPredicate = inExpression.in(colorsList);
             predicates.add(inPredicate);
         }
-    }
-
-    private List<Long> getIdsFromString(String idsString) {
-        String ids = idsString.replaceAll(" ", "");
-        String[] idsStrings = ids.split(",");
-        return Arrays.stream(idsStrings).map(s -> Long.valueOf(s)).toList();
     }
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
