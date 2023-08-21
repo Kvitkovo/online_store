@@ -6,7 +6,7 @@
   padding: 6px;
 
   &:hover {
-    border: 1px solid $accent-color;
+    border: 1px solid $page-accent-color;
     background-color: #fffdf2;
     cursor: pointer;
   }
@@ -31,7 +31,7 @@
 }
 
 .icon-background {
-  background-color: $accent-color;
+  background-color: $page-accent-color;
   &:hover {
     background-color: #97cf8e;
   }
@@ -42,8 +42,8 @@
   border-radius: 8px;
 }
 .icon-round-green {
-  border: 1px solid $accent-color;
+  border: 1px solid $page-accent-color;
   &:hover {
-    border: 1px solid $green-dark-dots-color;
+    border: 1px solid $green-dark-color;
   }
 }
