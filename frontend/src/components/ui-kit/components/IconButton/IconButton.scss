@@ -17,3 +17,22 @@
     cursor: pointer;
   }
 }
+
+.icon-round {
+  border-radius: 50%;
+  background-color: #ffffff;
+  padding: 10px;
+}
+.icon-opacity {
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.icon-background {
+  background-color: $accent-color;
+  &:hover {
+    background-color: #97cf8e;
+  }
+}
