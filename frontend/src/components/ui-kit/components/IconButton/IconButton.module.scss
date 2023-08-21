@@ -41,3 +41,9 @@
   padding: 12px 25px;
   border-radius: 8px;
 }
+.icon-round-green {
+  border: 1px solid $accent-color;
+  &:hover {
+    border: 1px solid $green-dark-dots-color;
+  }
+}

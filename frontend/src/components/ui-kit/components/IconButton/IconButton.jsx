@@ -17,6 +17,7 @@ const IconButton = (props) => {
           props.isRectangularWithPadding &&
           `${styles['icon-rectangular-padding']}`
         }
+        ${props.isRoundGreen && `${styles['icon-round-green']}`}
         `}
       onClick={onclick}
     />
