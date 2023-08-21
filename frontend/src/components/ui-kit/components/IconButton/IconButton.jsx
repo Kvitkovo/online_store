@@ -13,6 +13,10 @@ const IconButton = (props) => {
         ${props.isOpacity && `${styles['icon-opacity']}`}
         ${props.isRoundWithPadding && `${styles['icon-round-padding']}`}
         ${props.isBackground && `${styles['icon-background']}`}
+        ${
+          props.isRectangularWithPadding &&
+          `${styles['icon-rectangular-padding']}`
+        }
         `}
       onClick={onclick}
     />
