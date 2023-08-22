@@ -3,9 +3,7 @@ import styles from './IconButton.module.scss';
 
 const IconButton = (props) => {
   return (
-    <img
-      src={props.src}
-      alt={props.alt}
+    <button
       className={`${
         props.isBorder ? `${styles['icon-border']}` : `${styles.icon}`
       }
@@ -20,7 +18,9 @@ const IconButton = (props) => {
         ${props.isRoundGreen && `${styles['icon-round-green']}`}
         `}
       onClick={onclick}
-    />
+    >
+      {props.icon}
+    </button>
   );
 };
 
