@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -152,14 +153,14 @@ public class ProductController {
             schema = @Schema(type = "integer")
         ) @RequestParam(required = false) Long categoryId,
         @Parameter(description = "List of color identifiers",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false) String colors,
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> colors,
         @Parameter(description = "List of sizes identifiers",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false) String sizes,
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> sizes,
         @Parameter(description = "List of product types identifiers",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false) String types,
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> types,
         @Parameter(description = "Promotional product",
             schema = @Schema(type = "boolean")
         ) @RequestParam(required = false) Boolean discount) {

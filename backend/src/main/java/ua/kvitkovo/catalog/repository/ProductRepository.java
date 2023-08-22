@@ -32,4 +32,7 @@ public interface ProductRepository extends ProductRepositoryBasic {
 
     @Query("SELECT p.productType FROM Product p WHERE p.category.id = ?1 AND status = ?2")
     List<ProductType> findProductTypesByCategoryIdAndStatus(Long id, ProductStatus status);
+
+    Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status);
+    Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status);
 }
