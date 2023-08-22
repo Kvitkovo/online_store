@@ -1,5 +1,9 @@
 @import '../../../../_variables.scss';
 
+.button {
+  border: none;
+  background-color: transparent;
+}
 .icon-border {
   border-radius: 8px;
   border: 1px solid #e1c429;
@@ -10,17 +14,21 @@
     background-color: #fffdf2;
     cursor: pointer;
   }
+  &:active {
+    background-color: $page-accent-color;
+    path {
+      stroke: $white-color;
+    }
+  }
 }
 
 .icon {
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 }
 
 .icon-round {
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: $white-color;
   padding: 10px;
 }
 .icon-opacity {
@@ -35,6 +43,9 @@
   &:hover {
     background-color: #97cf8e;
   }
+  &:active {
+    background-color: $green-dark-color;
+  }
 }
 
 .icon-rectangular-padding {
@@ -45,5 +56,15 @@
   border: 1px solid $page-accent-color;
   &:hover {
     border: 1px solid $green-dark-color;
+    path {
+      stroke: $green-dark-color;
+    }
+  }
+  &:active {
+    path {
+      stroke: $white-color;
+    }
+    background-color: #97cf8e;
+    border: 1px solid #97cf8e;
   }
 }
