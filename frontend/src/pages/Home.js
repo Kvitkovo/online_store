@@ -11,8 +11,8 @@ const Home = () => {
       <Carousel />
       <Discount discount={15} />
       <Discount discount={15} isBigCard={true} />
-      <IconButton icon={<ICONS.CartIcon />} isBorder={true} />
-      <IconButton icon={<ICONS.PencilIcon />} isBorder={true} />
+      <IconButton icon={<ICONS.CartIcon />} isBorderYellow={true} />
+      <IconButton icon={<ICONS.PencilIcon />} isBorderYellow={true} />
       <IconButton icon={<ICONS.BouquetIcon />} />
       <IconButton icon={<ICONS.CloseIcon />} />
       <IconButton icon={<ICONS.TrashIcon />} />
@@ -46,6 +46,7 @@ const Home = () => {
         isRound={true}
         isRoundGreen={true}
       />
+      <IconButton icon={<ICONS.InCartIcon />} isBorderGreen={true} />
     </div>
   );
 };

@@ -3,8 +3,9 @@
 .button {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
-.icon-border {
+.icon-border-yellow {
   border-radius: 8px;
   border: 1px solid #e1c429;
   padding: 6px;
@@ -21,11 +22,11 @@
     }
   }
 }
-
-.icon {
-  cursor: pointer;
+.icon-border-green {
+  border-radius: 8px;
+  border: 1px solid $page-accent-color;
+  padding: 6px;
 }
-
 .icon-round {
   border-radius: 50%;
   background-color: $white-color;
