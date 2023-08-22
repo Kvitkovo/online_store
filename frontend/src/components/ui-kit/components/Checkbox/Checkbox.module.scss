@@ -1,0 +1,17 @@
+@import '../../../../variables';
+.Checkbox {
+  max-width: 280px;
+  margin: 50px;
+}
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.heading {
+  margin: 16px 0 16px;
+}
+hr {
+  background-color: $gray-light-color;
+  margin-top: 16px;
+}
