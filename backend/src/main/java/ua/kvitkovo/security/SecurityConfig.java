@@ -48,7 +48,6 @@ public class SecurityConfig {
     private static final String[] ENDPOINTS = {
             "/v1/categories/**",
             "/v1/products/**",
-            "/v1/users/**",
             "/v1/shops/**",
             "/v1/orders/**",
             "/v1/colors/**",

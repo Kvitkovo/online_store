@@ -2,18 +2,22 @@ package ua.kvitkovo.users.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.security.jwt.JwtUser;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserRequestDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.Role;
-import ua.kvitkovo.users.entity.Status;
+import ua.kvitkovo.users.entity.UserStatus;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.repository.RoleRepository;
 import ua.kvitkovo.users.repository.UserRepository;
@@ -58,7 +62,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
+        user.setUserStatus(UserStatus.ACTIVE);
         user.setId(null);
 
         User registeredUser = userRepository.save(user);
@@ -68,6 +72,12 @@ public class UserService {
     }
 
     public List<User> getAll() {
+        List<User> result = userRepository.findAll();
+        log.info("IN getAll - {} users found", result.size());
+        return result;
+    }
+
+    public List<User> getAllClients() {
         List<User> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result.size());
         return result;
@@ -89,6 +99,13 @@ public class UserService {
 
         log.info("IN findById - user: {} found by id: {}", result);
         return result;
+    }
+
+    public Page<UserResponseDto> getClientsByPage(Pageable pageable) {
+        Page<User> users = userRepository.findAllClient(pageable);
+        if (users.isEmpty())
+            throw new ItemNotFoundException("Clients don't exist in the Data Base");
+        return users.map(userMapper::mapEntityToDto);
     }
 
     public void delete(Long id) {
