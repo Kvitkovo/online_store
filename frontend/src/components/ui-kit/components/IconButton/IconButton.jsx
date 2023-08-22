@@ -15,7 +15,11 @@ const IconButton = (props) => {
     return classNames.join(' ');
   };
 
-  return <button className={addClassname()}>{props.icon}</button>;
+  return (
+    <button className={addClassname()} onClick={props.onClick}>
+      {props.icon}
+    </button>
+  );
 };
 
 export default IconButton;
