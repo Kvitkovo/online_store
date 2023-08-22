@@ -24,7 +24,7 @@ public class JwtUserFactory {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .authorities(mapToGrantedAuthorities(new ArrayList<>(user.getRoles())))
-                .enabled(user.getUserStatus().equals(UserStatus.ACTIVE))
+                .enabled(user.getStatus().equals(UserStatus.ACTIVE))
                 .lastPasswordResetDate(user.getUpdated()).build();
     }
 

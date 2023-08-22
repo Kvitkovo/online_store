@@ -2,7 +2,6 @@ package ua.kvitkovo.users.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,7 +61,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         user.setRoles(userRoles);
-        user.setUserStatus(UserStatus.ACTIVE);
+        user.setStatus(UserStatus.ACTIVE);
         user.setId(null);
 
         User registeredUser = userRepository.save(user);
