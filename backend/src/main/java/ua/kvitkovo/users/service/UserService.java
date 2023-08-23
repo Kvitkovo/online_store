@@ -1,5 +1,6 @@
 package ua.kvitkovo.users.service;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -63,8 +64,12 @@ public class UserService {
         user.setRoles(userRoles);
         user.setStatus(UserStatus.ACTIVE);
         user.setId(null);
+        user.setEmailConfirmCode(UUID.randomUUID().toString());
+        user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
+
+        //TODO send email with code for confirm
 
         log.info("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
@@ -115,5 +120,19 @@ public class UserService {
     public User getCurrentUser() {
         JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return findById(principal.getId());
+    }
+
+    public void findByVerificationCode (String code) throws ItemNotFoundException{
+        if (code == null || code.isEmpty()){
+            throw new ItemNotFoundException("Verification code not found");
+        }
+        User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
+            () -> new ItemNotFoundException("Verification code not found")
+        );
+        log.info("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
+        user.setEmailConfirmed(true);
+        user.setEmailConfirmCode("");
+        userRepository.save(user);
+        //TODO send email after confirm email
     }
 }
