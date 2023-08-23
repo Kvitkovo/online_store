@@ -56,6 +56,15 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email_confirmed")
+    private boolean emailConfirmed;
+
+    @Column(name = "email_confirm_code")
+    private String emailConfirmCode;
+
+    @Column(name = "newsletter")
+    private boolean newsletter;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

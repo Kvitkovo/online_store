@@ -21,4 +21,6 @@ public class UserResponseDto {
     private String email;
     private String phone;
     private UserStatus status;
+    private boolean emailConfirmed;
+    private boolean newsletter;
 }
