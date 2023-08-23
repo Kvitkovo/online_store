@@ -7,7 +7,8 @@ const Home = () => {
   return (
     <div className="home">
       <Carousel />
-      <Discount discount={15} />
+      <Discount discount={15} isSmallCard={true} />
+      <Discount discount={15} isSmallCard={false} />
     </div>
   );
 };
