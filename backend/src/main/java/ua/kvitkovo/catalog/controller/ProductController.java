@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 
@@ -46,6 +48,8 @@ import ua.kvitkovo.errorhandling.ErrorResponse;
 @RestController
 @RequestMapping(value = "/v1/products")
 public class ProductController {
+
+    private final ProductRepository productRepository;
 
     private final ProductService productService;
 
@@ -106,8 +110,12 @@ public class ProductController {
         ) @RequestParam(defaultValue = "1") int page,
         @Parameter(description = "The size of the page to be returned", required = true,
             schema = @Schema(type = "integer", defaultValue = "12")
-        ) @RequestParam(defaultValue = "12") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        ) @RequestParam(defaultValue = "12") int size,
+        @Parameter(description = "Sort direction (ASC, DESC)",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection) {
+        Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
+            "price");
         return productService.getDiscounted(pageable);
     }
 
@@ -125,8 +133,12 @@ public class ProductController {
         ) @RequestParam(defaultValue = "12") int size,
         @Parameter(description = "ID of the category of which the products will be returned", required = true,
             schema = @Schema(type = "integer")
-        ) @RequestParam long categoryId) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        ) @RequestParam long categoryId,
+        @Parameter(description = "Sort direction (ASC, DESC)",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection) {
+        Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
+            "price");
         return productService.getAllByCategory(pageable, categoryId);
     }
 
@@ -144,8 +156,8 @@ public class ProductController {
             schema = @Schema(type = "integer", defaultValue = "0")
         ) @RequestParam(required = false, defaultValue = "0") String priceFrom,
         @Parameter(description = "Get products whose price is equal to or less than the specified price",
-            schema = @Schema(type = "integer", defaultValue = "500")
-        ) @RequestParam(required = false, defaultValue = "500") String priceTo,
+            schema = @Schema(type = "integer", defaultValue = "5000")
+        ) @RequestParam(required = false, defaultValue = "5000") String priceTo,
         @Parameter(description = "Get products whose name is similar to the specified term",
             schema = @Schema(type = "string")
         ) @RequestParam(required = false) String title,
@@ -163,8 +175,12 @@ public class ProductController {
         ) @RequestParam(required = false) List<Long> types,
         @Parameter(description = "Promotional product",
             schema = @Schema(type = "boolean")
-        ) @RequestParam(required = false) Boolean discount) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        ) @RequestParam(required = false) Boolean discount,
+        @Parameter(description = "Sort direction (ASC, DESC)",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection) {
+        Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
+            "price");
         FilterRequestDto filter = FilterRequestDto.builder()
             .priceFrom(priceFrom)
             .priceTo(priceTo)
