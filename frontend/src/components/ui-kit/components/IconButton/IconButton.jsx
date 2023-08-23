@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './IconButton.module.scss';
 
 const IconButton = (props) => {
-  const addClassname = () => {
-    let classNames = [styles.button];
-    if (props.isBorderYellow) classNames.push(styles['icon-border-yellow']);
-    if (props.isBorderGreen) classNames.push(styles['icon-border-green']);
-    if (props.isRound) classNames.push(styles['icon-round']);
-    if (props.isOpacity) classNames.push(styles['icon-opacity']);
-    if (props.isBackground) classNames.push(styles['icon-background']);
+  let [classNames, setClassNames] = useState([]);
+
+  const calculateClassNames = (props) => {
+    let newClassNames = [styles.button];
+    if (props.isBorderYellow) newClassNames.push(styles['icon-border-yellow']);
+    if (props.isBorderGreen) newClassNames.push(styles['icon-border-green']);
+    if (props.isRound) newClassNames.push(styles['icon-round']);
+    if (props.isOpacity) newClassNames.push(styles['icon-opacity']);
+    if (props.isBackground) newClassNames.push(styles['icon-background']);
     if (props.isRectangularWithPadding)
-      classNames.push(styles['icon-rectangular-padding']);
-    if (props.isRoundGreen) classNames.push(styles['icon-round-green']);
-    return classNames.join(' ');
+      newClassNames.push(styles['icon-rectangular-padding']);
+    if (props.isRoundGreen) newClassNames.push(styles['icon-round-green']);
+    return newClassNames.join(' ');
   };
 
+  useEffect(() => {
+    setClassNames(calculateClassNames(props));
+  }, [props]);
+
   return (
-    <button className={addClassname()} onClick={props.onClick}>
+    <button className={classNames} onClick={props.onClick}>
       {props.icon}
     </button>
   );
