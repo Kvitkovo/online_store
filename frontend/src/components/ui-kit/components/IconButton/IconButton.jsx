@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import styles from './IconButton.module.scss';
 
 const IconButton = memo((props) => {
-  const calculateClassNames = (props) => {
+  const calculateClassNames = useMemo(() => {
     let newClassNames = [styles.button];
     if (props.isBorderYellow) newClassNames.push(styles['icon-border-yellow']);
     if (props.isBorderGreen) newClassNames.push(styles['icon-border-green']);
@@ -13,12 +13,18 @@ const IconButton = memo((props) => {
       newClassNames.push(styles['icon-rectangular-padding']);
     if (props.isRoundGreen) newClassNames.push(styles['icon-round-green']);
     return newClassNames.join(' ');
-  };
-
-  const classes = useMemo(() => calculateClassNames(props), [props]);
+  }, [
+    props.isBorderYellow,
+    props.isBorderGreen,
+    props.isRound,
+    props.isOpacity,
+    props.isBackground,
+    props.isRectangularWithPadding,
+    props.isRoundGreen,
+  ]);
 
   return (
-    <button className={classes} onClick={props.onClick}>
+    <button className={calculateClassNames} onClick={props.onClick}>
       {props.icon}
     </button>
   );
