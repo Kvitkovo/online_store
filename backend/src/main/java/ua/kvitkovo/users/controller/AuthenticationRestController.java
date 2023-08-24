@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import ua.kvitkovo.catalog.dto.CategoryResponseDto;
 import ua.kvitkovo.errorhandling.ErrorResponse;
@@ -87,8 +88,8 @@ public class AuthenticationRestController {
                     })
     })
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult){
-        userService.register(requestDto, bindingResult);
+    public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult, HttpServletRequest httpRequest){
+        userService.register(requestDto, bindingResult, httpRequest);
         return ResponseEntity.ok().build();
     }
 }

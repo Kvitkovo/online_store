@@ -1,14 +1,15 @@
 package ua.kvitkovo.users.validator;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
-import ua.kvitkovo.users.dto.UserRequestDto;
-import ua.kvitkovo.users.entity.User;
-import ua.kvitkovo.users.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ua.kvitkovo.users.dto.UserRequestDto;
+import ua.kvitkovo.users.entity.User;
+import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.utils.Helper;
 
 
@@ -19,8 +20,8 @@ import ua.kvitkovo.utils.Helper;
 @Component
 public class UserRequestDtoValidator implements Validator {
 
-    @Setter
-    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -34,8 +35,8 @@ public class UserRequestDtoValidator implements Validator {
         if (StringUtils.isBlank(dto.getEmail())) {
             errors.rejectValue("email", "", "is blank!");
         } else {
-            User byUsername = userService.findByUsername(dto.getEmail());
-            if (byUsername != null){
+            Optional<User> byUsername = userRepository.findByEmail(dto.getEmail());
+            if (!byUsername.isEmpty()) {
                 errors.rejectValue("email", "", "a user with this email already exists!");
             }
         }

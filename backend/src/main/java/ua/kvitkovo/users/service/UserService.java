@@ -1,6 +1,8 @@
 package ua.kvitkovo.users.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +21,12 @@ import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserRequestDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.Role;
-import ua.kvitkovo.users.entity.UserStatus;
 import ua.kvitkovo.users.entity.User;
+import ua.kvitkovo.users.entity.UserStatus;
 import ua.kvitkovo.users.repository.RoleRepository;
 import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.validator.UserRequestDtoValidator;
 import ua.kvitkovo.utils.ErrorUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -49,8 +48,8 @@ public class UserService {
         return new BCryptPasswordEncoder();
     }
 
-    public UserResponseDto register(UserRequestDto userRequestDto, BindingResult bindingResult) {
-        userRequestDtoValidator.setUserService(this);
+    public UserResponseDto register(UserRequestDto userRequestDto, BindingResult bindingResult,
+        HttpServletRequest httpRequest) {
         userRequestDtoValidator.validate(userRequestDto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
@@ -71,6 +70,7 @@ public class UserService {
 
         User registeredUser = userRepository.save(user);
 
+        String confirmEmailLink = constructUrlForConfirmEmailMessage(httpRequest, registeredUser);
         //TODO send email with code for confirm
 
         log.info("IN register - user: {} successfully registered", registeredUser);
@@ -111,8 +111,9 @@ public class UserService {
 
     public Page<UserResponseDto> getClientsByPage(Pageable pageable) {
         Page<User> users = userRepository.findAllClient(pageable);
-        if (users.isEmpty())
+        if (users.isEmpty()) {
             throw new ItemNotFoundException("Clients don't exist in the Data Base");
+        }
         return users.map(userMapper::mapEntityToDto);
     }
 
@@ -122,12 +123,13 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
+            .getPrincipal();
         return findById(principal.getId());
     }
 
-    public void findByVerificationCode (String code) throws ItemNotFoundException{
-        if (code == null || code.isEmpty()){
+    public void findByVerificationCode(String code) throws ItemNotFoundException {
+        if (code == null || code.isEmpty()) {
             throw new ItemNotFoundException("Verification code not found");
         }
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
@@ -137,11 +139,12 @@ public class UserService {
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
         userRepository.save(user);
+
         //TODO send email after confirm email
     }
 
     public void sendResetPassword(String email, HttpServletRequest httpRequest) {
-        if (email == null || email.isEmpty()){
+        if (email == null || email.isEmpty()) {
             throw new ItemNotFoundException("User email not found");
         }
         User user = userRepository.findByEmail(email).orElseThrow(
@@ -149,11 +152,18 @@ public class UserService {
         );
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         userRepository.save(user);
-        String resetPasswordLink = generateUrlForEmailMessage(httpRequest, user);
+        String resetPasswordLink = constructUrlForResetPasswordEmailMessage(httpRequest, user);
         //TODO send email for reset password
     }
 
-    private String generateUrlForEmailMessage(HttpServletRequest httpRequest, User user){
-        return httpRequest.getHeader(HttpHeaders.HOST) + "/resetPassword/"+user.getEmailConfirmCode();
+    private String constructUrlForConfirmEmailMessage(HttpServletRequest httpRequest, User user) {
+        return httpRequest.getHeader(HttpHeaders.HOST) + "/v1/users/email/"
+            + user.getEmailConfirmCode() + "/confirm";
+    }
+
+    private String constructUrlForResetPasswordEmailMessage(HttpServletRequest httpRequest,
+        User user) {
+        return httpRequest.getHeader(HttpHeaders.HOST) + "/v1/users/resetPassword/"
+            + user.getEmailConfirmCode();
     }
 }
