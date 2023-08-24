@@ -17,7 +17,7 @@ public interface UserRepository extends UserRepositoryBasic {
 
     User findByPhone(String phone);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     Optional<User> findByEmailConfirmCode(String code);
 
     @Query("Select u from User u  LEFT JOIN u.roles r WHERE r.name = 'ROLE_USER'")

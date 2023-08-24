@@ -45,7 +45,7 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-ui/**"
     };
-    private static final String[] ENDPOINTS = {
+    private static final String[] GET_PERMITTED_ENDPOINTS = {
             "/v1/categories/**",
             "/v1/products/**",
             "/v1/shops/**",
@@ -55,6 +55,10 @@ public class SecurityConfig {
             "/v1/filter/**",
             "/v1/types/**",
             "/v1/users/email/**",
+    };
+
+    private static final String[] POST_PERMITTED_ENDPOINTS = {
+        "/v1/users/resetPassword/**",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -73,7 +77,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.GET, GET_PERMITTED_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.POST, POST_PERMITTED_ENDPOINTS).permitAll()
                         .anyRequest().hasRole("ADMIN"))
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPointJwt)
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt)

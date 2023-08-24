@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -53,14 +54,6 @@ public class UserController {
     @Operation(summary = "Confirm user email")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
         @ApiResponse(responseCode = "404", description = "Verification code not found", content = {
             @Content(mediaType = "application/json", schema =
             @Schema(implementation = ErrorResponse.class))
@@ -76,6 +69,27 @@ public class UserController {
         log.info("Received request to confirm user mail with Verification code - {}.", code);
         userService.findByVerificationCode(code);
         log.info("Email confirmed");
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = "Reset user password")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation"),
+        @ApiResponse(responseCode = "404", description = "User email not found", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        })
+    })
+    @PostMapping("/resetPassword/{email}")
+    @ResponseBody
+    public ResponseEntity<Void> resetPassword(
+        @Parameter(description = "Email of the user whose password needs to be reset", required = true,
+            schema = @Schema(type = "string")
+        )
+        @PathVariable String email, HttpServletRequest httpRequest) {
+        log.info("Received request to reset password with email - {}.", email);
+        userService.sendResetPassword(email, httpRequest);
+        log.info("Email send to {} for reset password", email);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

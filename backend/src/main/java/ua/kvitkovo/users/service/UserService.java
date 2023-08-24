@@ -1,11 +1,13 @@
 package ua.kvitkovo.users.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -81,16 +83,18 @@ public class UserService {
         return result;
     }
 
-    public List<User> getAllClients() {
+    public List<User> getAllUsers() {
         List<User> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result.size());
         return result;
     }
 
     public User findByUsername(String username) {
-        User result = userRepository.findByEmail(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
-        return result;
+        User user = userRepository.findByEmail(username).orElseThrow(
+            () -> new ItemNotFoundException("User email not found")
+        );
+        log.info("IN findByUsername - user: {} found by username: {}", user, username);
+        return user;
     }
 
     public User findById(Long id) {
@@ -134,5 +138,22 @@ public class UserService {
         user.setEmailConfirmCode("");
         userRepository.save(user);
         //TODO send email after confirm email
+    }
+
+    public void sendResetPassword(String email, HttpServletRequest httpRequest) {
+        if (email == null || email.isEmpty()){
+            throw new ItemNotFoundException("User email not found");
+        }
+        User user = userRepository.findByEmail(email).orElseThrow(
+            () -> new ItemNotFoundException("User email not found")
+        );
+        user.setEmailConfirmCode(UUID.randomUUID().toString());
+        userRepository.save(user);
+        String resetPasswordLink = generateUrlForEmailMessage(httpRequest, user);
+        //TODO send email for reset password
+    }
+
+    private String generateUrlForEmailMessage(HttpServletRequest httpRequest, User user){
+        return httpRequest.getHeader(HttpHeaders.HOST) + "/resetPassword/"+user.getEmailConfirmCode();
     }
 }
