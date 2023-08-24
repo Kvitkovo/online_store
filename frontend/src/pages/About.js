@@ -29,7 +29,7 @@ function About() {
         onClick={() => alert('clicked added')}
       />
       <Button
-        variant="boquete"
+        variant="no-border"
         label="Додати до букету"
         icon={<ICONS.toBouquet />}
         onClick={() => alert('clicked bouquete')}

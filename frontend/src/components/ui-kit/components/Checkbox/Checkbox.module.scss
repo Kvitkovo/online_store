@@ -1,17 +1,28 @@
 @import '../../../../variables';
-.Checkbox {
+.checkbox {
   max-width: 280px;
   margin: 50px;
 }
-.container {
+label {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-.heading {
-  margin: 16px 0 16px;
+  margin-left: 30px;
 }
 hr {
   background-color: $gray-light-color;
   margin-top: 16px;
+}
+.selectedOptions {
+  position: absolute;
+  left: 30%;
+  top: 25%;
+  p {
+    span {
+      background-color: $page-background-color;
+      margin: 12px;
+      padding: 6px 12px 6px 8px;
+      border-radius: 8px;
+    }
+  }
 }
