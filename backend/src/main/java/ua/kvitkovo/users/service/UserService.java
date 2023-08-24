@@ -68,7 +68,7 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(UserStatus.ACTIVE);
+        user.setStatus(UserStatus.NOT_ACTIVE);
         user.setId(null);
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         user.setEmailConfirmed(false);
@@ -146,6 +146,7 @@ public class UserService {
         log.info("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
+        user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
 
         Map<String, Object> fields = Map.of(
