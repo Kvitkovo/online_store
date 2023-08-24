@@ -1,6 +1,5 @@
 import React, { useCallback, useState, memo } from 'react';
 import styles from './Checkbox.module.scss';
-import image from './icon-close.svg';
 import Button from '../Button/Button';
 import { ICONS } from '../../../ui-kit/icons';
 
@@ -143,31 +142,23 @@ const FlowerPicker = () => {
         <div className={styles.selectedOptions}>
           <p>
             {selectedTypes.map((type) => (
-              <span key={type} className={styles.selectedType}>
+              <span key={type} className={styles.selectedItem}>
                 {type}{' '}
-                <img
-                  src={image}
-                  alt="delete icon"
-                  onClick={() => handleRemoveType(type)}
-                />
+                <ICONS.removeSelection onClick={() => handleRemoveType(type)} />
               </span>
             ))}
             {selectedColors.map((color) => (
-              <span key={color} className={styles.selectedColor}>
+              <span key={color} className={styles.selectedItem}>
                 {color}{' '}
-                <img
-                  src={image}
-                  alt="delete icon"
+                <ICONS.removeSelection
                   onClick={() => handleRemoveColor(color)}
                 />
               </span>
             ))}
             {selectedHeight.map((height) => (
-              <span key={height} className={styles.selectedHeight}>
+              <span key={height} className={styles.selectedItem}>
                 {height}{' '}
-                <img
-                  src={image}
-                  alt="delete icon"
+                <ICONS.removeSelection
                   onClick={() => handleRemoveHeight(height)}
                 />
               </span>

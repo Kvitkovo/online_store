@@ -17,12 +17,12 @@ hr {
   position: absolute;
   left: 30%;
   top: 25%;
-  p {
-    span {
-      background-color: $page-background-color;
-      margin: 12px;
-      padding: 6px 12px 6px 8px;
-      border-radius: 8px;
-    }
-  }
+}
+.selectedItem {
+  display: inline-flex;
+  align-items: center;
+  background-color: $page-background-color;
+  margin: 12px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 8px;
 }
