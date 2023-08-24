@@ -1,6 +1,10 @@
 import React from 'react';
 
 function Delivery() {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Delivery</h1>
+    </div>
+  );
 }
 export default Delivery;

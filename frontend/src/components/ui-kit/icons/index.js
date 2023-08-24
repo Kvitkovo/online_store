@@ -14,9 +14,6 @@ import { ReactComponent as MessageIcon } from './message.svg';
 import { ReactComponent as PhoneIcon } from './phone.svg';
 import { ReactComponent as CloseGreenIcon } from './close-green.svg';
 import { ReactComponent as InCartIcon } from './in-cart.svg';
-import { ReactComponent as showList } from './icon-arrow-down.svg';
-import { ReactComponent as hideList } from './icon-arrow-right.svg';
-import { ReactComponent as removeSelection } from './icon-close.svg';
 
 export const ICONS = {
   addComponent,
@@ -35,7 +32,4 @@ export const ICONS = {
   PhoneIcon,
   CloseGreenIcon,
   InCartIcon,
-  showList,
-  hideList,
-  removeSelection,
 };

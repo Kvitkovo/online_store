@@ -1,14 +1,10 @@
 import React from 'react';
 import { ICONS } from '../components/ui-kit/icons';
 import Button from '../components/ui-kit/components/Button';
-import FlowerPicker from '../components/ui-kit/components/Checkbox/Checkbox';
 
 function About() {
   return (
     <div>
-      <div>
-        <FlowerPicker />
-      </div>
       <Button
         variant="secondary"
         label="Додати компонент"
@@ -29,7 +25,7 @@ function About() {
         onClick={() => alert('clicked added')}
       />
       <Button
-        variant="no-border"
+        variant="boquete"
         label="Додати до букету"
         icon={<ICONS.toBouquet />}
         onClick={() => alert('clicked bouquete')}
