@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useMemo } from 'react';
 import styles from './IconButton.module.scss';
 
-const IconButton = (props) => {
-  let [classNames, setClassNames] = useState([]);
-
+const IconButton = memo(function IconButton(props) {
   const calculateClassNames = (props) => {
     let newClassNames = [styles.button];
     if (props.isBorderYellow) newClassNames.push(styles['icon-border-yellow']);
@@ -17,15 +15,13 @@ const IconButton = (props) => {
     return newClassNames.join(' ');
   };
 
-  useEffect(() => {
-    setClassNames(calculateClassNames(props));
-  }, [props]);
+  const classes = useMemo(() => calculateClassNames(props), [props]);
 
   return (
-    <button className={classNames} onClick={props.onClick}>
+    <button className={classes} onClick={props.onClick}>
       {props.icon}
     </button>
   );
-};
+});
 
 export default IconButton;
