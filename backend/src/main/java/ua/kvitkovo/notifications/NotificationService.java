@@ -8,5 +8,5 @@ import ua.kvitkovo.users.entity.User;
  */
 public interface NotificationService {
 
-    void send(NotificationType type, Map<String, String> fields, User user);
+    void send(NotificationType type, Map<String, Object> fields, User user);
 }

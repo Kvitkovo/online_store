@@ -88,8 +88,8 @@ public class AuthenticationRestController {
                     })
     })
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult, HttpServletRequest httpRequest){
-        userService.register(requestDto, bindingResult, httpRequest);
+    public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult){
+        userService.register(requestDto, bindingResult);
         return ResponseEntity.ok().build();
     }
 }

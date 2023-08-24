@@ -85,9 +85,9 @@ public class UserController {
         @Parameter(description = "Email of the user whose password needs to be reset", required = true,
             schema = @Schema(type = "string")
         )
-        @PathVariable String email, HttpServletRequest httpRequest) {
+        @PathVariable String email) {
         log.info("Received request to reset password with email - {}.", email);
-        userService.sendResetPassword(email, httpRequest);
+        userService.sendResetPassword(email);
         log.info("Email send to {} for reset password", email);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
