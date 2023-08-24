@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import styles from './IconButton.module.scss';
 
-const IconButton = memo(function IconButton(props) {
+const IconButton = memo((props) => {
   const calculateClassNames = (props) => {
     let newClassNames = [styles.button];
     if (props.isBorderYellow) newClassNames.push(styles['icon-border-yellow']);
