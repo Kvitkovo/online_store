@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +66,7 @@ public class UserController {
         )
         @PathVariable String code) {
         log.info("Received request to confirm user mail with Verification code - {}.", code);
-        userService.findByVerificationCode(code);
+        userService.confirmEmail(code);
         log.info("Email confirmed");
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -3,6 +3,7 @@ package ua.kvitkovo.users.service;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
+import ua.kvitkovo.notifications.EmailService;
+import ua.kvitkovo.notifications.NotificationService;
+import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.security.jwt.JwtUser;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserRequestDto;
@@ -70,8 +74,9 @@ public class UserService {
 
         User registeredUser = userRepository.save(user);
 
-        String confirmEmailLink = constructUrlForConfirmEmailMessage(httpRequest, registeredUser);
-        //TODO send email with code for confirm
+        NotificationService emailService = new EmailService();
+        Map<String, String> fields = Map.of("link", constructUrlForConfirmEmailMessage(httpRequest, registeredUser));
+        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, registeredUser);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
@@ -128,7 +133,7 @@ public class UserService {
         return findById(principal.getId());
     }
 
-    public void findByVerificationCode(String code) throws ItemNotFoundException {
+    public void confirmEmail(String code) throws ItemNotFoundException {
         if (code == null || code.isEmpty()) {
             throw new ItemNotFoundException("Verification code not found");
         }
@@ -140,7 +145,9 @@ public class UserService {
         user.setEmailConfirmCode("");
         userRepository.save(user);
 
-        //TODO send email after confirm email
+        NotificationService emailService = new EmailService();
+        Map<String, String> fields = Map.of("message", "Ви успішно підтвердили пошту.");
+        emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, user);
     }
 
     public void sendResetPassword(String email, HttpServletRequest httpRequest) {
@@ -152,8 +159,10 @@ public class UserService {
         );
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         userRepository.save(user);
-        String resetPasswordLink = constructUrlForResetPasswordEmailMessage(httpRequest, user);
-        //TODO send email for reset password
+
+        NotificationService emailService = new EmailService();
+        Map<String, String> fields = Map.of("link", constructUrlForResetPasswordEmailMessage(httpRequest, user));
+        emailService.send(NotificationType.RESET_PASSWORD, fields, user);
     }
 
     private String constructUrlForConfirmEmailMessage(HttpServletRequest httpRequest, User user) {
