@@ -7,7 +7,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +19,8 @@ import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.security.jwt.JwtUser;
 import ua.kvitkovo.users.converter.UserDtoMapper;
+import ua.kvitkovo.users.dto.ChangePasswordRequestDto;
+import ua.kvitkovo.users.dto.ResetPasswordRequestDto;
 import ua.kvitkovo.users.dto.UserRequestDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.Role;
@@ -27,6 +28,8 @@ import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.entity.UserStatus;
 import ua.kvitkovo.users.repository.RoleRepository;
 import ua.kvitkovo.users.repository.UserRepository;
+import ua.kvitkovo.users.validator.ChangePasswordRequestDtoValidator;
+import ua.kvitkovo.users.validator.ResetPasswordRequestDtoValidator;
 import ua.kvitkovo.users.validator.UserRequestDtoValidator;
 import ua.kvitkovo.utils.ErrorUtils;
 
@@ -42,17 +45,14 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final UserDtoMapper userMapper;
     private final UserRequestDtoValidator userRequestDtoValidator;
+    private final ResetPasswordRequestDtoValidator resetPasswordRequestDtoValidator;
+    private final ChangePasswordRequestDtoValidator changePasswordRequestDtoValidator;
     private final ErrorUtils errorUtils;
     private final NotificationService emailService;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Value("${site.base.url}")
     private String baseSiteUrl;
-
-    @Bean
-    public BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     public UserResponseDto register(UserRequestDto userRequestDto, BindingResult bindingResult) {
         userRequestDtoValidator.validate(userRequestDto, bindingResult);
@@ -63,8 +63,6 @@ public class UserService {
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
-
-        passwordEncoder = encoder();
 
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         user.setRoles(userRoles);
@@ -178,5 +176,46 @@ public class UserService {
 
     private String constructUrlForResetPasswordEmailMessage(User user) {
         return baseSiteUrl + "/user/resetPassword/" + user.getEmailConfirmCode();
+    }
+
+    public void resetPassword(ResetPasswordRequestDto resetPasswordRequestDto,
+        BindingResult bindingResult) {
+        resetPasswordRequestDtoValidator.validate(resetPasswordRequestDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
+        }
+
+        User user = userRepository.findByEmailConfirmCode(
+            resetPasswordRequestDto.getVerificationCode()).orElseThrow(
+            () -> new ItemNotFoundException("Verification code not found")
+        );
+
+        user.setPassword(passwordEncoder.encode(resetPasswordRequestDto.getNewPassword()));
+        user.setEmailConfirmCode("");
+        userRepository.save(user);
+        Map<String, Object> fields = Map.of(
+            "message", "Ви успішно змінили пароль.",
+            "link", baseSiteUrl
+        );
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+    }
+
+    public void changePassword(ChangePasswordRequestDto changePasswordRequestDto,
+        BindingResult bindingResult) {
+        changePasswordRequestDtoValidator.validate(changePasswordRequestDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
+        }
+
+        User user = userRepository.findByEmail(changePasswordRequestDto.getEmail()).orElseThrow(
+            () -> new ItemNotFoundException("User not found")
+        );
+        user.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
+        userRepository.save(user);
+        Map<String, Object> fields = Map.of(
+            "message", "Ви успішно змінили пароль.",
+            "link", baseSiteUrl
+        );
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
     }
 }

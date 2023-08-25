@@ -37,6 +37,8 @@ public class EmailService implements NotificationService{
         switch (type){
             case MAIL_CONFIRMATION -> sendEmailMessage("Підтвердження пошти", "email/confirm-email.html", fields, user);
             case MAIL_CONFIRMATION_SUCCESSFULLY -> sendEmailMessage("Ви успішно підтвердили пошту", "email/confirm-email-successfully.html", fields, user);
+            case RESET_PASSWORD -> sendEmailMessage("Запит на зміну паролю", "email/reset-password.html", fields, user);
+            case CHANGE_PASSWORD -> sendEmailMessage("Ви успішно змінили пароль", "email/reset-password-successfully.html", fields, user);
         }
     }
 

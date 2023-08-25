@@ -59,6 +59,7 @@ public class SecurityConfig {
 
     private static final String[] POST_PERMITTED_ENDPOINTS = {
         "/v1/users/resetPassword/**",
+        "/v1/users/changePassword/**",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
