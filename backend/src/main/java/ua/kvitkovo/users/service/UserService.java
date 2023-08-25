@@ -173,10 +173,10 @@ public class UserService {
     }
 
     private String constructUrlForConfirmEmailMessage(User user) {
-        return baseSiteUrl + "/v1/users/email/" + user.getEmailConfirmCode() + "/confirm";
+        return baseSiteUrl + "/user/email/" + user.getEmailConfirmCode() + "/confirm";
     }
 
     private String constructUrlForResetPasswordEmailMessage(User user) {
-        return baseSiteUrl + "/v1/users/resetPassword/" + user.getEmailConfirmCode();
+        return baseSiteUrl + "/user/resetPassword/" + user.getEmailConfirmCode();
     }
 }
