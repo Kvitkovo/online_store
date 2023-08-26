@@ -1,0 +1,23 @@
+@import '../../../../variables';
+
+.discount {
+  color: $white-color;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  background-color: $discount-color;
+  padding: 4px 8px;
+  border-radius: 24px 0px 0px 24px;
+  display: inline-block;
+}
+
+.bigCardDiscount {
+  color: $white-color;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  background-color: $discount-color;
+  padding: 2px 12px;
+  border-radius: 3px;
+  display: inline-block;
+}

@@ -1,0 +1,70 @@
+@import '../../../../_variables.scss';
+
+.button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.icon-border-yellow {
+  border-radius: 8px;
+  border: 1px solid #e1c429;
+  padding: 6px;
+
+  &:hover {
+    border: 1px solid $page-accent-color;
+    background-color: #fffdf2;
+  }
+  &:active {
+    background-color: $page-accent-color;
+    path {
+      stroke: $white-color;
+    }
+  }
+}
+.icon-border-green {
+  border-radius: 8px;
+  border: 1px solid $page-accent-color;
+  padding: 6px;
+}
+.icon-round {
+  border-radius: 50%;
+  background-color: $white-color;
+  padding: 10px;
+}
+.icon-opacity {
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.icon-background {
+  background-color: $page-accent-color;
+  &:hover {
+    background-color: #97cf8e;
+  }
+  &:active {
+    background-color: $green-dark-color;
+  }
+}
+
+.icon-rectangular-padding {
+  padding: 12px 25px;
+  border-radius: 8px;
+}
+.icon-round-green {
+  border: 1px solid $page-accent-color;
+  &:hover {
+    border: 1px solid $green-dark-color;
+    path {
+      stroke: $green-dark-color;
+    }
+  }
+  &:active {
+    path {
+      stroke: $white-color;
+    }
+    background-color: #97cf8e;
+    border: 1px solid #97cf8e;
+  }
+}
