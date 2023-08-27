@@ -6,7 +6,7 @@ import { ICONS } from '../../../ui-kit/icons';
 const Checkbox = memo(({ label, checked, onChange }) => {
   return (
     <label>
-      <input type="checkbox" checked={checked} onChange={onChange} />
+      <input type="checkbox" id={label} checked={checked} onChange={onChange} />
       {label}
     </label>
   );
@@ -26,7 +26,8 @@ const FlowerPicker = () => {
     setSelectedPromotion(!selectedPromotion);
   }, [selectedPromotion]);
 
-  const handleTypeChange = useCallback((label) => {
+  const handleTypeChange = useCallback((e) => {
+    const label = e.target.id;
     setSelectedTypes((prevSelectedTypes) => {
       if (prevSelectedTypes.includes(label)) {
         return prevSelectedTypes.filter((t) => t !== label);
@@ -36,7 +37,8 @@ const FlowerPicker = () => {
     });
   }, []);
 
-  const handleColorChange = useCallback((label) => {
+  const handleColorChange = useCallback((e) => {
+    const label = e.target.id;
     setSelectedColors((prevSelectedColors) => {
       if (prevSelectedColors.includes(label)) {
         return prevSelectedColors.filter((c) => c !== label);
@@ -45,7 +47,8 @@ const FlowerPicker = () => {
       }
     });
   }, []);
-  const handleHeightChange = useCallback((label) => {
+  const handleHeightChange = useCallback((e) => {
+    const label = e.target.id;
     setSelectedHeight((prevSelectedHeight) => {
       if (prevSelectedHeight.includes(label)) {
         return prevSelectedHeight.filter((h) => h !== label);
@@ -95,7 +98,8 @@ const FlowerPicker = () => {
                 key={type}
                 label={type}
                 checked={selectedTypes.includes(type)}
-                onChange={() => handleTypeChange(type)}
+                value={type}
+                onChange={handleTypeChange}
               />
             ))}
           </>
@@ -114,7 +118,7 @@ const FlowerPicker = () => {
                 key={color}
                 label={color}
                 checked={selectedColors.includes(color)}
-                onChange={() => handleColorChange(color)}
+                onChange={handleColorChange}
               />
             ))}
           </>
@@ -133,7 +137,7 @@ const FlowerPicker = () => {
                 key={h}
                 label={h}
                 checked={selectedHeight.includes(h)}
-                onChange={() => handleHeightChange(h)}
+                onChange={handleHeightChange}
               />
             ))}
           </>
