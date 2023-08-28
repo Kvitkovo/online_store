@@ -1,9 +1,22 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
+import { ICONS } from '../../icons';
 
-const Checkbox = memo(({ label, checked, onChange }) => {
+const Checkbox = memo(({ label }) => {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
   return (
     <label>
-      <input type="checkbox" id={label} checked={checked} onChange={onChange} />
+      <input
+        type="checkbox"
+        style={{ display: 'none' }}
+        id={label}
+        checked={checked}
+        onChange={handleChange}
+      />
+      <div>{checked ? <ICONS.checkedBox /> : <ICONS.checkBox />}</div>
       {label}
     </label>
   );
