@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  align-items: center;
+  width: 526px;
+  height: 44px;
+  border: 1px solid #979797;
+  border-radius: 8px;
+  padding: 0 4px;
+  gap: 4px;
+  position: relative;
+
+  @media (max-width: 375px) {
+    width: 343px;
+    padding: 0 4px;
+  }
+
+  svg {
+    margin-left: 6px;
+  }
+
+  .clearBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  .input {
+    width: 438px;
+    padding: 6px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+
+    @media (max-width: 375px) {
+      width: 255px;
+      padding: 0 4px;
+    }
+  }
+}
