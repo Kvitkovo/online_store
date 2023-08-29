@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
 import { ICONS } from '../../icons';
+import styles from './Checkbox.module.scss';
 
 const Checkbox = memo(({ label }) => {
   const [checked, setChecked] = useState(false);
@@ -8,10 +9,9 @@ const Checkbox = memo(({ label }) => {
     setChecked(!checked);
   };
   return (
-    <label>
+    <label className={styles.checkbox}>
       <input
         type="checkbox"
-        style={{ display: 'none' }}
         id={label}
         checked={checked}
         onChange={handleChange}

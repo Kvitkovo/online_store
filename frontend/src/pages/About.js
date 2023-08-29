@@ -7,7 +7,7 @@ function About() {
   return (
     <div>
       <div>
-        <Checkbox />
+        <Checkbox label="Акційна ціна" />
       </div>
       <Button
         variant="secondary"
