@@ -20,7 +20,15 @@ function About() {
       <br />
       <div>
         <Button
+          variant="primary"
+          padding="btn-catalogue"
+          label="Каталог товарів"
+          onClick={() => alert('clicked primary')}
+        />
+        <br />
+        <Button
           variant="secondary"
+          padding="btn-add"
           label="Додати компонент"
           icon={<ICONS.addComponent />}
           onClick={() => alert('clicked add')}
@@ -30,6 +38,7 @@ function About() {
       <div>
         <Button
           variant="primary"
+          padding="btn-add"
           label="Додати у кошик"
           icon={<ICONS.toCart />}
           onClick={() => alert('clicked cart')}
@@ -40,6 +49,7 @@ function About() {
       <div>
         <Button
           variant="primary"
+          padding="btn-added"
           label="У кошику"
           icon={<ICONS.cartChecked />}
           onClick={() => alert('clicked added')}

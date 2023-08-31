@@ -19,7 +19,6 @@
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
-  padding: 12px 25px;
   gap: 10px;
 
   &:hover {
@@ -31,6 +30,15 @@
     background-color: $green-dark-color;
   }
 }
+.btn-catalogue {
+  padding: 12px 25px;
+}
+.btn-add {
+  padding: 12px 12px 12px 25px;
+}
+.btn-added {
+  padding: 12px 40px 12px 56px;
+}
 
 .secondary {
   color: $text-color;
@@ -38,7 +46,6 @@
   background-color: $white-color;
   border: 1px solid $page-accent-color;
   font-size: 18px;
-  padding: 12px 12px 12px 25px;
   gap: 8px;
 
   &:hover {

@@ -79,6 +79,7 @@ const Header = () => {
       <div className={`container-bottom ${sticky ? 'sticky' : ''}`}>
         <Button
           variant="primary"
+          padding="btn-catalogue"
           label="Каталог товарів"
           onClick={() => alert('clicked primary')}
         />
