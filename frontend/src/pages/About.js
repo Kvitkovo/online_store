@@ -17,31 +17,43 @@ function About() {
           onChange={handleCheckboxChange}
         />
       </div>
-      <Button
-        variant="secondary"
-        label="Додати компонент"
-        icon={<ICONS.addComponent />}
-        onClick={() => alert('clicked add')}
-      />
-      <Button
-        variant="primary"
-        label="Додати у кошик"
-        icon={<ICONS.toCart />}
-        onClick={() => alert('clicked cart')}
-      />
+      <br />
+      <div>
+        <Button
+          variant="secondary"
+          label="Додати компонент"
+          icon={<ICONS.addComponent />}
+          onClick={() => alert('clicked add')}
+        />
+      </div>
+      <br />
+      <div>
+        <Button
+          variant="primary"
+          label="Додати у кошик"
+          icon={<ICONS.toCart />}
+          onClick={() => alert('clicked cart')}
+        />
+      </div>
+      <br />
 
-      <Button
-        variant="primary"
-        label="У кошику"
-        icon={<ICONS.cartChecked />}
-        onClick={() => alert('clicked added')}
-      />
-      <Button
-        variant="no-border"
-        label="Додати до букету"
-        icon={<ICONS.toBouquet />}
-        onClick={() => alert('clicked bouquete')}
-      />
+      <div>
+        <Button
+          variant="primary"
+          label="У кошику"
+          icon={<ICONS.cartChecked />}
+          onClick={() => alert('clicked added')}
+        />
+      </div>
+      <br />
+      <div>
+        <Button
+          variant="no-border"
+          label="Додати до букету"
+          icon={<ICONS.toBouquet />}
+          onClick={() => alert('clicked bouquete')}
+        />
+      </div>
     </div>
   );
 }
