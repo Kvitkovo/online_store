@@ -157,7 +157,6 @@ public class UserController {
                     })
     })
     @PostMapping("/changePassword")
-    @PreAuthorize("#id == authentication.principal.id and hasRole('ROLE_ADMIN')")
     @ResponseBody
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDto changePasswordRequestDto,
                                                BindingResult bindingResult) {

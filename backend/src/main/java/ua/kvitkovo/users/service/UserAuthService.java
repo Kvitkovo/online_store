@@ -109,6 +109,8 @@ public class UserAuthService {
         user.setRoles(userRoles);
         user.setStatus(UserStatus.ACTIVE);
         user.setId(null);
+        user.setEmailConfirmCode(UUID.randomUUID().toString());
+        user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
         log.info("user: {} successfully created", registeredUser);
