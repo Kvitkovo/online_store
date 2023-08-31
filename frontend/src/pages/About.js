@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ICONS } from '../components/ui-kit/icons';
 import Button from '../components/ui-kit/components/Button';
 import Checkbox from '../components/ui-kit/components/Checkbox/Checkbox';
+import Divider from '../components/ui-kit/components/Divider/Divider';
 
 function About() {
   const [isChecked, setIsChecked] = useState(false);
@@ -42,6 +43,9 @@ function About() {
         icon={<ICONS.toBouquet />}
         onClick={() => alert('clicked bouquete')}
       />
+      <div>
+        <Divider />
+      </div>
     </div>
   );
 }
