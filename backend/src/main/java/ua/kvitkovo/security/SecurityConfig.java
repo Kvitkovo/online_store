@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ua.kvitkovo.security.jwt.AccessDeniedHandlerJwt;
 import ua.kvitkovo.security.jwt.AuthenticationEntryPointJwt;
@@ -27,10 +31,14 @@ import ua.kvitkovo.security.jwt.JwtTokenProvider;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     private static final String ADMIN_ENDPOINT = "/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/v1/auth/login";
     private static final String REGISTER_ENDPOINT = "/v1/auth/register";
-    private static final String[] AUTH_WHITELIST = {
+    private static final String[] ALL_PERMITTED_ENDPOINTS = {
             LOGIN_ENDPOINT,
             REGISTER_ENDPOINT,
             // -- Swagger UI v2
@@ -43,7 +51,7 @@ public class SecurityConfig {
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
     };
     private static final String[] GET_PERMITTED_ENDPOINTS = {
             "/v1/categories/**",
@@ -62,6 +70,10 @@ public class SecurityConfig {
         "/v1/users/changePassword/**",
     };
 
+    private static final String[] AUTH_PERMITTED_ENDPOINTS = {
+            "/v1/users/{id:\\d+}"
+    };
+
     private final JwtTokenProvider jwtTokenProvider;
     @Autowired
     private AuthenticationEntryPointJwt authenticationEntryPointJwt;
@@ -76,7 +88,8 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .formLogin().disable()
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers(ALL_PERMITTED_ENDPOINTS).permitAll()
+                        .requestMatchers(AUTH_PERMITTED_ENDPOINTS).authenticated()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, GET_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, POST_PERMITTED_ENDPOINTS).permitAll()
@@ -91,9 +104,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .build();
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(encoder());
+        authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .authenticationProvider(authProvider())
+                .build();
+    }
 }

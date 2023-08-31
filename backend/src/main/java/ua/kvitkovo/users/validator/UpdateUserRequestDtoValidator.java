@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.users.dto.ResetPasswordRequestDto;
+import ua.kvitkovo.users.dto.UserRequestDto;
 
 
 /**
@@ -14,24 +13,23 @@ import ua.kvitkovo.users.dto.ResetPasswordRequestDto;
  */
 @RequiredArgsConstructor
 @Component
-public class ResetPasswordRequestDtoValidator implements Validator {
+public class UpdateUserRequestDtoValidator implements Validator {
 
+    @Autowired
+    private EmailValidator emailValidator;
     @Autowired
     private PasswordValidator passwordValidator;
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return ResetPasswordRequestDto.class.equals(clazz);
+        return UserRequestDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        ResetPasswordRequestDto dto = (ResetPasswordRequestDto) target;
+        UserRequestDto dto = (UserRequestDto) target;
 
-        if (dto == null || dto.getVerificationCode().isEmpty()) {
-            throw new ItemNotFoundException("Verification code not found");
-        }
-
-        passwordValidator.validate("newPassword", dto.getNewPassword(), errors);
+        emailValidator.validate("email", dto.getEmail(), errors, false);
+        passwordValidator.validate("password", dto.getPassword(), errors);
     }
 }

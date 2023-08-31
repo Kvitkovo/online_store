@@ -61,7 +61,7 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public String getPassword() {
-        return "{bcrypt}" + password;
+        return password;
     }
 
     @Override
