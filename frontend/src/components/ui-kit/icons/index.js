@@ -19,6 +19,9 @@ import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as removeSelection } from './icon-close.svg';
 import { ReactComponent as dash } from './dash-icon.svg';
 import { ReactComponent as arrowUp } from './arrow-up.svg';
+import { ReactComponent as checkBox } from './icon-checkbox.svg';
+import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
+
 
 export const ICONS = {
   addComponent,
@@ -42,4 +45,6 @@ export const ICONS = {
   removeSelection,
   dash,
   arrowUp,
+  checkBox,
+  checkedBox,
 };

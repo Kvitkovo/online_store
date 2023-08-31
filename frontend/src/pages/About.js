@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ICONS } from '../components/ui-kit/icons';
 import Button from '../components/ui-kit/components/Button';
-import FlowerPicker from '../components/ui-kit/components/Checkbox/Checkbox';
+import Checkbox from '../components/ui-kit/components/Checkbox/Checkbox';
 
 function About() {
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
   return (
     <div>
       <div>
-        <FlowerPicker />
+        <Checkbox
+          label="Акційна ціна"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
       </div>
       <Button
         variant="secondary"
