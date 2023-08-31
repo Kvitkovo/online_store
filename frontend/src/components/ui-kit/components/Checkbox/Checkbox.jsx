@@ -6,7 +6,9 @@ const Checkbox = memo(({ label, checked, onChange }) => {
   return (
     <label className={styles.checkbox}>
       <input type="checkbox" id={label} checked={checked} onChange={onChange} />
-      <div>{checked ? <ICONS.checkedBox /> : <ICONS.checkBox />}</div>
+      <div className={styles.icon}>
+        {checked ? <ICONS.checkedBox /> : <ICONS.checkBox />}
+      </div>
       <div className={styles.label}> {label} </div>
     </label>
   );

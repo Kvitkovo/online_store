@@ -9,8 +9,11 @@
     display: none;
   }
 
+  .icon {
+    display: flex;
+  }
+
   .label {
     color: $text-color;
-    margin-bottom: 5px;
   }
 }
