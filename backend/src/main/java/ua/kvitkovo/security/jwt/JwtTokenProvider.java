@@ -3,16 +3,14 @@ package ua.kvitkovo.security.jwt;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import ua.kvitkovo.users.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import ua.kvitkovo.users.entity.Role;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -31,12 +29,6 @@ public class JwtTokenProvider {
     private String secret;
     @Value("${jwt.token.expired}")
     private long validityInMilliseconds;
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
 
     @PostConstruct
     protected void init() {
