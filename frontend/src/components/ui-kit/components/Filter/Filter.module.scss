@@ -1,0 +1,18 @@
+@import '../../../../variables';
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  background-color: $page-background-color;
+  padding: 6px 8px 6px 12px;
+  border-radius: 8px;
+  gap: 8px;
+  margin-right: 12px;
+  font-size: 14px;
+  .label {
+    color: $text-color;
+  }
+  .icon {
+    display: flex;
+  }
+}
