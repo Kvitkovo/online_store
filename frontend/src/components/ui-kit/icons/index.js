@@ -16,7 +16,6 @@ import { ReactComponent as CloseGreenIcon } from './close-green.svg';
 import { ReactComponent as InCartIcon } from './in-cart.svg';
 import { ReactComponent as showList } from './icon-arrow-down.svg';
 import { ReactComponent as hideList } from './icon-arrow-right.svg';
-import { ReactComponent as removeSelection } from './icon-close.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
 
@@ -39,7 +38,6 @@ export const ICONS = {
   InCartIcon,
   showList,
   hideList,
-  removeSelection,
   checkBox,
   checkedBox,
 };

@@ -14,5 +14,8 @@
   }
   .icon {
     display: flex;
+    path {
+      stroke: $page-accent-color;
+    }
   }
 }
