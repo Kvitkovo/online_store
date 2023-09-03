@@ -25,7 +25,7 @@ import ua.kvitkovo.catalog.entity.Product;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
+@Table(name = "order_details")
 public class OrderItem {
 
     @Id
