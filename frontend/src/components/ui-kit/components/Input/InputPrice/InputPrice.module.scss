@@ -1,30 +1,9 @@
-.root {
-  margin-left: 20px;
-  width: 220px;
-  height: 72px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .input {
-      width: 92px;
-      height: 40px;
-      padding: 8px 12px;
-      border: 1px solid #242424;
-      border-radius: 8px;
-      font-size: 16px;
-      line-height: 24px;
-    }
-  }
-
-  .bot {
-    width: 206px;
-    display: flex;
-    margin: 0 auto;
-  }
+.input {
+  width: 92px;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 24px;
 }

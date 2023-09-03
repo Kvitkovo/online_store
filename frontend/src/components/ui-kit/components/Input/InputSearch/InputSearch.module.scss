@@ -14,26 +14,25 @@
     padding: 0 4px;
   }
 
-  svg {
-    margin-left: 6px;
-  }
-
   .clearBtn {
     position: absolute;
     top: 8px;
-    right: 8px;
+    right: 6px;
   }
 
   .input {
     width: 438px;
     padding: 6px;
+    margin-left: 6px;
+    gap: 10px;
     font-size: 16px;
     outline: none;
     border: none;
 
     @media (max-width: 375px) {
       width: 255px;
-      padding: 0 4px;
+      padding: 6px;
+      margin-left: 0;
     }
   }
 }

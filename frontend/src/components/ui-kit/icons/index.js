@@ -21,6 +21,9 @@ import { ReactComponent as dash } from './dash-icon.svg';
 import { ReactComponent as arrowUp } from './arrow-up.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
+import { ReactComponent as searchGreen } from './search-green.svg';
+import { ReactComponent as back } from './back-icon.svg';
+import { ReactComponent as search } from './search-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -44,6 +47,9 @@ export const ICONS = {
   removeSelection,
   dash,
   arrowUp,
+  searchGreen,
+  back,
+  search,
   checkBox,
   checkedBox,
 };

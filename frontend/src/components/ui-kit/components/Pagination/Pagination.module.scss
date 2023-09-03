@@ -1,17 +1,20 @@
 .root {
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 320px;
   height: 36px;
 
   .arrow {
-    margin-top: 6px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
   }
 
   .link {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 3px;
     width: 36px;
     cursor: pointer;
 

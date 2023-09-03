@@ -1,10 +1,10 @@
 .root {
+  margin: 30px;
   width: 246px;
   max-height: 80px;
   border: 1px solid #979797;
   border-radius: 8px;
   padding: 8px 12px;
-  cursor: pointer;
 
   .select {
     display: flex;
@@ -13,8 +13,8 @@
   }
   span {
     line-height: 24px;
-    font-size: 16px;
     user-select: none;
+    cursor: pointer;
   }
   .option {
     height: 40px;

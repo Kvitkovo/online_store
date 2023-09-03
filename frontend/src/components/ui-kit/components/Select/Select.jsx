@@ -1,23 +1,10 @@
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import styles from './Select.module.scss';
 
 import { ICONS } from '../../icons';
-import IconButton from '../IconButton';
 
-const Select = () => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('fromCheapToExpensive');
-
-  const options = {
-    fromExpensiveToCheap: 'від дорогих до дешевих',
-    fromCheapToExpensive: 'від дешевих до дорогих',
-  };
-
-  const handleChange = () => {
-    const nextValue =
-      value === 'fromCheapToExpensive'
-        ? 'fromExpensiveToCheap'
-        : 'fromCheapToExpensive';
+const Select = memo(({ open, setOpen, value, setValue, options }) => {
+  const handleChange = (nextValue) => {
     setValue(nextValue);
     setOpen(false);
   };
@@ -25,18 +12,26 @@ const Select = () => {
   return (
     <div className={styles.root}>
       <div className={styles.select} onClick={() => setOpen(!open)}>
-        <span>{options[value]}</span>
-        <IconButton icon={open ? <ICONS.arrowUp /> : <ICONS.showList />} />
+        <span>{options.find((option) => option.value === value)?.label}</span>
+        {open ? <ICONS.arrowUp /> : <ICONS.showList />}
       </div>
       {open && (
-        <div className={styles.option} onClick={handleChange}>
-          {Object.keys(options).map(
-            (key) => key !== value && <span key={key}>{options[key]}</span>,
+        <div className={styles.option}>
+          {options.map(
+            (option) =>
+              option.value !== value && (
+                <span
+                  key={option.value}
+                  onClick={() => handleChange(option.value)}
+                >
+                  {option.label}
+                </span>
+              ),
           )}
         </div>
       )}
     </div>
   );
-};
+});
 
 export default Select;
