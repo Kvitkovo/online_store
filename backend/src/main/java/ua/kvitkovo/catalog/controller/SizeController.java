@@ -164,7 +164,7 @@ public class SizeController {
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deleteSize(
-            @Parameter(description = "The ID of the size to disable", required = true,
+            @Parameter(description = "The ID of the size to delete", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {

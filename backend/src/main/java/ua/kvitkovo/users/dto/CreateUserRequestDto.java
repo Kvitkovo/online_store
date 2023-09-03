@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDto {
+public class CreateUserRequestDto {
 
     private String firstName;
     private String lastName;
@@ -23,9 +23,12 @@ public class UserRequestDto {
     @Pattern(regexp ="^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     private String email;
     private String phone;
-    @NotBlank
-    @Pattern(regexp ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})")
-    private String password;
+    private String role;
+
+    @Schema(example = "ROLE_USER", description = "User role")
+    public String getRole() {
+        return role;
+    }
 
     @Schema(example = "Andrii", description = "User first name")
     public String getFirstName() {
@@ -45,10 +48,5 @@ public class UserRequestDto {
     @Schema(example = "099-123-45-67", description = "User phone")
     public String getPhone() {
         return phone;
-    }
-
-    @Schema(example = "Password", description = "User password")
-    public String getPassword() {
-        return password;
     }
 }

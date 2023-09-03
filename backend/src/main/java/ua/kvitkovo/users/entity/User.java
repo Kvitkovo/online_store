@@ -36,7 +36,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private UserStatus status;
 
     @Column(name = "user_name")
     private String username;
@@ -55,6 +55,15 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "email_confirmed")
+    private boolean emailConfirmed;
+
+    @Column(name = "email_confirm_code")
+    private String emailConfirmCode;
+
+    @Column(name = "newsletter")
+    private boolean newsletter;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

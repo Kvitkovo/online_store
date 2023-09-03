@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.kvitkovo.users.entity.Role;
+import ua.kvitkovo.users.entity.UserStatus;
+
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -19,4 +23,8 @@ public class UserResponseDto {
     private String lastName;
     private String email;
     private String phone;
+    private UserStatus status;
+    private boolean emailConfirmed;
+    private boolean newsletter;
+    private List<Role> roles;
 }

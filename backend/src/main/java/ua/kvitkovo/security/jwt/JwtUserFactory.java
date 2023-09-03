@@ -1,7 +1,7 @@
 package ua.kvitkovo.security.jwt;
 
 import ua.kvitkovo.users.entity.Role;
-import ua.kvitkovo.users.entity.Status;
+import ua.kvitkovo.users.entity.UserStatus;
 import ua.kvitkovo.users.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +24,7 @@ public class JwtUserFactory {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .authorities(mapToGrantedAuthorities(new ArrayList<>(user.getRoles())))
-                .enabled(user.getStatus().equals(Status.ACTIVE))
+                .enabled(user.getStatus().equals(UserStatus.ACTIVE))
                 .lastPasswordResetDate(user.getUpdated()).build();
     }
 
