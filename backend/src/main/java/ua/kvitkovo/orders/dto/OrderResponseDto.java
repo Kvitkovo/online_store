@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.orders.entity.OrderStatus;
+import ua.kvitkovo.shop.dto.ShopResponseDto;
+import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
 
 import java.math.BigDecimal;
@@ -27,4 +30,17 @@ public class OrderResponseDto {
     private String postcardText;
     private BigDecimal totalSum;
     private String comment;
+    private OrderStatus status;
+    private String customerName;
+    private String customerPhone;
+    private String customerEmail;
+    private String addressCity;
+    private String addressStreet;
+    private String addressHouse;
+    private String addressApartment;
+    private String receiverName;
+    private String receiverPhone;
+    private Date dateOfShipment;
+    private UserResponseDto customer;
+    private ShopResponseDto shop;
 }

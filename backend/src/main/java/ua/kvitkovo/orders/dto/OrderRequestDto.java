@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 /**
  * @author Andriy Gaponov
  */
@@ -16,9 +14,17 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderRequestDto {
 
-    private String address;
     private Boolean addPostcard;
     private String postcardText;
-    private BigDecimal totalSum;
     private String comment;
+    private String customerName;
+    private String customerPhone;
+    private String customerEmail;
+    private String addressCity;
+    private String addressStreet;
+    private String addressHouse;
+    private String addressApartment;
+    private String receiverName;
+    private String receiverPhone;
+    private Long shopId;
 }
