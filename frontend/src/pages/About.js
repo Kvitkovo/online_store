@@ -12,21 +12,18 @@ function About() {
   };
   return (
     <div>
-      <div>
         <Checkbox
           label="Акційна ціна"
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-      </div>
       <br />
-      <div>
         <Button
           variant="primary"
           padding="padding-even"
           label="Каталог товарів"
           onClick={() => alert('clicked primary')}
-        />
+        />  
         <br />
         <Button
           variant="secondary"
@@ -35,9 +32,7 @@ function About() {
           icon={<ICONS.addComponent />}
           onClick={() => alert('clicked add')}
         />
-      </div>
       <br />
-      <div>
         <Button
           variant="primary"
           padding="padding-sm"
@@ -45,9 +40,7 @@ function About() {
           icon={<ICONS.toCart />}
           onClick={() => alert('clicked cart')}
         />
-      </div>
       <br />
-      <div>
         <Button
           variant="primary"
           padding="padding-bg"
@@ -55,20 +48,15 @@ function About() {
           icon={<ICONS.cartChecked />}
           onClick={() => alert('clicked added')}
         />
-      </div>
       <br />
-      <div>
         <Button
           variant="no-border"
           label="Додати до букету"
           icon={<ICONS.toBouquet />}
           onClick={() => alert('clicked bouquete')}
         />
-      <div>
         <Divider />
-      </div>
       <br />
-      <div>
         <Filter label="Троянди" />
         <Filter label="Троянди" />
         <Filter label="Троянди" />
