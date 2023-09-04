@@ -1,20 +1,25 @@
 @import '../../../../variables';
 
 .button {
+  font-family: $font-main;
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 12px 25px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  gap: 8px;
-  transition: all 0.2s ease-in-out;
+  .icon {
+    display: flex;
+    align-items: center;
+  }
 }
+
 .primary {
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
+  gap: 10px;
 
   &:hover {
     opacity: 0.5;
@@ -25,11 +30,23 @@
     background-color: $green-dark-color;
   }
 }
+.padding-even {
+  padding: 12px 25px;
+}
+.padding-sm {
+  padding: 12px 12px 12px 25px;
+}
+.padding-bg {
+  padding: 12px 40px 12px 56px;
+}
 
 .secondary {
+  color: $text-color;
+  font-weight: 500;
   background-color: $white-color;
   border: 1px solid $page-accent-color;
   font-size: 18px;
+  gap: 8px;
 
   &:hover {
     background-color: $page-background-color;
@@ -48,6 +65,12 @@
 
 .no-border {
   flex-direction: row-reverse;
+  color: $text-color;
   background-color: $white-color;
   font-size: 14px;
+  padding: 6px;
+  gap: 6px;
+  .icon {
+    padding: 6px;
+  }
 }

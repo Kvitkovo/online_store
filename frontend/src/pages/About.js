@@ -12,47 +12,54 @@ function About() {
   };
   return (
     <div>
-      <div>
-        <Checkbox
-          label="Акційна ціна"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-      </div>
+      <Checkbox
+        label="Акційна ціна"
+        checked={isChecked}
+        onChange={handleCheckboxChange}
+      />
+      <br />
+      <Button
+        variant="primary"
+        padding="padding-even"
+        label="Каталог товарів"
+        onClick={() => alert('clicked primary')}
+      />
+      <br />
       <Button
         variant="secondary"
+        padding="padding-sm"
         label="Додати компонент"
         icon={<ICONS.addComponent />}
         onClick={() => alert('clicked add')}
       />
+      <br />
       <Button
         variant="primary"
+        padding="padding-sm"
         label="Додати у кошик"
         icon={<ICONS.toCart />}
         onClick={() => alert('clicked cart')}
       />
-
+      <br />
       <Button
         variant="primary"
+        padding="padding-bg"
         label="У кошику"
         icon={<ICONS.cartChecked />}
         onClick={() => alert('clicked added')}
       />
+      <br />
       <Button
         variant="no-border"
         label="Додати до букету"
         icon={<ICONS.toBouquet />}
         onClick={() => alert('clicked bouquete')}
       />
-      <div>
-        <Divider />
-      </div>
+      <Divider />
       <br />
-      <div>
-        <Filter label="Троянди" />
-        <Filter label="Троянди" />
-        <Filter label="Троянди" />
-      </div>
+      <Filter label="Троянди" />
+      <Filter label="Троянди" />
+      <Filter label="Троянди" />
     </div>
   );
 }
