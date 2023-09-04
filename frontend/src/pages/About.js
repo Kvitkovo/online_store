@@ -20,50 +20,37 @@ function About() {
         />
       </div>
       <br />
-      <div>
-        <Button
-          variant="primary"
-          padding="padding-even"
-          label="Каталог товарів"
-          onClick={() => alert('clicked primary')}
-        />
-        <br />
-        <Button
-          variant="secondary"
-          padding="padding-sm"
-          label="Додати компонент"
-          icon={<ICONS.addComponent />}
-          onClick={() => alert('clicked add')}
-        />
-      </div>
+      <Button
+        variant="secondary"
+        label="Додати компонент"
+        padding="padding-sm"
+        icon={<ICONS.addComponent />}
+        onClick={() => alert('clicked add')}
+      />
       <br />
-      <div>
-        <Button
-          variant="primary"
-          padding="padding-sm"
-          label="Додати у кошик"
-          icon={<ICONS.toCart />}
-          onClick={() => alert('clicked cart')}
-        />
-      </div>
+      <Button
+        variant="primary"
+        label="Додати у кошик"
+        padding="padding-sm"
+        icon={<ICONS.toCart />}
+        onClick={() => alert('clicked cart')}
+      />
       <br />
-      <div>
-        <Button
-          variant="primary"
-          padding="padding-bg"
-          label="У кошику"
-          icon={<ICONS.cartChecked />}
-          onClick={() => alert('clicked added')}
-        />
-      </div>
+      <Button
+        variant="primary"
+        label="У кошику"
+        padding="padding-bg"
+        icon={<ICONS.cartChecked />}
+        onClick={() => alert('clicked added')}
+      />
       <br />
-      <div>
-        <Button
-          variant="no-border"
-          label="Додати до букету"
-          icon={<ICONS.toBouquet />}
-          onClick={() => alert('clicked bouquete')}
-        />
+      <Button
+        variant="no-border"
+        label="Додати до букету"
+        icon={<ICONS.toBouquet />}
+        onClick={() => alert('clicked bouquete')}
+      />
+      <br />
       <div>
         <Divider />
       </div>
