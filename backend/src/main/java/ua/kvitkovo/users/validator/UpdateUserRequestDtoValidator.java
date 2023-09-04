@@ -13,7 +13,7 @@ import ua.kvitkovo.users.dto.UserRequestDto;
  */
 @RequiredArgsConstructor
 @Component
-public class UserRequestDtoValidator implements Validator {
+public class UpdateUserRequestDtoValidator implements Validator {
 
     @Autowired
     private EmailValidator emailValidator;
@@ -29,7 +29,7 @@ public class UserRequestDtoValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserRequestDto dto = (UserRequestDto) target;
 
-        emailValidator.validate("email", dto.getEmail(), errors, true);
+        emailValidator.validate("email", dto.getEmail(), errors, false);
         passwordValidator.validate("password", dto.getPassword(), errors);
     }
 }
