@@ -1,0 +1,11 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .container {
+    max-width: 1180px;
+    width: 100%;
+    border: 1px solid #000;
+  }
+}
