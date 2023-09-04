@@ -12,10 +12,13 @@
   .label {
     color: $text-color;
   }
-  .icon {
-    display: flex;
-    path {
-      stroke: $page-accent-color;
-    }
+  button {
+    padding: 0px;
+  }
+}
+.icon {
+  display: flex;
+  path {
+    stroke: $page-accent-color;
   }
 }
