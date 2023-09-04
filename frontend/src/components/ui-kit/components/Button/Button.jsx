@@ -5,14 +5,8 @@ const Button = memo(
   ({ label, variant = 'primary', padding, type = 'button', icon, onClick }) => {
     const buttonClasses = useMemo(() => {
       const classes = [styles.button, styles[variant]];
-      if (padding === 'btn-catalogue') {
-        classes.push(styles['btn-catalogue']);
-      }
-      if (padding === 'btn-add') {
-        classes.push(styles['btn-add']);
-      }
-      if (padding === 'btn-added') {
-        classes.push(styles['btn-added']);
+      if (padding && styles[padding]) {
+        classes.push(styles[padding]);
       }
       return classes.join(' ');
     }, [variant, padding]);
