@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.users.entity.User;
 
 import java.math.BigDecimal;
@@ -56,6 +57,44 @@ public class Order {
 
     @Column(name = "order_status")
     private OrderStatus status;
+
+    @Column(name = "customer_name")
+    private String customerName;
+
+    @Column(name = "customer_phone")
+    private String customerPhone;
+
+    @Column(name = "customer_email")
+    private String customerEmail;
+
+    @Column(name = "address_city")
+    private String addressCity;
+
+    @Column(name = "address_street")
+    private String addressStreet;
+
+    @Column(name = "address_house")
+    private String addressHouse;
+
+    @Column(name = "address_apartment")
+    private String addressApartment;
+
+    @Column(name = "receiver_name")
+    private String receiverName;
+
+    @Column(name = "receiver_phone")
+    private String receiverPhone;
+
+    @Column(name = "date_of_shipment")
+    private Date dateOfShipment;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private User customer;
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id", nullable = false)
+    private Shop shop;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private Set<OrderItem> orderItems;
