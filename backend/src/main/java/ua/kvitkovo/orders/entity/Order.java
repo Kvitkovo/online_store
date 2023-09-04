@@ -38,7 +38,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User manager;
 
     @Column(name = "address_text")
     private String address;

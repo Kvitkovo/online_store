@@ -7,7 +7,6 @@ import lombok.Setter;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
 import ua.kvitkovo.users.dto.UserResponseDto;
-import ua.kvitkovo.users.entity.User;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class OrderResponseDto {
     private Long id;
     private Date created;
     private Date updated;
-    private User user;
+    private UserResponseDto manager;
     private String address;
     private Boolean addPostcard;
     private String postcardText;
