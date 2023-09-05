@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../scss/Header.scss';
-import Button from './ui-kit/components/Button';
+import './Header.module.scss';
+import Button from '../../ui-kit/components/Button';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -35,10 +35,7 @@ const Header = () => {
         </div>
         <div className="text-icon">
           <img src="images/phone-icon.svg" alt="phone reciever" />
-          <a className="links" href="tel:(093) 777-77-77">
-            {' '}
-            (093) 777-77-77{' '}
-          </a>
+          <p>(093) 777-77-77</p>
         </div>
         <ul>
           <li>
@@ -49,6 +46,11 @@ const Header = () => {
           <li>
             <NavLink className="links" to="/about">
               Про нас
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="links" to="/shops">
+              Магазини
             </NavLink>
           </li>
           <li>
