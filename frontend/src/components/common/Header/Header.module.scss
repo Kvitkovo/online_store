@@ -1,5 +1,4 @@
-@import '../variables';
-
+@import '../../../variables';
 
 header {
   margin: 20px 0;
@@ -30,7 +29,7 @@ header {
     transition: all 0.2s ease-in-out;
   }
   .links:hover {
-    color: $page-accent-color;
+    color: #6cc25e;
   }
 
   .links:active {
@@ -52,7 +51,7 @@ header {
   }
 
   .vertical-line {
-    border-left: 1px solid $page-accent-color;
+    border-left: 1px solid #6cc25e;
     height: 40px;
   }
 
@@ -66,7 +65,7 @@ header {
   .btn-language {
     margin-right: 80px;
     border-radius: 20px;
-    border: 1px solid $page-background-color;
+    border: 1px solid #f1ffef;
     background-color: white;
   }
 
@@ -87,7 +86,7 @@ header {
   .search {
     display: flex;
     flex-direction: row;
-    border: 1px solid $gray-dots-color;
+    border: 1px solid #979797;
     border-radius: 8px;
   }
 
@@ -116,10 +115,4 @@ header {
   .cart {
     cursor: pointer;
   }
-
-  @media screen and (max-width: 767px){
-
-    display: none;
-  }
-
 }
