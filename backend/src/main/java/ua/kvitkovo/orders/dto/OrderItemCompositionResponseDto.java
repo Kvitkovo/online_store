@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.kvitkovo.catalog.dto.ProductResponseDto;
 
 import java.math.BigDecimal;
 
@@ -20,4 +19,16 @@ public class OrderItemCompositionResponseDto {
     private Long id;
     private ProductResponseDto product;
     private BigDecimal qty;
+
+    public Long getId() {
+        return id;
+    }
+
+    public ProductResponseDto getProduct() {
+        return product;
+    }
+
+    public BigDecimal getQty() {
+        return qty;
+    }
 }

@@ -29,8 +29,11 @@ public class OrderItem {
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "product_title", nullable = false)
+    private String productTitle;
 
     @Column(name = "product_price")
     private BigDecimal price;

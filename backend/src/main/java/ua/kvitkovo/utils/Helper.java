@@ -1,17 +1,18 @@
 package ua.kvitkovo.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.http.HttpHeaders;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Andriy Gaponov
@@ -39,8 +40,8 @@ public class Helper {
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
-            .matcher(emailAddress)
-            .matches();
+                .matcher(emailAddress)
+                .matches();
     }
 
     public static String getBaseUrl(HttpServletRequest httpRequest) {

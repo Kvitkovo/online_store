@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.users.entity.User;
 
@@ -21,6 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
 
     @Id
@@ -43,9 +45,6 @@ public class Order {
     @Column(name = "address_text")
     private String address;
 
-    @Column(name = "add_postcard")
-    private Boolean addPostcard;
-
     @Column(name = "postcard_text")
     private String postcardText;
 
@@ -56,6 +55,7 @@ public class Order {
     private String comment;
 
     @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Column(name = "customer_name")
@@ -85,6 +85,7 @@ public class Order {
     @Column(name = "receiver_phone")
     private String receiverPhone;
 
+    @CreatedDate
     @Column(name = "date_of_shipment")
     private Date dateOfShipment;
 

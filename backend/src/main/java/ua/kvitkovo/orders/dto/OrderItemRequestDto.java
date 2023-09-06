@@ -1,5 +1,7 @@
 package ua.kvitkovo.orders.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,33 @@ import java.util.Set;
 public class OrderItemRequestDto {
 
     private Long productId;
+    private String productTitle;
     private BigDecimal price;
+    @NotNull
     private BigDecimal qty;
     private Set<OrderItemCompositionRequestDto> orderItemsCompositions;
+
+    @Schema(example = "1", description = "Product ID")
+    public Long getProductId() {
+        return productId;
+    }
+
+    @Schema(example = "Власний букет", description = "Product title")
+    public String getProductTitle() {
+        return productTitle;
+    }
+
+    @Schema(example = "1000.50", description = "Product price")
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    @Schema(example = "2", description = "Product quantity")
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    public Set<OrderItemCompositionRequestDto> getOrderItemsCompositions() {
+        return orderItemsCompositions;
+    }
 }
