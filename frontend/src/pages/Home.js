@@ -1,6 +1,6 @@
 import React from 'react';
 import '../scss/Home.scss';
-import Carousel from '../components/Carousel';
+import Carousel from '../components/Carousel/Carousel';
 import IconButton from '../components/ui-kit/components/IconButton';
 import { ICONS } from '../components/ui-kit/icons';
 import Discount from '../components/ui-kit/components/Discount';

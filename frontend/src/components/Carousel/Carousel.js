@@ -1,4 +1,4 @@
-import '../scss/Carousel.scss';
+import './Carousel.scss';
 import React, { useEffect, useState } from 'react';
 
 const Carousel = ({ data }) => {
