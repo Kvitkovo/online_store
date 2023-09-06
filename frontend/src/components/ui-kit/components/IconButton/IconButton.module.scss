@@ -27,9 +27,10 @@
   padding: 6px;
 }
 .icon-round {
+  display: inline-flex;
   border-radius: 50%;
   background-color: $white-color;
-  padding: 10px 11.5px;
+  padding: 10px;
 }
 .icon-opacity {
   opacity: 0.5;
