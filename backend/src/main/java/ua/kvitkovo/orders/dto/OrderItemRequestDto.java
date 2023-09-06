@@ -1,6 +1,7 @@
 package ua.kvitkovo.orders.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,9 @@ import java.util.Set;
 public class OrderItemRequestDto {
 
     private Long productId;
+    @NotBlank
     private String productTitle;
+    @NotNull
     private BigDecimal price;
     @NotNull
     private BigDecimal qty;
