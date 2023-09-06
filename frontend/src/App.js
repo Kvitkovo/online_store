@@ -7,13 +7,13 @@ import Shops from './pages/Shops';
 import Delivery from './pages/Delivery';
 import Handling from './pages/Handling';
 import './App.scss';
-import Header from './components/Header';
+// import Header from './components/Header';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
+        {/* <Header /> */}
         <div>
           <Routes>
             <Route path="/" element={<Home />} />

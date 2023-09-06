@@ -1,5 +1,7 @@
-import './Carousel.scss';
+import styles from './Carousel.module.scss';
 import React, { useEffect, useState } from 'react';
+import IconButton from '../ui-kit/components/IconButton';
+import { ICONS } from '../ui-kit/icons';
 
 const Carousel = ({ data }) => {
   const [slide, setSlide] = useState(0);
@@ -50,41 +52,51 @@ const Carousel = ({ data }) => {
   };
   return (
     <div
-      className="carousel"
+      className={styles.carousel}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      <img
-        src="./images/button_left.jpg"
-        alt="стрілка ліворуч"
-        className="arrow arrow-left"
-        onClick={prevSlide}
-      ></img>
+      <div className={styles.arrow + ' ' + styles['arrow-left']}>
+        <IconButton
+          icon={<ICONS.ArrowLeftIcon />}
+          isRound={true}
+          isOpacity={true}
+          onClick={prevSlide}
+        />
+      </div>
       {data.map((item, index) => {
         return (
           <img
             src={item.src}
             alt={item.alt}
-            key={index}
-            className={slide === index ? 'slide' : 'slide slide-hidden'}
+            key={item.src}
+            className={
+              slide === index
+                ? `${styles.slide}`
+                : `${styles['slide-hidden'] + ' ' + styles.slide}`
+            }
           />
         );
       })}
-      <img
-        src="./images/button_right.jpg"
-        alt="стрілка праворуч"
-        className="arrow arrow-right"
-        onClick={nextSlide}
-      ></img>
-      <span className="indicators">
+      <div className={styles.arrow + ' ' + styles['arrow-right']}>
+        <IconButton
+          icon={<ICONS.ArrowRightIcon />}
+          isRound={true}
+          isOpacity={true}
+          onClick={nextSlide}
+        />
+      </div>
+      <span className={styles.indicators}>
         {data.map((item, index) => {
           return (
             <div
-              key={index}
+              key={item}
               onClick={() => setSlide(index)}
               className={
-                slide === index ? 'indicator' : 'indicator indicator-inactive'
+                slide === index
+                  ? `${styles.indicator}`
+                  : `${styles.indicator + ' ' + styles['indicator-inactive']}`
               }
             ></div>
           );
