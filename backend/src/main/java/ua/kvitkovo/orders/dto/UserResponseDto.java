@@ -1,14 +1,10 @@
-package ua.kvitkovo.users.dto;
+package ua.kvitkovo.orders.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.kvitkovo.users.entity.Role;
-import ua.kvitkovo.users.entity.UserStatus;
-
-import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -24,10 +20,6 @@ public class UserResponseDto {
     private String lastName;
     private String email;
     private String phone;
-    private UserStatus status;
-    private boolean emailConfirmed;
-    private boolean newsletter;
-    private List<Role> roles;
 
     @Schema(example = "1", description = "User ID")
     public long getId() {
@@ -52,23 +44,5 @@ public class UserResponseDto {
     @Schema(example = "099-123-45-67", description = "User phone")
     public String getPhone() {
         return phone;
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    @Schema(example = "true", description = "Email is confirmed")
-    public boolean isEmailConfirmed() {
-        return emailConfirmed;
-    }
-
-    @Schema(example = "true", description = "Permission to receive advertising messages")
-    public boolean isNewsletter() {
-        return newsletter;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
     }
 }
