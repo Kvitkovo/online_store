@@ -91,7 +91,7 @@ const Carousel = ({ data }) => {
         {data.map((item, index) => {
           return (
             <div
-              key={item}
+              key={item.src}
               onClick={() => setSlide(index)}
               className={
                 slide === index
