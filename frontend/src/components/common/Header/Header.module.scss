@@ -1,31 +1,60 @@
 @import '../../../variables';
 
 header {
-  margin: 20px 0;
-  background-color: white;
-  width: 100%;
+  margin: 10px 0;
+  background-color: $white-color;
+  //width: 100%;
 
-  .container-top {
+  .containerTop {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    height: 64px;
   }
-
+  .logo {
+    width: 137px;
+    height: 50px;
+    margin-left: 50px;
+    cursor: pointer;
+  }
+  .leftTop {
+    display: flex;
+    gap: 26px;
+  }
+  .location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 6px;
+    color: $text-color;
+  }
+  .phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .text {
+    color: $text-color;
+  }
+  .phoneNumber {
+    padding: 8px;
+    color: $text-color;
+  }
   ul {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
   }
-
-  li {
+  .links {
+    color: $text-color;
+    font-size: 16px;
     list-style: none;
     padding: 8px;
-  }
-
-  .links {
     text-decoration: none;
-    color: black;
     transition: all 0.2s ease-in-out;
   }
   .links:hover {
@@ -36,43 +65,30 @@ header {
     color: rgb(255, 255, 0);
   }
 
-  .logo {
-    width: 137px;
-    height: 50px;
-    margin-left: 80px;
-    cursor: pointer;
-  }
-
-  .city {
-    font-size: 20px;
-  }
   .promotions {
     color: #de5f38;
   }
 
-  .vertical-line {
+  .verticalLine {
     border-left: 1px solid #6cc25e;
     height: 40px;
   }
-
-  .text-icon {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+  .accessIcon {
+    padding: 6px;
   }
 
-  .btn-language {
-    margin-right: 80px;
+  .btnLanguage {
+    margin-right: 50px;
     border-radius: 20px;
     border: 1px solid #f1ffef;
     background-color: white;
   }
 
-  .container-bottom {
+  .containerBottom {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    z-index: 1;
   }
   .sticky {
     position: fixed;
@@ -90,7 +106,7 @@ header {
     border-radius: 8px;
   }
 
-  .search-field {
+  .searchField {
     padding: 4px;
     border: none;
     border-radius: 8px;
@@ -99,14 +115,14 @@ header {
     height: 44px;
   }
 
-  .search-button {
+  .searchButton {
     background: transparent;
     border: none;
     outline: none;
     margin-left: -33px;
   }
 
-  .search-icon {
+  .searchIcon {
     width: 20px;
     height: 20px;
     margin-left: 50px;
