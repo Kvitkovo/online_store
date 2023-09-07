@@ -2,7 +2,15 @@ import React, { memo, useMemo } from 'react';
 import styles from './Button.module.scss';
 
 const Button = memo(
-  ({ label, variant = 'primary', padding, type = 'button', icon, onClick }) => {
+  ({
+    label,
+    variant = 'primary',
+    padding,
+    reverse,
+    type = 'button',
+    icon,
+    onClick,
+  }) => {
     const buttonClasses = useMemo(() => {
       const classes = [styles.button, styles[variant]];
       if (padding && styles[padding]) {
@@ -10,10 +18,18 @@ const Button = memo(
       }
       return classes.join(' ');
     }, [variant, padding]);
+    const containerStyle = useMemo(() => {
+      return {
+        display: 'flex',
+        flexDirection: reverse ? 'row-reverse' : 'row',
+      };
+    }, [reverse]);
     return (
       <button className={buttonClasses} type={type} onClick={onClick}>
-        <span className={styles.label}>{label}</span>
-        <span className={styles.icon}> {icon} </span>{' '}
+        <div className={styles.btnContainer} style={containerStyle}>
+          <span className={styles.label}>{label}</span>
+          <span className={styles.icon}> {icon} </span>{' '}
+        </div>
       </button>
     );
   },
