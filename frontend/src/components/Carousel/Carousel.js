@@ -19,7 +19,7 @@ const Carousel = ({ data }) => {
     return () => {
       clearInterval(slider);
     };
-  });
+  }, [slide, data.length]);
 
   const nextSlide = () => {
     setSlide(slide === data.length - 1 ? 0 : slide + 1);
