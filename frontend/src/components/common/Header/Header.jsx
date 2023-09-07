@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Header.module.scss';
+import styles from './Header.module.scss';
 import Button from '../../ui-kit/components/Button';
+import { ICONS } from '../../ui-kit/icons';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -20,82 +21,83 @@ const Header = () => {
   }, []);
   return (
     <header>
-      <div className="container-top">
-        <NavLink to="/">
-          <img
-            className="logo"
-            src="images/logo.svg"
-            alt="логотип магазину 'Квітково'"
-          />
-        </NavLink>
+      <div className={styles.containerTop}>
+        <div className={styles.leftTop}>
+          {' '}
+          <NavLink to="/">
+            <img
+              className={styles.logo}
+              src="images/logo.svg"
+              alt="логотип магазину 'Квітково'"
+            />
+          </NavLink>
+          <div className={styles.location}>
+            <ICONS.location />
+            <p className={styles.text}>
+              <b>Київ</b>
+            </p>
+          </div>
+          <div className={styles.phone}>
+            <img src="images/phone-icon.svg" alt="phone reciever" />
+            <p className={styles.phoneNumber}>(093) 777-77-77</p>
+          </div>
+        </div>
 
-        <div className="text-icon">
-          <img src="images/location-icon.svg" alt="location icon" />
-          <p className="city">Київ</p>
-        </div>
-        <div className="text-icon">
-          <img src="images/phone-icon.svg" alt="phone reciever" />
-          <p>(093) 777-77-77</p>
-        </div>
         <ul>
           <li>
-            <NavLink className="links promotions" to="/promotions">
+            <NavLink
+              className={`${styles.links} ${styles.promotions}`}
+              to="/promotions"
+            >
               Акції
             </NavLink>
           </li>
           <li>
-            <NavLink className="links" to="/about">
+            <NavLink className={styles.links} to="/about">
               Про нас
             </NavLink>
           </li>
           <li>
-            <NavLink className="links" to="/shops">
-              Магазини
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="links" to="/delivery">
+            <NavLink className={styles.links} to="/delivery">
               Доставка та оплата
             </NavLink>
           </li>
           <li>
-            <NavLink className="links" to="/handling">
+            <NavLink className={styles.links} to="/handling">
               Догляд за квітами
             </NavLink>
           </li>
-          <li className="vertical-line"></li>
-          <li className="access-icon">
+          <li className={styles.verticalLine}></li>
+          <li className={styles.accessIcon}>
             <img
               src="images/access-icon.svg"
               alt="person with open arms for accessibility"
             />
           </li>
           <li>
-            <button className="btn-language">Укр</button>
+            <button className={styles.btnLanguage}>Укр</button>
           </li>
         </ul>
       </div>
 
-      <div className={`container-bottom ${sticky ? 'sticky' : ''}`}>
+      <div
+        className={`${styles.containerBottom} ${sticky ? styles.sticky : ''}`}
+      >
         <Button
           variant="primary"
           padding="padding-even"
           label="Каталог товарів"
           onClick={() => alert('clicked primary')}
         />
-        <div className="search">
-          <button type="submit" className="search-button">
-            <img
-              className="search-icon"
-              src="images/search-icon.svg"
-              alt="magnifying glass icon"
-            />
-          </button>
-
-          <input className="search-field" type="search" placeholder="Пошук" />
+        <div className={styles.search}>
+          <input
+            className={styles.searchField}
+            type="search"
+            placeholder="Пошук"
+          />
         </div>
 
-        <div className="text-icon">
+        <div className={styles.textIcon}>
           <p>Зібрати букет</p>
           <img
             src="images/bouquet-icon.svg"
@@ -103,7 +105,7 @@ const Header = () => {
           />
         </div>
 
-        <div className="text-icon">
+        <div className={styles.textIcon}>
           <p>Увійти</p>
           <img
             src="images/person-icon.svg"
@@ -111,7 +113,7 @@ const Header = () => {
           />
         </div>
 
-        <div className="cart">
+        <div className={styles.cart}>
           <img src="images/cart-icon.svg" alt="cart outline icon" />
         </div>
       </div>
