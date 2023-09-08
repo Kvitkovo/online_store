@@ -20,31 +20,31 @@ function About() {
       <br />
       <Button
         variant="primary"
-        padding="padding-even"
         label="Каталог товарів"
+        padding="padding-even"
         onClick={() => alert('clicked primary')}
       />
       <br />
       <Button
         variant="secondary"
-        padding="padding-sm"
         label="Додати компонент"
+        padding="padding-sm"
         icon={<ICONS.addComponent />}
         onClick={() => alert('clicked add')}
       />
       <br />
       <Button
         variant="primary"
-        padding="padding-sm"
         label="Додати у кошик"
+        padding="padding-sm"
         icon={<ICONS.toCart />}
         onClick={() => alert('clicked cart')}
       />
       <br />
       <Button
         variant="primary"
-        padding="padding-bg"
         label="У кошику"
+        padding="padding-bg"
         icon={<ICONS.cartChecked />}
         onClick={() => alert('clicked added')}
       />
@@ -52,7 +52,40 @@ function About() {
       <Button
         variant="no-border"
         label="Додати до букету"
+        padding="padding-header-sm"
+        reverse="true"
         icon={<ICONS.toBouquet />}
+        onClick={() => alert('clicked bouquete')}
+      />
+      <br />
+      <Button
+        variant="no-border"
+        label="Зібрати букет"
+        padding="padding-header-sm"
+        icon={<ICONS.toBouquet />}
+        onClick={() => alert('clicked bouquete')}
+      />
+      <Button
+        variant="no-border"
+        label="Увійти"
+        padding="padding-header-even"
+        icon={<ICONS.halfPerson />}
+        onClick={() => alert('clicked bouquete')}
+      />
+      <Button
+        variant="no-border"
+        label="(093) 777-77-77"
+        padding="padding-header-even"
+        reverse="true"
+        icon={<ICONS.phone />}
+        onClick={() => alert('clicked bouquete')}
+      />
+      <Button
+        variant="no-border"
+        label="Київ"
+        padding="padding-header-even"
+        reverse="true"
+        icon={<ICONS.location />}
         onClick={() => alert('clicked bouquete')}
       />
       <Divider />

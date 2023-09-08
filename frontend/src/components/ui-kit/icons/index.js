@@ -18,6 +18,10 @@ import { ReactComponent as showList } from './icon-arrow-down.svg';
 import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
+import { ReactComponent as location } from './location-icon.svg';
+import { ReactComponent as person } from './person-icon.svg';
+import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
+import { ReactComponent as phone } from './phone-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -40,4 +44,8 @@ export const ICONS = {
   hideList,
   checkBox,
   checkedBox,
+  location,
+  person,
+  halfPerson,
+  phone,
 };
