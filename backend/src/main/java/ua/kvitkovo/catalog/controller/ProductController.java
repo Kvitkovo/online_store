@@ -115,7 +115,7 @@ public class ProductController {
             schema = @Schema(type = "string")
         ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection) {
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
-            "price");
+            "priceWithDiscount");
         return productService.getDiscounted(pageable);
     }
 
