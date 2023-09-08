@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from './Card.module.scss';
+import IconButton from '../ui-kit/components/IconButton';
+import { ICONS } from '../ui-kit/icons';
+import Discount from '../ui-kit/components/Discount/Discount';
 
 const Card = (props) => {
   return (
@@ -17,7 +20,7 @@ const Card = (props) => {
           props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
         }
       >
-        {props.discount}%
+        <Discount discount={props.discount} />
       </div>
       <div className={styles['card-info']}>
         <p>Ціна</p>
@@ -42,18 +45,14 @@ const Card = (props) => {
                 : `${styles.icons}`
             }
           >
-            <img
-              src="./images/bouquet-card.svg"
-              alt="додати в букет"
+            <div
               className={
                 props.bouquet === false ? `${styles.hide}` : `${styles.bouquet}`
               }
-            />
-            <img
-              src="./images/cart-card.svg"
-              alt="додати в корзину"
-              className="cart"
-            />
+            >
+              <IconButton icon={<ICONS.BouquetIcon />} />
+            </div>
+            <IconButton icon={<ICONS.CartIcon />} isBorderYellow={true} />
           </div>
         </div>
       </div>
