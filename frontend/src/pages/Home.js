@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/Home.scss';
-import Carousel from '../components/Carousel/Carousel';
+import Carousel from '../components/Carousel';
 import carouselData from '../data/carouselData.json';
 import DiscountPrice from '../components/ui-kit/components/DiscountPrice';
 import Card from '../components/Card';
