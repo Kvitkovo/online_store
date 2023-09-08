@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins.scss';
+@import '../../variables';
+@import '../../mixins.scss';
 
 .carousel {
   position: relative;
@@ -18,11 +18,6 @@
   }
   .arrow {
     position: absolute;
-    border-radius: 50%;
-    opacity: 0.5;
-  }
-  .arrow:hover {
-    cursor: pointer;
   }
   .arrow-left {
     left: 1rem;

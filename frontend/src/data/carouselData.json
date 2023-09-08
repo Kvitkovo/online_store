@@ -1,0 +1,7 @@
+{
+  "slides": [
+    { "src": "./images/banner-01.jpg", "alt": "перший банер" },
+    { "src": "./images/banner-02.jpg", "alt": "другий банер" },
+    { "src": "./images/banner-03.jpg", "alt": "третій банер" }
+  ]
+}
