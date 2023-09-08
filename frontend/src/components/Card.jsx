@@ -1,4 +1,5 @@
-import '../scss/Card.scss'
+import '../scss/Card.scss';
+import React from 'react';
 const Card = (props) => {
   return (
     <div className={props.status === 'NO_ACTIVE' ? 'card inactive' : 'card'}>
@@ -32,6 +33,6 @@ const Card = (props) => {
         </div>
       </div>
     </div>
-  )
-}
-export default Card
+  );
+};
+export default Card;

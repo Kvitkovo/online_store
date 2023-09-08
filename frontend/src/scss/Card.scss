@@ -66,12 +66,12 @@
       .actual-price {
         font-size: 24px;
         font-weight: 700;
-        color: $accent-color;
+        color: $page-accent-color;
 
         span {
           font-weight: 400;
           font-size: 20px;
-          color: $accent-color;
+          color: $page-accent-color;
           padding-left: 4px;
         }
       }
@@ -89,7 +89,7 @@
           padding: 6px;
 
           &:hover {
-            border: 1px solid $accent-color;
+            border: 1px solid $page-accent-color;
           }
         }
       }
