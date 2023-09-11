@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import Button from '../../ui-kit/components/Button';
@@ -6,43 +6,41 @@ import { ICONS } from '../../ui-kit/icons';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+
+  window.onscroll = () => {
+    if (window.scrollY > 70) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
   return (
     <header>
       <div className={styles.containerTop}>
-        <div className={styles.leftTop}>
-          {' '}
-          <NavLink to="/">
-            <img
-              className={styles.logo}
-              src="images/logo.svg"
-              alt="логотип магазину 'Квітково'"
-            />
-          </NavLink>
-          <div className={styles.location}>
-            <ICONS.location />
-            <p className={styles.text}>
-              <b>Київ</b>
-            </p>
-          </div>
-          <div className={styles.phone}>
-            <img src="images/phone-icon.svg" alt="phone reciever" />
-            <p className={styles.phoneNumber}>(093) 777-77-77</p>
-          </div>
+        {' '}
+        <NavLink to="/">
+          <img
+            className={styles.logo}
+            src="images/logo.svg"
+            alt="логотип магазину 'Квітково'"
+          />
+        </NavLink>
+        <div className={styles.contacts}>
+          <Button
+            variant="no-border"
+            label="Київ"
+            padding="padding-header-even"
+            reverse="true"
+            icon={<ICONS.location />}
+          />
+          <Button
+            variant="no-border"
+            label="(093) 777-77-77"
+            padding="padding-header-even"
+            reverse="true"
+            icon={<ICONS.phone />}
+          />
         </div>
-
         <ul>
           <li>
             <NavLink
@@ -69,10 +67,7 @@ const Header = () => {
           </li>
           <li className={styles.verticalLine}></li>
           <li className={styles.accessIcon}>
-            <img
-              src="images/access-icon.svg"
-              alt="person with open arms for accessibility"
-            />
+            <ICONS.person />
           </li>
           <li>
             <button className={styles.btnLanguage}>Укр</button>
@@ -83,12 +78,15 @@ const Header = () => {
       <div
         className={`${styles.containerBottom} ${sticky ? styles.sticky : ''}`}
       >
-        <Button
-          variant="primary"
-          padding="padding-even"
-          label="Каталог товарів"
-          onClick={() => alert('clicked primary')}
-        />
+        <div className={styles.btnCatalogue}>
+          <Button
+            variant="primary"
+            padding="padding-even"
+            label="Каталог товарів"
+            onClick={() => alert('clicked primary')}
+          />
+        </div>
+
         <div className={styles.search}>
           <input
             className={styles.searchField}
@@ -96,25 +94,25 @@ const Header = () => {
             placeholder="Пошук"
           />
         </div>
-
-        <div className={styles.textIcon}>
-          <p>Зібрати букет</p>
-          <img
-            src="images/bouquet-icon.svg"
-            alt="three roses wraped in a boquete"
+        <div className={styles.action}>
+          <Button
+            variant="no-border"
+            label="Зібрати букет"
+            padding="padding-header-sm"
+            icon={<ICONS.toBouquet />}
+            onClick={() => alert('clicked bouquete')}
           />
-        </div>
 
-        <div className={styles.textIcon}>
-          <p>Увійти</p>
-          <img
-            src="images/person-icon.svg"
-            alt="person`s head and shoulders outline icon"
+          <Button
+            variant="no-border"
+            label="Увійти"
+            padding="padding-header-even"
+            icon={<ICONS.halfPerson />}
+            onClick={() => alert('clicked bouquete')}
           />
-        </div>
-
-        <div className={styles.cart}>
-          <img src="images/cart-icon.svg" alt="cart outline icon" />
+          <div className={styles.cart}>
+            <ICONS.CartIcon />
+          </div>
         </div>
       </div>
     </header>
