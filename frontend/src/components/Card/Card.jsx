@@ -13,7 +13,15 @@ const Card = (props) => {
           : `${styles.card}`
       }
     >
-      <img src={props.image} alt="букет" />
+      <img
+        src={props.image}
+        alt="букет"
+        className={
+          props.status === 'NO_ACTIVE'
+            ? `${styles.foto + ' ' + styles['foto-inactive']}`
+            : `${styles.foto}`
+        }
+      />
       <h3>
         {props.title.charAt(0).toUpperCase() +
           props.title.substring(1).toLowerCase()}
@@ -26,7 +34,22 @@ const Card = (props) => {
         <Discount discount={props.discount} />
       </div>
       <div className={styles['card-info']}>
-        <p>Ціна</p>
+        <div className={styles['text-flex']}>
+          <p
+            className={
+              props.status === 'NO_ACTIVE'
+                ? `${styles.inactive + ' ' + styles.price}`
+                : `${styles.price}`
+            }
+          >
+            Ціна
+          </p>
+          {props.status === 'NO_ACTIVE' ? (
+            <p className={styles['out-of-stock']}>Немає в наявності</p>
+          ) : (
+            <span></span>
+          )}
+        </div>
         <div
           className={
             props.discount === 0
@@ -37,9 +60,23 @@ const Card = (props) => {
           {props.oldPrice} грн
         </div>
         <div className={styles['card-flex-bottom']}>
-          <div className={styles['actual-price']}>
+          <div
+            className={
+              props.status === 'NO_ACTIVE'
+                ? `${styles['actual-price'] + ' ' + styles.inactive}`
+                : `${styles['actual-price']}`
+            }
+          >
             {props.price}
-            <span>грн</span>
+            <span
+              className={
+                props.status === 'NO_ACTIVE'
+                  ? `${styles.currency + ' ' + styles.inactive}`
+                  : `${styles.currency}`
+              }
+            >
+              грн
+            </span>
           </div>
           <div
             className={

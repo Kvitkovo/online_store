@@ -10,6 +10,7 @@
   &:hover {
     box-shadow: 0px 2px 10px 0px rgba(151, 207, 142, 0.44);
   }
+
   .hide {
     display: none;
   }
@@ -18,9 +19,14 @@
     visibility: hidden;
     line-height: 24px;
   }
-  img {
+
+  .foto {
     width: 100%;
     border-radius: 8px 8px 0 0;
+  }
+
+  .foto-inactive {
+    opacity: 0.5;
   }
 
   h3 {
@@ -41,7 +47,17 @@
   .card-info {
     padding: 12px;
 
-    p {
+    .text-flex {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .out-of-stock {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+    .price {
       font-size: 14px;
       line-height: 24px;
       padding-bottom: 14px;
@@ -57,40 +73,40 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+    .actual-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: $page-accent-color;
+    }
+    .currency {
+      font-weight: 400;
+      font-size: 20px;
+      color: $page-accent-color;
+      padding-left: 4px;
+    }
 
-      .actual-price {
-        font-size: 24px;
-        font-weight: 700;
-        color: $page-accent-color;
+    .inactive {
+      color: #dbdbdb;
+    }
 
-        span {
-          font-weight: 400;
-          font-size: 20px;
-          color: $page-accent-color;
-          padding-left: 4px;
-        }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .bouquet {
+        padding-right: 6px;
       }
-      .icons {
-        display: flex;
-        align-items: center;
-        gap: 16px;
+      .cart {
+        border-radius: 8px;
+        border: 1px solid #e1c429;
+        padding: 6px;
 
-        .bouquet {
-          padding-right: 6px;
-        }
-        .cart {
-          border-radius: 8px;
-          border: 1px solid #e1c429;
-          padding: 6px;
-
-          &:hover {
-            border: 1px solid $page-accent-color;
-          }
+        &:hover {
+          border: 1px solid $page-accent-color;
         }
       }
     }
   }
-}
-.inactive {
-  opacity: 0.5;
 }
