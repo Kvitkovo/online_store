@@ -32,7 +32,11 @@ const Home = () => {
           data.map((card) => (
             <Card
               bouquet={card.allowAddToConstructor}
-              image={card.images[0] ? card.images[0].urlSmall : ''}
+              image={
+                card.images[0]
+                  ? card.images[0].urlSmall
+                  : './images/no_image.jpg'
+              }
               title={card.title}
               discount={card.discount}
               oldPrice={card.priceWithDiscount}
