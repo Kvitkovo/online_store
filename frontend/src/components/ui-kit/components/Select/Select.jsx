@@ -8,7 +8,6 @@ const Select = memo(({ open, setOpen, value, setValue, options }) => {
     setValue(nextValue);
     setOpen(false);
   };
-
   return (
     <div className={styles.root}>
       <div className={styles.select} onClick={() => setOpen(!open)}>

@@ -5,23 +5,25 @@
   border: 1px solid #979797;
   border-radius: 8px;
   padding: 8px 12px;
+}
 
-  .select {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-  }
-  span {
-    line-height: 24px;
-    user-select: none;
-    cursor: pointer;
-  }
-  .option {
-    height: 40px;
-    margin-top: 10px;
+.select {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
 
-    &:hover {
-      color: #6cc25e;
-    }
+span {
+  line-height: 24px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.option {
+  height: 40px;
+  margin-top: 10px;
+
+  &:hover {
+    color: #6cc25e;
   }
 }

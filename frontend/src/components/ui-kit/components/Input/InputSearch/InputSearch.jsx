@@ -1,30 +1,19 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, memo } from 'react';
 import styles from './InputSearch.module.scss';
+
+import useIsMobile from '../../../../../hooks/useIsMobile';
 
 import { ICONS } from '../../../icons';
 import IconButton from '../../IconButton';
 
-const InputSearch = memo(({ search, setSearch }) => {
-  const [smallScreen, setSmallScreen] = useState(false);
+const InputSearch = memo(({ search, changeInput, clearInput }) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 375px)');
-
-    const handleMediaChange = (event) => {
-      setSmallScreen(event.matches);
-    };
-    mediaQuery.addListener(handleMediaChange);
-    handleMediaChange(mediaQuery);
-
-    return () => {
-      mediaQuery.removeListener(handleMediaChange);
-    };
-  }, []);
+  const isSmallScreen = useIsMobile('(max-width: 412px)');
 
   return (
     <div className={styles.root}>
-      {smallScreen ? (
+      {isSmallScreen ? (
         <IconButton icon={<ICONS.back />} />
       ) : isFocused ? (
         <ICONS.searchGreen />
@@ -33,10 +22,7 @@ const InputSearch = memo(({ search, setSearch }) => {
       )}
       {search && (
         <div className={styles.clearBtn}>
-          <IconButton
-            onClick={() => setSearch('')}
-            icon={<ICONS.CloseIcon />}
-          />
+          <IconButton onClick={clearInput} icon={<ICONS.CloseIcon />} />
         </div>
       )}
       <input
@@ -44,7 +30,7 @@ const InputSearch = memo(({ search, setSearch }) => {
         type="text"
         placeholder="Пошук"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={changeInput}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />

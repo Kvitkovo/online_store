@@ -9,30 +9,30 @@
   gap: 4px;
   position: relative;
 
-  @media (max-width: 375px) {
+  @media (max-width: 412px) {
     width: 343px;
     padding: 0 4px;
   }
+}
 
-  .clearBtn {
-    position: absolute;
-    top: 8px;
-    right: 6px;
-  }
+.clearBtn {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+}
 
-  .input {
-    width: 438px;
+.input {
+  width: 438px;
+  padding: 6px;
+  margin-left: 6px;
+  gap: 10px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+
+  @media (max-width: 412px) {
+    width: 255px;
     padding: 6px;
-    margin-left: 6px;
-    gap: 10px;
-    font-size: 16px;
-    outline: none;
-    border: none;
-
-    @media (max-width: 375px) {
-      width: 255px;
-      padding: 6px;
-      margin-left: 0;
-    }
+    margin-left: 0;
   }
 }
