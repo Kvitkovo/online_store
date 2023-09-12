@@ -1,0 +1,122 @@
+@import '../../../variables';
+
+header {
+  margin: 7px 0;
+  background-color: $white-color;
+  //margin: 7px 130px;
+  font-weight: 400;
+
+  .containerTop {
+    display: flex;
+    margin-bottom: 9px;
+    height: 64px;
+  }
+  .btnCatalogue {
+    margin-left: 130px;
+  }
+  .logo {
+    width: 137px;
+    height: 50px;
+    margin: 7px 32px 7px 130px;
+    cursor: pointer;
+  }
+  .contacts {
+    display: flex;
+    gap: 26px;
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 123px;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+  }
+  .links {
+    color: $text-color;
+    font-size: 16px;
+    list-style: none;
+    padding: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+  .links:hover {
+    color: $page-accent-color;
+  }
+
+  .links:active {
+    color: $active-color;
+  }
+  .promotions {
+    color: $discount-color;
+  }
+
+  .verticalLine {
+    border-left: 1px solid $page-accent-color;
+    height: 40px;
+  }
+  .accessIcon {
+    padding: 6px;
+  }
+
+  .btnLanguage {
+    padding: 2px;
+    button {
+      border-radius: 20px;
+      border: 1px solid $page-background-color;
+      background-color: $white-color;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: $font-main;
+      color: $text-color;
+      padding: 2px 6px;
+      transition: all 0.2s ease-in-out;
+    }
+    button:hover {
+      border: 1px solid $page-accent-color;
+    }
+  }
+
+  .containerBottom {
+    display: flex;
+    align-items: center;
+    z-index: 1;
+  }
+  .sticky {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    background-color: $white-color;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $gray-dark-color;
+    border-radius: 8px;
+    margin: 0px 93px 0 48px;
+  }
+
+  .searchField {
+    padding: 4px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    width: 526px;
+    height: 44px;
+  }
+
+  .action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cart {
+    cursor: pointer;
+    margin-right: 8px;
+  }
+}
