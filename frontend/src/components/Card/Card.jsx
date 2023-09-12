@@ -5,22 +5,17 @@ import { ICONS } from '../ui-kit/icons';
 import Discount from '../ui-kit/components/Discount/Discount';
 
 const Card = (props) => {
+  const inactive = (classNameActive, classNameInActive) => {
+    if (props.status === 'NO_ACTIVE')
+      return classNameActive + ' ' + classNameInActive;
+    else return classNameActive;
+  };
   return (
-    <div
-      className={
-        props.status === 'NO_ACTIVE'
-          ? `${styles.card + ' ' + styles.inactive}`
-          : `${styles.card}`
-      }
-    >
+    <div className={styles.card}>
       <img
         src={props.image}
         alt="букет"
-        className={
-          props.status === 'NO_ACTIVE'
-            ? `${styles.foto + ' ' + styles['foto-inactive']}`
-            : `${styles.foto}`
-        }
+        className={inactive(styles.foto, styles['foto-inactive'])}
       />
       <h3>
         {props.title.charAt(0).toUpperCase() +
@@ -35,15 +30,7 @@ const Card = (props) => {
       </div>
       <div className={styles['card-info']}>
         <div className={styles['text-flex']}>
-          <p
-            className={
-              props.status === 'NO_ACTIVE'
-                ? `${styles.inactive + ' ' + styles.price}`
-                : `${styles.price}`
-            }
-          >
-            Ціна
-          </p>
+          <p className={inactive(styles.price, styles.inactive)}>Ціна</p>
           {props.status === 'NO_ACTIVE' ? (
             <p className={styles['out-of-stock']}>Немає в наявності</p>
           ) : (
@@ -60,21 +47,9 @@ const Card = (props) => {
           {props.oldPrice} грн
         </div>
         <div className={styles['card-flex-bottom']}>
-          <div
-            className={
-              props.status === 'NO_ACTIVE'
-                ? `${styles['actual-price'] + ' ' + styles.inactive}`
-                : `${styles['actual-price']}`
-            }
-          >
+          <div className={inactive(styles['actual-price'], styles.inactive)}>
             {props.price}
-            <span
-              className={
-                props.status === 'NO_ACTIVE'
-                  ? `${styles.currency + ' ' + styles.inactive}`
-                  : `${styles.currency}`
-              }
-            >
+            <span className={inactive(styles.currency, styles.inactive)}>
               грн
             </span>
           </div>
