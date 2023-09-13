@@ -8,6 +8,7 @@ import Handling from './pages/Handling';
 import './App.scss';
 import ROUTES from './components/constants/routers';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path={ROUTES.handling} element={<Handling />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

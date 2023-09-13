@@ -22,6 +22,9 @@ import { ReactComponent as location } from './location-icon.svg';
 import { ReactComponent as person } from './person-icon.svg';
 import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
 import { ReactComponent as phone } from './phone-icon.svg';
+import { ReactComponent as facebook } from './facebook.svg';
+import { ReactComponent as instagram } from './instagram.svg';
+import { ReactComponent as youtube } from './youtube.svg';
 
 export const ICONS = {
   addComponent,
@@ -48,4 +51,7 @@ export const ICONS = {
   person,
   halfPerson,
   phone,
+  instagram,
+  facebook,
+  youtube,
 };
