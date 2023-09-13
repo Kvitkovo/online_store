@@ -15,6 +15,7 @@ import { ReactComponent as PhoneIcon } from './phone.svg';
 import { ReactComponent as CloseGreenIcon } from './close-green.svg';
 import { ReactComponent as InCartIcon } from './in-cart.svg';
 import { ReactComponent as showList } from './icon-arrow-down.svg';
+import { ReactComponent as arrowUp } from './arrow-up.svg';
 import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
@@ -41,6 +42,7 @@ export const ICONS = {
   CloseGreenIcon,
   InCartIcon,
   showList,
+  arrowUp,
   hideList,
   checkBox,
   checkedBox,
