@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../scss/Home.scss';
+import styles from '../scss/Home.module.scss';
 import Carousel from '../components/Carousel';
 import carouselData from '../data/carouselData.json';
 import DiscountPrice from '../components/ui-kit/components/DiscountPrice';
@@ -16,13 +16,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home">
+    <div className={styles.home}>
       <Carousel data={carouselData.slides} />
       <div className="padding">
         <DiscountPrice oldPrice="2000" actualPrice="1500" />
         <DiscountPrice oldPrice="2000" actualPrice="2000" />
       </div>
-      <div className="cardOutput">
+      <div className={styles.cardOutput}>
         {data &&
           data.map((card) => (
             <Card
