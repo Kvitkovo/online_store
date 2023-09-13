@@ -17,10 +17,7 @@ const Card = (props) => {
         alt="букет"
         className={inactive(styles.foto, styles['foto-inactive'])}
       />
-      <h3>
-        {props.title.charAt(0).toUpperCase() +
-          props.title.substring(1).toLowerCase()}
-      </h3>
+      <h3>{props.title.toUpperCase()}</h3>
       <div
         className={
           props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
