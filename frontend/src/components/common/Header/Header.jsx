@@ -26,20 +26,25 @@ const Header = () => {
           />
         </NavLink>
         <div className={styles.contacts}>
-          <Button
-            variant="no-border"
-            label="Київ"
-            padding="padding-header-even"
-            reverse="true"
-            icon={<ICONS.location />}
-          />
-          <Button
-            variant="no-border"
-            label="(093) 777-77-77"
-            padding="padding-header-even"
-            reverse="true"
-            icon={<ICONS.phone />}
-          />
+          <div className={styles.location}>
+            <Button
+              variant="no-border"
+              label="Київ"
+              padding="padding-header-even"
+              reverse="true"
+              icon={<ICONS.location />}
+            />
+          </div>
+
+          <a className={styles.phoneLink} href="tel:+380937777777">
+            <Button
+              variant="no-border"
+              label="(093) 777-77-77"
+              padding="padding-header-even"
+              reverse="true"
+              icon={<ICONS.phone />}
+            />
+          </a>
         </div>
         <ul>
           <li>
@@ -102,14 +107,16 @@ const Header = () => {
             icon={<ICONS.toBouquet />}
             onClick={() => alert('clicked bouquete')}
           />
+          <div className={styles.login}>
+            <Button
+              variant="no-border"
+              label="Увійти"
+              padding="padding-header-even"
+              icon={<ICONS.halfPerson />}
+              onClick={() => alert('clicked bouquete')}
+            />
+          </div>
 
-          <Button
-            variant="no-border"
-            label="Увійти"
-            padding="padding-header-even"
-            icon={<ICONS.halfPerson />}
-            onClick={() => alert('clicked bouquete')}
-          />
           <div className={styles.cart}>
             <ICONS.CartIcon />
           </div>

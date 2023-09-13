@@ -1,18 +1,16 @@
 @import '../../../variables';
+@import '../../../mixins.scss';
 
 header {
+  width: 100%;
   margin: 7px 0;
   background-color: $white-color;
-  //margin: 7px 130px;
   font-weight: 400;
 
   .containerTop {
     display: flex;
     margin-bottom: 9px;
     height: 64px;
-  }
-  .btnCatalogue {
-    margin-left: 130px;
   }
   .logo {
     width: 137px;
@@ -23,6 +21,13 @@ header {
   .contacts {
     display: flex;
     gap: 26px;
+  }
+  .location {
+    display: flex;
+  }
+  .phoneLink {
+    display: flex;
+    text-decoration: none;
   }
   ul {
     display: flex;
@@ -91,13 +96,15 @@ header {
     height: 80px;
     background-color: $white-color;
   }
-
+  .btnCatalogue {
+    margin-left: 130px;
+  }
   .search {
     display: flex;
     flex-direction: row;
     border: 1px solid $gray-dark-color;
     border-radius: 8px;
-    margin: 0px 93px 0 48px;
+    margin: 0 93px 0 48px;
   }
 
   .searchField {
@@ -114,9 +121,43 @@ header {
     align-items: center;
     gap: 12px;
   }
-
+  .login {
+    margin-bottom: 8px;
+  }
   .cart {
     cursor: pointer;
-    margin-right: 8px;
+    margin: 0 130px 8px 8px;
   }
+}
+@include md {
+  header {
+    .logo {
+      margin: 7px 0 7px 47px;
+    }
+    .location {
+      display: none;
+    }
+    .phoneLink {
+      display: none;
+    }
+    ul {
+      margin-left: 174px;
+      margin-right: 47px;
+    }
+    .btnCatalogue {
+      margin-left: 47px;
+    }
+    .search {
+      margin: 0 32px 0 43px;
+    }
+    .searchField {
+      width: 346px;
+      height: 36px;
+    }
+    .cart {
+      margin-right: 47px;
+    }
+  }
+}
+@include sm {
 }
