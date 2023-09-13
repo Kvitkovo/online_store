@@ -1,7 +1,13 @@
 @import '../variables';
 
 .home {
-  background-color: $page-background-color;
+  background: linear-gradient(
+    188deg,
+    #6ec660 -112.86%,
+    #fff 27.91%,
+    #fff 57.77%,
+    #6ec660 236.93%
+  );
   padding-top: 20px;
   min-height: 100vh;
 
