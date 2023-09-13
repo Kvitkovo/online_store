@@ -4,20 +4,15 @@ import Carousel from '../components/Carousel';
 import carouselData from '../data/carouselData.json';
 import DiscountPrice from '../components/ui-kit/components/DiscountPrice';
 import Card from '../components/Card';
-import axios from 'axios';
+import getAllCards from '../api/getAllCards';
 
 const Home = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://195.191.104.138:4446/v1/products')
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getAllCards().then((res) => {
+      setData(res.data);
+    });
   }, []);
 
   return (
