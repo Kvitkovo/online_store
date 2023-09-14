@@ -23,6 +23,9 @@ import { ReactComponent as location } from './location-icon.svg';
 import { ReactComponent as person } from './person-icon.svg';
 import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
 import { ReactComponent as phone } from './phone-icon.svg';
+import { ReactComponent as search } from './search-icon.svg';
+import { ReactComponent as back } from './back-icon.svg';
+import { ReactComponent as dash } from './dash-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -50,4 +53,7 @@ export const ICONS = {
   person,
   halfPerson,
   phone,
+  search,
+  back,
+  dash,
 };
