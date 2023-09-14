@@ -217,11 +217,16 @@ public class ProductService {
         }
     }
 
-    private void addPriceFromFilter(FilterRequestDto filter, Root<Object> root,
+    private void addCategoryFilter(FilterRequestDto filter, Root<Object> root,
         List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
-        if (filter.getPriceFrom() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
-                new BigDecimal(filter.getPriceFrom())));
+        if (filter.getCategoryId() != null) {
+            Category category = categoryRepository.findById(filter.getCategoryId())
+                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            Predicate categoryPredicate = criteriaBuilder.or(
+                criteriaBuilder.equal(root.get("category"), category),
+                criteriaBuilder.equal(root.get("category").get("parentId"), category.getId())
+            );
+            predicates.add(categoryPredicate);
         }
     }
 
