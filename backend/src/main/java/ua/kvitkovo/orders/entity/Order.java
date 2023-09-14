@@ -39,7 +39,7 @@ public class Order {
     private Date updated;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User manager;
 
     @Column(name = "address_text")
