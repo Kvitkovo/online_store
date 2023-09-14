@@ -1,0 +1,24 @@
+@import '../../../../variables';
+
+.old-price {
+  font-size: 18px;
+  line-height: 24px;
+  text-decoration: line-through;
+  color: $black-80-color;
+  padding-bottom: 10px;
+}
+
+.actual-price {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  color: $page-accent-color;
+}
+
+span {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: $page-accent-color;
+  padding-left: 4px;
+}
