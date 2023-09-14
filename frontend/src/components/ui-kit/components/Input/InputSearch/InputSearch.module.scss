@@ -1,0 +1,46 @@
+@import 'src/variables';
+
+.root {
+  display: flex;
+  align-items: center;
+  width: 526px;
+  height: 44px;
+  border: 1px solid $gray-dark-color;
+  border-radius: 8px;
+  padding: 0 4px;
+  gap: 4px;
+  position: relative;
+
+  @media (max-width: 414px) {
+    width: 343px;
+    padding: 0 4px;
+  }
+}
+
+.iconGreen {
+  path {
+    stroke: $page-accent-color;
+  }
+}
+
+.clearBtn {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+}
+
+.input {
+  width: 438px;
+  padding: 6px;
+  margin-left: 6px;
+  gap: 10px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+
+  @media (max-width: 414px) {
+    width: 255px;
+    padding: 6px;
+    margin-left: 0;
+  }
+}

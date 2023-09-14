@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputSearch from '../components/ui-kit/components/Input/InputSearch';
 import InputPrice from '../components/ui-kit/components/Input/InputPrice';
 import RangeSlider from '../components/ui-kit/components/RangeSlider';
 import { ICONS } from '../components/ui-kit/icons';
@@ -6,7 +7,18 @@ import { ICONS } from '../components/ui-kit/icons';
 import '../scss/Promotions.scss';
 
 function Promotions() {
-  //inputPrice
+  // inputSearch
+  const [search, setSearch] = useState('');
+
+  const changeInput = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const clearInput = () => {
+    setSearch('');
+  };
+
+  // inputPrice
   const [inputValues, setInputValues] = useState([99, 99999]);
 
   const handleInputChange = (e) => {
@@ -21,8 +33,15 @@ function Promotions() {
   const handleSliderChange = (values) => {
     setInputValues(values);
   };
+
   return (
     <div>
+      <h1>Promotions</h1>
+      <InputSearch
+        search={search}
+        changeInput={changeInput}
+        clearInput={clearInput}
+      />
       <div className="priceBlock">
         <div className="priceTop">
           <InputPrice
@@ -45,4 +64,5 @@ function Promotions() {
     </div>
   );
 }
+
 export default Promotions;
