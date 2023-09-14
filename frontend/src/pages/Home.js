@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from '../scss/Home.module.scss';
 import Carousel from '../components/Carousel';
 import carouselData from '../data/carouselData.json';
 import DiscountPrice from '../components/ui-kit/components/DiscountPrice';
 import Card from '../components/Card';
-import getAllCards from '../api/getAllCards';
 
 const Home = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getAllCards().then((res) => {
-      setData(res.data);
-    });
-  }, []);
-
   return (
     <div className={styles.home}>
       <Carousel data={carouselData.slides} />
@@ -23,22 +14,20 @@ const Home = () => {
         <DiscountPrice oldPrice="2000" actualPrice="2000" />
       </div>
       <div className={styles.cardOutput}>
-        {data &&
-          data.map((card) => (
-            <Card
-              bouquet={card.allowAddToConstructor}
-              image={
-                card.images[0]
-                  ? card.images[0].urlSmall
-                  : './images/no_image.jpg'
-              }
-              title={card.title}
-              discount={card.discount}
-              oldPrice={card.priceWithDiscount}
-              price={card.price}
-              key={card.id}
-            />
-          ))}
+        <Card
+          bouquet={false}
+          image="./images/bouquet.jpg"
+          title="Букет “101 троянда”"
+          discount={0}
+          price="1234"
+        />
+        <Card
+          image="./images/bouquet.jpg"
+          title="Троянда червона"
+          discount={10}
+          oldPrice="400"
+          price="200"
+        />
         <Card
           status="NO_ACTIVE"
           bouquet={false}
