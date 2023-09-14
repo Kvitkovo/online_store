@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import styles from './InputPrice.module.scss';
 
 const InputPrice = memo(({ value, handleInputChange, index }) => {
-  const inputName = index === 0 ? 'input1' : 'input2';
+  const inputName = useMemo(() => (index === 0 ? 'input1' : 'input2'), [index]);
   return (
     <input
       type="number"
