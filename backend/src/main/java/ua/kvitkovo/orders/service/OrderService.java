@@ -3,6 +3,7 @@ package ua.kvitkovo.orders.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
@@ -28,6 +29,7 @@ import ua.kvitkovo.utils.ErrorUtils;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -132,5 +134,19 @@ public class OrderService {
             }
         }
         return orderItemCompositions;
+    }
+
+    @Transactional
+    public List<OrderResponseDto> updateOrdersStatus(List<Long> ordersID, OrderStatus status) {
+        List<Order> orders = ordersID.stream()
+                .map(id -> orderRepository.findById(id)
+                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+                .toList();
+
+        for (Order order : orders) {
+            order.setStatus(status);
+            orderRepository.save(order);
+        }
+        return orderDtoMapper.mapEntityToDto(orders);
     }
 }
