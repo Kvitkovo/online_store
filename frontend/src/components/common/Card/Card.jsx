@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Card.module.scss';
-import IconButton from '../ui-kit/components/IconButton';
-import { ICONS } from '../ui-kit/icons';
-import Discount from '../ui-kit/components/Discount/Discount';
+import IconButton from '../../ui-kit/components/IconButton';
+import { ICONS } from '../../ui-kit/icons';
+import Discount from '../../ui-kit/components/Discount/Discount';
 
 const Card = (props) => {
   const inactive = (classNameActive, classNameInActive) => {

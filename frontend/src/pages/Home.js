@@ -3,7 +3,7 @@ import styles from '../scss/Home.module.scss';
 import Carousel from '../components/Carousel';
 import carouselData from '../data/carouselData.json';
 import DiscountPrice from '../components/ui-kit/components/DiscountPrice';
-import Card from '../components/Card';
+import Card from '../components/common/Card';
 
 const Home = () => {
   return (
