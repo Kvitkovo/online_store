@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Select from '../components/ui-kit/components/Select';
 import InputSearch from '../components/ui-kit/components/Input/InputSearch';
 import InputPrice from '../components/ui-kit/components/Input/InputPrice';
 import RangeSlider from '../components/ui-kit/components/RangeSlider';
@@ -34,6 +35,14 @@ function Promotions() {
     setInputValues(values);
   };
 
+  // select
+  const [value, setValue] = useState('fromCheapToExpensive');
+
+  const options = [
+    { value: 'fromExpensiveToCheap', label: 'від дорогих до дешевих' },
+    { value: 'fromCheapToExpensive', label: 'від дешевих до дорогих' },
+  ];
+
   return (
     <div>
       <h1>Promotions</h1>
@@ -61,6 +70,7 @@ function Promotions() {
           handleSliderChange={handleSliderChange}
         />
       </div>
+      <Select value={value} setValue={setValue} options={options} />
     </div>
   );
 }
