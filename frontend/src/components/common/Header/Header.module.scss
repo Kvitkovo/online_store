@@ -160,4 +160,7 @@ header {
   }
 }
 @include sm {
+  header {
+    display: none;
+  }
 }
