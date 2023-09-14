@@ -28,10 +28,8 @@ const Card = (props) => {
       <div className={styles['card-info']}>
         <div className={styles['text-flex']}>
           <p className={inactive(styles.price, styles.inactive)}>Ціна</p>
-          {props.status === 'NO_ACTIVE' ? (
+          {props.status === 'NO_ACTIVE' && (
             <p className={styles['out-of-stock']}>Немає в наявності</p>
-          ) : (
-            <span></span>
           )}
         </div>
         <div
