@@ -3,7 +3,6 @@ import Select from '../components/ui-kit/components/Select';
 
 function Promotions() {
   //select
-  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('fromCheapToExpensive');
 
   const options = [
@@ -13,13 +12,7 @@ function Promotions() {
   return (
     <div>
       <h1>Promotions</h1>
-      <Select
-        open={open}
-        setOpen={setOpen}
-        value={value}
-        setValue={setValue}
-        options={options}
-      />
+      <Select value={value} setValue={setValue} options={options} />
     </div>
   );
 }

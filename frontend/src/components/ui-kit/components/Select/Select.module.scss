@@ -1,8 +1,10 @@
+@import '/src/variables';
+
 .root {
   margin: 30px;
   width: 246px;
   max-height: 80px;
-  border: 1px solid #979797;
+  border: 1px solid $gray-dark-color;
   border-radius: 8px;
   padding: 8px 12px;
 }
@@ -24,6 +26,6 @@ span {
   margin-top: 10px;
 
   &:hover {
-    color: #6cc25e;
+    color: $page-accent-color;
   }
 }

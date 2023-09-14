@@ -1,9 +1,11 @@
-import React, { memo } from 'react';
+import React, { useState, memo } from 'react';
 import styles from './Select.module.scss';
 
 import { ICONS } from '../../icons';
 
-const Select = memo(({ open, setOpen, value, setValue, options }) => {
+const Select = memo(({ value, setValue, options }) => {
+  const [open, setOpen] = useState(false);
+
   const handleChange = (nextValue) => {
     setValue(nextValue);
     setOpen(false);
