@@ -15,11 +15,6 @@
     display: none;
   }
 
-  .hide-price {
-    visibility: hidden;
-    line-height: 24px;
-  }
-
   .foto {
     width: 100%;
     border-radius: 8px 8px 0 0;
@@ -64,27 +59,10 @@
     padding-bottom: 14px;
   }
 
-  .old-price {
-    font-size: 18px;
-    line-height: 24px;
-    text-decoration: line-through;
-  }
-
   .card-flex-bottom {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-  }
-  .actual-price {
-    font-size: 24px;
-    font-weight: 700;
-    color: $page-accent-color;
-  }
-  .currency {
-    font-weight: 400;
-    font-size: 20px;
-    color: $page-accent-color;
-    padding-left: 4px;
   }
 
   .inactive {
@@ -94,17 +72,5 @@
     display: flex;
     align-items: center;
     gap: 16px;
-  }
-  .bouquet {
-    padding-right: 6px;
-  }
-  .cart {
-    border-radius: 8px;
-    border: 1px solid #e1c429;
-    padding: 6px;
-
-    &:hover {
-      border: 1px solid $page-accent-color;
-    }
   }
 }

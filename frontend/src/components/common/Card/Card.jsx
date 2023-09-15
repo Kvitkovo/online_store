@@ -34,7 +34,11 @@ const Card = (props) => {
           )}
         </div>
         <div className={styles['card-flex-bottom']}>
-          <DiscountPrice oldPrice={props.oldPrice} actualPrice={props.price} />
+          <DiscountPrice
+            oldPrice={props.oldPrice}
+            actualPrice={props.price}
+            isActive={props.status}
+          />
           <div className={styles['card-flex-bottom']}>
             <div
               className={
@@ -43,15 +47,7 @@ const Card = (props) => {
                   : `${styles.icons}`
               }
             >
-              <div
-                className={
-                  props.bouquet === false
-                    ? `${styles.hide}`
-                    : `${styles.bouquet}`
-                }
-              >
-                <IconButton icon={<ICONS.BouquetIcon />} />
-              </div>
+              {props.bouquet && <IconButton icon={<ICONS.BouquetIcon />} />}
               <IconButton icon={<ICONS.CartIcon />} isBorderYellow={true} />
             </div>
           </div>

@@ -10,8 +10,13 @@ const Home = () => {
     <div className={styles.home}>
       <Carousel data={carouselData.slides} />
       <div className="padding">
-        <DiscountPrice oldPrice="2000" actualPrice="1500" />
-        <DiscountPrice oldPrice="2000" actualPrice="2000" />
+        <DiscountPrice oldPrice="2000" actualPrice="1500" isActive="ACTIVE" />
+        <DiscountPrice oldPrice="600" actualPrice="600" isActive="ACTIVE" />
+        <DiscountPrice
+          oldPrice="2000"
+          actualPrice="2000"
+          isActive="NO_ACTIVE"
+        />
       </div>
       <div className={styles.cardOutput}>
         <Card
@@ -25,6 +30,7 @@ const Home = () => {
         <Card
           image="./images/bouquet.jpg"
           title="Троянда червона"
+          bouquet={true}
           discount={10}
           oldPrice="400"
           price="200"
