@@ -72,8 +72,8 @@
 
   .card-flex-bottom {
     display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    align-items: center;
   }
   .actual-price {
     font-size: 24px;
@@ -90,7 +90,6 @@
   .inactive {
     color: #dbdbdb;
   }
-
   .icons {
     display: flex;
     align-items: center;
