@@ -1,0 +1,14 @@
+.priceBlock {
+  margin: 20px;
+  width: 220px;
+  height: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .priceTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

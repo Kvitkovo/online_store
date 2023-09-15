@@ -6,6 +6,8 @@ import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 
+import java.util.List;
+
 /**
  * @author Andriy Gaponov
  */
@@ -16,4 +18,6 @@ public interface OrderDtoMapper {
     Order mapDtoRequestToEntity(OrderRequestDto dto);
 
     OrderResponseDto mapEntityToDto(Order order);
+
+    List<OrderResponseDto> mapEntityToDto(List<Order> entities);
 }

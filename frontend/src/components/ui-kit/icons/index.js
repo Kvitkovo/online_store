@@ -15,6 +15,7 @@ import { ReactComponent as PhoneIcon } from './phone.svg';
 import { ReactComponent as CloseGreenIcon } from './close-green.svg';
 import { ReactComponent as InCartIcon } from './in-cart.svg';
 import { ReactComponent as showList } from './icon-arrow-down.svg';
+import { ReactComponent as arrowUp } from './arrow-up.svg';
 import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
@@ -26,6 +27,9 @@ import { ReactComponent as burgerMenu } from './burger-icon.svg';
 import { ReactComponent as searchMobile } from './search-icon-green.svg';
 import { ReactComponent as closeMobile } from './close-icon-black.svg';
 import { ReactComponent as mobileCatalogue } from './mobile-catalogue-icon.svg';
+import { ReactComponent as search } from './search-icon.svg';
+import { ReactComponent as back } from './back-icon.svg';
+import { ReactComponent as dash } from './dash-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -45,6 +49,7 @@ export const ICONS = {
   CloseGreenIcon,
   InCartIcon,
   showList,
+  arrowUp,
   hideList,
   checkBox,
   checkedBox,
@@ -56,4 +61,7 @@ export const ICONS = {
   searchMobile,
   closeMobile,
   mobileCatalogue,
+  search,
+  back,
+  dash,
 };
