@@ -4,6 +4,8 @@ import BurgerMenu from './BurgerMenu/BurgerMenu';
 import styles from './Header.module.scss';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
+import InputSearch from '../../ui-kit/components/Input/InputSearch';
+import ROUTES from '../../constants/routers';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -21,7 +23,7 @@ const Header = () => {
       <header>
         <div className={styles.containerTop}>
           {' '}
-          <NavLink to="/">
+          <NavLink to={ROUTES.home}>
             <img
               className={styles.logo}
               src="images/logo.svg"
@@ -53,23 +55,23 @@ const Header = () => {
             <li>
               <NavLink
                 className={`${styles.links} ${styles.promotions}`}
-                to="/promotions"
+                to={ROUTES.promotions}
               >
                 Акції
               </NavLink>
             </li>
             <li>
-              <NavLink className={styles.links} to="/about">
+              <NavLink className={styles.links} to={ROUTES.about}>
                 Про нас
               </NavLink>
             </li>
             <li>
-              <NavLink className={styles.links} to="/delivery">
+              <NavLink className={styles.links} to={ROUTES.delivery}>
                 Доставка та оплата
               </NavLink>
             </li>
             <li>
-              <NavLink className={styles.links} to="/handling">
+              <NavLink className={styles.links} to={ROUTES.handling}>
                 Догляд за квітами
               </NavLink>
             </li>
@@ -95,12 +97,8 @@ const Header = () => {
             />
           </div>
 
-          <div className={styles.search}>
-            <input
-              className={styles.searchField}
-              type="search"
-              placeholder="Пошук"
-            />
+          <div className={styles.searchField}>
+            <InputSearch />
           </div>
           <div className={styles.action}>
             <Button

@@ -30,8 +30,7 @@ header {
     text-decoration: none;
   }
   ul {
-    display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
     margin-left: 123px;
     gap: 12px;
@@ -99,23 +98,9 @@ header {
   .btnCatalogue {
     margin-left: 130px;
   }
-  .search {
-    display: flex;
-    flex-direction: row;
-    border: 1px solid $gray-dark-color;
-    border-radius: 8px;
+  .searchField {
     margin: 0 93px 0 48px;
   }
-
-  .searchField {
-    padding: 4px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    width: 526px;
-    height: 44px;
-  }
-
   .action {
     display: flex;
     align-items: center;
@@ -147,12 +132,8 @@ header {
     .btnCatalogue {
       margin-left: 47px;
     }
-    .search {
-      margin: 0 32px 0 43px;
-    }
     .searchField {
-      width: 346px;
-      height: 36px;
+      margin: 0 32px 0 43px;
     }
     .cart {
       margin-right: 47px;

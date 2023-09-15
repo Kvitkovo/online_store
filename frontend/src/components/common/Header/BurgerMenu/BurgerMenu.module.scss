@@ -25,8 +25,16 @@
   display: flex;
   padding: 8px 8px 0px 8px;
 }
-
-.menuItems {
+.openMenu {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.containerTop {
+  height: 50px;
   background-color: #fff;
   list-style: none;
   z-index: 1;
@@ -34,7 +42,7 @@
 .logoContainer {
   display: flex;
   padding: 3px 16px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 182px;
 }
@@ -42,7 +50,7 @@
   width: 137px;
   height: 50px;
 }
-.container {
+.menuItems {
   background: linear-gradient(
       188deg,
       #6ec660 -112.86%,
@@ -51,30 +59,47 @@
       #6ec660 236.93%
     ),
     #fff;
-}
-ul {
-  display: flex;
-  flex-direction: column;
-  padding: 27px 16px 0 16px;
-  list-style: none;
+  padding: 24px 16px;
 }
 .catalogue {
   display: flex;
   align-items: center;
+
   span {
     color: $text-color;
     font-weight: 700;
     padding: 12px 8px;
   }
+  .catalogueIcon {
+    margin-left: 8px;
+  }
 }
+ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+  li {
+    padding: 12px 8px;
+    .links {
+      color: $text-color;
+      list-style: none;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+    }
+    .links:hover {
+      color: $page-accent-color;
+    }
+
+    .links:active {
+      color: $active-color;
+    }
+  }
+}
+
 .navigation {
   margin-top: 24px;
 
-  .links {
-    padding: 12px 8px;
-    color: $text-color;
-    font-weight: 400;
-  }
   .promotions {
     color: $discount-color;
   }
@@ -94,6 +119,16 @@ ul {
   button {
     background: inherit;
   }
+}
+
+.addition {
+  display: flex;
+  padding: 10px 8px;
+  gap: 8px;
+}
+.language {
+  color: $text-color;
+  font-weight: 500;
 }
 .open .menuItems {
   display: block;
