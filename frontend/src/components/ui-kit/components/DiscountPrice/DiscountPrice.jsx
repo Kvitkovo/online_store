@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './DiscountPrice.module.scss';
 
-const DiscountPrice = ({ discount, oldPrice, actualPrice }) => {
+const DiscountPrice = ({ oldPrice, actualPrice }) => {
   return (
     <div>
       <div
         className={
-          styles['old-price'] + ' ' + `${discount === 0 ? styles.hide : ''}`
+          styles['old-price'] +
+          ' ' +
+          `${oldPrice === actualPrice ? styles.hide : ''}`
         }
       >
         {oldPrice} грн
