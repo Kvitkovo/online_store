@@ -9,7 +9,8 @@ const Home = () => {
     <div className="home">
       <Carousel data={data.slides} />
       <div className="padding">
-        <DiscountPrice oldPrice="2000" actualPrice="1500" />
+        <DiscountPrice discount="10" oldPrice="2000" actualPrice="1500" />
+        <DiscountPrice discount={0} oldPrice="2000" actualPrice="1500" />
       </div>
     </div>
   );
