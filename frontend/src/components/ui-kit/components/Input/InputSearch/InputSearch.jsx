@@ -13,11 +13,11 @@ const InputSearch = memo(({ search, changeInput, clearInput }) => {
 
   return (
     <div className={styles.root}>
-      {width <= 414 ? (
+      {width <= 767 ? (
         <IconButton icon={<ICONS.back />} />
       ) : (
         <ICONS.search
-          className={search || isFocused ? styles.iconGreen : null}
+          className={search || isFocused ? styles.iconGreen : styles.icon}
         />
       )}
       {search && (

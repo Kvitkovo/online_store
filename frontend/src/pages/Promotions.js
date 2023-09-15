@@ -3,8 +3,8 @@ import Select from '../components/ui-kit/components/Select';
 import InputSearch from '../components/ui-kit/components/Input/InputSearch';
 import InputPrice from '../components/ui-kit/components/Input/InputPrice';
 import RangeSlider from '../components/ui-kit/components/RangeSlider';
-import { ICONS } from '../components/ui-kit/icons';
 
+import { ICONS } from '../components/ui-kit/icons';
 import '../scss/Promotions.scss';
 
 function Promotions() {
