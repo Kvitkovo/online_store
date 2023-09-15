@@ -97,6 +97,6 @@ public class Order {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", orphanRemoval = true)
     private Set<OrderItem> orderItems;
 }
