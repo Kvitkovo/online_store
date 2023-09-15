@@ -4,7 +4,7 @@ import styles from './DiscountPrice.module.scss';
 const DiscountPrice = ({ oldPrice, actualPrice }) => {
   return (
     <div>
-      <div
+      <p
         className={
           styles['old-price'] +
           ' ' +
@@ -12,11 +12,11 @@ const DiscountPrice = ({ oldPrice, actualPrice }) => {
         }
       >
         {oldPrice} грн
-      </div>
-      <div className={styles['actual-price']}>
+      </p>
+      <p className={styles['actual-price']}>
         {actualPrice}
         <span className={styles.currency}>грн</span>
-      </div>
+      </p>
     </div>
   );
 };
