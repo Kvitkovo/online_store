@@ -13,7 +13,9 @@ const Select = memo(({ value, setValue, options }) => {
   return (
     <div className={styles.root}>
       <div className={styles.select} onClick={() => setOpen(!open)}>
-        <span>{options.find((option) => option.value === value)?.label}</span>
+        <span className={styles.label}>
+          {options.find((option) => option.value === value)?.label}
+        </span>
         {open ? <ICONS.arrowUp /> : <ICONS.showList />}
       </div>
       {open && (
@@ -23,6 +25,7 @@ const Select = memo(({ value, setValue, options }) => {
               option.value !== value && (
                 <span
                   key={option.value}
+                  className={styles.label}
                   onClick={() => handleChange(option.value)}
                 >
                   {option.label}
