@@ -26,6 +26,10 @@ public class ProductTypeDtoValidator implements Validator {
         ProductTypeRequestDto dto = (ProductTypeRequestDto) target;
         if (StringUtils.isBlank(dto.getName())) {
             errors.rejectValue("name", "", "is blank!");
+            return;
+        }
+        if (dto.getName().length() > 255) {
+            errors.rejectValue("name", "", "length > 255!");
         }
     }
 }
