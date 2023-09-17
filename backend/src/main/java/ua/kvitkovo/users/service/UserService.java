@@ -67,8 +67,14 @@ public class UserService {
 
     public UserResponseDto getCurrentUser() {
         JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+            .getPrincipal();
         return findById(principal.getId());
+    }
+
+    public Long getCurrentUserId() {
+        JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
+            .getPrincipal();
+        return principal.getId();
     }
 
     public UserResponseDto enableUser(Long id) {

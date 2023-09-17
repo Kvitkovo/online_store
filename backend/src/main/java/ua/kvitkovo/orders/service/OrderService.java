@@ -3,6 +3,8 @@ package ua.kvitkovo.orders.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -58,9 +60,9 @@ public class OrderService {
         OrderResponseDto order = orderRepository.findById(id)
             .map(orderDtoMapper::mapEntityToDto)
             .orElseThrow(() -> new ItemNotFoundException("Order not found"));
-        UserResponseDto currentUser = userService.getCurrentUser();
 
-        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer()
+        if (!userService.isCurrentUserAdmin()
+            && userService.getCurrentUserId() != order.getCustomer()
             .getId()) {
             throw new ItemNotFoundException("Order not found");
         }
@@ -202,10 +204,10 @@ public class OrderService {
     public OrderResponseDto cancelOrder(Long id) {
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new ItemNotFoundException("Order not found"));
-        UserResponseDto currentUser = userService.getCurrentUser();
 
-        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer()
-                .getId()) {
+        if (!userService.isCurrentUserAdmin()
+            && userService.getCurrentUserId() != order.getCustomer()
+            .getId()) {
             throw new ItemNotFoundException("Order not found");
         }
         if (!OrderStatus.NEW.equals(order.getStatus())) {
@@ -214,5 +216,15 @@ public class OrderService {
         order.setStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
         return orderDtoMapper.mapEntityToDto(order);
+    }
+
+    public Page<OrderResponseDto> getAllOrdersForCurrentUser(Pageable pageable) {
+        Page<Order> orders = orderRepository.findAllByCustomerIdAndStatusNotIn(pageable,
+                userService.getCurrentUserId(), List.of(OrderStatus.DONE, OrderStatus.CANCELED));
+        if (orders.isEmpty()) {
+            return Page.empty();
+        } else {
+            return orders.map(orderDtoMapper::mapEntityToDto);
+        }
     }
 }
