@@ -1,9 +1,5 @@
 package ua.kvitkovo.orders.service;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -16,11 +12,7 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
-import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
-import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
-import ua.kvitkovo.orders.dto.OrderItemRequestDto;
-import ua.kvitkovo.orders.dto.OrderRequestDto;
-import ua.kvitkovo.orders.dto.OrderResponseDto;
+import ua.kvitkovo.orders.dto.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -36,6 +28,11 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -208,10 +205,10 @@ public class OrderService {
         UserResponseDto currentUser = userService.getCurrentUser();
 
         if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer()
-            .getId()) {
+                .getId()) {
             throw new ItemNotFoundException("Order not found");
         }
-        if (OrderStatus.NEW.equals(order.getStatus())) {
+        if (!OrderStatus.NEW.equals(order.getStatus())) {
             throw new ItemNotUpdatedException("Order not NEW status");
         }
         order.setStatus(OrderStatus.CANCELED);

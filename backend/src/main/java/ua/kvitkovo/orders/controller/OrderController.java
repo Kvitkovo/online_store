@@ -10,26 +10,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.orders.service.OrderService;
+
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -125,7 +117,6 @@ public class OrderController {
             @Schema(implementation = ErrorResponse.class))
         })
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{ordersID}/setStatus")
     public List<OrderResponseDto> setOrdersStatus(@PathVariable List<Long> ordersID,
         @RequestParam OrderStatus status) {
@@ -143,17 +134,17 @@ public class OrderController {
             @Content(mediaType = "application/json", schema =
             @Schema(implementation = ErrorResponse.class))
         }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Order not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Order not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
     })
-    @PutMapping("/{id}/cansel")
-    public OrderResponseDto setCanselOrder(@PathVariable Long id) {
+    @PutMapping("/{id}/cancel")
+    public OrderResponseDto cancelOrder(@PathVariable Long id) {
         log.info("Received request to cancel order with id {} status {}.", id);
         return orderService.cancelOrder(id);
     }
@@ -181,7 +172,6 @@ public class OrderController {
             @Schema(implementation = ErrorResponse.class))
         })
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @ResponseBody
     public OrderResponseDto updateOrder(
