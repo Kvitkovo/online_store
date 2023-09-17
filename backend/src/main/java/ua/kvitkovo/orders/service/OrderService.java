@@ -1,5 +1,9 @@
 package ua.kvitkovo.orders.service;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +16,11 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
-import ua.kvitkovo.orders.dto.*;
+import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
+import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
+import ua.kvitkovo.orders.dto.OrderItemRequestDto;
+import ua.kvitkovo.orders.dto.OrderRequestDto;
+import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -28,11 +36,6 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -56,11 +59,12 @@ public class OrderService {
 
     public OrderResponseDto findById(long id) throws ItemNotFoundException {
         OrderResponseDto order = orderRepository.findById(id)
-                .map(orderDtoMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+            .map(orderDtoMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Order not found"));
         UserResponseDto currentUser = userService.getCurrentUser();
 
-        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer().getId()) {
+        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer()
+            .getId()) {
             throw new ItemNotFoundException("Order not found");
         }
         return order;
@@ -73,7 +77,8 @@ public class OrderService {
         }
         Order order = orderDtoMapper.mapDtoRequestToEntity(dto);
         order.setId(null);
-        order.setShop(shopRepository.findById(dto.getShopId()).orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+        order.setShop(shopRepository.findById(dto.getShopId())
+            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
         order.setAddress(getFullTextAddress(order));
         order.setStatus(OrderStatus.NEW);
 
@@ -91,10 +96,10 @@ public class OrderService {
 
     private String getFullTextAddress(Order order) {
         return String.join(", ",
-                order.getAddressCity(),
-                order.getAddressStreet(),
-                order.getAddressHouse(),
-                order.getAddressApartment()
+            order.getAddressCity(),
+            order.getAddressStreet(),
+            order.getAddressHouse(),
+            order.getAddressApartment()
         );
     }
 
@@ -112,7 +117,8 @@ public class OrderService {
         return totalSum;
     }
 
-    private Set<OrderItem> getOrderItemsFromDtosRequest(Order order, Set<OrderItemRequestDto> dtoOrderItems) {
+    private Set<OrderItem> getOrderItemsFromDtosRequest(Order order,
+        Set<OrderItemRequestDto> dtoOrderItems) {
         if (dtoOrderItems == null) {
             return null;
         }
@@ -121,7 +127,8 @@ public class OrderService {
             OrderItem orderItem = orderItemDtoMapper.mapDtoRequestToEntity(itemRequestDto);
             if (itemRequestDto.getProductId() != null) {
                 orderItem.setProduct(
-                        productRepository.findById(itemRequestDto.getProductId()).orElseThrow(() -> new ItemNotFoundException("Product not found"))
+                    productRepository.findById(itemRequestDto.getProductId())
+                        .orElseThrow(() -> new ItemNotFoundException("Product not found"))
                 );
             } else {
                 orderItem.setProduct(null);
@@ -134,18 +141,20 @@ public class OrderService {
         return orderItems;
     }
 
-    private Set<OrderItemComposition> getProductComposition(OrderItemRequestDto itemRequestDto, OrderItem orderItem) {
+    private Set<OrderItemComposition> getProductComposition(OrderItemRequestDto itemRequestDto,
+        OrderItem orderItem) {
         Set<OrderItemComposition> orderItemCompositions = new HashSet<>();
         Set<OrderItemCompositionRequestDto> orderItemsCompositions = itemRequestDto.getOrderItemsCompositions();
         if (orderItemsCompositions != null) {
             for (OrderItemCompositionRequestDto compositionDtoItem : orderItemsCompositions) {
                 OrderItemComposition composition = OrderItemComposition.builder()
-                        .orderItem(orderItem)
-                        .qty(compositionDtoItem.getQty())
-                        .product(
-                                productRepository.findById(compositionDtoItem.getProductId()).orElseThrow(() -> new ItemNotFoundException("Composition product not found"))
-                        )
-                        .build();
+                    .orderItem(orderItem)
+                    .qty(compositionDtoItem.getQty())
+                    .product(
+                        productRepository.findById(compositionDtoItem.getProductId()).orElseThrow(
+                            () -> new ItemNotFoundException("Composition product not found"))
+                    )
+                    .build();
                 orderItemCompositions.add(composition);
             }
         }
@@ -155,9 +164,9 @@ public class OrderService {
     @Transactional
     public List<OrderResponseDto> updateOrdersStatus(List<Long> ordersID, OrderStatus status) {
         List<Order> orders = ordersID.stream()
-                .map(id -> orderRepository.findById(id)
-                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
-                .toList();
+            .map(id -> orderRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+            .toList();
 
         for (Order order : orders) {
             order.setStatus(status);
@@ -167,7 +176,8 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponseDto updateOrder(Long id, OrderAdminRequestDto dto, BindingResult bindingResult) {
+    public OrderResponseDto updateOrder(Long id, OrderAdminRequestDto dto,
+        BindingResult bindingResult) {
         OrderResponseDto orderResponseDto = findById(id);
         orderAdminDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -178,13 +188,33 @@ public class OrderService {
 
         Order order = orderDtoMapper.mapDtoToEntity(orderResponseDto);
         order.setId(id);
-        order.setShop(shopRepository.findById(dto.getShopId()).orElseThrow(() -> new ItemNotFoundException("Shop not found")));
-        order.setManager(userRepository.findById(dto.getManagerId()).orElseThrow(() -> new ItemNotFoundException("User not found")));
+        order.setShop(shopRepository.findById(dto.getShopId())
+            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+        order.setManager(userRepository.findById(dto.getManagerId())
+            .orElseThrow(() -> new ItemNotFoundException("User not found")));
         order.setAddress(getFullTextAddress(order));
 
         order.setOrderItems(getOrderItemsFromDtosRequest(order, dto.getOrderItems()));
         order.setTotalSum(calculateTotalSum(order));
 
+        orderRepository.save(order);
+        return orderDtoMapper.mapEntityToDto(order);
+    }
+
+    @Transactional
+    public OrderResponseDto cancelOrder(Long id) {
+        Order order = orderRepository.findById(id)
+            .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+        UserResponseDto currentUser = userService.getCurrentUser();
+
+        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer()
+            .getId()) {
+            throw new ItemNotFoundException("Order not found");
+        }
+        if (OrderStatus.NEW.equals(order.getStatus())) {
+            throw new ItemNotUpdatedException("Order not NEW status");
+        }
+        order.setStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
         return orderDtoMapper.mapEntityToDto(order);
     }
