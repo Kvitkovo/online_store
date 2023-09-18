@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -66,8 +67,14 @@ public class UserService {
 
     public UserResponseDto getCurrentUser() {
         JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+            .getPrincipal();
         return findById(principal.getId());
+    }
+
+    public Long getCurrentUserId() {
+        JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
+            .getPrincipal();
+        return principal.getId();
     }
 
     public UserResponseDto enableUser(Long id) {
@@ -86,5 +93,13 @@ public class UserService {
         user.setStatus(UserStatus.NOT_ACTIVE);
         userRepository.save(user);
         return userMapper.mapEntityToDto(user);
+    }
+
+    public boolean isCurrentUserAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return true;
+        }
+        return false;
     }
 }

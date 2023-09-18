@@ -1,16 +1,13 @@
 package ua.kvitkovo.catalog.repository;
 
-import java.math.BigDecimal;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ua.kvitkovo.catalog.entity.Color;
-import ua.kvitkovo.catalog.entity.Product;
-import ua.kvitkovo.catalog.entity.ProductStatus;
-import ua.kvitkovo.catalog.entity.ProductType;
-import ua.kvitkovo.catalog.entity.Size;
+import ua.kvitkovo.catalog.entity.*;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -18,8 +15,8 @@ import ua.kvitkovo.catalog.entity.Size;
 @Repository
 public interface ProductRepository extends ProductRepositoryBasic {
 
-    Page<Product> findAllByCategoryIdAndStatusEquals(Pageable pageable, Long id,
-        ProductStatus status);
+    Page<Product> findAllByCategoryInAndStatusEquals(Pageable pageable, List<Category> id,
+                                                     ProductStatus status);
 
     Page<Product> findAllByDiscountGreaterThanAndStatusEquals(Pageable pageable,
         BigDecimal discount, ProductStatus status);

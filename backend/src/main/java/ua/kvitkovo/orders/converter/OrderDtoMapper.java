@@ -17,6 +17,8 @@ public interface OrderDtoMapper {
     @Mapping(target = "orderItems", ignore = true)
     Order mapDtoRequestToEntity(OrderRequestDto dto);
 
+    Order mapDtoToEntity(OrderResponseDto dto);
+
     OrderResponseDto mapEntityToDto(Order order);
 
     List<OrderResponseDto> mapEntityToDto(List<Order> entities);
