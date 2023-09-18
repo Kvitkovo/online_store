@@ -16,9 +16,7 @@ const DiscountPrice = ({ oldPrice, actualPrice, isActive }) => {
       </p>
       <p className={Inactive(isActive, styles.actualPrice, styles.inactive)}>
         {actualPrice}
-        <span className={Inactive(isActive, styles.currency, styles.inactive)}>
-          грн
-        </span>
+        <span className={styles.currency}>грн</span>
       </p>
     </div>
   );
