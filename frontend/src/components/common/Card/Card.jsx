@@ -4,7 +4,7 @@ import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
 import Discount from '../../ui-kit/components/Discount/Discount';
 import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
-import { Inactive } from '../../utils/ClassActiveAndInactive';
+import { Inactive } from '../../../utils/ClassActiveAndInactive';
 
 const Card = (props) => {
   return (

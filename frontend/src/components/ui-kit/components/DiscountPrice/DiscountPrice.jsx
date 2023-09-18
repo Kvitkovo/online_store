@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './DiscountPrice.module.scss';
-import { Inactive } from '../../../utils/ClassActiveAndInactive';
+import { Inactive } from '../../../../utils/ClassActiveAndInactive';
 
 const DiscountPrice = ({ oldPrice, actualPrice, isActive }) => {
   return (
