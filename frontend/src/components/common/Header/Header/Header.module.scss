@@ -1,5 +1,5 @@
-@import '../../../variables';
-@import '../../../mixins.scss';
+@import '../../../../variables';
+@import '../../../../mixins.scss';
 
 header {
   width: 100%;
@@ -9,13 +9,14 @@ header {
 
   .containerTop {
     display: flex;
+    align-items: center;
     margin-bottom: 9px;
     height: 64px;
   }
   .logo {
     width: 137px;
     height: 50px;
-    margin: 7px 32px 7px 130px;
+    margin: 7px 32px 0px 130px;
     cursor: pointer;
   }
   .contacts {
@@ -33,6 +34,7 @@ header {
     flex-direction: row;
     align-items: center;
     margin-left: 123px;
+    margin-right: 130px;
     gap: 12px;
     list-style: none;
     padding: 0;
@@ -40,8 +42,6 @@ header {
   .links {
     color: $text-color;
     font-size: 16px;
-    list-style: none;
-    padding: 8px;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
   }
@@ -61,30 +61,29 @@ header {
     height: 40px;
   }
   .accessIcon {
+    display: flex;
     padding: 6px;
   }
 
   .btnLanguage {
     padding: 2px;
-    button {
-      border-radius: 20px;
-      border: 1px solid $page-background-color;
-      background-color: $white-color;
-      font-size: 16px;
-      font-weight: 500;
-      font-family: $font-main;
-      color: $text-color;
-      padding: 2px 6px;
-      transition: all 0.2s ease-in-out;
-    }
-    button:hover {
-      border: 1px solid $page-accent-color;
-    }
+    border-radius: 20px;
+    border: 1px solid $page-background-color;
+    background-color: $white-color;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: $font-main;
+    color: $text-color;
+    padding: 2px 6px;
+    transition: all 0.2s ease-in-out;
   }
-
+  .btnLanguage:hover {
+    border: 1px solid $page-accent-color;
+  }
   .containerBottom {
     display: flex;
     align-items: center;
+    height: 64px;
     z-index: 1;
   }
   .sticky {
@@ -99,6 +98,7 @@ header {
     margin-left: 130px;
   }
   .searchField {
+    display: flex;
     margin: 0 93px 0 48px;
   }
   .action {
@@ -111,7 +111,7 @@ header {
   }
   .cart {
     cursor: pointer;
-    margin: 0 130px 8px 8px;
+    margin: 0 0 8px 8px;
   }
 }
 @include md {
@@ -126,17 +126,13 @@ header {
       display: none;
     }
     ul {
-      margin-left: 174px;
-      margin-right: 47px;
+      margin: 0 0px 0 174px;
     }
     .btnCatalogue {
       margin-left: 47px;
     }
     .searchField {
       margin: 0 32px 0 43px;
-    }
-    .cart {
-      margin-right: 47px;
     }
   }
 }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import BurgerMenu from './BurgerMenu/BurgerMenu';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import styles from './Header.module.scss';
-import Button from '../../ui-kit/components/Button';
-import { ICONS } from '../../ui-kit/icons';
-import InputSearch from '../../ui-kit/components/Input/InputSearch';
-import ROUTES from '../../constants/routers';
+import Button from '../../../ui-kit/components/Button';
+import { ICONS } from '../../../ui-kit/icons';
+import InputSearch from '../../../ui-kit/components/Input/InputSearch';
+import ROUTES from '../../../constants/routers';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -75,13 +75,11 @@ const Header = () => {
                 Догляд за квітами
               </NavLink>
             </li>
-            <li className={styles.verticalLine}></li>
+            <span className={styles.verticalLine}></span>
             <li className={styles.accessIcon}>
               <ICONS.person />
             </li>
-            <li className={styles.btnLanguage}>
-              <button>Укр</button>
-            </li>
+            <button className={styles.btnLanguage}>Укр</button>
           </ul>
         </div>
 
