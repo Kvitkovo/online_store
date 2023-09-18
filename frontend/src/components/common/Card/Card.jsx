@@ -4,19 +4,15 @@ import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
 import Discount from '../../ui-kit/components/Discount/Discount';
 import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
+import { Inactive } from '../../utils/ClassActiveAndInactive';
 
 const Card = (props) => {
-  const inactive = (classNameActive, classNameInActive) => {
-    if (props.status === 'NO_ACTIVE')
-      return classNameActive + ' ' + classNameInActive;
-    else return classNameActive;
-  };
   return (
     <div className={styles.card}>
       <img
         src={props.image}
         alt="букет"
-        className={inactive(styles.foto, styles['foto-inactive'])}
+        className={Inactive(props.status, styles.foto, styles['foto-inactive'])}
       />
       <h3>{props.title}</h3>
       <div
@@ -28,7 +24,9 @@ const Card = (props) => {
       </div>
       <div className={styles['card-info']}>
         <div className={styles['text-flex']}>
-          <p className={inactive(styles.price, styles.inactive)}>Ціна</p>
+          <p className={Inactive(props.status, styles.price, styles.inactive)}>
+            Ціна
+          </p>
           {props.status === 'NO_ACTIVE' && (
             <p className={styles['out-of-stock']}>Немає в наявності</p>
           )}
