@@ -20,7 +20,7 @@
     border-radius: 8px 8px 0 0;
   }
 
-  .foto-inactive {
+  .fotoInactive {
     opacity: 0.4;
   }
 
@@ -40,15 +40,15 @@
     right: 0px;
     color: #fff;
   }
-  .card-info {
+  .cardInfo {
     padding: 12px;
   }
-  .text-flex {
+  .textFlex {
     display: flex;
     justify-content: space-between;
   }
 
-  .out-of-stock {
+  .outOfStock {
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
@@ -59,7 +59,7 @@
     padding-bottom: 14px;
   }
 
-  .card-flex-bottom {
+  .cardFlexBottom {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
