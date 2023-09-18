@@ -26,6 +26,10 @@ public class ProductDtoValidator implements Validator {
         ProductRequestDto dto = (ProductRequestDto) target;
         if (StringUtils.isBlank(dto.getTitle())) {
             errors.rejectValue("title", "", "is blank!");
+            return;
+        }
+        if (dto.getTitle().length() > 250) {
+            errors.rejectValue("title", "", "length > 255!");
         }
         if (dto.getCategoryId() <= 0) {
             errors.rejectValue("categoryId", "", "is blank!");

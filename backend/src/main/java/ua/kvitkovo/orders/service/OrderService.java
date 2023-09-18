@@ -2,32 +2,36 @@ package ua.kvitkovo.orders.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
+import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
-import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
-import ua.kvitkovo.orders.dto.OrderItemRequestDto;
-import ua.kvitkovo.orders.dto.OrderRequestDto;
-import ua.kvitkovo.orders.dto.OrderResponseDto;
+import ua.kvitkovo.orders.dto.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.orders.repository.OrderRepository;
+import ua.kvitkovo.orders.validator.OrderAdminDtoValidator;
 import ua.kvitkovo.orders.validator.OrderDtoValidator;
 import ua.kvitkovo.shop.repository.ShopRepository;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
+import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
+import ua.kvitkovo.utils.Helper;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,13 +44,27 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderDtoValidator orderDtoValidator;
+    private final OrderAdminDtoValidator orderAdminDtoValidator;
     private final ShopRepository shopRepository;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderDtoMapper orderDtoMapper;
     private final OrderItemDtoMapper orderItemDtoMapper;
     private final ErrorUtils errorUtils;
     private final UserService userService;
     private final UserDtoMapper userDtoMapper;
+
+    public OrderResponseDto findById(long id) throws ItemNotFoundException {
+        OrderResponseDto order = orderRepository.findById(id)
+                .map(orderDtoMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+        UserResponseDto currentUser = userService.getCurrentUser();
+
+        if (!userService.isCurrentUserAdmin() && currentUser.getId() != order.getCustomer().getId()) {
+            throw new ItemNotFoundException("Order not found");
+        }
+        return order;
+    }
 
     public OrderResponseDto addOrder(OrderRequestDto dto, BindingResult bindingResult) {
         orderDtoValidator.validate(dto, bindingResult);
@@ -132,5 +150,42 @@ public class OrderService {
             }
         }
         return orderItemCompositions;
+    }
+
+    @Transactional
+    public List<OrderResponseDto> updateOrdersStatus(List<Long> ordersID, OrderStatus status) {
+        List<Order> orders = ordersID.stream()
+                .map(id -> orderRepository.findById(id)
+                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+                .toList();
+
+        for (Order order : orders) {
+            order.setStatus(status);
+            orderRepository.save(order);
+        }
+        return orderDtoMapper.mapEntityToDto(orders);
+    }
+
+    @Transactional
+    public OrderResponseDto updateOrder(Long id, OrderAdminRequestDto dto, BindingResult bindingResult) {
+        OrderResponseDto orderResponseDto = findById(id);
+        orderAdminDtoValidator.validate(dto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
+        }
+
+        BeanUtils.copyProperties(dto, orderResponseDto, Helper.getNullPropertyNames(dto));
+
+        Order order = orderDtoMapper.mapDtoToEntity(orderResponseDto);
+        order.setId(id);
+        order.setShop(shopRepository.findById(dto.getShopId()).orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+        order.setManager(userRepository.findById(dto.getManagerId()).orElseThrow(() -> new ItemNotFoundException("User not found")));
+        order.setAddress(getFullTextAddress(order));
+
+        order.setOrderItems(getOrderItemsFromDtosRequest(order, dto.getOrderItems()));
+        order.setTotalSum(calculateTotalSum(order));
+
+        orderRepository.save(order);
+        return orderDtoMapper.mapEntityToDto(order);
     }
 }

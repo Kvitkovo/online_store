@@ -15,6 +15,7 @@ import { ReactComponent as PhoneIcon } from './phone.svg';
 import { ReactComponent as CloseGreenIcon } from './close-green.svg';
 import { ReactComponent as InCartIcon } from './in-cart.svg';
 import { ReactComponent as showList } from './icon-arrow-down.svg';
+import { ReactComponent as arrowUp } from './arrow-up.svg';
 import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
@@ -25,6 +26,9 @@ import { ReactComponent as phone } from './phone-icon.svg';
 import { ReactComponent as facebook } from './facebook.svg';
 import { ReactComponent as instagram } from './instagram.svg';
 import { ReactComponent as youtube } from './youtube.svg';
+import { ReactComponent as search } from './search-icon.svg';
+import { ReactComponent as back } from './back-icon.svg';
+import { ReactComponent as dash } from './dash-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -44,6 +48,7 @@ export const ICONS = {
   CloseGreenIcon,
   InCartIcon,
   showList,
+  arrowUp,
   hideList,
   checkBox,
   checkedBox,
@@ -54,4 +59,7 @@ export const ICONS = {
   instagram,
   facebook,
   youtube,
+  search,
+  back,
+  dash,
 };

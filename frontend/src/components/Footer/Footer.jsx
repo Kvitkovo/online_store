@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import ROUTES from '../constants/routers';
 import styles from './Footer.module.scss';
 import IconButton from '../ui-kit/components/IconButton';
 import { ICONS } from '../ui-kit/icons';
+import LinksList from '../LinksList';
 
 const kvitkovoLinks = [
   { route: ROUTES.about, text: 'Про нас' },
@@ -20,49 +20,42 @@ const clientLinks = [
   { route: ROUTES.faq, text: 'Поширені запитання' },
 ];
 
+const socialsLinks = [
+  { icon: <ICONS.facebook />, url: 'https://uk-ua.facebook.com/' },
+  { icon: <ICONS.instagram />, url: 'https://www.instagram.com/' },
+  { icon: <ICONS.youtube />, url: 'https://www.youtube.com/' },
+];
+
 const Footer = () => {
   return (
     <footer>
       <div className={styles.container}>
-        <section>
-          <h3 className={styles.title}>Kvitkovo</h3>
-          <ul>
-            {kvitkovoLinks.map((link, index) => (
-              <li key={index}>
-                <NavLink className={styles.links} to={link.route}>
-                  {link.text}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section>
-          <h3 className={styles.title}>Клієнтам</h3>
-          <ul>
-            {clientLinks.map((link, index) => (
-              <li key={index}>
-                <NavLink className={styles.links} to={link.route}>
-                  {link.text}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section>
-          <h3 className={styles.title}>Номер телефону</h3>
-          <p>+38 (093) 777-77-77 </p>
+        <LinksList title="Kvitkovo" links={kvitkovoLinks} />
+        <LinksList title="Клієнтам" links={clientLinks} />
+        <div className={styles.blockRight}>
+          <section>
+            <h3 className={styles.title}>Номер телефону</h3>
+            <p>+38 (093) 777-77-77 </p>
 
-          <h3 className={styles.title}>Адреса</h3>
-          <address>м. Київ, вул. Івана Мазепи 11</address>
-        </section>
-        <section>
-          <h3 className={styles.title}>Соц. мережі</h3>
-          <div className={styles.img}>
-            <IconButton icon={<ICONS.facebook />} />
-            <IconButton icon={<ICONS.instagram />} />
-            <IconButton icon={<ICONS.youtube />} />
-          </div>
-        </section>
+            <h3 className={styles.title}>Адреса</h3>
+            <address>м. Київ, вул. Івана Мазепи 11</address>
+          </section>
+          <section className={styles.socials}>
+            <h3 className={styles.title}>Соц. мережі</h3>
+            <div className={styles.iconsBlock}>
+              {socialsLinks.map((link) => (
+                <a
+                  key={link.url}
+                  rel="noreferrer"
+                  target="_blank"
+                  href={link.url}
+                >
+                  <IconButton icon={link.icon} />
+                </a>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </footer>
   );
