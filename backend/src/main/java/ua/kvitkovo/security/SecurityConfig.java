@@ -56,7 +56,6 @@ public class SecurityConfig {
             "/v1/categories/**",
             "/v1/products/**",
             "/v1/shops/**",
-            "/v1/orders/**",
             "/v1/colors/**",
             "/v1/sizes/**",
             "/v1/filter/**",
@@ -77,7 +76,9 @@ public class SecurityConfig {
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
         "/v1/users/{id:\\d+}",
         "/v1/orders/{id:\\d+}",
-        "/v1/orders/currentUser",
+        "/v1/orders",
+        "/v1/orders/user/current",
+        "/v1/orders/user/{id:\\d+}",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
