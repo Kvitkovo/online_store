@@ -8,7 +8,7 @@
 }
 .burgerHeader {
   display: flex;
-  padding: 8px 16px 16px 16px;
+  padding: 8px 16px 16px;
   background-color: $white-color;
   width: 100%;
 }
@@ -23,7 +23,7 @@
 .account,
 .cart {
   display: flex;
-  padding: 8px 8px 0px 8px;
+  padding: 8px 8px 0;
 }
 .openMenu {
   position: fixed;
@@ -35,7 +35,7 @@
 }
 .containerTop {
   height: 50px;
-  background-color: #fff;
+  background-color: $white-color;
   list-style: none;
   z-index: 1;
 }
@@ -74,28 +74,6 @@
     margin-left: 8px;
   }
 }
-ul {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  list-style: none;
-  li {
-    padding: 12px 8px;
-    .links {
-      color: $text-color;
-      list-style: none;
-      text-decoration: none;
-      transition: all 0.2s ease-in-out;
-    }
-    .links:hover {
-      color: $page-accent-color;
-    }
-
-    .links:active {
-      color: $active-color;
-    }
-  }
-}
 
 .navigation {
   margin-top: 24px;
@@ -108,9 +86,12 @@ ul {
   width: 100%;
   margin: 12px 0;
 }
-
 .phoneLink {
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: $text-color;
+  gap: 2px;
+  padding: 8px 2px;
   button {
     background: inherit;
   }
@@ -123,8 +104,9 @@ ul {
 
 .addition {
   display: flex;
+  align-items: center;
   padding: 10px 8px;
-  gap: 8px;
+  gap: 2px;
 }
 .language {
   color: $text-color;

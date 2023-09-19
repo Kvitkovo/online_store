@@ -5,7 +5,10 @@ import styles from './Header.module.scss';
 import Button from '../../../ui-kit/components/Button';
 import { ICONS } from '../../../ui-kit/icons';
 import InputSearch from '../../../ui-kit/components/Input/InputSearch';
-import ROUTES from '../../../constants/routers';
+import ROUTES from '../../../../constants/routers';
+import IconButton from '../../../ui-kit/components/IconButton';
+import { navigationItems } from '../navigationItems';
+import NavigationMenu from '../NavigationMenu/NavigationMenu';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -23,12 +26,8 @@ const Header = () => {
       <header>
         <div className={styles.containerTop}>
           {' '}
-          <NavLink to={ROUTES.home}>
-            <img
-              className={styles.logo}
-              src="images/logo.svg"
-              alt="логотип магазину 'Квітково'"
-            />
+          <NavLink to={ROUTES.home} className={styles.logo}>
+            <img src="images/logo.svg" alt="логотип магазину 'Квітково'" />
           </NavLink>
           <div className={styles.contacts}>
             <div className={styles.location}>
@@ -40,47 +39,17 @@ const Header = () => {
                 icon={<ICONS.location />}
               />
             </div>
-
             <a className={styles.phoneLink} href="tel:+380937777777">
-              <Button
-                variant="no-border"
-                label="(093) 777-77-77"
-                padding="padding-header-even"
-                reverse="true"
-                icon={<ICONS.phone />}
-              />
+              <IconButton icon={<ICONS.phone />} className={styles.phoneIcon} />
+              (093) 777-77-77
             </a>
           </div>
-          <ul>
-            <li>
-              <NavLink
-                className={`${styles.links} ${styles.promotions}`}
-                to={ROUTES.promotions}
-              >
-                Акції
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={styles.links} to={ROUTES.about}>
-                Про нас
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={styles.links} to={ROUTES.delivery}>
-                Доставка та оплата
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={styles.links} to={ROUTES.handling}>
-                Догляд за квітами
-              </NavLink>
-            </li>
-            <span className={styles.verticalLine}></span>
-            <li className={styles.accessIcon}>
-              <ICONS.person />
-            </li>
-            <button className={styles.btnLanguage}>Укр</button>
-          </ul>
+          <NavigationMenu items={navigationItems} menuType="Header" />
+          <span className={styles.verticalLine}></span>
+          <li className={styles.accessIcon}>
+            <IconButton icon={<ICONS.person />} />
+          </li>
+          <button className={styles.btnLanguage}>Укр</button>
         </div>
 
         <div
@@ -117,7 +86,7 @@ const Header = () => {
             </div>
 
             <div className={styles.cart}>
-              <ICONS.CartIcon />
+              <IconButton icon={<ICONS.CartIcon />} />
             </div>
           </div>
         </div>

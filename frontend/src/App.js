@@ -7,7 +7,7 @@ import Delivery from './pages/Delivery';
 import Handling from './pages/Handling';
 import './App.scss';
 import ROUTES from './constants/routers';
-import Header from './components/common/Header';
+import Header from './components/Layouts/Header/Header';
 
 function App() {
   return (

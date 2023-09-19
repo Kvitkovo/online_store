@@ -4,7 +4,10 @@ import styles from './BurgerMenu.module.scss';
 import Button from '../../../ui-kit/components/Button';
 import { ICONS } from '../../../ui-kit/icons';
 import Divider from '../../../ui-kit/components/Divider';
-import ROUTES from '../../../constants/routers';
+import ROUTES from '../../../../constants/routers';
+import NavigationMenu from '../NavigationMenu/NavigationMenu';
+import { navigationItems } from '../navigationItems';
+import IconButton from '../../../ui-kit/components/IconButton';
 
 const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,46 +36,17 @@ const BurgerMenu = () => {
               <ICONS.mobileCatalogue className={styles.catalogueIcon} />
               <span>Каталог товарів</span>
             </p>
-
-            <ul>
-              <div className={styles.navigation}>
-                <li>
-                  <NavLink
-                    className={`${styles.links} ${styles.promotions}`}
-                    to={ROUTES.promotions}
-                  >
-                    Акції
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className={styles.links} to={ROUTES.about}>
-                    Про нас
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className={styles.links} to={ROUTES.delivery}>
-                    Доставка та оплата
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className={styles.links} to={ROUTES.handling}>
-                    Догляд за квітами
-                  </NavLink>
-                </li>
-              </div>
-            </ul>
+            <NavigationMenu items={navigationItems} menuType="BurgerMenu" />
             <div className={styles.divider}>
               <Divider />
             </div>
             <div>
               <a className={styles.phoneLink} href="tel:+380937777777">
-                <Button
-                  variant="no-border"
-                  label="(093) 777-77-77"
-                  padding="padding-header-even"
-                  reverse="true"
+                <IconButton
                   icon={<ICONS.phone />}
+                  className={styles.phoneIcon}
                 />
+                (093) 777-77-77
               </a>
               <div className={styles.location}>
                 <Button
@@ -90,9 +64,7 @@ const BurgerMenu = () => {
             <p className={styles.addition}>
               {' '}
               <span className={styles.language}>Укр</span>{' '}
-              <span>
-                <ICONS.person />
-              </span>
+              <IconButton icon={<ICONS.person />} />
             </p>
           </div>
         </div>

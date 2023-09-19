@@ -1,0 +1,41 @@
+@import '../../../../variables';
+@import '../../../../mixins.scss';
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  li {
+    padding: 8px;
+  }
+}
+.burgerNav {
+  display: flex;
+  flex-direction: column;
+  li {
+    padding: 12px 8px;
+  }
+}
+.links {
+  color: $text-color;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+.links:hover {
+  color: $page-accent-color;
+}
+
+.links:active {
+  color: $active-color;
+}
+.promotions {
+  color: $discount-color;
+}
+@include md {
+  .headerNav {
+    ul {
+      margin: 0 0 0 174px;
+    }
+  }
+}
