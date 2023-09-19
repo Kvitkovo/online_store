@@ -1,0 +1,53 @@
+@import './src/variables';
+
+.root {
+  width: 300px;
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  user-select: none;
+
+  &:hover {
+    color: $page-accent-color;
+    cursor: pointer;
+  }
+}
+
+.dots:hover {
+  color: $text-color;
+  background-color: transparent;
+  cursor: default;
+}
+
+.selected {
+  background-color: $light-yellow;
+  color: $page-accent-color;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+}
+
+.arrowLeft {
+  position: absolute;
+  top: -2px;
+  left: 20px;
+}
+
+.arrowRight {
+  position: absolute;
+  top: -2px;
+  right: 20px;
+}
