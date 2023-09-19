@@ -1,5 +1,9 @@
 package ua.kvitkovo.orders.service;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +18,11 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
-import ua.kvitkovo.orders.dto.*;
+import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
+import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
+import ua.kvitkovo.orders.dto.OrderItemRequestDto;
+import ua.kvitkovo.orders.dto.OrderRequestDto;
+import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -30,11 +38,6 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -218,9 +221,29 @@ public class OrderService {
         return orderDtoMapper.mapEntityToDto(order);
     }
 
-    public Page<OrderResponseDto> getAllOrdersForCurrentUser(Pageable pageable) {
+    public Page<OrderResponseDto> getActiveOrdersForCurrentUser(Pageable pageable) {
         Page<Order> orders = orderRepository.findAllByCustomerIdAndStatusNotIn(pageable,
-                userService.getCurrentUserId(), List.of(OrderStatus.DONE, OrderStatus.CANCELED));
+            userService.getCurrentUserId(), List.of(OrderStatus.DONE, OrderStatus.CANCELED));
+        if (orders.isEmpty()) {
+            return Page.empty();
+        } else {
+            return orders.map(orderDtoMapper::mapEntityToDto);
+        }
+    }
+
+    public Page<OrderResponseDto> getAllOrdersForUser(Pageable pageable, Long id) {
+        userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found"));
+
+        Page<Order> orders = orderRepository.findAllByCustomerId(pageable, id);
+        if (orders.isEmpty()) {
+            return Page.empty();
+        } else {
+            return orders.map(orderDtoMapper::mapEntityToDto);
+        }
+    }
+
+    public Page<OrderResponseDto> getAllOrders(Pageable pageable) {
+        Page<Order> orders = orderRepository.findAll(pageable);
         if (orders.isEmpty()) {
             return Page.empty();
         } else {
