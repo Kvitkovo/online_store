@@ -6,8 +6,8 @@ import About from './pages/About';
 import Delivery from './pages/Delivery';
 import Handling from './pages/Handling';
 import './App.scss';
-import ROUTES from './components/constants/routers';
-import Header from './components/common/Header/Header';
+import ROUTES from './constants/routers';
+import Header from './components/common/Header';
 
 function App() {
   return (
