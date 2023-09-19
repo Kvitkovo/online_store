@@ -74,7 +74,7 @@ public class OrderController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful operation")
     })
-    @GetMapping(path = "/currentUser")
+    @GetMapping(path = "/user/current")
     @ResponseBody
     public Page<OrderResponseDto> getAllOrdersForCurrentUser(
 
@@ -91,7 +91,56 @@ public class OrderController {
         log.info("Received request to get current user Orders.");
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
             "created");
-        return orderService.getAllOrdersForCurrentUser(pageable);
+        return orderService.getActiveOrdersForCurrentUser(pageable);
+    }
+
+    @Operation(summary = "Get all orders")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation")
+    })
+    @GetMapping
+    @ResponseBody
+    public Page<OrderResponseDto> getAllOrders(
+
+        @Parameter(description = "Number of page (1..N)", required = true,
+            schema = @Schema(type = "integer", defaultValue = "1")
+        ) @RequestParam(defaultValue = "1") int page,
+        @Parameter(description = "The size of the page to be returned", required = true,
+            schema = @Schema(type = "integer", defaultValue = "12")
+        ) @RequestParam(defaultValue = "12") int size,
+        @Parameter(description = "Sort direction (ASC, DESC)",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection
+    ) {
+        log.info("Received request to get all Orders.");
+        Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
+            "created");
+        return orderService.getAllOrders(pageable);
+    }
+
+    @Operation(summary = "Get Orders for user.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation")
+    })
+    @GetMapping(path = "/user/{id}")
+    @ResponseBody
+    public Page<OrderResponseDto> getAllOrdersForUser(
+
+        @Parameter(description = "Number of page (1..N)", required = true,
+            schema = @Schema(type = "integer", defaultValue = "1")
+        ) @RequestParam(defaultValue = "1") int page,
+        @Parameter(description = "The size of the page to be returned", required = true,
+            schema = @Schema(type = "integer", defaultValue = "12")
+        ) @RequestParam(defaultValue = "12") int size,
+        @Parameter(description = "Sort direction (ASC, DESC)",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
+        @PathVariable Long id
+    ) {
+        log.info("Received request to get user with ID {} Orders.", id);
+        Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
+            "created");
+        return orderService.getAllOrdersForUser(pageable, id);
     }
 
     @Operation(summary = "Add a new Order")

@@ -1,19 +1,22 @@
 import React from 'react';
 import styles from './DiscountPrice.module.scss';
+import { inActive } from '../../../../utils/ClassActiveAndInactive';
 
-const DiscountPrice = ({ oldPrice, actualPrice }) => {
+const DiscountPrice = ({ oldPrice, actualPrice, isActive }) => {
   return (
     <div>
       <p
         className={
-          styles['old-price'] +
+          styles.oldPrice +
           ' ' +
-          `${oldPrice === actualPrice ? styles.hide : ''}`
+          `${oldPrice === actualPrice ? styles.hide : ''}` +
+          ' ' +
+          inActive(isActive, styles.actualPrice, styles.hide)
         }
       >
         {oldPrice} грн
       </p>
-      <p className={styles['actual-price']}>
+      <p className={inActive(isActive, styles.actualPrice, styles.inactive)}>
         {actualPrice}
         <span className={styles.currency}>грн</span>
       </p>
