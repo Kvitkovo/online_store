@@ -1,6 +1,6 @@
 @import '../../../../variables';
 
-.old-price {
+.oldPrice {
   font-size: 18px;
   line-height: 24px;
   text-decoration: line-through;
@@ -8,7 +8,7 @@
   padding-bottom: 10px;
 }
 
-.actual-price {
+.actualPrice {
   font-size: 24px;
   font-weight: 700;
   line-height: 24px;
@@ -19,10 +19,14 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: $page-accent-color;
   padding-left: 4px;
 }
 
 .hide {
-  display: none;
+  visibility: hidden;
+  line-height: 24px;
+}
+
+.inactive {
+  color: $gray-light-color;
 }
