@@ -26,8 +26,12 @@ const Header = () => {
       <header>
         <div className={styles.containerTop}>
           {' '}
-          <NavLink to={ROUTES.home} className={styles.logo}>
-            <img src="images/logo.svg" alt="логотип магазину 'Квітково'" />
+          <NavLink className={styles.logoLink} to={ROUTES.home}>
+            <img
+              className={styles.logo}
+              src="images/logo.svg"
+              alt="логотип магазину 'Квітково'"
+            />
           </NavLink>
           <div className={styles.contacts}>
             <div className={styles.location}>

@@ -13,11 +13,13 @@ header {
   margin-bottom: 9px;
   height: 64px;
 }
-.logo {
-  width: 137px;
+.logoLink {
   height: 50px;
   margin: 7px 32px 0px 130px;
   cursor: pointer;
+}
+.logo {
+  width: 137px;
 }
 .contacts {
   display: flex;
@@ -97,7 +99,7 @@ header {
 }
 @include md {
   header {
-    .logo {
+    .logoLink {
       margin: 7px 174px 7px 47px;
     }
     .contacts {

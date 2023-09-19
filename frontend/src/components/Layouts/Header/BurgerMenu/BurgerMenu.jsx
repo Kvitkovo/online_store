@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+/* import { NavLink } from 'react-router-dom';
 import styles from './BurgerMenu.module.scss';
 import Button from '../../../ui-kit/components/Button';
 import { ICONS } from '../../../ui-kit/icons';
@@ -7,7 +7,9 @@ import Divider from '../../../ui-kit/components/Divider';
 import ROUTES from '../../../../constants/routers';
 import NavigationMenu from '../NavigationMenu/NavigationMenu';
 import { navigationItems } from '../navigationItems';
-import IconButton from '../../../ui-kit/components/IconButton';
+import IconButton from '../../../ui-kit/components/IconButton'; */
+import OpenMenu from './OpenMenu';
+import ClosedMenu from './ClosedMenu';
 
 const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +17,20 @@ const BurgerMenu = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const closeNavigation = () => {
-    setIsOpen(false);
-  };
-
   return (
+    <>
+      {isOpen ? (
+        <OpenMenu toggleMenu={toggleMenu} />
+      ) : (
+        <ClosedMenu toggleMenu={toggleMenu} />
+      )}
+    </>
+  );
+  /*   const closeNavigation = () => {
+    setIsOpen(false);
+  }; */
+
+  /* return (
     <>
       {isOpen ? (
         <div className={styles.openMenu}>
@@ -92,7 +103,7 @@ const BurgerMenu = () => {
         </div>
       )}
     </>
-  );
+  ); */
 };
 
 export default BurgerMenu;
