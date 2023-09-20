@@ -61,10 +61,11 @@ header {
   color: $text-color;
   padding: 2px 6px;
   transition: all 0.2s ease-in-out;
+  &:hover {
+    border: 1px solid $page-accent-color;
+  }
 }
-.btnLanguage:hover {
-  border: 1px solid $page-accent-color;
-}
+
 .containerBottom {
   display: flex;
   align-items: center;
