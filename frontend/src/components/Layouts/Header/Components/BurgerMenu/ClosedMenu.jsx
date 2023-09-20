@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './BurgerMenu.module.scss';
-import { ICONS } from '../../../ui-kit/icons';
+import { ICONS } from '../../../../ui-kit/icons';
 
 const ClosedMenu = ({ toggleMenu }) => {
   return (

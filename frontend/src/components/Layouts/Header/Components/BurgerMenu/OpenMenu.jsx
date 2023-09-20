@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './BurgerMenu.module.scss';
-import Button from '../../../ui-kit/components/Button';
-import { ICONS } from '../../../ui-kit/icons';
-import Divider from '../../../ui-kit/components/Divider';
-import ROUTES from '../../../../constants/routers';
-import IconButton from '../../../ui-kit/components/IconButton';
+import Button from '../../../../ui-kit/components/Button';
+import { ICONS } from '../../../../ui-kit/icons';
+import Divider from '../../../../ui-kit/components/Divider';
+import ROUTES from '../../../../../constants/routers';
+import IconButton from '../../../../ui-kit/components/IconButton';
 import NavigationMenu from '../NavigationMenu';
-import { navigationItems } from '../navigationItems';
+import { navigationItems } from '../../navigationItems';
 
 const OpenMenu = ({ toggleMenu }) => {
   const closeNavigation = () => {

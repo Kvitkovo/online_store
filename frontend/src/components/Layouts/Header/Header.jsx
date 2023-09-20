@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import BurgerMenu from './Components/BurgerMenu/BurgerMenu';
 import styles from './Header.module.scss';
-import Button from '../../../ui-kit/components/Button';
-import { ICONS } from '../../../ui-kit/icons';
-import InputSearch from '../../../ui-kit/components/Input/InputSearch';
-import ROUTES from '../../../../constants/routers';
-import IconButton from '../../../ui-kit/components/IconButton';
-import { navigationItems } from '../navigationItems';
-import NavigationMenu from '../NavigationMenu/NavigationMenu';
+import Button from '../../ui-kit/components/Button';
+import { ICONS } from '../../ui-kit/icons';
+import InputSearch from '../../ui-kit/components/Input/InputSearch';
+import ROUTES from '../../../constants/routers';
+import IconButton from '../../ui-kit/components/IconButton';
+import { navigationItems } from './navigationItems';
+import NavigationMenu from './Components/NavigationMenu/NavigationMenu';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
