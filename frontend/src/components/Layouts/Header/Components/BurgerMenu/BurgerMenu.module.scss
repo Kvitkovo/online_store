@@ -26,31 +26,7 @@
   padding: 8px 8px 0;
 }
 .openMenu {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.containerTop {
-  height: 50px;
-  background-color: $white-color;
-  list-style: none;
-  z-index: 1;
-}
-.logoContainer {
-  display: flex;
-  padding: 3px 16px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 182px;
-}
-.logo {
-  width: 137px;
-  height: 50px;
-}
-.menuItems {
+  height: 100vh;
   background: linear-gradient(
       188deg,
       #6ec660 -112.86%,
@@ -59,15 +35,32 @@
       #6ec660 236.93%
     ),
     #fff;
+}
+.containerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 3px 16px;
+  background-color: $white-color;
+}
+.logo {
+  width: 137px;
+  height: 50px;
+}
+.menuItems {
   padding: 24px 16px;
 }
 .catalogue {
   display: flex;
   align-items: center;
+  background-color: inherit;
+  border: none;
 
   span {
     color: $text-color;
     font-weight: 700;
+    font-size: 16px;
     padding: 12px 8px;
   }
   .catalogueIcon {
@@ -90,8 +83,8 @@
   display: flex;
   align-items: center;
   color: $text-color;
-  gap: 2px;
-  padding: 8px 2px;
+  gap: 8px;
+  padding: 8px;
   button {
     background: inherit;
   }
@@ -106,7 +99,7 @@
   display: flex;
   align-items: center;
   padding: 10px 8px;
-  gap: 2px;
+  gap: 8px;
 }
 .language {
   color: $text-color;

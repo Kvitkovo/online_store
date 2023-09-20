@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import BurgerMenu from './Components/BurgerMenu/BurgerMenu';
 import styles from './Header.module.scss';
@@ -13,13 +13,15 @@ import NavigationMenu from './Components/NavigationMenu/NavigationMenu';
 const Header = () => {
   const [sticky, setSticky] = useState(false);
 
-  window.onscroll = () => {
-    if (window.scrollY > 70) {
-      setSticky(true);
-    } else {
-      setSticky(false);
-    }
-  };
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.scrollY > 70) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+  });
   return (
     <div>
       <BurgerMenu />
@@ -44,15 +46,15 @@ const Header = () => {
               />
             </div>
             <a className={styles.phoneLink} href="tel:+380937777777">
-              <IconButton icon={<ICONS.phone />} className={styles.phoneIcon} />
+              <ICONS.phone className={styles.phoneIcon} />
               (093) 777-77-77
             </a>
           </div>
           <NavigationMenu items={navigationItems} menuType="Header" />
           <span className={styles.verticalLine}></span>
-          <li className={styles.accessIcon}>
+          <div className={styles.accessIcon}>
             <IconButton icon={<ICONS.person />} />
-          </li>
+          </div>
           <button className={styles.btnLanguage}>Укр</button>
         </div>
 

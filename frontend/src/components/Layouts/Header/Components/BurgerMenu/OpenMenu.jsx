@@ -10,32 +10,28 @@ import NavigationMenu from '../NavigationMenu';
 import { navigationItems } from '../../navigationItems';
 
 const OpenMenu = ({ toggleMenu }) => {
-  const closeNavigation = () => {
-    toggleMenu();
-  };
-
   return (
     <div className={styles.openMenu}>
-      <div className={styles.containerTop}>
-        <NavLink to={ROUTES.home} className={styles.logoContainer}>
-          <img className={styles.logo} src="images/logo.svg" />
-          <ICONS.closeMobile onClick={closeNavigation} />
-        </NavLink>
-      </div>
+      <NavLink to={ROUTES.home} className={styles.containerTop}>
+        <img className={styles.logo} src="images/logo.svg" />
+        <IconButton icon={<ICONS.closeMobile />} onClick={toggleMenu} />
+      </NavLink>
 
       <div className={styles.menuItems}>
-        <p className={`${styles.links} ${styles.catalogue}`}>
+        <button className={`${styles.links} ${styles.catalogue}`}>
           {' '}
-          <ICONS.mobileCatalogue className={styles.catalogueIcon} />
+          <IconButton
+            icon={<ICONS.mobileCatalogue className={styles.catalogueIcon} />}
+          />
           <span>Каталог товарів</span>
-        </p>
+        </button>
         <NavigationMenu items={navigationItems} menuType="BurgerMenu" />
         <div className={styles.divider}>
           <Divider />
         </div>
         <div>
           <a className={styles.phoneLink} href="tel:+380937777777">
-            <IconButton icon={<ICONS.phone />} className={styles.phoneIcon} />
+            <ICONS.phone className={styles.phoneIcon} />
             (093) 777-77-77
           </a>
           <div className={styles.location}>
