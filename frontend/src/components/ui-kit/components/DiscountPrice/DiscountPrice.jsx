@@ -7,11 +7,9 @@ const DiscountPrice = ({ oldPrice, actualPrice, isActive }) => {
     <div>
       <p
         className={
-          styles.oldPrice +
+          inActive(isActive, styles.oldPrice, styles.hide) +
           ' ' +
-          `${oldPrice === actualPrice ? styles.hide : ''}` +
-          ' ' +
-          inActive(isActive, styles.actualPrice, styles.hide)
+          `${oldPrice === actualPrice ? styles.hide : ''}`
         }
       >
         {oldPrice} грн

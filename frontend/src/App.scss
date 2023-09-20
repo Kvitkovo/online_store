@@ -1,5 +1,6 @@
 @import './variables';
 * {
+  padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
@@ -7,13 +8,10 @@ body {
   font-family: $font-main;
   color: $text-color;
 }
+
 ul {
   padding: 0;
   li {
     list-style: none;
   }
-}
-
-a {
-  text-decoration: none;
 }
