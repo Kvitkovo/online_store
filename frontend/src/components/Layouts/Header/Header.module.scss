@@ -106,8 +106,14 @@ header {
     flex-direction: column;
     align-items: center;
   }
+  .logoLink {
+    margin-left: 0;
+  }
   .containerBottom {
     justify-content: center;
+  }
+  .btnCatalogue {
+    margin-left: 0;
   }
 }
 @include md {
