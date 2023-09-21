@@ -65,6 +65,16 @@ public class User {
     @Column(name = "newsletter")
     private boolean newsletter;
 
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "position_id")
+    private Position position;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

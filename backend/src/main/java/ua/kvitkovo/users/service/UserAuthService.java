@@ -19,16 +19,14 @@ import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.Role;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.entity.UserStatus;
+import ua.kvitkovo.users.repository.PositionRepository;
 import ua.kvitkovo.users.repository.RoleRepository;
 import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.validator.*;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Andriy Gaponov
@@ -42,11 +40,13 @@ public class UserAuthService {
     private final ResetPasswordRequestDtoValidator resetPasswordRequestDtoValidator;
     private final ChangePasswordRequestDtoValidator changePasswordRequestDtoValidator;
     private final UserRepository userRepository;
+    private final PositionRepository positionRepository;
     private final ErrorUtils errorUtils;
     private final UserDtoMapper userMapper;
     private final UserRequestDtoValidator userRequestDtoValidator;
     private final CreateUserRequestDtoValidator createUserRequestDtoValidator;
     private final UpdateUserRequestDtoValidator updateUserRequestDtoValidator;
+    private final EmployeeRequestDtoValidator employeeRequestDtoValidator;
     private final RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -91,6 +91,14 @@ public class UserAuthService {
         }
         User user = userMapper.mapDtoRequestToDto(userRequestDto);
 
+        if (userRequestDto.getPositionId() != null) {
+            user.setPosition(positionRepository.findById(userRequestDto.getPositionId()).orElseThrow(
+                    () -> {
+                        throw new ItemNotFoundException("Position not found");
+                    }
+            ));
+        }
+
         Role roleUser;
         if (!StringUtils.isBlank(userRequestDto.getRole())) {
             roleUser = roleRepository.findByName(userRequestDto.getRole()).orElseThrow(() -> {
@@ -129,12 +137,22 @@ public class UserAuthService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ItemNotFoundException("User not found")
         );
+
+        if (dto.getEmail() != null) {
+            Optional<User> userByEmail = userRepository.findByEmail(dto.getEmail());
+            if (userByEmail.isPresent() && userByEmail.get().getId() != id) {
+                throw new ItemNotUpdatedException("User with this email already exists");
+            }
+        }
+
         updateUserRequestDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
         BeanUtils.copyProperties(dto, user, Helper.getNullPropertyNames(dto));
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (dto.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
 
         userRepository.save(user);
         return userMapper.mapEntityToDto(user);
@@ -224,5 +242,35 @@ public class UserAuthService {
                 "link", baseSiteUrl
         );
         emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+    }
+
+    public UserResponseDto updateEmployee(Long id, EmployeeUpdateRequestDto dto, BindingResult bindingResult) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ItemNotFoundException("User not found")
+        );
+
+        Optional<User> userByEmail = userRepository.findByEmail(dto.getEmail());
+        if (userByEmail.isPresent() && userByEmail.get().getId() != id) {
+            throw new ItemNotUpdatedException("User with this email already exists");
+        }
+
+        employeeRequestDtoValidator.validate(dto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
+        }
+        BeanUtils.copyProperties(dto, user, Helper.getNullPropertyNames(dto));
+
+        if (dto.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
+        if (dto.getPositionId() != null) {
+            user.setPosition(positionRepository.findById(dto.getPositionId()).orElseThrow(
+                    () -> new ItemNotFoundException("Position not found")
+            ));
+        }
+
+        userRepository.save(user);
+        return userMapper.mapEntityToDto(user);
     }
 }

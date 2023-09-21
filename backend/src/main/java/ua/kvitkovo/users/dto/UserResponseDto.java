@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.users.entity.Position;
 import ua.kvitkovo.users.entity.Role;
 import ua.kvitkovo.users.entity.UserStatus;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +29,25 @@ public class UserResponseDto {
     private UserStatus status;
     private boolean emailConfirmed;
     private boolean newsletter;
+    private Date birthday;
+    private String comment;
+    private Position position;
     private List<Role> roles;
+
+    @Schema(example = "2001-09-01", description = "User birthday")
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    @Schema(example = "", description = "User comment")
+    public String getComment() {
+        return comment;
+    }
+
+    @Schema(example = "vip client", description = "User comment")
+    public Position getPosition() {
+        return position;
+    }
 
     @Schema(example = "1", description = "User ID")
     public long getId() {
