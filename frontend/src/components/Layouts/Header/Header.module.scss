@@ -1,0 +1,139 @@
+@import '../../../variables';
+@import '../../../mixins.scss';
+
+header {
+  width: 100%;
+  padding: 7px 0;
+  background-color: $white-color;
+  font-weight: 400;
+}
+
+.containerTop {
+  display: flex;
+  align-items: center;
+  margin-bottom: 9px;
+  height: 64px;
+}
+.logoLink {
+  height: 50px;
+  margin: 7px 32px 0px 130px;
+  cursor: pointer;
+}
+.logo {
+  width: 137px;
+}
+.contacts {
+  display: flex;
+  gap: 26px;
+  margin-right: 123px;
+}
+.location {
+  display: flex;
+}
+.phoneLink {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  color: $text-color;
+}
+.iconButton {
+  margin-right: 130px;
+}
+.verticalLine {
+  border-left: 1px solid $page-accent-color;
+  height: 40px;
+  margin: 0 12px;
+}
+.accessIcon {
+  display: flex;
+  padding: 6px;
+  margin-right: 12px;
+}
+
+.btnLanguage {
+  padding: 2px;
+  border-radius: 20px;
+  border: 1px solid $page-background-color;
+  background-color: $white-color;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: $font-main;
+  color: $text-color;
+  padding: 2px 6px;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    border: 1px solid $page-accent-color;
+  }
+}
+
+.containerBottom {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  z-index: 1;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 80px;
+  background-color: $white-color;
+}
+.btnCatalogue {
+  margin-left: 130px;
+}
+.searchField {
+  display: flex;
+  margin: 0 93px 0 48px;
+}
+.action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.login {
+  margin-bottom: 8px;
+}
+.cart {
+  cursor: pointer;
+  margin: 0 0 8px 8px;
+}
+@include bg {
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .logoLink {
+    margin-left: 0;
+  }
+  .containerBottom {
+    justify-content: center;
+  }
+  .btnCatalogue {
+    margin-left: 0;
+  }
+}
+@include md {
+  header {
+    .logoLink {
+      margin: 7px 174px 7px 47px;
+    }
+    .contacts {
+      display: none;
+    }
+    .btnCatalogue {
+      margin-left: 47px;
+    }
+    .searchField {
+      margin: 0 32px 0 43px;
+    }
+  }
+}
+@include sm {
+  header {
+    display: none;
+  }
+}
