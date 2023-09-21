@@ -1,0 +1,32 @@
+.itemContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 58px;
+  padding: 62px 130px 34px;
+}
+.itemDescriptionContainer {
+  flex-direction: column;
+}
+.rating {
+  padding: 6px 0px;
+  margin-bottom: 38px;
+  margin-top: 14px;
+}
+.itemDescription {
+  font-size: 20px;
+  padding: 6px 0px;
+  margin-bottom: 34px;
+}
+.type {
+  font-size: 20px;
+}
+.price {
+  margin-top: 32px;
+  margin-bottom: 26px;
+}
+.buttons {
+  display: flex;
+
+  gap: 26px;
+}
