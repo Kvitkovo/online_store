@@ -13,9 +13,3 @@
     @content;
   }
 }
-// Big devices
-@mixin bg {
-  @media screen and (min-width: #{$breakpoint-bg}) {
-    @content;
-  }
-}

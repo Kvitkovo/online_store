@@ -2,6 +2,9 @@
 @import '../../../mixins.scss';
 
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   padding: 7px 0;
   background-color: $white-color;
@@ -16,7 +19,7 @@ header {
 }
 .logoLink {
   height: 50px;
-  margin: 7px 32px 0px 130px;
+  margin: 7px 32px 0px 0px;
   cursor: pointer;
 }
 .logo {
@@ -70,19 +73,19 @@ header {
 .containerBottom {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 64px;
   z-index: 1;
+  width: 100%;
 }
 .sticky {
   position: fixed;
+  width: 100%;
   top: 0;
   right: 0;
   left: 0;
   height: 80px;
   background-color: $white-color;
-}
-.btnCatalogue {
-  margin-left: 130px;
 }
 .searchField {
   display: flex;
@@ -99,22 +102,6 @@ header {
 .cart {
   cursor: pointer;
   margin: 0 0 8px 8px;
-}
-@include bg {
-  header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .logoLink {
-    margin-left: 0;
-  }
-  .containerBottom {
-    justify-content: center;
-  }
-  .btnCatalogue {
-    margin-left: 0;
-  }
 }
 @include md {
   header {
