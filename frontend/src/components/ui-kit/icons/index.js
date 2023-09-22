@@ -30,6 +30,8 @@ import { ReactComponent as mobileCatalogue } from './mobile-catalogue-icon.svg';
 import { ReactComponent as search } from './search-icon.svg';
 import { ReactComponent as back } from './back-icon.svg';
 import { ReactComponent as dash } from './dash-icon.svg';
+import { ReactComponent as starColor } from './star-color.svg';
+import { ReactComponent as starNoColor } from './star-no-color.svg';
 
 export const ICONS = {
   addComponent,
@@ -64,4 +66,6 @@ export const ICONS = {
   search,
   back,
   dash,
+  starColor,
+  starNoColor,
 };

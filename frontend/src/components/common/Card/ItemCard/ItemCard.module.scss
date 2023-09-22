@@ -1,9 +1,37 @@
+@import '../../../../variables';
+
+.mainPage {
+  background: $background-gradient;
+  padding-top: 20px;
+  min-height: 100vh;
+}
+.path {
+  color: $black-80-color;
+}
+p {
+  span {
+    padding: 7px 9px;
+  }
+}
 .itemContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 58px;
-  padding: 62px 130px 34px;
+  padding: 32px 0px 32px 4px;
+  margin-top: 22px;
+  border-radius: 8px;
+  background: $white-color;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.04);
+}
+.itemImage {
+  position: relative;
+  padding: 0px 16px;
+}
+.discount {
+  position: absolute;
+  left: 16px;
+  top: 0;
 }
 .itemDescriptionContainer {
   flex-direction: column;
@@ -12,11 +40,20 @@
   padding: 6px 0px;
   margin-bottom: 38px;
   margin-top: 14px;
+  gap: 8px;
+  display: flex;
 }
 .itemDescription {
   font-size: 20px;
   padding: 6px 0px;
   margin-bottom: 34px;
+  margin-top: 8px;
+}
+.features {
+  p {
+    padding: 6px 0px;
+    gap: 6px;
+  }
 }
 .type {
   font-size: 20px;
@@ -27,6 +64,18 @@
 }
 .buttons {
   display: flex;
-
   gap: 26px;
+}
+.previous {
+  padding: 6px;
+  margin-top: 28px;
+  margin-bottom: 32px;
+}
+.previousCards {
+  margin-bottom: 46px;
+}
+.helpButton {
+  position: fixed;
+  top: 90vh;
+  left: 95vw;
 }
