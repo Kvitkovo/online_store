@@ -1,10 +1,13 @@
 import React from 'react';
 import CategoryOutput from './components/CategoryOutput';
 import Wrrapper from '../../Wrraper/Wrraper';
+import Carousel from './components/Carousel';
+import carouselData from '../../../data/carouselData.json';
 
 const HomePageComponent = () => {
   return (
     <Wrrapper>
+      <Carousel data={carouselData.slides} />
       <CategoryOutput
         title={'Акційна ціна'}
         api={'v1/products/discounted?page=1&size=8'}
