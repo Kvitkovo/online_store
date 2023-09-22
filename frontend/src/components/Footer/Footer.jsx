@@ -1,30 +1,9 @@
 import React from 'react';
-import ROUTES from '../constants/routers';
+import LinksList from './components/LinksList';
+import { clientLinks, kvitkovoLinks, socialsLinks } from './navigationLinks';
+
 import styles from './Footer.module.scss';
 import IconButton from '../ui-kit/components/IconButton';
-import { ICONS } from '../ui-kit/icons';
-import LinksList from '../LinksList';
-
-const kvitkovoLinks = [
-  { route: ROUTES.about, text: 'Про нас' },
-  { route: ROUTES.contacts, text: 'Контакти' },
-  { route: ROUTES.partner, text: 'Стати партнером' },
-  { route: ROUTES.privacy, text: 'Політика конфіденційності' },
-];
-
-const clientLinks = [
-  { route: ROUTES.orderStatus, text: 'Статус замовлення' },
-  { route: ROUTES.delivery, text: 'Доставка та оплата' },
-  { route: ROUTES.about, text: 'Акції в Kvitkovo' },
-  { route: ROUTES.care, text: 'Догляд за квітами' },
-  { route: ROUTES.faq, text: 'Поширені запитання' },
-];
-
-const socialsLinks = [
-  { icon: <ICONS.facebook />, url: 'https://uk-ua.facebook.com/' },
-  { icon: <ICONS.instagram />, url: 'https://www.instagram.com/' },
-  { icon: <ICONS.youtube />, url: 'https://www.youtube.com/' },
-];
 
 const Footer = () => {
   return (
@@ -33,7 +12,7 @@ const Footer = () => {
         <LinksList title="Kvitkovo" links={kvitkovoLinks} />
         <LinksList title="Клієнтам" links={clientLinks} />
         <div className={styles.blockRight}>
-          <section>
+          <section className={styles.contacts}>
             <h3 className={styles.title}>Номер телефону</h3>
             <p>+38 (093) 777-77-77 </p>
 

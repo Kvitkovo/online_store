@@ -6,6 +6,7 @@
 }
 body {
   font-family: $font-main;
+  color: $text-color;
 }
 
 ul {
@@ -14,7 +15,6 @@ ul {
     list-style: none;
   }
 }
-
 a {
   text-decoration: none;
 }

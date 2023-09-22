@@ -1,7 +1,6 @@
 package ua.kvitkovo.security;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +56,6 @@ public class SecurityConfig {
             "/v1/categories/**",
             "/v1/products/**",
             "/v1/shops/**",
-            "/v1/orders/**",
             "/v1/colors/**",
             "/v1/sizes/**",
             "/v1/filter/**",
@@ -66,14 +64,19 @@ public class SecurityConfig {
     };
 
     private static final String[] POST_PERMITTED_ENDPOINTS = {
-        "/v1/users/resetPassword/**",
-        "/v1/users/changePassword/**",
-        "/v1/orders/**",
+            "/v1/users/resetPassword/**",
+            "/v1/users/changePassword/**",
+            "/v1/orders/**",
+    };
+
+    private static final String[] PUT_PERMITTED_ENDPOINTS = {
+            "/v1/orders/{id:\\d+}/cancel",
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
-            "/v1/users/{id:\\d+}",
-            "/v1/orders/{id:\\d+}",
+        "/v1/users/{id:\\d+}",
+        "/v1/orders/{id:\\d+}",
+        "/v1/orders/user/current",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -95,6 +98,7 @@ public class SecurityConfig {
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, GET_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, POST_PERMITTED_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.PUT, PUT_PERMITTED_ENDPOINTS).permitAll()
                         .anyRequest().hasRole("ADMIN"))
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPointJwt)
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt)

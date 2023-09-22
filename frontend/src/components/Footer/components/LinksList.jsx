@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Footer/Footer.module.scss';
 import { NavLink } from 'react-router-dom';
+import styles from './LinksList.module.scss';
 
 const LinksList = ({ title, links }) => {
   return (

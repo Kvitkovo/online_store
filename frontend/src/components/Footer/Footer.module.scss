@@ -25,23 +25,15 @@ section {
   justify-content: space-around;
 }
 
-.list {
-  margin-top: 28px;
-  .item {
-    margin-top: 16px;
-  }
-}
-
-.links {
-  line-height: 20.8px;
-  color: $white-color;
-}
-
 .title {
   color: $white-color;
   font-size: 18px;
   font-weight: 700;
   line-height: 23.4px;
+}
+
+.contacts {
+  width: 240px;
 }
 
 .socials {
@@ -60,14 +52,24 @@ p {
 }
 
 address {
+  font-style: normal;
   color: $white-color;
   margin-top: 16px;
+}
+
+@include bg {
+  footer {
+    padding: 32px 0;
+  }
+  .container {
+    margin: 0 auto;
+  }
 }
 
 @include md {
   footer {
     height: 100%;
-    padding-left: 47px;
+    padding: 32px 102px 0 47px;
   }
   .container {
     display: flex;
@@ -97,5 +99,8 @@ address {
   }
   .blockRight {
     flex-direction: column;
+  }
+  .socials {
+    margin-top: 32px;
   }
 }

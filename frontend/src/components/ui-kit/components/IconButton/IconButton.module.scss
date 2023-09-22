@@ -1,6 +1,7 @@
 @import '../../../../_variables.scss';
 
 .button {
+  display: inline-flex;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -27,7 +28,6 @@
   padding: 6px;
 }
 .icon-round {
-  display: inline-flex;
   border-radius: 50%;
   background-color: $white-color;
   padding: 10px;

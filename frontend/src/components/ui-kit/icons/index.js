@@ -26,6 +26,10 @@ import { ReactComponent as phone } from './phone-icon.svg';
 import { ReactComponent as facebook } from './facebook.svg';
 import { ReactComponent as instagram } from './instagram.svg';
 import { ReactComponent as youtube } from './youtube.svg';
+import { ReactComponent as burgerMenu } from './burger-icon.svg';
+import { ReactComponent as searchMobile } from './search-icon-green.svg';
+import { ReactComponent as closeMobile } from './close-icon-black.svg';
+import { ReactComponent as mobileCatalogue } from './mobile-catalogue-icon.svg';
 import { ReactComponent as search } from './search-icon.svg';
 import { ReactComponent as back } from './back-icon.svg';
 import { ReactComponent as dash } from './dash-icon.svg';
@@ -59,6 +63,10 @@ export const ICONS = {
   instagram,
   facebook,
   youtube,
+  burgerMenu,
+  searchMobile,
+  closeMobile,
+  mobileCatalogue,
   search,
   back,
   dash,
