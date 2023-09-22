@@ -30,6 +30,6 @@ public class CreateUserRequestDtoValidator implements Validator {
     public void validate(Object target, Errors errors) {
         CreateUserRequestDto dto = (CreateUserRequestDto) target;
 
-        emailValidator.validate("email", dto.getEmail(), errors, true);
+        emailValidator.validate("email", dto.getEmail(), errors);
     }
 }

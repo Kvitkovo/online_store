@@ -32,7 +32,7 @@ public class OrderAdminDtoValidator implements Validator {
     public void validate(Object target, Errors errors) {
         OrderAdminRequestDto dto = (OrderAdminRequestDto) target;
 
-        emailValidator.validate("customerEmail", dto.getCustomerEmail(), errors, false);
+        emailValidator.validate("customerEmail", dto.getCustomerEmail(), errors);
 
         if (StringUtils.isBlank(dto.getCustomerName())) {
             errors.rejectValue("customerName", "", "is blank!");
