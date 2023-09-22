@@ -19,11 +19,11 @@ p {
   justify-content: center;
   position: relative;
   gap: 58px;
-  padding: 32px 0px 32px 4px;
+  padding: 32px 0 32px 4px;
   margin-top: 22px;
   border-radius: 8px;
   background: $white-color;
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
 }
 .itemImage {
   padding: 0 16px;
@@ -37,7 +37,7 @@ p {
   flex-direction: column;
 }
 .rating {
-  padding: 6px 0px;
+  padding: 6px 0;
   margin-bottom: 38px;
   margin-top: 14px;
   gap: 8px;
@@ -45,13 +45,12 @@ p {
 }
 .itemDescription {
   font-size: 20px;
-  padding: 6px 0px;
-  margin-bottom: 34px;
-  margin-top: 8px;
+  padding: 6px 0;
+  margin: 8px 16px 34px 0;
 }
 .features {
   p {
-    padding: 6px 0px;
+    padding: 6px 0;
     gap: 6px;
   }
 }
