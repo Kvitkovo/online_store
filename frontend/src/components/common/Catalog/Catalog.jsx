@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { ICONS } from '../../ui-kit/icons';
 import styles from './Catalog.module.scss';
+import mockCategories from '../../../data/catalogMockData.json';
 
 const Catalog = (props) => {
   const categories = [
@@ -55,23 +56,101 @@ const Catalog = (props) => {
       hasSubCategory: false,
     },
   ];
+
+  const contacts = [
+    {
+      id: 97,
+      name: '(093) 777-77-77',
+      bg: './images/catalog-images/background/akciyna_cena.png',
+      icon: <ICONS.akciyna_cena />,
+      hasSubCategory: false,
+    },
+    {
+      id: 98,
+      name: 'Київ',
+      bg: './images/catalog-images/background/akciyna_cena.png',
+      icon: <ICONS.akciyna_cena />,
+      hasSubCategory: false,
+    },
+  ];
+
+  const arrIcon = categories.map((category) => category.icon);
+  const arrBg = categories.map((category) => category.bg);
+
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const formatedCategories = mockCategories
+    .filter((category) => !category.parent)
+    .map((category, index) => ({
+      ...category,
+      children: mockCategories.filter(
+        (child) => child.parent?.id === category.id,
+      ),
+      icon: arrIcon[index] || <ICONS.bukety_z_kvitiv />,
+      bg: arrBg[index],
+    }));
+
   return (
     <div className={styles.categoryWrapper}>
-      <ul className={styles.categoryList}>
-        {categories.map((category) => {
-          return (
-            <li key={category.id} className={styles.categoryItem}>
-              <a href="#">
-                {category.icon}
-                <span>{category.name}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div className={styles.itemsWrapper}>
+        <ul className={styles.categoryList}>
+          {formatedCategories.map((category) => {
+            const isHasChildren = !!category?.children?.length;
+            return (
+              <li
+                key={category.id}
+                className={styles.categoryItem}
+                onMouseOver={() =>
+                  setHoveredItem({
+                    subCategories: category.children,
+                    bg: category.bg,
+                    name: category.name,
+                  })
+                }
+              >
+                <a href="#">
+                  <span className={styles.categoryIcon}>{category.icon}</span>
+                  <div className={styles.categoryItemContent}>
+                    <span className={styles.categoryItemText}>
+                      {category.name}
+                    </span>
+                    {isHasChildren && <ICONS.ArrowRightIcon />}
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+          <div className={styles.contacts}>
+            {contacts.map((contact) => {
+              return (
+                <li key={contact.id} className={styles.categoryItem}>
+                  <a href="#">
+                    <span className={styles.categoryIcon}>{contact.icon}</span>
+                    <div className={styles.categoryItemContent}>
+                      <span className={styles.categoryItemText}>
+                        {contact.name}
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
+          </div>
+        </ul>
+        {!!hoveredItem?.subCategories?.length && (
+          <ul className={styles.subCategoryList}>
+            {hoveredItem.subCategories.map((child) => (
+              <li key={child.id} className={styles.categoryItem}>
+                <a href="#">{child.name}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       <img
-        src={categories[0].bg}
-        alt={categories[0].name}
+        src={hoveredItem?.bg || categories[0].bg}
+        alt={hoveredItem?.name || categories[0].name}
         className={styles.categoryBg}
       />
     </div>

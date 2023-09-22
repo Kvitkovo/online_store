@@ -16,7 +16,12 @@ const Modal = memo(({ isOpen, setIsOpen, children }) => {
   //     flexDirection: reverse ? 'row-reverse' : 'row',
   //   };
   // }, [reverse]);
-  return isOpen ? <div>{children}</div> : null;
+  return isOpen ? (
+    <>
+      <div className={styles.wrapper}>{children}</div>
+      <div onClick={() => setIsOpen(false)} className={styles.background}></div>
+    </>
+  ) : null;
 });
 
 export default Modal;

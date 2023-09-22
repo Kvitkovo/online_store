@@ -1,0 +1,647 @@
+[
+  {
+    "id": 1,
+    "name": "Букети",
+    "alias": "Buketi",
+    "parent": null,
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "name": "весільні",
+    "alias": "vesilni",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "name": "елітні",
+    "alias": "elitni",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 4,
+    "name": "рози",
+    "alias": "rozi",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 5,
+    "name": "тюльпани",
+    "alias": "t-lpani",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 6,
+    "name": "еустоми",
+    "alias": "eustomi",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 7,
+    "name": "ромашки",
+    "alias": "romashki",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 8,
+    "name": "гладіолуси",
+    "alias": "gladiolusi",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 9,
+    "name": "піони",
+    "alias": "pioni",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 10,
+    "name": "гвоздики",
+    "alias": "gvozdiki",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 11,
+    "name": "айстри",
+    "alias": "ajstri",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 12,
+    "name": "гербери",
+    "alias": "gerberi",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 13,
+    "name": "гортензії",
+    "alias": "gortenzii",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 14,
+    "name": "хризантеми",
+    "alias": "khrizantemi",
+    "parent": {
+      "id": 1,
+      "name": "Букети",
+      "alias": "Buketi",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 15,
+    "name": "Квіти поштучно",
+    "alias": "Kviti-poshtuchno",
+    "parent": null,
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 16,
+    "name": "рози",
+    "alias": "rozi-vlI",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 17,
+    "name": "тюльпани",
+    "alias": "t-lpani-9Z7",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 18,
+    "name": "еустоми",
+    "alias": "eustomi-1UF",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 19,
+    "name": "ромашки",
+    "alias": "romashki-zNe",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 20,
+    "name": "гладіолуси",
+    "alias": "gladiolusi-XJf",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 21,
+    "name": "піони",
+    "alias": "pioni-FhS",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 22,
+    "name": "гвоздики",
+    "alias": "gvozdiki-2kB",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 23,
+    "name": "айстри",
+    "alias": "ajstri-hBw",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 24,
+    "name": "гербери",
+    "alias": "gerberi-DSj",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 25,
+    "name": "гортензії",
+    "alias": "gortenzii-eYZ",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 26,
+    "name": "хризантеми",
+    "alias": "khrizantemi-ocy",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 27,
+    "name": "декорації та відкритки",
+    "alias": "dekoracii-ta-vidkritki",
+    "parent": {
+      "id": 15,
+      "name": "Квіти поштучно",
+      "alias": "Kviti-poshtuchno",
+      "parent": null,
+      "metaDescription": "",
+      "metaKeywords": "",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 28,
+    "name": "Квіти у кошику",
+    "alias": "Kviti-u-koshiku",
+    "parent": null,
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 29,
+    "name": "Кімнатні квіти",
+    "alias": "Kimnatni-kviti",
+    "parent": null,
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 30,
+    "name": "Декор із квітів",
+    "alias": "Dekor-iz-kvitiv",
+    "parent": null,
+    "metaDescription": "",
+    "metaKeywords": "",
+    "description": "",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 36,
+    "name": "MyTestCategory12",
+    "alias": "MyTestCategory12",
+    "parent": null,
+    "metaDescription": "MyTestCategory1",
+    "metaKeywords": "MyTestCategory1",
+    "description": "MyTestCategory1",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 39,
+    "name": "parsing category name",
+    "alias": "parsing-category-name",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 40,
+    "name": "category test name 222",
+    "alias": "category-test-name-222",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 41,
+    "name": "category test name 64",
+    "alias": "category-test-name-64",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 42,
+    "name": "Global category name",
+    "alias": "Global-category-name",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 43,
+    "name": "Fresh category name",
+    "alias": "Fresh-category-name",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 44,
+    "name": "category test name 954",
+    "alias": "category-test-name-954",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 45,
+    "name": "category test name 715",
+    "alias": "category-test-name-715",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 46,
+    "name": "category test name 406",
+    "alias": "category-test-name-406",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 47,
+    "name": "category test name Garret",
+    "alias": "category-test-name-Garret",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 48,
+    "name": "category test name Karson",
+    "alias": "category-test-name-Karson",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 49,
+    "name": "category test name Drew",
+    "alias": "category-test-name-Drew",
+    "parent": null,
+    "metaDescription": "MyTestCategory",
+    "metaKeywords": "MyTestCategory",
+    "description": "MyTestCategory",
+    "status": "ACTIVE"
+  }
+]

@@ -9,9 +9,16 @@ import ROUTES from '../../../constants/routers';
 import IconButton from '../../ui-kit/components/IconButton';
 import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
+import Modal from '../../ui-kit/components/Modal';
+import Catalog from '../../common/Catalog/Catalog';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
+  const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
+  const catalogHandler = () => {
+    setIsCatalogOpened(!isCatalogOpened);
+  };
 
   useEffect(() => {
     window.onscroll = () => {
@@ -69,7 +76,7 @@ const Header = () => {
               variant="primary"
               padding="padding-even"
               label="Каталог товарів"
-              onClick={() => alert('clicked primary')}
+              onClick={catalogHandler}
             />
           </div>
 
@@ -100,6 +107,9 @@ const Header = () => {
           </div>
         </div>
       </header>
+      <Modal isOpen={isCatalogOpened} setIsOpen={setIsCatalogOpened}>
+        <Catalog />
+      </Modal>
     </div>
   );
 };

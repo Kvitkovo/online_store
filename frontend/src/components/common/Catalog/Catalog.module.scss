@@ -1,26 +1,5 @@
 @import '../../../variables';
 
-.categoryWrapper {
-  display: flex;
-  position: absolute;
-  z-index: 9999;
-  width: 838px;
-  height: 550px;
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-.categoryList {
-  display: flex;
-  flex-direction: column;
-}
-
-.categoryItem {
-}
-
-.categoryBg {
-}
-
 ul {
   padding: 0;
   margin: 0;
@@ -30,98 +9,91 @@ li {
   list-style-type: none;
 }
 
+svg {
+  width: 24px;
+  height: 24px;
+}
+
 a {
   display: flex;
   gap: 10px;
   align-items: center;
-  text-decoration: none;
   color: var(--Black, #242424);
   font-family: Fixel Display;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 130%; /* 20.8px */
+  text-transform: capitalize;
+  min-height: 24px;
 }
 
-svg {
-  width: 24px;
-  height: 24px;
+.categoryWrapper {
+  display: flex;
+  gap: -1px;
+
+  .categoryBg {
+    //TODO: Temporary solution until we get the correct image
+    transform: translateX(-2px) scale(1.004);
+  }
 }
 
-img {
+.itemsWrapper {
+  display: flex;
+  background-color: #fff;
+  border-radius: 8px 0 0 8px;
+  border: none;
+
+  .categoryList {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 22px;
+
+    a {
+      min-width: 280px;
+    }
+
+    .categoryItemContent {
+      width: 100%;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+
+      .categoryItemText {
+      }
+
+      svg {
+        color: #000;
+      }
+    }
+
+    .contacts{
+      
+    }
+  }
+
+  .categoryItem {
+    transition: all 0.3s ease-in-out;
+    border-radius: 26px;
+    padding: 4px 10px;
+
+    .categoryIcon {
+      min-width: 24px;
+    }
+
+    &:hover {
+      background-color: #f1ffef;
+    }
+  }
+
+  .subCategoryList {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 22px;
+
+    a {
+      min-width: 208px;
+    }
+  }
 }
-
-// .card {
-//   width: 280px;
-//   background-color: white;
-//   border-radius: 8px;
-//   position: relative;
-//   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.08);
-
-//   &:hover {
-//     box-shadow: 0px 2px 10px 0px rgba(151, 207, 142, 0.44);
-//   }
-
-//   .hide {
-//     display: none;
-//   }
-
-//   .foto {
-//     width: 100%;
-//     border-radius: 8px 8px 0 0;
-//   }
-
-//   .fotoInactive {
-//     opacity: 0.4;
-//   }
-
-//   h3 {
-//     font-size: 20px;
-//     font-weight: 400;
-//     line-height: 24px;
-//     height: 48px;
-//     overflow: hidden;
-//     margin-top: 16px;
-//     padding: 0 12px;
-//     text-transform: uppercase;
-//   }
-//   .discount {
-//     position: absolute;
-//     top: 20px;
-//     right: 0px;
-//     color: #fff;
-//   }
-//   .cardInfo {
-//     padding: 12px;
-//   }
-//   .textFlex {
-//     display: flex;
-//     justify-content: space-between;
-//   }
-
-//   .outOfStock {
-//     font-size: 16px;
-//     font-weight: 500;
-//     line-height: 24px;
-//   }
-//   .price {
-//     font-size: 14px;
-//     line-height: 24px;
-//     padding-bottom: 14px;
-//   }
-
-//   .cardFlexBottom {
-//     display: flex;
-//     align-items: flex-end;
-//     justify-content: space-between;
-//   }
-
-//   .inactive {
-//     color: #dbdbdb;
-//   }
-//   .icons {
-//     display: flex;
-//     align-items: center;
-//     gap: 16px;
-//   }
-// }
