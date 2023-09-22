@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ua.kvitkovo.users.dto.EmployeeUpdateRequestDto;
 import ua.kvitkovo.users.dto.UserRequestDto;
 
 
@@ -13,7 +14,7 @@ import ua.kvitkovo.users.dto.UserRequestDto;
  */
 @RequiredArgsConstructor
 @Component
-public class UserRequestDtoValidator implements Validator {
+public class EmployeeRequestDtoValidator implements Validator {
 
     @Autowired
     private EmailValidator emailValidator;
@@ -27,9 +28,13 @@ public class UserRequestDtoValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        UserRequestDto dto = (UserRequestDto) target;
+        EmployeeUpdateRequestDto dto = (EmployeeUpdateRequestDto) target;
 
-        emailValidator.validate("email", dto.getEmail(), errors);
-        passwordValidator.validate("password", dto.getPassword(), errors);
+        if (dto.getEmail() != null) {
+            emailValidator.validate("email", dto.getEmail(), errors);
+        }
+        if (dto.getPassword() != null) {
+            passwordValidator.validate("password", dto.getPassword(), errors);
+        }
     }
 }

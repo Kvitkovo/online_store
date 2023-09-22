@@ -41,7 +41,7 @@
   padding: 12px 48px;
 }
 .padding-header-even {
-  padding: 6px;
+  padding: 8px;
 }
 .padding-header-bg {
   padding: 6px 2px;
@@ -77,4 +77,10 @@
   .label {
     align-self: center;
   }
+}
+.bg-inherit {
+  background-color: inherit;
+  color: $text-color;
+  font-weight: 700;
+  font-size: 16px;
 }
