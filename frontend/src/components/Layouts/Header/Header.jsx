@@ -54,9 +54,6 @@ const Header = () => {
                 reverse="true"
                 icon={<ICONS.location />}
               />
-              <Modal isOpen={isCatalogOpened} setIsOpen={setIsCatalogOpened}>
-                <Catalog setIsOpen={setIsCatalogOpened} />
-              </Modal>
             </div>
             <a className={styles.phoneLink} href="tel:+380937777777">
               <ICONS.phone className={styles.phoneIcon} />
@@ -74,7 +71,7 @@ const Header = () => {
         <div
           className={`${styles.containerBottom} ${sticky ? styles.sticky : ''}`}
         >
-          <div className={styles.btnCatalogue}>
+          <div className={styles.btnCatalogue} id="catalog">
             <Button
               variant="primary"
               padding="padding-even"
@@ -110,6 +107,13 @@ const Header = () => {
           </div>
         </div>
       </header>
+      <Modal
+        isOpen={isCatalogOpened}
+        setIsOpen={setIsCatalogOpened}
+        nodeId="catalog"
+      >
+        <Catalog setIsOpen={setIsCatalogOpened} />
+      </Modal>
     </div>
   );
 };

@@ -2,10 +2,10 @@
 
 .categoryWrapper {
   display: flex;
-  position: fixed;
+  position: absolute;
   z-index: 9999;
-  top: 159px;
-  left: 109px;
+  top: 75px;
+  left: 0;
 
   .itemsWrapper {
     display: flex;
