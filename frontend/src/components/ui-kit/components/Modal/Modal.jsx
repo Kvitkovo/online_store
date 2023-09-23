@@ -1,24 +1,11 @@
-/* eslint-disable no-unused-vars */
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import styles from './Modal.module.scss';
+import { Portal } from 'react-portal';
 
 const Modal = memo(({ isOpen, setIsOpen, children }) => {
-  // const buttonClasses = useMemo(() => {
-  //   const classes = [styles.button, styles[variant]];
-  //   if (padding && styles[padding]) {
-  //     classes.push(styles[padding]);
-  //   }
-  //   return classes.join(' ');
-  // }, [variant, padding]);
-  // const containerStyle = useMemo(() => {
-  //   return {
-  //     display: 'flex',
-  //     flexDirection: reverse ? 'row-reverse' : 'row',
-  //   };
-  // }, [reverse]);
   return isOpen ? (
     <>
-      <div className={styles.wrapper}>{children}</div>
+      {isOpen && <Portal>{children}</Portal>}
       <div onClick={() => setIsOpen(false)} className={styles.background}></div>
     </>
   ) : null;

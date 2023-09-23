@@ -54,6 +54,9 @@ const Header = () => {
                 reverse="true"
                 icon={<ICONS.location />}
               />
+              <Modal isOpen={isCatalogOpened} setIsOpen={setIsCatalogOpened}>
+                <Catalog setIsOpen={setIsCatalogOpened} />
+              </Modal>
             </div>
             <a className={styles.phoneLink} href="tel:+380937777777">
               <ICONS.phone className={styles.phoneIcon} />
@@ -107,9 +110,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <Modal isOpen={isCatalogOpened} setIsOpen={setIsCatalogOpened}>
-        <Catalog />
-      </Modal>
     </div>
   );
 };

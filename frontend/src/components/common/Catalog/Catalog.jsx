@@ -1,94 +1,41 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { ICONS } from '../../ui-kit/icons';
 import styles from './Catalog.module.scss';
-import mockCategories from '../../../data/catalogMockData.json';
+import mockCategories from '../../../data/catalog/catalogMockData.json';
+import {
+  mockContacts,
+  mockCategories as mockData,
+} from '../../../data/catalog/contatct';
+import { useNavigate } from 'react-router-dom';
 
-const Catalog = (props) => {
-  const categories = [
-    {
-      id: 1,
-      name: 'Акційна ціна',
-      bg: './images/catalog-images/background/akciyna_cena.png',
-      icon: <ICONS.akciyna_cena />,
-      hasSubCategory: false,
-    },
-    {
-      id: 2,
-      name: 'Букети з квітів',
-      bg: './images/catalog-images/background/bukety_z_kvitiv.png',
-      icon: <ICONS.bukety_z_kvitiv />,
-      hasSubCategory: true,
-    },
-    {
-      id: 3,
-      name: 'Квіти поштучно',
-      bg: './images/catalog-images/background/kvity_po_shtuchno.png',
-      icon: <ICONS.kvity_po_shtuchno />,
-      hasSubCategory: true,
-    },
-    {
-      id: 4,
-      name: 'Весільні букети',
-      bg: './images/catalog-images/background/vesilni.png',
-      icon: <ICONS.vesilni />,
-      hasSubCategory: true,
-    },
-    {
-      id: 5,
-      name: 'Квіти у кошику',
-      bg: './images/catalog-images/background/kvity_u_koshyku.png',
-      icon: <ICONS.kvity_u_koshyku />,
-      hasSubCategory: false,
-    },
-    {
-      id: 6,
-      name: 'Кімнатні квіти',
-      bg: './images/catalog-images/background/hatni.png',
-      icon: <ICONS.hatni />,
-      hasSubCategory: false,
-    },
-    {
-      id: 7,
-      name: 'Декор із квітів',
-      bg: './images/catalog-images/background/dekor.png',
-      icon: <ICONS.dekor />,
-      hasSubCategory: false,
-    },
-  ];
-
-  const contacts = [
-    {
-      id: 97,
-      name: '(093) 777-77-77',
-      bg: './images/catalog-images/background/akciyna_cena.png',
-      icon: <ICONS.akciyna_cena />,
-      hasSubCategory: false,
-    },
-    {
-      id: 98,
-      name: 'Київ',
-      bg: './images/catalog-images/background/akciyna_cena.png',
-      icon: <ICONS.akciyna_cena />,
-      hasSubCategory: false,
-    },
-  ];
-
-  const arrIcon = categories.map((category) => category.icon);
-  const arrBg = categories.map((category) => category.bg);
-
+const Catalog = ({ setIsOpen }) => {
+  const navigate = useNavigate();
   const [hoveredItem, setHoveredItem] = useState(null);
 
+  const arrIcon = mockData.map((category) => category.icon);
+  const arrBg = mockData.map((category) => category.bg);
   const formatedCategories = mockCategories
     .filter((category) => !category.parent)
-    .map((category, index) => ({
-      ...category,
-      children: mockCategories.filter(
-        (child) => child.parent?.id === category.id,
-      ),
-      icon: arrIcon[index] || <ICONS.bukety_z_kvitiv />,
-      bg: arrBg[index],
-    }));
+    .map((category, index) => {
+      const mainPath = `/catalog/${category.alias.toLocaleLowerCase()}`;
+      return {
+        ...category,
+        children: mockCategories
+          .filter((child) => child.parent?.id === category.id)
+          .map((child) => ({
+            ...child,
+            link: `${mainPath}/${child.alias.toLocaleLowerCase()}`,
+          })),
+        icon: arrIcon[index] || <ICONS.bukety_z_kvitiv />,
+        bg: arrBg[index],
+        link: mainPath,
+      };
+    });
+
+  const redirectHandler = (link) => {
+    navigate(link);
+    setIsOpen(false);
+  };
 
   return (
     <div className={styles.categoryWrapper}>
@@ -99,7 +46,7 @@ const Catalog = (props) => {
             return (
               <li
                 key={category.id}
-                className={styles.categoryItem}
+                className={styles.categoryItemWrapper}
                 onMouseOver={() =>
                   setHoveredItem({
                     subCategories: category.children,
@@ -108,7 +55,10 @@ const Catalog = (props) => {
                   })
                 }
               >
-                <a href="#">
+                <a
+                  onClick={() => redirectHandler(category.link)}
+                  className={styles.categoryLink}
+                >
                   <span className={styles.categoryIcon}>{category.icon}</span>
                   <div className={styles.categoryItemContent}>
                     <span className={styles.categoryItemText}>
@@ -121,10 +71,10 @@ const Catalog = (props) => {
             );
           })}
           <div className={styles.contacts}>
-            {contacts.map((contact) => {
+            {mockContacts.map((contact) => {
               return (
-                <li key={contact.id} className={styles.categoryItem}>
-                  <a href="#">
+                <li key={contact.id} className={styles.categoryItemWrapper}>
+                  <a className={styles.categoryLink}>
                     <span className={styles.categoryIcon}>{contact.icon}</span>
                     <div className={styles.categoryItemContent}>
                       <span className={styles.categoryItemText}>
@@ -140,8 +90,13 @@ const Catalog = (props) => {
         {!!hoveredItem?.subCategories?.length && (
           <ul className={styles.subCategoryList}>
             {hoveredItem.subCategories.map((child) => (
-              <li key={child.id} className={styles.categoryItem}>
-                <a href="#">{child.name}</a>
+              <li key={child.id} className={styles.categoryItemWrapper}>
+                <a
+                  onClick={() => redirectHandler(child.link)}
+                  className={styles.categoryLink}
+                >
+                  {child.name}
+                </a>
               </li>
             ))}
           </ul>
@@ -149,8 +104,8 @@ const Catalog = (props) => {
       </div>
 
       <img
-        src={hoveredItem?.bg || categories[0].bg}
-        alt={hoveredItem?.name || categories[0].name}
+        src={hoveredItem?.bg || mockData[0].bg}
+        alt={hoveredItem?.name || mockData[0].name}
         className={styles.categoryBg}
       />
     </div>
