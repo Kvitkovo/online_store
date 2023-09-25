@@ -6,7 +6,7 @@ import { ICONS } from '../../../../ui-kit/icons';
 import { Link } from 'react-router-dom';
 import IconButton from '../../../../ui-kit/components/IconButton';
 
-const CategoryOutput = ({ title, api, link }) => {
+const CategoryOutput = ({ api, link }) => {
   const [data, setData] = useState();
   useEffect(() => {
     axiosInstance
@@ -20,7 +20,6 @@ const CategoryOutput = ({ title, api, link }) => {
   }, [api]);
   return (
     <div className={styles.categoryOutput}>
-      <h2>{title}</h2>
       <div className={styles.cardOutput}>
         {data &&
           data.map((card) => (
