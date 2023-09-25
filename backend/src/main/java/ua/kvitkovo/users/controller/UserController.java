@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -302,12 +301,48 @@ public class UserController {
     @PreAuthorize("#id == authentication.principal.id or hasRole('ROLE_ADMIN')")
     @ResponseBody
     public UserResponseDto updateUser(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final UserRequestDto request,
+            @RequestBody @NotNull(message = "Request body is mandatory") final UserRequestDto request,
             @Parameter(description = "The ID of the user to update", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update User - {} with id {}.", request, id);
         return userAuthService.updateUser(id, request, bindingResult);
+    }
+
+    @Operation(summary = "Update User by ID from admin panel")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = UserResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Size not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @PutMapping("/employee/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseBody
+    public UserResponseDto updateAdminUser(
+            @RequestBody @NotNull(message = "Request body is mandatory") final EmployeeUpdateRequestDto request,
+            @Parameter(description = "The ID of the user to update", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id, BindingResult bindingResult) {
+        log.info("Received request to update User - {} with id {}.", request, id);
+        return userAuthService.updateEmployee(id, request, bindingResult);
     }
 }

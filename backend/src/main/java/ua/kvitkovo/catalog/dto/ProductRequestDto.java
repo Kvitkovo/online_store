@@ -34,10 +34,11 @@ public class ProductRequestDto {
     private String description;
     private ProductStatus status;
     @NotNull
-    private long categoryId;
-    private long productTypeId;
-    private long colorId;
-    private int height;
+    private Long categoryId;
+    private Long productTypeId;
+    private Long colorId;
+    @NotNull
+    private Long sizeId;
     private boolean allowAddToConstructor;
 
     @Schema(example = "Букет з гортензіями", description = "Product name")
@@ -81,23 +82,23 @@ public class ProductRequestDto {
     }
 
     @Schema(example = "1", description = "Product category ID")
-    public long getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
     @Schema(example = "7", description = "Product type ID")
-    public long getProductTypeId() {
+    public Long getProductTypeId() {
         return productTypeId;
     }
 
     @Schema(example = "2", description = "Product color ID")
-    public long getColorId() {
+    public Long getColorId() {
         return colorId;
     }
 
-    @Schema(example = "50", description = "Product height in sm")
-    public int getHeight() {
-        return height;
+    @Schema(example = "1", description = "Product size ID")
+    public Long getSizeId() {
+        return sizeId;
     }
 
     @Schema(example = "true", description = "The product can be added to the bouquet designer (true or false)")

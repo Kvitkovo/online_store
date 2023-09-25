@@ -140,7 +140,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     @ResponseBody
     public CategoryResponseDto updateCategory(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
+            @RequestBody @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
             @Parameter(description = "The ID of the category to update", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
