@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../../../ui-kit/components/IconButton';
 
 const CategoryOutput = ({ api, link }) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     axiosInstance
       .get(api)
