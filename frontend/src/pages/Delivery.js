@@ -1,10 +1,9 @@
 import React from 'react';
-import ItemCard from '../components/common/Card/ItemCard';
-
+import CardPage from './CardPage/CardPage';
 function Delivery() {
   return (
     <div>
-      <ItemCard />
+      <CardPage />
     </div>
   );
 }

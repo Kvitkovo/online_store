@@ -1,0 +1,78 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.pathContainer {
+  width: 100vw;
+  overflow: auto;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    width: 128px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $page-accent-color;
+    border-radius: 2px;
+  }
+  .path {
+    margin-top: 19px;
+    margin-bottom: 15px;
+    margin-left: 16px;
+  }
+}
+
+.mainContainer {
+  background-color: $white-color;
+  padding: 16px;
+  width: 100%;
+}
+.itemName {
+  font-size: 26px;
+  font-weight: 500;
+  padding: 6px 0;
+  margin-bottom: 8px;
+}
+.itemImage {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 22px;
+  img {
+    width: 331px;
+    height: 332px;
+    padding: 6px;
+  }
+}
+.discount {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.price {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 22px;
+  margin-bottom: 32px;
+}
+.features {
+  margin-top: 32px;
+  margin-bottom: 22px;
+}
+.type {
+  font-size: 20px;
+}
+.itemDescription {
+  margin-top: 16px;
+  margin-bottom: 44px;
+}
+.previous {
+  font-size: 26px;
+  font-weight: 500;
+  padding: 6px 0;
+}
+.helpButton {
+  position: fixed;
+  z-index: 1;
+  top: 90vh;
+  left: 85vw;
+}

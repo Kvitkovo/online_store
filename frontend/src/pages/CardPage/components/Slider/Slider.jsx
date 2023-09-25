@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Slider.module.scss';
-import IconButton from '../ui-kit/components/IconButton';
-import { ICONS } from '../ui-kit/icons';
-import Card from '../common/Card/Card';
+import IconButton from '../../../../components/ui-kit/components/IconButton';
+import { ICONS } from '../../../../components/ui-kit/icons';
+import Card from '../../../../components/common/Card/Card';
 
 const Slider = () => {
   return (
@@ -50,7 +50,7 @@ const Slider = () => {
           />
         </div>
       </div>
-      <div>
+      <div className={styles.arrow}>
         <IconButton
           icon={<ICONS.ArrowRightIcon />}
           isRound={true}
