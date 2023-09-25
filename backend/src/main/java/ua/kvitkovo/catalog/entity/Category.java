@@ -45,6 +45,10 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
 
+    @Column(name = "category_icon", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CategoryIcon icon;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Product> products;
 
