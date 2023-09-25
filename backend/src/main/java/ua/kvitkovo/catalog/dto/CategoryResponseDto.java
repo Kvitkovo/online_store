@@ -1,7 +1,11 @@
 package ua.kvitkovo.catalog.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ua.kvitkovo.catalog.entity.CategoryIcon;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
 /**
@@ -21,6 +25,12 @@ public class CategoryResponseDto {
     private String metaKeywords;
     private String description;
     private CategoryStatus status;
+    private CategoryIcon icon;
+
+    @Schema(example = "SALE", description = "Category icon")
+    public CategoryIcon getIcon() {
+        return icon;
+    }
 
     @Schema(example = "1", description = "ID category")
     public Long getId() {
