@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .discount {
   color: $white-color;
@@ -20,4 +21,10 @@
   padding: 2px 12px;
   border-radius: 3px;
   display: inline-block;
+
+  @include sm {
+    span {
+      display: none;
+    }
+  }
 }
