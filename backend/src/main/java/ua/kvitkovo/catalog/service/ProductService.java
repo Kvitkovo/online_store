@@ -72,17 +72,17 @@ public class ProductService {
                 categoryRepository.findById(dto.getCategoryId()).
                         orElseThrow(() -> new ItemNotFoundException("Category not found"))
         );
-        if (dto.getHeight() > 0) {
+        if (dto.getSizeId() != null) {
             product.setSize(
-                    sizeRepository.findFirstSizeByHeight(dto.getHeight()).orElse(null)
+                    sizeRepository.findById(dto.getSizeId()).orElse(null)
             );
         }
-        if (dto.getProductTypeId() > 0) {
+        if (dto.getProductTypeId() != null) {
             product.setProductType(
                     productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
             );
         }
-        if (dto.getColorId() > 0) {
+        if (dto.getColorId() != null) {
             product.setColor(
                     colorRepository.findById(dto.getColorId()).orElse(null)
             );
