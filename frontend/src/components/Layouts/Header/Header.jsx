@@ -9,9 +9,19 @@ import ROUTES from '../../../constants/routers';
 import IconButton from '../../ui-kit/components/IconButton';
 import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
+import CartPopup from '../../common/Cart';
+import { useModalEffect } from '../../../hooks/useModalEffect';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
+
+  const [isOpenCart, setIsOpenCart] = useState(false);
+
+  const toggleCartPopup = () => {
+    setIsOpenCart((prev) => !prev);
+  };
+
+  useModalEffect(isOpenCart);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -27,7 +37,7 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu />
+      <BurgerMenu toggleCart={toggleCartPopup} />
       <header>
         <div className={styles.containerTop}>
           {' '}
@@ -95,11 +105,12 @@ const Header = () => {
             </div>
 
             <div className={styles.cart}>
-              <IconButton icon={<ICONS.CartIcon />} />
+              <IconButton onClick={toggleCartPopup} icon={<ICONS.CartIcon />} />
             </div>
           </div>
         </div>
       </header>
+      {isOpenCart && <CartPopup setIsOpen={setIsOpenCart} />}
     </div>
   );
 };
