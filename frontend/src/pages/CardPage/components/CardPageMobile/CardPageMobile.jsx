@@ -6,19 +6,14 @@ import { ICONS } from '../../../../components/ui-kit/icons';
 import Discount from '../../../../components/ui-kit/components/Discount';
 /* eslint-disable-next-line max-len */
 import DiscountPrice from '../../../../components/ui-kit/components/DiscountPrice';
+import Path from '../Path';
 /* import Slider from '../../../Slider'; */
 
 const CardPageMobile = () => {
   const ButtonFullWidth = true;
   return (
     <div className={styles.mainPage}>
-      <div className={styles.pathContainer}>
-        <p className={styles.path}>
-          Головна <span> &gt; </span> Букети з квітів <span> &gt;</span> Букет
-          “101” троянда Головна <span> &gt; </span> Букети з квітів{' '}
-          <span> &gt;</span> Букет “101” троянда
-        </p>
-      </div>
+      <Path />
 
       <div className={styles.mainContainer}>
         <div className={styles.itemContainer}>

@@ -57,14 +57,14 @@ address {
   margin-top: 16px;
 }
 
-@include bg {
+/* @include bg {
   footer {
     padding: 32px 0;
   }
   .container {
     margin: 0 auto;
   }
-}
+} */
 
 @include md {
   footer {

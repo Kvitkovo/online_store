@@ -1,0 +1,32 @@
+@import '../../../../../variables';
+@import '../../../../../mixins';
+
+.descriptioContainer {
+  margin: 8px 16px 34px 0;
+  p {
+    color: $text-color;
+  }
+}
+
+.itemName {
+  font-weight: 500;
+  padding: 6px 0;
+  margin-bottom: 32px;
+}
+.description {
+  padding: 6px 0;
+}
+.itemDescription {
+  font-size: 20px;
+  padding: 6px 0;
+}
+.features {
+  p {
+    padding: 6px 0;
+    gap: 6px;
+    color: $text-color;
+  }
+}
+.type {
+  font-size: 20px;
+}

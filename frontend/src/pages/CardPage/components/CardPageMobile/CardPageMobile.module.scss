@@ -1,25 +1,6 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
-.pathContainer {
-  width: 100vw;
-  overflow: auto;
-  white-space: nowrap;
-  &::-webkit-scrollbar {
-    width: 128px;
-    height: 4px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: $page-accent-color;
-    border-radius: 2px;
-  }
-  .path {
-    margin-top: 19px;
-    margin-bottom: 15px;
-    margin-left: 16px;
-  }
-}
-
 .mainContainer {
   background-color: $white-color;
   padding: 16px;
@@ -55,6 +36,9 @@
   margin-bottom: 32px;
 }
 .features {
+  p {
+    color: $text-color;
+  }
   margin-top: 32px;
   margin-bottom: 22px;
 }
@@ -62,6 +46,7 @@
   font-size: 20px;
 }
 .itemDescription {
+  color: $text-color;
   margin-top: 16px;
   margin-bottom: 44px;
 }

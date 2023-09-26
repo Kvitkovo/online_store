@@ -1,0 +1,19 @@
+@import '../../../../mixins';
+
+.itemImage {
+  padding: 0 16px;
+}
+.discount {
+  position: absolute;
+  left: 16px;
+  top: 0;
+}
+
+@include md {
+  .itemImage {
+    img {
+      width: 352px;
+      height: 400px;
+    }
+  }
+}
