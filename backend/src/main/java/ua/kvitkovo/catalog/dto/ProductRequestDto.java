@@ -40,6 +40,12 @@ public class ProductRequestDto {
     @NotNull
     private Long sizeId;
     private boolean allowAddToConstructor;
+    private int stock;
+
+    @Schema(example = "25", description = "Product stock")
+    public int getStock() {
+        return stock;
+    }
 
     @Schema(example = "Букет з гортензіями", description = "Product name")
     public String getTitle() {
