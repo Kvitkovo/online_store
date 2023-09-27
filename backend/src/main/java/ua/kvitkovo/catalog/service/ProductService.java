@@ -341,7 +341,7 @@ public class ProductService {
         }
         List<ProductStockResponseDto> result = new ArrayList<>();
 
-        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.NEW);
+        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.ACCEPT);
         Map<Product, BigDecimal> productQtySum = orders.stream()
                 .flatMap(order -> order.getOrderItems().stream())
                 .collect(Collectors.groupingBy(
