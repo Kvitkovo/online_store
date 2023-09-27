@@ -81,6 +81,18 @@ public class UserController {
         return userService.getClientsByPage(pageable);
     }
 
+    @Operation(summary = "Get all employees by Page")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "If clients don't exist in the Data Base"),
+    })
+    @GetMapping(path = "/employees")
+    public Page<UserResponseDto> getEmployees(@RequestParam(defaultValue = "1") int page,
+                                              @RequestParam(defaultValue = "30") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return userService.getEmployeesByPage(pageable);
+    }
+
     @Operation(summary = "Confirm user email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
