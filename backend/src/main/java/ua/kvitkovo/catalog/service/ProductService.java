@@ -350,17 +350,18 @@ public class ProductService {
                 ));
 
         for (Product product : products) {
-            int available = 0;
+            int inOrders = 0;
 
             BigDecimal qty = productQtySum.get(product);
             if (qty != null) {
-                available = qty.intValue();
+                inOrders = qty.intValue();
             }
 
             result.add(ProductStockResponseDto.builder()
                     .productId(product.getId())
                     .stock(product.getStock())
-                    .available(product.getStock() - available)
+                    .inOrders(inOrders)
+                    .available(product.getStock() - inOrders)
                     .build())
             ;
         }

@@ -16,7 +16,12 @@ public class ProductStockResponseDto {
 
     private Long productId;
     private int stock;
+    private int inOrders;
     private int available;
+
+    public int getInOrders() {
+        return inOrders;
+    }
 
     public Long getProductId() {
         return productId;
