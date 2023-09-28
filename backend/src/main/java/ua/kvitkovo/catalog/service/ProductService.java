@@ -17,18 +17,24 @@ import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.dto.ProductStockResponseDto;
 import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.repository.*;
 import ua.kvitkovo.catalog.validator.ProductDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
+import ua.kvitkovo.orders.entity.Order;
+import ua.kvitkovo.orders.entity.OrderItem;
+import ua.kvitkovo.orders.entity.OrderStatus;
+import ua.kvitkovo.orders.repository.OrderRepository;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Andriy Gaponov
@@ -37,6 +43,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class ProductService {
+    private final OrderRepository orderRepository;
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -325,5 +332,39 @@ public class ProductService {
         } else {
             return types;
         }
+    }
+
+    public List<ProductStockResponseDto> getProductsStocks(List<Long> ids) {
+        List<Product> products = productRepository.findAllByIdIn(ids);
+        if (products.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<ProductStockResponseDto> result = new ArrayList<>();
+
+        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.ACCEPT);
+        Map<Product, BigDecimal> productQtySum = orders.stream()
+                .flatMap(order -> order.getOrderItems().stream())
+                .collect(Collectors.groupingBy(
+                        OrderItem::getProduct,
+                        Collectors.reducing(BigDecimal.ZERO, OrderItem::getQty, BigDecimal::add)
+                ));
+
+        for (Product product : products) {
+            int inOrders = 0;
+
+            BigDecimal qty = productQtySum.get(product);
+            if (qty != null) {
+                inOrders = qty.intValue();
+            }
+
+            result.add(ProductStockResponseDto.builder()
+                    .productId(product.getId())
+                    .stock(product.getStock())
+                    .inOrders(inOrders)
+                    .available(product.getStock() - inOrders)
+                    .build())
+            ;
+        }
+        return result;
     }
 }

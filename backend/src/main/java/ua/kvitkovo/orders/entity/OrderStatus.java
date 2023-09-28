@@ -4,5 +4,5 @@ package ua.kvitkovo.orders.entity;
  * @author Andriy Gaponov
  */
 public enum OrderStatus {
-    NEW, IS_DELIVERED, DONE, CANCELED
+    NEW, ACCEPT, IS_DELIVERED, DONE, CANCELED
 }

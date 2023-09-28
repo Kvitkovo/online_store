@@ -1,7 +1,10 @@
 package ua.kvitkovo.catalog.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 
@@ -35,7 +38,14 @@ public class ProductResponseDto {
     private ProductTypeResponseDto productType;
     private ColorResponseDto color;
     private SizeResponseDto size;
+    private int stock;
+
     private List<ImageResponseDto> images;
+
+    @Schema(example = "25", description = "Product stock")
+    public int getStock() {
+        return stock;
+    }
 
     @Schema(example = "1", description = "Product id")
     public Long getId() {
