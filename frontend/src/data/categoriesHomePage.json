@@ -1,0 +1,14 @@
+{
+  "Акційна ціна": {
+    "api": "v1/products/discounted?page=1&size=8"
+  },
+  "Весільні букети": {
+    "api": "v1/products/category?page=1&size=4&categoryId=2"
+  },
+  "Квіти у кошику": {
+    "api": "v1/products/category?page=1&size=4&categoryId=28"
+  },
+  "Кімнатні квіти": {
+    "api": "v1/products/category?page=1&size=4&categoryId=29"
+  }
+}

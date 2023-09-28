@@ -6,20 +6,19 @@ import carouselData from '../../../data/carouselData.json';
 import styles from './HomePageComponent.module.scss';
 
 const HomePageComponent = () => {
-  const categoryAPI = 'v1/products/category?page=1&size=4&categoryId=';
   return (
     <Wrrapper>
       <Carousel data={carouselData.slides} />
       <h2 className={styles.title}>
         <span>Акційна</span> ціна
       </h2>
-      <CategoryOutput api="v1/products/discounted?page=1&size=8" link={'#'} />
+      <CategoryOutput title="Акційна ціна" link={'#'} />
       <h2 className={styles.title}>Весільні букети</h2>
-      <CategoryOutput api={categoryAPI + '2'} link={'#'} />
+      <CategoryOutput title="Весільні букети" link={'#'} />
       <h2 className={styles.title}>Квіти у кошику</h2>
-      <CategoryOutput api={categoryAPI + '28'} link={'#'} />
+      <CategoryOutput title="Квіти у кошику" link={'#'} />
       <h2 className={styles.title}>Кімнатні квіти</h2>
-      <CategoryOutput api={categoryAPI + '29'} link={'#'} />
+      <CategoryOutput title="Кімнатні квіти" link={'#'} />
     </Wrrapper>
   );
 };

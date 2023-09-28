@@ -53,7 +53,7 @@
     "src/**/*.{js,jsx,json,css,scss,md}": [
       "prettier --write"
     ],
-    "src/**/*.{js,jsx,json}": [
+    "src/**/*.{js,jsx}": [
       "eslint --fix --max-warnings 0"
     ]
   }

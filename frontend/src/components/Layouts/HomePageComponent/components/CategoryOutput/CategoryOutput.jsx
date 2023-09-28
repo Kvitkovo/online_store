@@ -5,13 +5,14 @@ import Card from '../../../../common/Card';
 import { ICONS } from '../../../../ui-kit/icons';
 import { Link } from 'react-router-dom';
 import IconButton from '../../../../ui-kit/components/IconButton';
+import Categories from '../../../../../data/categoriesHomePage.json';
 
-const CategoryOutput = ({ api, link }) => {
+const CategoryOutput = ({ title, link }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     axiosInstance
-      .get(api)
+      .get(Categories[title].api)
       .then((response) => {
         setData(response.data.content);
         setIsLoading(true);
@@ -19,7 +20,7 @@ const CategoryOutput = ({ api, link }) => {
       .catch((error) => {
         console.error(error);
       });
-  }, [api]);
+  }, [title]);
   return (
     <>
       {!isLoading ? (
