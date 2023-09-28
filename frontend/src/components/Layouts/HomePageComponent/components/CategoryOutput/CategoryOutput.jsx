@@ -9,13 +9,13 @@ import Categories from '../../../../../data/categoriesHomePage.json';
 
 const CategoryOutput = ({ title, link }) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     axiosInstance
       .get(Categories[title].api)
       .then((response) => {
         setData(response.data.content);
-        setIsLoading(true);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -23,7 +23,7 @@ const CategoryOutput = ({ title, link }) => {
   }, [title]);
   return (
     <>
-      {!isLoading ? (
+      {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div className={styles.categoryOutput}>
