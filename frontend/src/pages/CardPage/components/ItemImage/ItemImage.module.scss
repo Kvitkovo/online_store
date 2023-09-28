@@ -1,12 +1,15 @@
 @import '../../../../mixins';
 
 .itemImage {
-  padding: 0 16px;
+  position: relative;
+  img {
+    padding: 28px 16px;
+  }
 }
 .discount {
   position: absolute;
   left: 16px;
-  top: 0;
+  top: 0px;
 }
 
 @include md {
@@ -15,5 +18,19 @@
       width: 352px;
       height: 400px;
     }
+  }
+}
+@include sm {
+  .itemImage {
+    display: flex;
+    justify-content: center;
+    text-align: right;
+    img {
+      width: 331px;
+      height: 332px;
+    }
+  }
+  .discount {
+    right: 0;
   }
 }

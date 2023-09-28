@@ -1,9 +1,6 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
-.cardPageMobile {
-  display: none;
-}
 .path {
   color: $text-color;
   span {
@@ -17,32 +14,16 @@
   background: $white-color;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
 }
+.itemName {
+  font-weight: 500;
+  padding: 6px 0;
+}
 .itemBlock {
   display: flex;
-  position: relative;
   gap: 58px;
 }
 .itemDescriptionContainer {
   flex-direction: column;
-}
-
-.price {
-  margin-top: 32px;
-  margin-bottom: 26px;
-}
-.descriptionContainerTablet {
-  display: none;
-}
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-.bouquetDesktop {
-  display: flex;
-}
-.bouquetTablet {
-  display: none;
 }
 .previous {
   font-size: 32px;
@@ -64,9 +45,6 @@
   display: none;
 }
 @include md {
-  .mainPage {
-    padding-top: 16px;
-  }
   .path {
     font-size: 14px;
     margin: 16px 47px;
@@ -97,26 +75,37 @@
   .itemDescription {
     padding-bottom: 32px;
   }
-  .price {
-    margin-top: 26px;
-    margin-bottom: 26px;
-  }
-  .bouquetDesktop {
-    display: none;
-  }
-  .bouquetTablet {
-    display: flex;
-  }
   .previous {
     margin-left: 47px;
     margin-top: 46px;
   }
 }
 @include sm {
-  .cardPageMobile {
-    display: block;
+  .mobileItemCard {
+    display: flex;
+    flex-direction: column;
+    background-color: $white-color;
+    padding: 16px;
+    width: 100%;
   }
-  .mainContainer {
+  .itemContainer {
     display: none;
+  }
+  .itemName {
+    font-size: 26px;
+    font-weight: 500;
+    //margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  .priceMobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 22px;
+    margin-bottom: 32px;
+  }
+  .helpButton {
+    top: 90vh;
+    left: 85vw;
   }
 }

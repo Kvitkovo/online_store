@@ -12,9 +12,6 @@ const ItemImage = (props) => {
       >
         <Discount discount={props.discount} isBigCard={props.isBigCard} />
       </div>
-      {/* <div className={styles.discount}>
-        <Discount discount="15" isBigCard={true} />
-      </div> */}
       <img
         src={props.image}
         alt="букет"
