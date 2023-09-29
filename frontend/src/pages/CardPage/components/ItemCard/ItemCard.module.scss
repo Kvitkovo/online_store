@@ -1,6 +1,8 @@
 @import '../../../../variables';
 @import '../../../../mixins';
-
+/* .mainContainer{
+  width: 100%;
+} */
 .path {
   color: $text-color;
   span {
@@ -25,6 +27,12 @@
 .itemDescriptionContainer {
   flex-direction: column;
 }
+.helpButton {
+  position: fixed;
+  z-index: 1;
+  top: 90vh;
+  left: 95vw;
+}
 .previous {
   font-size: 32px;
   padding: 6px;
@@ -32,19 +40,13 @@
   margin-bottom: 32px;
   font-weight: 500;
 }
-.previousCards {
-  margin-bottom: 46px;
-}
-.helpButton {
-  position: fixed;
-  z-index: 1;
-  top: 90vh;
-  left: 95vw;
-}
 .mobileTop {
   display: none;
 }
 @include md {
+  .itemContainer {
+    overflow: hidden;
+  }
   .path {
     font-size: 14px;
     margin: 16px 47px;
@@ -76,7 +78,6 @@
     padding-bottom: 32px;
   }
   .previous {
-    margin-left: 47px;
     margin-top: 46px;
   }
 }

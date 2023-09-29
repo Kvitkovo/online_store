@@ -7,7 +7,7 @@ import Card from '../../../../components/common/Card/Card';
 const Slider = () => {
   return (
     <div className={styles.sliderContainer}>
-      <div>
+      <div className={styles.arrowContainer}>
         <IconButton
           icon={<ICONS.ArrowLeftIcon />}
           isRound={true}
@@ -50,7 +50,7 @@ const Slider = () => {
           />
         </div>
       </div>
-      <div className={styles.arrow}>
+      <div className={styles.arrowContainer}>
         <IconButton
           icon={<ICONS.ArrowRightIcon />}
           isRound={true}

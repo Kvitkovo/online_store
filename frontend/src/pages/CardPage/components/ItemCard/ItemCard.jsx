@@ -3,7 +3,6 @@ import styles from './ItemCard.module.scss';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import Wrapper from '../../../../components/Wrapper';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
-/* import Slider from '../CardPage/components/Slider'; */
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
 import ItemFeatures from '../ItemFeatures/ItemFeatures';
@@ -11,11 +10,12 @@ import { useWindowSize } from '../../../../hooks/useWindowSize';
 import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
+import Slider from '../Slider';
 
 const ItemCard = () => {
   const { width } = useWindowSize();
   return (
-    <div className={styles.mainPage}>
+    <div>
       <Wrapper>
         <div className={styles.mainContainer}>
           <Path />
@@ -62,20 +62,17 @@ const ItemCard = () => {
               <ItemDescription />
             </div>
           ) : null}
-          <h2 className={styles.previous}>Раніше переглянуті</h2>
-          <div className={styles.previousCards}>
-            {/*  <Slider /> */}
-            <div className={styles.helpButton}>
-              {' '}
-              <IconButton
-                icon={<ICONS.QuestionIcon />}
-                isBackground={true}
-                isRound={true}
-              />
-            </div>
+          <div className={styles.helpButton}>
+            <IconButton
+              icon={<ICONS.QuestionIcon />}
+              isBackground={true}
+              isRound={true}
+            />
           </div>
-        </div>
+          <h2 className={styles.previous}>Раніше переглянуті</h2>
+        </div>{' '}
       </Wrapper>
+      <Slider />
     </div>
   );
 };
