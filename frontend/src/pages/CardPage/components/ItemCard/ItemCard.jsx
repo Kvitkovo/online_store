@@ -10,7 +10,7 @@ import { useWindowSize } from '../../../../hooks/useWindowSize';
 import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
-/* import Slider from '../Slider'; */
+import Slider from '../Slider';
 
 const ItemCard = () => {
   const { width } = useWindowSize();
@@ -72,7 +72,7 @@ const ItemCard = () => {
           <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>{' '}
       </Wrapper>
-      {/*       <Slider /> */}
+      <Slider />
     </div>
   );
 };
