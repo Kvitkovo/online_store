@@ -102,4 +102,12 @@ public class UserService {
         }
         return false;
     }
+
+    public Page<UserResponseDto> getEmployeesByPage(Pageable pageable) {
+        Page<User> users = userRepository.findAllEmployees(pageable);
+        if (users.isEmpty()) {
+            throw new ItemNotFoundException("Employees don't exist in the Data Base");
+        }
+        return users.map(userMapper::mapEntityToDto);
+    }
 }

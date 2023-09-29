@@ -31,5 +31,8 @@ public interface ProductRepository extends ProductRepositoryBasic {
     List<ProductType> findProductTypesByCategoryIdAndStatus(Long id, ProductStatus status);
 
     Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status);
+
     Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status);
+
+    List<Product> findAllByIdIn(List<Long> id);
 }
