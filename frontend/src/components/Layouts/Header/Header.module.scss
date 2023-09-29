@@ -2,6 +2,7 @@
 @import '../../../mixins.scss';
 
 header {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,6 +10,7 @@ header {
   padding: 7px 0;
   background-color: $white-color;
   font-weight: 400;
+  box-shadow: $box-shadow;
 }
 
 .containerTop {
@@ -86,6 +88,7 @@ header {
   left: 0;
   height: 80px;
   background-color: $white-color;
+  box-shadow: $box-shadow;
 }
 .searchField {
   display: flex;
