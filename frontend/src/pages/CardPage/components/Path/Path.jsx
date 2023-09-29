@@ -6,7 +6,7 @@ const Path = () => {
     <div className={styles.pathContainer}>
       <p className={styles.path}>
         Головна <span> &gt; </span> Букети з квітів <span> &gt;</span> Букет
-        “101” троянда <span> &gt;</span> Букет “101” троянда
+        “101” троянда
       </p>
     </div>
   );

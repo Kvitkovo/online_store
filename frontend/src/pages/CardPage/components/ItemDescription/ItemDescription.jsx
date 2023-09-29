@@ -4,7 +4,7 @@ import styles from './ItemDescription.module.scss';
 const ItemDescription = () => {
   return (
     <div>
-      <div className={styles.descriptioContainer}>
+      <div className={styles.descriptionContainer}>
         <p className={styles.description}> Опис: </p>
         <p className={styles.itemDescription}>
           101 троянда червоного кольору сорту Гран Прі або Престиж. Будь-яка

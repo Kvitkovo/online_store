@@ -22,7 +22,6 @@ const PriceAndButtons = () => {
             label="Додати у кошик"
             padding="padding-sm"
             icon={<ICONS.toCart />}
-            onClick={() => alert('clicked cart')}
           />
           <div className={styles.bouquetDesktop}>
             <Button
@@ -31,7 +30,6 @@ const PriceAndButtons = () => {
               padding="padding-header-sm"
               reverse="true"
               icon={<ICONS.toBouquet />}
-              onClick={() => alert('clicked bouquete')}
             />
           </div>
           <div className={styles.bouquetTablet}>

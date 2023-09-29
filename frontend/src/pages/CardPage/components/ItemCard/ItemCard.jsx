@@ -10,7 +10,7 @@ import { useWindowSize } from '../../../../hooks/useWindowSize';
 import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
-import Slider from '../Slider';
+/* import Slider from '../Slider'; */
 
 const ItemCard = () => {
   const { width } = useWindowSize();
@@ -31,12 +31,12 @@ const ItemCard = () => {
                   Букет &rdquo;101&rdquo; троянда
                 </h1>
                 <Stock isInStock={true} />
-                {width > 1023 ? <ItemDescription /> : null}
+                {width > 1023 && <ItemDescription />}
                 <ItemFeatures />
                 <PriceAndButtons />
               </div>
             </div>
-            {width < 1023 ? <ItemDescription /> : null}
+            {width < 1023 && <ItemDescription />}
             <div className={styles.helpButton}>
               {' '}
               <IconButton
@@ -46,7 +46,7 @@ const ItemCard = () => {
               />
             </div>
           </div>
-          {width < 767 ? (
+          {width < 767 && (
             <div className={styles.mobileItemCard}>
               <h1 className={styles.itemName}>
                 Букет &rdquo;101&rdquo; троянда
@@ -61,7 +61,7 @@ const ItemCard = () => {
               <ItemFeatures />
               <ItemDescription />
             </div>
-          ) : null}
+          )}
           <div className={styles.helpButton}>
             <IconButton
               icon={<ICONS.QuestionIcon />}
@@ -72,7 +72,7 @@ const ItemCard = () => {
           <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>{' '}
       </Wrapper>
-      <Slider />
+      {/*       <Slider /> */}
     </div>
   );
 };
