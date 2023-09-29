@@ -1,5 +1,5 @@
 @import '../../../variables';
-
+@import '../../../mixins';
 .card {
   width: 280px;
   background-color: white;
@@ -72,5 +72,10 @@
     display: flex;
     align-items: center;
     gap: 16px;
+  }
+}
+@include sm {
+  .card {
+    flex: 0 0 auto;
   }
 }
