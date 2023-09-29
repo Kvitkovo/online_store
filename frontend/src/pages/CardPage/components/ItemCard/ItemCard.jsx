@@ -14,6 +14,11 @@ import Slider from '../Slider';
 
 const ItemCard = () => {
   const { width } = useWindowSize();
+  const windowWidth = width;
+  const isDesktop = windowWidth > 1023;
+  const isTablet = windowWidth < 1023;
+  const isMobile = windowWidth < 767;
+
   return (
     <div>
       <Wrapper>
@@ -31,12 +36,12 @@ const ItemCard = () => {
                   Букет &rdquo;101&rdquo; троянда
                 </h1>
                 <Stock isInStock={true} />
-                {width > 1023 && <ItemDescription />}
+                {isDesktop && <ItemDescription />}
                 <ItemFeatures />
                 <PriceAndButtons />
               </div>
             </div>
-            {width < 1023 && <ItemDescription />}
+            {isTablet && <ItemDescription />}
             <div className={styles.helpButton}>
               {' '}
               <IconButton
@@ -46,7 +51,7 @@ const ItemCard = () => {
               />
             </div>
           </div>
-          {width < 767 && (
+          {isMobile && (
             <div className={styles.mobileItemCard}>
               <h1 className={styles.itemName}>
                 Букет &rdquo;101&rdquo; троянда
