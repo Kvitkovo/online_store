@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { ICONS } from '../../ui-kit/icons';
 import styles from './Catalog.module.scss';
 import mockCategories from '../../../data/catalog/catalogMockData.json';
-import {
-  mockContacts,
-  mockCategories as mockData,
-} from '../../../data/catalog/contatct';
+import { mockCategories as mockData } from '../../../data/catalog/contatct';
 import { useNavigate } from 'react-router-dom';
 
 const Catalog = ({ setIsOpen }) => {
@@ -70,7 +67,8 @@ const Catalog = ({ setIsOpen }) => {
               </li>
             );
           })}
-          <div className={styles.contacts}>
+          {/* Display only for mobile\tablet */}
+          {/* <div className={styles.contacts}>
             {mockContacts.map((contact) => {
               return (
                 <li key={contact.id} className={styles.categoryItemWrapper}>
@@ -85,7 +83,7 @@ const Catalog = ({ setIsOpen }) => {
                 </li>
               );
             })}
-          </div>
+          </div> */}
         </ul>
         {!!hoveredItem?.subCategories?.length && (
           <ul className={styles.subCategoryList}>

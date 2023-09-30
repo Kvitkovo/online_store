@@ -17,7 +17,7 @@ const Header = () => {
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
 
   const catalogHandler = () => {
-    setIsCatalogOpened(!isCatalogOpened);
+    setIsCatalogOpened((prev) => !prev);
   };
 
   useEffect(() => {
