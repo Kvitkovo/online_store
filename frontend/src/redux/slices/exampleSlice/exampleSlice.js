@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   exampleState: false,
-  exampleData: null,
+  exampleCountState: 0,
 };
 
 export const exampleSlice = createSlice({
@@ -12,17 +12,17 @@ export const exampleSlice = createSlice({
     updateExampleState: (state, action) => {
       state.exampleState = action.payload;
     },
-    updateExampleData: (state, action) => {
-      state.exampleData = action.payload;
+    updateExampleCount: (state, action) => {
+      state.exampleCountState = action.payload;
     },
   },
 });
 
-export const { updateExampleState, updateExampleData } = exampleSlice.actions;
+export const { updateExampleState, updateExampleCount } = exampleSlice.actions;
 
 export const exampleSliceReducer = exampleSlice.reducer;
-export const addBankStateSelector = (state) => state.exampleSliceReducer;
+
 export const exampleStateSelector = (state) =>
   state.exampleSliceReducer.exampleState;
-export const exampleDataSelector = (state) =>
-  state.exampleSliceReducer.exampleData;
+export const exampleCountStateSelector = (state) =>
+  state.exampleSliceReducer.exampleCountState;
