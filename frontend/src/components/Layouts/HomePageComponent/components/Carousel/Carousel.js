@@ -1,7 +1,7 @@
 import styles from './Carousel.module.scss';
 import React, { useEffect, useState } from 'react';
-import IconButton from '../ui-kit/components/IconButton';
-import { ICONS } from '../ui-kit/icons';
+import IconButton from '../../../../ui-kit/components/IconButton';
+import { ICONS } from '../../../../ui-kit/icons';
 
 const Carousel = ({ data }) => {
   const [slide, setSlide] = useState(0);

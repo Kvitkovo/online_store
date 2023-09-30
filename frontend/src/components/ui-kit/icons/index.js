@@ -23,6 +23,9 @@ import { ReactComponent as location } from './location-icon.svg';
 import { ReactComponent as person } from './person-icon.svg';
 import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
 import { ReactComponent as phone } from './phone-icon.svg';
+import { ReactComponent as facebook } from './facebook.svg';
+import { ReactComponent as instagram } from './instagram.svg';
+import { ReactComponent as youtube } from './youtube.svg';
 import { ReactComponent as burgerMenu } from './burger-icon.svg';
 import { ReactComponent as searchMobile } from './search-icon-green.svg';
 import { ReactComponent as closeMobile } from './close-icon-black.svg';
@@ -69,6 +72,9 @@ export const ICONS = {
   person,
   halfPerson,
   phone,
+  instagram,
+  facebook,
+  youtube,
   burgerMenu,
   searchMobile,
   closeMobile,

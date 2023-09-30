@@ -17,4 +17,6 @@ public interface OrderRepository extends OrderRepositoryBasic {
     Page<Order> findAllByCustomerId(Pageable pageable, Long id);
 
     Page<Order> findAllByCustomerIdAndStatusNotIn(Pageable pageable, Long id, List<OrderStatus> orderStatusList);
+
+    List<Order> findAllByStatus(OrderStatus orderStatus);
 }

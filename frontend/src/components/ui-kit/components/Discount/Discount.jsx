@@ -5,7 +5,9 @@ const Discount = ({ discount, isBigCard = false }) => {
   return (
     <>
       {isBigCard ? (
-        <div className={styles.bigCardDiscount}>-{discount}% знижка</div>
+        <div className={styles.bigCardDiscount}>
+          -{discount}% <span>знижка</span>
+        </div>
       ) : (
         <div className={styles.discount}>-{discount}%</div>
       )}
