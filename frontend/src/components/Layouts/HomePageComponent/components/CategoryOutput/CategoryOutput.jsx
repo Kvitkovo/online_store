@@ -1,26 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../../../../helpers/axiosInstance';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './CategoryOutput.module.scss';
 import Card from '../../../../common/Card';
 import { ICONS } from '../../../../ui-kit/icons';
 import { Link } from 'react-router-dom';
 import IconButton from '../../../../ui-kit/components/IconButton';
-import Categories from '../../../../../data/categoriesHomePage.json';
+import {
+  GetDiscountedProducts,
+  GetProductsCategory,
+} from '../../../../../services/products/productsAccess.service';
 
-const CategoryOutput = ({ title, link }) => {
+const CategoryOutput = ({ title, link, categoryId }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const getData = useCallback(
+    async (title) => {
+      setIsLoading(true);
+
+      if (title === 'Акційна ціна') {
+        const response = await GetDiscountedProducts({
+          page: 1,
+          size: 8,
+        });
+        setData(response.content);
+      }
+
+      if (
+        title === 'Весільні букети' ||
+        title === 'Квіти у кошику' ||
+        title === 'Кімнатні квіти'
+      ) {
+        const response = await GetProductsCategory({
+          page: 1,
+          size: 4,
+          categoryId,
+        });
+        setData(response.content);
+      }
+
+      setIsLoading(false);
+    },
+    [categoryId],
+  );
+
   useEffect(() => {
-    axiosInstance
-      .get(Categories[title].api)
-      .then((response) => {
-        setData(response.data.content);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [title]);
+    getData(title);
+  }, [title, getData]);
+
   return (
     <>
       {isLoading ? (
