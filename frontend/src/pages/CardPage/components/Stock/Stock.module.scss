@@ -1,0 +1,17 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.Stock {
+  border-radius: 3px;
+  padding: 6px 8px;
+  width: 153px;
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+.isInStock {
+  background: $page-background-color;
+}
+.outOfStock {
+  background: #efefef;
+}

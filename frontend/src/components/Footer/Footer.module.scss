@@ -1,0 +1,106 @@
+@import 'src/_variables.scss';
+@import 'src/_mixins.scss';
+
+footer {
+  max-width: 100%;
+  height: 337px;
+  padding: 32px 130px;
+  background-color: $text-color;
+}
+
+.container {
+  max-width: 1056px;
+  display: flex;
+  justify-content: space-between;
+}
+
+section {
+  padding: 10px;
+  text-align: justify;
+}
+
+.blockRight {
+  width: 456px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  color: $white-color;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23.4px;
+}
+
+.contacts {
+  width: 240px;
+}
+
+.socials {
+  width: 156px;
+}
+
+.iconsBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+/* p {
+  color: $white-color;
+  margin: 16px 0;
+} */
+
+address {
+  font-style: normal;
+  color: $white-color;
+  margin-top: 16px;
+}
+
+// @include bg {
+//   footer {
+//     padding: 32px 0;
+//   }
+//   .container {
+//     margin: 0 auto;
+//   }
+// }
+
+@include md {
+  footer {
+    height: 100%;
+    padding: 32px 102px 0 47px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 936px;
+  }
+  .blockRight {
+    width: 235px;
+    flex-direction: column;
+  }
+  .socials {
+    margin-top: 8px;
+  }
+}
+
+@include sm {
+  footer {
+    height: 100%;
+    padding: 0 26px 32px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  section {
+    margin-top: 32px;
+  }
+  .blockRight {
+    flex-direction: column;
+  }
+  .socials {
+    margin-top: 32px;
+  }
+}

@@ -29,7 +29,7 @@ public class UserRequestDtoValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserRequestDto dto = (UserRequestDto) target;
 
-        emailValidator.validate("email", dto.getEmail(), errors, true);
+        emailValidator.validate("email", dto.getEmail(), errors);
         passwordValidator.validate("password", dto.getPassword(), errors);
     }
 }

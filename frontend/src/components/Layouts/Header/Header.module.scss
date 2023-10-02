@@ -8,7 +8,7 @@ header {
   width: 100%;
   background-color: $white-color;
   font-weight: 400;
-  margin: 0;
+  box-shadow: $box-shadow;
 }
 
 .containerTop {
@@ -87,7 +87,6 @@ header {
   left: 0;
   height: 80px;
   background-color: $white-color;
-  //box-shadow: $box-shadow;
 }
 .searchField {
   display: flex;
@@ -104,6 +103,9 @@ header {
 .cart {
   cursor: pointer;
   margin: 0 0 8px 8px;
+}
+.btnCatalogue {
+  position: relative;
 }
 @include md {
   header {

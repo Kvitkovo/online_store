@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * @author Andriy Gaponov
  */
@@ -20,10 +22,28 @@ public class CreateUserRequestDto {
     private String firstName;
     private String lastName;
     @NotBlank
-    @Pattern(regexp ="^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
+    @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     private String email;
     private String phone;
     private String role;
+    private Date birthday;
+    private String comment;
+    private Long positionId;
+
+    @Schema(example = "1", description = "User position ID")
+    public Long getPositionId() {
+        return positionId;
+    }
+
+    @Schema(example = "2001-09-01", description = "User birthday")
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    @Schema(example = "vip client", description = "User comment")
+    public String getComment() {
+        return comment;
+    }
 
     @Schema(example = "ROLE_USER", description = "User role")
     public String getRole() {

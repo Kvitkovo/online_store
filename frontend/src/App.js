@@ -6,6 +6,7 @@ import About from './pages/About';
 import Delivery from './pages/Delivery';
 import Handling from './pages/Handling';
 import './App.scss';
+import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
 
@@ -23,6 +24,7 @@ function App() {
             <Route path={ROUTES.handling} element={<Handling />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

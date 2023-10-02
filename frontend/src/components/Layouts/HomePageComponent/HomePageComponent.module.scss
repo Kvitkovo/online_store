@@ -1,0 +1,11 @@
+@import '../../../variables';
+.title {
+  padding: 54px 0 38px;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 130%;
+
+  span {
+    color: $discount-color;
+  }
+}

@@ -23,6 +23,9 @@ import { ReactComponent as location } from './location-icon.svg';
 import { ReactComponent as person } from './person-icon.svg';
 import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
 import { ReactComponent as phone } from './phone-icon.svg';
+import { ReactComponent as facebook } from './facebook.svg';
+import { ReactComponent as instagram } from './instagram.svg';
+import { ReactComponent as youtube } from './youtube.svg';
 import { ReactComponent as burgerMenu } from './burger-icon.svg';
 import { ReactComponent as searchMobile } from './search-icon-green.svg';
 import { ReactComponent as closeMobile } from './close-icon-black.svg';
@@ -30,6 +33,18 @@ import { ReactComponent as mobileCatalogue } from './mobile-catalogue-icon.svg';
 import { ReactComponent as search } from './search-icon.svg';
 import { ReactComponent as back } from './back-icon.svg';
 import { ReactComponent as dash } from './dash-icon.svg';
+
+// Catalog icons
+//TODO: Check icon sizes
+//TODO: Icon naming
+/* eslint-disable max-len */
+import { ReactComponent as akciyna_cena } from './catalog-icons/akciyna_cena.svg';
+import { ReactComponent as bukety_z_kvitiv } from './catalog-icons/bukety_z_kvitiv.svg';
+import { ReactComponent as kvity_po_shtuchno } from './catalog-icons/kvity_po_shtuchno.svg';
+import { ReactComponent as kvity_u_koshyku } from './catalog-icons/kvity_u_koshyku.svg';
+import { ReactComponent as dekor } from './catalog-icons/dekor.svg';
+import { ReactComponent as hatni } from './catalog-icons/hatni.svg';
+import { ReactComponent as vesilni } from './catalog-icons/vesilni.svg';
 
 export const ICONS = {
   addComponent,
@@ -57,6 +72,9 @@ export const ICONS = {
   person,
   halfPerson,
   phone,
+  instagram,
+  facebook,
+  youtube,
   burgerMenu,
   searchMobile,
   closeMobile,
@@ -64,4 +82,11 @@ export const ICONS = {
   search,
   back,
   dash,
+  akciyna_cena,
+  bukety_z_kvitiv,
+  dekor,
+  hatni,
+  kvity_po_shtuchno,
+  kvity_u_koshyku,
+  vesilni,
 };

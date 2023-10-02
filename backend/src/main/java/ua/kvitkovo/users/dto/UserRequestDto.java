@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * @author Andriy Gaponov
  */
@@ -20,12 +22,18 @@ public class UserRequestDto {
     private String firstName;
     private String lastName;
     @NotBlank
-    @Pattern(regexp ="^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
+    @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     private String email;
     private String phone;
     @NotBlank
-    @Pattern(regexp ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})")
     private String password;
+    private Date birthday;
+
+    @Schema(example = "2001-09-01", description = "User birthday")
+    public Date getBirthday() {
+        return birthday;
+    }
 
     @Schema(example = "Andrii", description = "User first name")
     public String getFirstName() {
