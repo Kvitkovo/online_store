@@ -14,7 +14,6 @@ header {
 .containerTop {
   display: flex;
   align-items: center;
-  margin-bottom: 9px;
   height: 64px;
 }
 .logoLink {
@@ -95,6 +94,7 @@ header {
 .action {
   display: flex;
   align-items: center;
+
   gap: 12px;
 }
 .login {
