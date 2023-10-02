@@ -8,19 +8,5 @@
     #fff 57.77%,
     #6ec660 236.93%
   );
-  padding-top: 20px;
-  min-height: 100vh;
-
-  .cardOutput {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1180px;
-    margin: 0 auto;
-    padding-top: 38px;
-  }
-}
-
-.padding {
-  padding-left: 100px;
+  padding: 20px 0 48px;
 }
