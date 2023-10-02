@@ -11,7 +11,6 @@ const ItemFeatures = () => {
         Колір: <span className={styles.type}>Червоний</span>{' '}
       </p>
       <p>
-        {' '}
         Висота букета: <span className={styles.type}>55-60см</span>{' '}
       </p>
     </div>

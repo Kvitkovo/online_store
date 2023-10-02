@@ -32,9 +32,7 @@ const ItemCard = () => {
                 isBigCard={true}
               />
               <div className={styles.itemDescriptionContainer}>
-                <h1 className={styles.itemName}>
-                  Букет &rdquo;101&rdquo; троянда
-                </h1>
+                <h1 className={styles.itemName}>{'Букет "101 троянда"'}</h1>
                 <Stock isInStock={true} />
                 {isDesktop && <ItemDescription />}
                 <ItemFeatures />
@@ -43,7 +41,6 @@ const ItemCard = () => {
             </div>
             {isTablet && <ItemDescription />}
             <div className={styles.helpButton}>
-              {' '}
               <IconButton
                 icon={<ICONS.QuestionIcon />}
                 isBackground={true}

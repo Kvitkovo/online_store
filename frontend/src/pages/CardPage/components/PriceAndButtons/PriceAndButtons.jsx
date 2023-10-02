@@ -43,7 +43,6 @@ const PriceAndButtons = () => {
           <div className={styles.priceMobile}>
             <DiscountPrice oldPrice={4864} actualPrice={4000} />
             <span className={styles.bouquetMobile}>
-              {' '}
               <IconButton icon={<ICONS.BouquetIcon />} />
             </span>
           </div>
