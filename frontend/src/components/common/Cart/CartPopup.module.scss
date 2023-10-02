@@ -1,0 +1,79 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+.container {
+  margin-bottom: 12px;
+  padding: 24px 32px;
+  overflow: hidden;
+}
+
+.headerBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 41.6px;
+}
+
+.icon {
+  path {
+    stroke: $text-color;
+  }
+}
+
+.bottomBlock {
+  margin-top: auto;
+}
+
+.bottom {
+  padding: 24px 26px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+
+  b {
+    margin-left: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+}
+
+.currency {
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 12px;
+}
+
+@include sm {
+  .container {
+    padding: 16px;
+    overflow: unset;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28.6px;
+  }
+  .bottom {
+    padding: 16px 16px 46px;
+    flex-direction: column;
+  }
+  .total {
+    justify-content: space-between;
+    padding-bottom: 24px;
+    b {
+      margin: 0;
+    }
+  }
+}

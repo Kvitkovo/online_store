@@ -1,0 +1,23 @@
+@import '/src/variables';
+
+.countBlock {
+  width: 125px;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.field {
+  width: 53px;
+  height: 40px;
+  text-align: center;
+  border: 1px solid $text-color;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.icon {
+  path {
+    stroke: $text-color;
+  }
+}

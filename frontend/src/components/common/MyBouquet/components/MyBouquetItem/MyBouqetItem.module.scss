@@ -1,0 +1,95 @@
+@import '../../../../../variables';
+@import '../../../../../mixins';
+
+.itemsBlock {
+  padding-right: 15px;
+  margin-top: 30px;
+  overflow-y: auto;
+  height: 320px;
+  max-width: 571px;
+
+  &:hover {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: $page-accent-color;
+  }
+}
+
+.item {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftBlock {
+  display: flex;
+  align-items: center;
+}
+
+.blockImg {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 59px;
+    height: 60px;
+    margin-left: 18px;
+    margin-right: 20px;
+  }
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18.2px;
+  }
+}
+
+.rightBlock {
+  display: flex;
+  align-items: center;
+  gap: 29px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  color: $page-accent-color;
+  line-height: 24px;
+
+  span {
+    margin-left: 12px;
+    font-weight: 400;
+    font-size: 14px;
+  }
+}
+
+.divider {
+  padding: 12px 0;
+}
+
+@include sm {
+  .itemsBlock {
+    padding-right: 0;
+    height: 100%;
+    overflow-y: hidden;
+  }
+  .item {
+    height: 116px;
+    flex-direction: column;
+  }
+  .rightBlock {
+    margin-left: 95px;
+    justify-content: space-between;
+  }
+}

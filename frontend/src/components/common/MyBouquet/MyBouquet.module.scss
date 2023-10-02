@@ -1,0 +1,111 @@
+@import 'src/_variables.scss';
+@import 'src/_mixins.scss';
+
+.container {
+  margin-bottom: 12px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.headerBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.icon {
+  path {
+    stroke: $text-color;
+  }
+}
+.changeItems {
+  padding: 0 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteAll {
+  color: $page-accent-color;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.noActiveDelete {
+  color: $gray-light-color;
+  text-decoration: underline;
+  cursor: auto;
+}
+
+.bottomBlock {
+  margin-top: auto;
+}
+
+.bottom {
+  padding: 24px 26px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+
+  b {
+    margin-left: 12px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  .sum {
+    margin-left: 24px;
+  }
+  span {
+    margin-left: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+@include sm {
+  .container {
+    padding: 16px;
+    overflow: unset;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28.6px;
+  }
+  .reverse {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .changeItems {
+    padding: 16px 16px 0;
+    margin-bottom: 0;
+  }
+  .divider {
+    padding-top: 60px;
+  }
+  .bottom {
+    padding: 24px 16px 46px;
+    flex-direction: column;
+  }
+  .total {
+    justify-content: space-between;
+    padding-bottom: 24px;
+    b {
+      margin-left: 0;
+    }
+    .sum {
+      margin-left: 14px;
+    }
+  }
+}

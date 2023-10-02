@@ -33,6 +33,8 @@ import { ReactComponent as mobileCatalogue } from './mobile-catalogue-icon.svg';
 import { ReactComponent as search } from './search-icon.svg';
 import { ReactComponent as back } from './back-icon.svg';
 import { ReactComponent as dash } from './dash-icon.svg';
+import { ReactComponent as cartEmpty } from './cartEmpty-icon.svg';
+import { ReactComponent as myBouquetEmpty } from './myBouquetEmpty-icon.svg';
 
 // Catalog icons
 //TODO: Check icon sizes
@@ -82,6 +84,8 @@ export const ICONS = {
   search,
   back,
   dash,
+  cartEmpty,
+  myBouquetEmpty,
   akciyna_cena,
   bukety_z_kvitiv,
   dekor,
