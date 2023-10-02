@@ -6,15 +6,14 @@ header {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 7px 0;
   background-color: $white-color;
   font-weight: 400;
+  box-shadow: $box-shadow;
 }
 
 .containerTop {
   display: flex;
   align-items: center;
-  margin-bottom: 9px;
   height: 64px;
 }
 .logoLink {
@@ -77,6 +76,7 @@ header {
   height: 64px;
   z-index: 1;
   width: 100%;
+  box-shadow: $box-shadow;
 }
 .sticky {
   position: fixed;
@@ -94,6 +94,7 @@ header {
 .action {
   display: flex;
   align-items: center;
+
   gap: 12px;
 }
 .login {
@@ -102,6 +103,9 @@ header {
 .cart {
   cursor: pointer;
   margin: 0 0 8px 8px;
+}
+.btnCatalogue {
+  position: relative;
 }
 @include md {
   header {

@@ -1,0 +1,19 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.features {
+  p {
+    padding: 6px 0;
+    gap: 6px;
+    color: $text-color;
+  }
+}
+.type {
+  font-size: 20px;
+}
+@include sm {
+  .features {
+    margin-top: 32px;
+    margin-bottom: 22px;
+  }
+}

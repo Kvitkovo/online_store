@@ -1,0 +1,110 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.path {
+  color: $text-color;
+  span {
+    padding: 7px 9px;
+  }
+}
+.itemContainer {
+  padding: 32px 0 32px 4px;
+  margin-top: 22px;
+  border-radius: 8px;
+  background: $white-color;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
+}
+.itemName {
+  font-weight: 500;
+  padding: 6px 0;
+}
+.itemBlock {
+  display: flex;
+  gap: 58px;
+}
+.itemDescriptionContainer {
+  flex-direction: column;
+}
+.helpButton {
+  position: fixed;
+  z-index: 1;
+  top: 90vh;
+  left: 95vw;
+}
+.previous {
+  font-size: 32px;
+  padding: 6px;
+  margin-top: 28px;
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+.mobileTop {
+  display: none;
+}
+@include md {
+  .itemContainer {
+    overflow: hidden;
+  }
+  .path {
+    font-size: 14px;
+    margin: 16px 47px;
+    margin-bottom: 16px;
+  }
+  .itemContainer {
+    flex-direction: column;
+    padding: 32px 20px 0px 4px;
+    width: 906px;
+    margin-left: 47px;
+  }
+  .itemBlock {
+    gap: 92px;
+  }
+  .itemImage {
+    img {
+      width: 352px;
+      height: 400px;
+    }
+  }
+  .descriptioContainer {
+    display: none;
+  }
+  .descriptionContainerTablet {
+    display: block;
+    margin-left: 20px;
+  }
+  .itemDescription {
+    padding-bottom: 32px;
+  }
+  .previous {
+    margin-top: 46px;
+  }
+}
+@include sm {
+  .mobileItemCard {
+    display: flex;
+    flex-direction: column;
+    background-color: $white-color;
+    padding: 16px;
+    width: 100%;
+  }
+  .itemContainer {
+    display: none;
+  }
+  .itemName {
+    font-size: 26px;
+    font-weight: 500;
+    //margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  .priceMobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 22px;
+    margin-bottom: 32px;
+  }
+  .helpButton {
+    top: 90vh;
+    left: 85vw;
+  }
+}
