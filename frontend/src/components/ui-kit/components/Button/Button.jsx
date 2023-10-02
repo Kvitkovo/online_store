@@ -9,6 +9,7 @@ const Button = memo(
     reverse,
     type = 'button',
     icon,
+    isFullWidth,
     onClick,
   }) => {
     const buttonClasses = useMemo(() => {
@@ -16,8 +17,11 @@ const Button = memo(
       if (padding && styles[padding]) {
         classes.push(styles[padding]);
       }
+      if (isFullWidth) {
+        classes.push(styles['full-width']);
+      }
       return classes.join(' ');
-    }, [variant, padding]);
+    }, [variant, padding, isFullWidth]);
     const containerStyle = useMemo(() => {
       return {
         display: 'flex',

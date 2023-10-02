@@ -1,0 +1,34 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.path {
+  margin-top: 19px;
+  span {
+    padding: 7px 9px;
+  }
+}
+@include md {
+  .path {
+    font-size: 14px;
+    margin: 16px 47px;
+    margin-bottom: 16px;
+  }
+}
+@include sm {
+  .pathContainer {
+    width: 100vw;
+    overflow: auto;
+    white-space: nowrap;
+    &::-webkit-scrollbar {
+      width: 128px;
+      height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $page-accent-color;
+      border-radius: 2px;
+    }
+  }
+  .path {
+    margin: 19px 16px 15px;
+  }
+}

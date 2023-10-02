@@ -1,13 +1,13 @@
 import React from 'react';
 import CategoryOutput from './components/CategoryOutput';
-import Wrrapper from '../../Wrraper/Wrraper';
+import Wrapper from '../../Wrapper/Wrapper';
 import Carousel from './components/Carousel';
 import carouselData from '../../../data/carouselData.json';
 import styles from './HomePageComponent.module.scss';
 
 const HomePageComponent = () => {
   return (
-    <Wrrapper>
+    <Wrapper>
       <Carousel data={carouselData.slides} />
       <h2 className={styles.title}>
         <span>Акційна</span> ціна
@@ -19,7 +19,7 @@ const HomePageComponent = () => {
       <CategoryOutput title="Квіти у кошику" link={'#'} categoryId={28} />
       <h2 className={styles.title}>Кімнатні квіти</h2>
       <CategoryOutput title="Кімнатні квіти" link={'#'} categoryId={29} />
-    </Wrrapper>
+    </Wrapper>
   );
 };
 export default HomePageComponent;
