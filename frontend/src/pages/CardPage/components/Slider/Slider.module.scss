@@ -1,0 +1,29 @@
+@import '../../../../mixins';
+
+.previousCards {
+  margin-bottom: 46px;
+}
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 46px;
+  overflow: hidden;
+}
+.cardContainer {
+  display: flex;
+  gap: 20px;
+}
+.arrowContainer {
+  display: flex;
+  align-items: center;
+}
+@include md {
+  .sliderContainer {
+    margin-left: 47px;
+  }
+  .arrow {
+    display: none;
+  }
+}

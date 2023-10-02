@@ -1,6 +1,10 @@
 import React from 'react';
-
+import CardPage from './CardPage/CardPage';
 function Delivery() {
-  return <div></div>;
+  return (
+    <div>
+      <CardPage />
+    </div>
+  );
 }
 export default Delivery;

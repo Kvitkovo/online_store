@@ -1,20 +1,20 @@
 import React, { memo } from 'react';
 import styles from './Modal.module.scss';
+import { Portal } from 'react-portal';
 
-const Modal = memo(({ type, children, onClick }) => {
-  const handleButtonClick = (e) => {
-    e.stopPropagation();
-  };
-  return (
-    <div className={styles.overlay} onClick={onClick}>
-      <div
-        className={`${styles.drawer} ${styles[type]}`}
-        onClick={handleButtonClick}
-      >
-        {children}
-      </div>
-    </div>
-  );
+const Modal = memo(({ isOpen, setIsOpen, children, nodeId }) => {
+  const handleOutsideClick = () => setIsOpen(false);
+
+  return isOpen ? (
+    <>
+      {isOpen && (
+        <Portal node={document && document.getElementById(nodeId)}>
+          {children}
+          <div onClick={handleOutsideClick} className={styles.background}></div>
+        </Portal>
+      )}
+    </>
+  ) : null;
 });
 
 export default Modal;

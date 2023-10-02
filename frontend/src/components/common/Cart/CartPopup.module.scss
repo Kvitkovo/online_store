@@ -57,7 +57,7 @@
 
 @include sm {
   .container {
-    padding: 15px;
+    padding: 16px;
     overflow: unset;
   }
   .title {
@@ -66,12 +66,12 @@
     line-height: 28.6px;
   }
   .bottom {
-    padding: 8px 12px;
+    padding: 16px 16px 46px;
     flex-direction: column;
   }
   .total {
     justify-content: space-between;
-    padding: 10px 0;
+    padding-bottom: 24px;
     b {
       margin: 0;
     }

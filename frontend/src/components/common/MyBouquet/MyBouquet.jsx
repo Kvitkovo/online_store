@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal from '../../ui-kit/components/Modal';
+import Modals from '../Modals';
 import Button from '../../ui-kit/components/Button';
 import IconButton from '../../ui-kit/components/IconButton';
 import Divider from '../../ui-kit/components/Divider';
@@ -55,8 +55,10 @@ const MyBouquet = ({ toggleMyBouquet }) => {
 
   const totalSum = itemsBouquet.reduce((sum, obj) => sum + obj.price, 0);
 
+  const hasItems = itemsBouquet.length > 0;
+
   return (
-    <Modal type="myBouquet" onClick={toggleMyBouquet}>
+    <Modals type="myBouquet" onClick={toggleMyBouquet}>
       <div className={styles.container}>
         <div className={styles.headerBlock}>
           {width > 767 ? (
@@ -69,16 +71,20 @@ const MyBouquet = ({ toggleMyBouquet }) => {
             onClick={toggleMyBouquet}
           />
         </div>
-        {itemsBouquet.length > 0 ? (
+        {hasItems ? (
           <MyBouquetItem items={itemsBouquet} count={1} />
         ) : (
           <MyBouquetEmpty />
         )}
       </div>
       <div className={styles.bottomBlock}>
-        <div className={styles.reverse}>
+        <div className={hasItems ? styles.reverse : ''}>
           <div className={styles.changeItems}>
-            <span className={styles.deleteAll}>Видалити все</span>
+            <span
+              className={hasItems ? styles.deleteAll : styles.noActiveDelete}
+            >
+              Видалити все
+            </span>
             <Button
               label={width > 767 ? 'Додати компонент' : 'Додати'}
               variant="secondary"
@@ -86,15 +92,19 @@ const MyBouquet = ({ toggleMyBouquet }) => {
               icon={<ICONS.addComponent />}
             />
           </div>
-          <Divider />
+          <div className={hasItems || styles.divider}>
+            <Divider />
+          </div>
         </div>
         <div className={styles.bottom}>
           <div className={styles.total}>
-            Разом:
-            <b>99</b>
-            <span>шт</span>
-            <b className={styles.sum}>{totalSum}</b>
-            <span>грн</span>
+            <p>Разом:</p>
+            <div>
+              <b>99</b>
+              <span>шт</span>
+              <b className={styles.sum}>{totalSum}</b>
+              <span>грн</span>
+            </div>
           </div>
           <Button
             label="Зібрати букет"
@@ -105,7 +115,7 @@ const MyBouquet = ({ toggleMyBouquet }) => {
           />
         </div>
       </div>
-    </Modal>
+    </Modals>
   );
 };
 

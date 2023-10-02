@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal from '../../ui-kit/components/Modal';
+import Modals from '../Modals';
 import CartItem from './components/CartItem';
 import CartEmpty from './components/CartEmpty';
 import Divider from '../../ui-kit/components/Divider';
@@ -65,7 +65,7 @@ const CartPopup = ({ toggleCart }) => {
   const totalSum = items.reduce((sum, obj) => sum + obj.actualPrice, 0);
 
   return (
-    <Modal type="cart" onClick={toggleCart}>
+    <Modals type="cart" onClick={toggleCart}>
       <div className={styles.container}>
         <div className={styles.headerBlock}>
           <p className={styles.title}>Кошик</p>
@@ -99,7 +99,7 @@ const CartPopup = ({ toggleCart }) => {
           />
         </div>
       </div>
-    </Modal>
+    </Modals>
   );
 };
 

@@ -12,9 +12,16 @@ import NavigationMenu from './components/NavigationMenu';
 import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
+import Modal from '../../ui-kit/components/Modal';
+import Catalog from '../../common/Catalog/Catalog';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
+  const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
+  const catalogHandler = () => {
+    setIsCatalogOpened((prev) => !prev);
+  };
 
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
@@ -80,12 +87,12 @@ const Header = () => {
         <div
           className={`${styles.containerBottom} ${sticky ? styles.sticky : ''}`}
         >
-          <div className={styles.btnCatalogue}>
+          <div className={styles.btnCatalogue} id="catalog">
             <Button
               variant="primary"
               padding="padding-even"
               label="Каталог товарів"
-              onClick={() => alert('clicked primary')}
+              onClick={catalogHandler}
             />
           </div>
 
@@ -118,6 +125,13 @@ const Header = () => {
       </header>
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
+      <Modal
+        isOpen={isCatalogOpened}
+        setIsOpen={setIsCatalogOpened}
+        nodeId="catalog"
+      >
+        <Catalog setIsOpen={setIsCatalogOpened} />
+      </Modal>
     </div>
   );
 };

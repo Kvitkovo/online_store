@@ -38,6 +38,12 @@
   text-decoration: underline;
 }
 
+.noActiveDelete {
+  color: $gray-light-color;
+  text-decoration: underline;
+  cursor: auto;
+}
+
 .bottomBlock {
   margin-top: auto;
 }
@@ -69,7 +75,7 @@
 
 @include sm {
   .container {
-    padding: 15px;
+    padding: 16px;
     overflow: unset;
   }
   .title {
@@ -82,19 +88,24 @@
     flex-direction: column-reverse;
   }
   .changeItems {
-    padding: 12px;
+    padding: 16px 16px 0;
     margin-bottom: 0;
   }
+  .divider {
+    padding-top: 60px;
+  }
   .bottom {
-    padding: 12px;
+    padding: 24px 16px 46px;
     flex-direction: column;
   }
   .total {
     justify-content: space-between;
-    padding: 10px 0;
-
+    padding-bottom: 24px;
     b {
-      margin: 0;
+      margin-left: 0;
+    }
+    .sum {
+      margin-left: 14px;
     }
   }
 }

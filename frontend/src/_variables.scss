@@ -11,6 +11,14 @@ $text-color: #242424;
 $black-80-color: #3a3a3a;
 $light-yellow: #fffdf2;
 $page-blur-color: rgba(0, 0, 0, 0.3);
+$box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.1);
+$background-gradient: linear-gradient(
+  188deg,
+  #6ec660 -112.86%,
+  #fff 27.91%,
+  #fff 57.77%,
+  #6ec660 236.93%
+);
 
 $breakpoint-sm: 767px;
 $breakpoint-md: 1023px;
