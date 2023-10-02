@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import OpenMenu from './OpenMenu';
 import ClosedMenu from './ClosedMenu';
 
-const BurgerMenu = ({ toggleCart }) => {
+const BurgerMenu = ({ toggleCart, toggleMyBouquet }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = useCallback(() => {
@@ -13,7 +13,11 @@ const BurgerMenu = ({ toggleCart }) => {
       {isOpen ? (
         <OpenMenu toggleMenu={toggleMenu} />
       ) : (
-        <ClosedMenu toggleMenu={toggleMenu} toggleCart={toggleCart} />
+        <ClosedMenu
+          toggleMenu={toggleMenu}
+          toggleCart={toggleCart}
+          toggleMyBouquet={toggleMyBouquet}
+        />
       )}
     </>
   );

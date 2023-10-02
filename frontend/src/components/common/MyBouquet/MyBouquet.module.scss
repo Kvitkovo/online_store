@@ -1,9 +1,9 @@
-@import '../../../variables';
-@import '../../../mixins';
+@import 'src/_variables.scss';
+@import 'src/_mixins.scss';
 
 .container {
   margin-bottom: 12px;
-  padding: 24px 32px;
+  padding: 24px;
   overflow: hidden;
 }
 
@@ -14,15 +14,28 @@
 }
 
 .title {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
-  line-height: 41.6px;
+  line-height: 24px;
 }
 
 .icon {
   path {
     stroke: $text-color;
   }
+}
+.changeItems {
+  padding: 0 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteAll {
+  color: $page-accent-color;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .bottomBlock {
@@ -38,21 +51,20 @@
 .total {
   display: flex;
   align-items: center;
-  font-size: 18px;
-  font-weight: 500;
 
   b {
     margin-left: 12px;
-    font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 24px;
   }
-}
-
-.currency {
-  font-size: 18px;
-  font-weight: 400;
-  margin-left: 12px;
+  .sum {
+    margin-left: 24px;
+  }
+  span {
+    margin-left: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
 }
 
 @include sm {
@@ -65,13 +77,22 @@
     font-weight: 600;
     line-height: 28.6px;
   }
+  .reverse {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .changeItems {
+    padding: 12px;
+    margin-bottom: 0;
+  }
   .bottom {
-    padding: 8px 12px;
+    padding: 12px;
     flex-direction: column;
   }
   .total {
     justify-content: space-between;
     padding: 10px 0;
+
     b {
       margin: 0;
     }

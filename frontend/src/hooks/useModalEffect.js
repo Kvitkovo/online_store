@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-export const useModalEffect = (isOpenCart) => {
+export const useModalEffect = (isOpenCart, isOpenMyBouquet) => {
   useEffect(() => {
-    if (isOpenCart) {
+    if (isOpenCart || isOpenMyBouquet) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -10,5 +10,5 @@ export const useModalEffect = (isOpenCart) => {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpenCart]);
+  }, [isOpenCart, isOpenMyBouquet]);
 };

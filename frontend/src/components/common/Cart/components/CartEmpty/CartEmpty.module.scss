@@ -1,0 +1,28 @@
+@import './src/variables';
+
+.root {
+  padding-top: 25px;
+
+  p {
+    color: $gray-dark-color;
+    line-height: 20.8px;
+  }
+}
+
+.block {
+  margin: 0 auto;
+  width: 366px;
+  height: 309px;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    color: $text-color;
+    font-size: 24px;
+    line-height: 31.2px;
+  }
+}

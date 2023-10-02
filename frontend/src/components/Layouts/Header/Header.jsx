@@ -11,17 +11,23 @@ import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
 import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
+import MyBouquet from '../../common/MyBouquet/MyBouquet';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
 
   const [isOpenCart, setIsOpenCart] = useState(false);
+  const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
 
-  const toggleCartPopup = () => {
+  const toggleCart = () => {
     setIsOpenCart((prev) => !prev);
   };
 
-  useModalEffect(isOpenCart);
+  const toggleMyBouquet = () => {
+    setIsOpenMyBouquet((prev) => !prev);
+  };
+
+  useModalEffect(isOpenCart, isOpenMyBouquet);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -37,7 +43,7 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCartPopup} />
+      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
       <header>
         <div className={styles.containerTop}>
           {' '}
@@ -92,7 +98,7 @@ const Header = () => {
               label="Зібрати букет"
               padding="padding-header-sm"
               icon={<ICONS.toBouquet />}
-              onClick={() => alert('clicked bouquete')}
+              onClick={toggleMyBouquet}
             />
             <div className={styles.login}>
               <Button
@@ -105,12 +111,13 @@ const Header = () => {
             </div>
 
             <div className={styles.cart}>
-              <IconButton onClick={toggleCartPopup} icon={<ICONS.CartIcon />} />
+              <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
             </div>
           </div>
         </div>
       </header>
-      {isOpenCart && <CartPopup setIsOpen={setIsOpenCart} />}
+      {isOpenCart && <CartPopup toggleCart={toggleCart} />}
+      {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
     </div>
   );
 };

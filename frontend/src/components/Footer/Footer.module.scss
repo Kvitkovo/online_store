@@ -2,7 +2,8 @@
 @import 'src/_mixins.scss';
 
 footer {
-  max-width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   height: 337px;
   padding: 32px 130px;
   background-color: $text-color;
@@ -34,6 +35,15 @@ section {
 
 .contacts {
   width: 240px;
+  p {
+    color: $white-color;
+    margin: 16px 0;
+  }
+  address {
+    font-style: normal;
+    color: $white-color;
+    margin-top: 16px;
+  }
 }
 
 .socials {
@@ -44,26 +54,6 @@ section {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-}
-
-p {
-  color: $white-color;
-  margin: 16px 0;
-}
-
-address {
-  font-style: normal;
-  color: $white-color;
-  margin-top: 16px;
-}
-
-@include bg {
-  footer {
-    padding: 32px 0;
-  }
-  .container {
-    margin: 0 auto;
-  }
 }
 
 @include md {
