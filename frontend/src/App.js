@@ -9,6 +9,7 @@ import './App.scss';
 import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
+import ContactDetails from './components/account/ContactDetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path={ROUTES.about} element={<About />} />
             <Route path={ROUTES.delivery} element={<Delivery />} />
             <Route path={ROUTES.handling} element={<Handling />} />
+            <Route path={ROUTES.account} element={<ContactDetails />} />
           </Routes>
         </div>
         <Footer />

@@ -10,6 +10,7 @@ const ROUTES = {
   orderStatus: '/orderStatus',
   care: '/care',
   faq: '/faq',
+  account: '/account',
 };
 
 export default ROUTES;
