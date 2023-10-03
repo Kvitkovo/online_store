@@ -1,4 +1,6 @@
 @import '../../../variables';
+@import '../../../mixins';
+
 .title {
   padding: 54px 0 38px;
   font-size: 26px;
@@ -7,5 +9,11 @@
 
   span {
     color: $discount-color;
+  }
+}
+
+@include sm {
+  .title {
+    padding-left: 16px;
   }
 }
