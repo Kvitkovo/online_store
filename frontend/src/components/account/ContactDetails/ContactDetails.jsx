@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ContactDetails.module.scss';
 import Wrapper from './../../Wrapper';
 import { ICONS } from '../../ui-kit/icons';
+import Button from '../../ui-kit/components/Button/Button';
 // import IconButton from '../../ui-kit/components/IconButton/IconButton';
 
 const ContactDetails = () => {
@@ -38,6 +39,18 @@ const ContactDetails = () => {
               <p>example@gmail.com</p>
               <p>26.03.1992</p>
             </div>
+          </div>
+          <div className={styles.flexButtons}>
+            <Button
+              variant="no-border"
+              label="Редагувати"
+              icon={<ICONS.PencilIcon />}
+            />
+            <Button
+              variant="no-border"
+              label="Змінити пароль"
+              icon={<ICONS.changePassword />}
+            />
           </div>
         </div>
       </div>

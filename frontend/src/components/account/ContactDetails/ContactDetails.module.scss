@@ -64,3 +64,16 @@
 .fields {
   color: $gray-dark-color;
 }
+
+.flexButtons {
+  display: flex;
+  gap: 16px;
+
+  button {
+    padding: 8px;
+  }
+
+  & :first-child {
+    padding-left: 0;
+  }
+}
