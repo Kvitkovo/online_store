@@ -3,7 +3,6 @@ const ROUTES = {
   promotions: '/promotions',
   about: '/about',
   delivery: '/delivery',
-  handling: '/handling',
   contacts: '/contacts',
   partner: '/partner',
   privacy: '/privacy',
