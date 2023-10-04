@@ -1,0 +1,99 @@
+@import '../../../../../variables';
+@import '../../../../../mixins';
+
+.itemsBlock {
+  padding-right: 15px;
+  margin-top: 24px;
+  overflow-y: auto;
+  height: 467px;
+  max-width: 737px;
+
+  &:hover {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: $page-accent-color;
+  }
+}
+
+.item {
+  height: 98px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftBlock {
+  display: flex;
+  align-items: center;
+}
+
+.blockImg {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 96px;
+    height: 98px;
+    margin-left: 31px;
+    margin-right: 16px;
+  }
+  span {
+    font-weight: 500;
+    line-height: 20.8px;
+  }
+}
+
+.rightBlock {
+  display: flex;
+  align-items: center;
+  gap: 29px;
+}
+
+.divider {
+  padding: 12px 0;
+}
+
+@include sm {
+  .itemsBlock {
+    overflow-y: hidden;
+    height: 100%;
+    padding-right: 0;
+  }
+  .item {
+    height: 129px;
+    position: relative;
+    flex-direction: column;
+  }
+  .leftBlock {
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  .blockImg {
+    img {
+      width: 56px;
+      height: 56px;
+      margin-left: 0;
+      margin-right: 16px;
+    }
+  }
+  .pencilIcon {
+    position: absolute;
+    top: 18px;
+    right: 45px;
+  }
+  .rightBlock {
+    max-height: 70px;
+    margin-left: 75px;
+    justify-content: space-between;
+  }
+}

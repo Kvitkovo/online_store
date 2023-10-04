@@ -9,6 +9,9 @@ import ROUTES from '../../../constants/routers';
 import IconButton from '../../ui-kit/components/IconButton';
 import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
+import CartPopup from '../../common/Cart';
+import { useModalEffect } from '../../../hooks/useModalEffect';
+import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog/Catalog';
 
@@ -19,6 +22,19 @@ const Header = () => {
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
   };
+
+  const [isOpenCart, setIsOpenCart] = useState(false);
+  const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
+
+  const toggleCart = () => {
+    setIsOpenCart((prev) => !prev);
+  };
+
+  const toggleMyBouquet = () => {
+    setIsOpenMyBouquet((prev) => !prev);
+  };
+
+  useModalEffect(isOpenCart, isOpenMyBouquet);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -34,7 +50,7 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu />
+      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
       <header>
         <div className={styles.containerTop}>
           {' '}
@@ -89,7 +105,7 @@ const Header = () => {
               label="Зібрати букет"
               padding="padding-header-sm"
               icon={<ICONS.toBouquet />}
-              onClick={() => alert('clicked bouquete')}
+              onClick={toggleMyBouquet}
             />
             <div className={styles.login}>
               <Button
@@ -102,11 +118,13 @@ const Header = () => {
             </div>
 
             <div className={styles.cart}>
-              <IconButton icon={<ICONS.CartIcon />} />
+              <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
             </div>
           </div>
         </div>
       </header>
+      {isOpenCart && <CartPopup toggleCart={toggleCart} />}
+      {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       <Modal
         isOpen={isCatalogOpened}
         setIsOpen={setIsCatalogOpened}

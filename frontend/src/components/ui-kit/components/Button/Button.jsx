@@ -9,27 +9,31 @@ const Button = memo(
     reverse,
     type = 'button',
     icon,
-    isFullWidth,
     onClick,
+    disabled = false,
   }) => {
     const buttonClasses = useMemo(() => {
       const classes = [styles.button, styles[variant]];
       if (padding && styles[padding]) {
         classes.push(styles[padding]);
       }
-      if (isFullWidth) {
-        classes.push(styles['full-width']);
-      }
       return classes.join(' ');
-    }, [variant, padding, isFullWidth]);
+    }, [variant, padding]);
+
     const containerStyle = useMemo(() => {
       return {
         display: 'flex',
         flexDirection: reverse ? 'row-reverse' : 'row',
       };
     }, [reverse]);
+
     return (
-      <button className={buttonClasses} type={type} onClick={onClick}>
+      <button
+        className={buttonClasses}
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+      >
         <div className={styles.btnContainer} style={containerStyle}>
           <span className={styles.label}>{label}</span>
           <span className={styles.icon}> {icon} </span>{' '}

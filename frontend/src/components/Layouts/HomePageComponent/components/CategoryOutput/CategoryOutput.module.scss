@@ -1,5 +1,5 @@
 @import '../../../../../variables';
-
+@import '../../../../../mixins';
 .cardOutput {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -21,4 +21,16 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+@include sm {
+  .cardOutput {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 16px;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

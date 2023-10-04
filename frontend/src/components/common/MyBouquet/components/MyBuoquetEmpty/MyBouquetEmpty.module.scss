@@ -1,0 +1,37 @@
+@import '/src/variables';
+@import 'src/mixins';
+
+.root {
+  padding-top: 84.5px;
+}
+
+.block {
+  margin: 0 auto;
+  width: 571px;
+  height: 279px;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    text-align: center;
+    padding-top: 46px;
+    color: $text-color;
+    font-size: 24px;
+    line-height: 31.2px;
+  }
+}
+
+@include sm {
+  .block {
+    width: 309px;
+  }
+  .centered {
+    p {
+      font-size: 20px;
+    }
+  }
+}
