@@ -73,6 +73,7 @@ const CategoryOutput = ({ title, link, categoryId }) => {
                   oldPrice={card.priceWithDiscount}
                   price={card.price}
                   key={card.id}
+                  data={card}
                   onCardClick={() => toggleCardPage(card)}
                 />
               ))}

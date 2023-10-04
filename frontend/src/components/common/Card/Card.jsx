@@ -5,6 +5,7 @@ import { ICONS } from '../../ui-kit/icons';
 import Discount from '../../ui-kit/components/Discount/Discount';
 import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
+//import { Link } from 'react-router-dom';
 
 const Card = (props) => {
   const handleCardClick = () => {
@@ -14,6 +15,7 @@ const Card = (props) => {
   };
   return (
     <div className={styles.card} onClick={handleCardClick}>
+      {/*  <Link to={`/api/${props.data.id}`}> */}
       <img
         src={props.image}
         alt="букет"
@@ -56,6 +58,7 @@ const Card = (props) => {
           </div>
         </div>
       </div>
+      {/*   </Link> */}
     </div>
   );
 };

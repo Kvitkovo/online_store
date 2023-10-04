@@ -10,6 +10,7 @@ const ROUTES = {
   orderStatus: '/orderStatus',
   care: '/care',
   faq: '/faq',
+  /*  card: '/api/:myId', */
 };
 
 export default ROUTES;
