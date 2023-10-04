@@ -1,4 +1,4 @@
-@import './../../../variables';
+@import '../../../variables';
 
 .gridTwoBlocks {
   display: grid;
@@ -14,6 +14,15 @@
 }
 .menuAccount {
   padding-bottom: 32px;
+}
+
+.contactDetails {
+  padding: 20px 0 32px 26px;
+  h2 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+  }
 }
 
 .accountIcon {
@@ -39,4 +48,19 @@
 
 .menuItem {
   padding: 8px;
+}
+
+.flexFieldsAndData {
+  display: flex;
+  gap: 134px;
+  padding: 34px 0 16px;
+
+  p {
+    padding-bottom: 18px;
+    line-height: 24px;
+  }
+}
+
+.fields {
+  color: $gray-dark-color;
 }
