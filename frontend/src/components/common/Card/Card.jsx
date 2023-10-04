@@ -7,8 +7,13 @@ import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
 
 const Card = (props) => {
+  const handleCardClick = () => {
+    if (props.onCardClick) {
+      props.onCardClick();
+    }
+  };
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={handleCardClick}>
       <img
         src={props.image}
         alt="букет"

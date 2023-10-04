@@ -7,13 +7,13 @@ import { ICONS } from '../../../../components/ui-kit/icons';
 import Button from '../../../../components/ui-kit/components/Button';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
-const PriceAndButtons = () => {
+const PriceAndButtons = ({ actualPrice, oldPrice }) => {
   const { width } = useWindowSize();
   return (
     <div>
       <div className={styles.desktopContainer}>
         <div className={styles.price}>
-          <DiscountPrice oldPrice={4864} actualPrice={4000} />
+          <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
         </div>
 
         <div className={styles.buttons}>
@@ -41,7 +41,7 @@ const PriceAndButtons = () => {
       {width < 767 ? (
         <>
           <div className={styles.priceMobile}>
-            <DiscountPrice oldPrice={4864} actualPrice={4000} />
+            <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
             <span className={styles.bouquetMobile}>
               <IconButton icon={<ICONS.BouquetIcon />} />
             </span>
