@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './ItemCard.module.scss';
 import { ICONS } from '../../../../components/ui-kit/icons';
-import Wrapper from '../../../../components/Wrapper';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
@@ -21,49 +20,24 @@ const ItemCard = () => {
 
   return (
     <div>
-      <Wrapper>
-        <div className={styles.mainContainer}>
-          <Path />
-          <div className={styles.itemContainer}>
-            <div className={styles.itemBlock}>
-              <ItemImage
-                image="./images/itemCard.jpg"
-                discount={15}
-                isBigCard={true}
-              />
-              <div className={styles.itemDescriptionContainer}>
-                <h1 className={styles.itemName}>{'Букет "101 троянда"'}</h1>
-                <Stock isInStock={true} />
-                {isDesktop && <ItemDescription />}
-                <ItemFeatures />
-                <PriceAndButtons />
-              </div>
-            </div>
-            {isTablet && <ItemDescription />}
-            <div className={styles.helpButton}>
-              <IconButton
-                icon={<ICONS.QuestionIcon />}
-                isBackground={true}
-                isRound={true}
-              />
+      <div className={styles.mainContainer}>
+        <Path />
+        <div className={styles.itemContainer}>
+          <div className={styles.itemBlock}>
+            <ItemImage
+              image="./images/itemCard.jpg"
+              discount={15}
+              isBigCard={true}
+            />
+            <div className={styles.itemDescriptionContainer}>
+              <h1 className={styles.itemName}>{'Букет "101 троянда"'}</h1>
+              <Stock isInStock={true} />
+              {isDesktop && <ItemDescription />}
+              <ItemFeatures />
+              <PriceAndButtons />
             </div>
           </div>
-          {isMobile && (
-            <div className={styles.mobileItemCard}>
-              <h1 className={styles.itemName}>
-                Букет &rdquo;101&rdquo; троянда
-              </h1>
-              <Stock isInStock={true} />
-              <ItemImage
-                image="./images/itemCard.jpg"
-                discount={15}
-                isBigCard={true}
-              />
-              <PriceAndButtons />
-              <ItemFeatures />
-              <ItemDescription />
-            </div>
-          )}
+          {isTablet && <ItemDescription />}
           <div className={styles.helpButton}>
             <IconButton
               icon={<ICONS.QuestionIcon />}
@@ -71,10 +45,31 @@ const ItemCard = () => {
               isRound={true}
             />
           </div>
-          <h2 className={styles.previous}>Раніше переглянуті</h2>
-        </div>{' '}
-        <Slider />
-      </Wrapper>
+        </div>
+        {isMobile && (
+          <div className={styles.mobileItemCard}>
+            <h1 className={styles.itemName}>Букет &rdquo;101&rdquo; троянда</h1>
+            <Stock isInStock={true} />
+            <ItemImage
+              image="./images/itemCard.jpg"
+              discount={15}
+              isBigCard={true}
+            />
+            <PriceAndButtons />
+            <ItemFeatures />
+            <ItemDescription />
+          </div>
+        )}
+        <div className={styles.helpButton}>
+          <IconButton
+            icon={<ICONS.QuestionIcon />}
+            isBackground={true}
+            isRound={true}
+          />
+        </div>
+        <h2 className={styles.previous}>Раніше переглянуті</h2>
+      </div>{' '}
+      <Slider />
     </div>
   );
 };
