@@ -15,6 +15,6 @@ export const navigationItems = [
   },
   {
     label: 'Догляд за квітами',
-    to: ROUTES.handling,
+    to: ROUTES.care,
   },
 ];
