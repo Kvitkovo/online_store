@@ -8,12 +8,10 @@ import {
   GetDiscountedProducts,
   GetProductsCategory,
 } from '../../../../../services/products/productsAccess.service';
-import CardPage from '../../../../../pages/CardPage/CardPage';
 
 const CategoryOutput = ({ title, link, categoryId }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCard, setSelectedCard] = useState(null);
 
   const getData = useCallback(
     async (title) => {
@@ -45,10 +43,6 @@ const CategoryOutput = ({ title, link, categoryId }) => {
     [categoryId],
   );
 
-  const toggleCardPage = (cardData) => {
-    setSelectedCard(cardData);
-  };
-
   useEffect(() => {
     getData(title);
   }, [title, getData]);
@@ -74,7 +68,6 @@ const CategoryOutput = ({ title, link, categoryId }) => {
                   price={card.price}
                   key={card.id}
                   data={card}
-                  onCardClick={() => toggleCardPage(card)}
                 />
               ))}
           </div>
@@ -85,12 +78,6 @@ const CategoryOutput = ({ title, link, categoryId }) => {
             <IconButton icon={<ICONS.hideList />} />
           </div>
         </div>
-      )}
-      {selectedCard && (
-        <CardPage
-          cardData={selectedCard}
-          onClose={() => setSelectedCard(null)}
-        />
       )}
     </>
   );

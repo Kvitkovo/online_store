@@ -13,7 +13,6 @@ import Stock from '../Stock';
 import Slider from '../Slider';
 
 const ItemCard = ({ cardData }) => {
-  //console.log('cardData:', cardData);
   const { width } = useWindowSize();
   const windowWidth = width;
   const isDesktop = windowWidth > 1023;
@@ -33,7 +32,7 @@ const ItemCard = ({ cardData }) => {
                 image={
                   cardData.images[0]
                     ? cardData.images[0].url
-                    : './images/no_image.jpg'
+                    : '/images/no_image.jpg'
                 }
                 discount={cardData.discount}
                 isBigCard={true}
@@ -80,8 +79,8 @@ const ItemCard = ({ cardData }) => {
                 isBigCard={true}
               />
               <PriceAndButtons
-                price={cardData.price}
-                oldPrice={cardData.oldPrice}
+                oldPrice={cardData.price}
+                actualPrice={cardData.priceWithDiscount}
               />
               <ItemFeatures
                 type={cardData.category.name}

@@ -9,7 +9,7 @@ import './App.scss';
 import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
-/* import CardPage from './pages/CardPage/CardPage'; */
+import CardPage from './pages/CardPage/CardPage';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
             <Route path={ROUTES.about} element={<About />} />
             <Route path={ROUTES.delivery} element={<Delivery />} />
             <Route path={ROUTES.handling} element={<Handling />} />
-            {/* <Route path={ROUTES.card} element={<CardPage />} /> */}
+            <Route path={ROUTES.card} element={<CardPage />} />
           </Routes>
         </div>
         <Footer />
