@@ -1,19 +1,9 @@
 @import '../../../variables';
 
-.gridTwoBlocks {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 20px;
-}
-
-.menuAccount,
 .contactDetails {
   background-color: white;
   border-radius: 8px;
   margin-top: 25px;
-}
-.menuAccount {
-  padding-bottom: 32px;
 }
 
 .contactDetails {
@@ -23,31 +13,6 @@
     font-weight: 400;
     line-height: 24px;
   }
-}
-
-.accountIcon {
-  background: $green-80-color;
-  border-radius: 50%;
-  padding: 6px;
-  height: 36px;
-}
-
-.account {
-  display: flex;
-  gap: 8px;
-  padding: 8px 18px 8px 8px;
-  border-bottom: 1px solid #97cf8e;
-  align-items: center;
-}
-
-.name {
-  padding: 8px;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.menuItem {
-  padding: 8px;
 }
 
 .flexFieldsAndData {
