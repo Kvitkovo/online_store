@@ -29,8 +29,9 @@
     flex-wrap: nowrap;
     overflow-x: auto;
     padding: 0 16px;
-  }
-  ::-webkit-scrollbar {
-    display: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

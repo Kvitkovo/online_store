@@ -73,8 +73,8 @@ const ItemCard = () => {
           </div>
           <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>{' '}
+        <Slider />
       </Wrapper>
-      <Slider />
     </div>
   );
 };
