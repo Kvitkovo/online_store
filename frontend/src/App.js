@@ -15,27 +15,40 @@ import OrderStatus from './pages/OrderStatus';
 import Partner from './pages/Partner';
 import Privacy from './pages/Privacy';
 import ContactDetails from './components/account/ContactDetails';
+import SideMenu from './components/account/SideMenu/SideMenu';
+import ChangeDetails from './components/account/ChangeDetails/ChangeDetails';
+import Wrapper from './components/Wrapper';
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Header />
-        <div>
-          <Routes>
-            <Route path={ROUTES.home} element={<Home />} />
-            <Route path={ROUTES.promotions} element={<Promotions />} />
-            <Route path={ROUTES.about} element={<About />} />
-            <Route path={ROUTES.delivery} element={<Delivery />} />
-            <Route path={ROUTES.care} element={<Care />} />
-            <Route path={ROUTES.contacts} element={<Contacts />} />
-            <Route path={ROUTES.faq} element={<Faq />} />
-            <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
-            <Route path={ROUTES.partner} element={<Partner />} />
-            <Route path={ROUTES.privacy} element={<Privacy />} />
-            <Route path={ROUTES.account} element={<ContactDetails />} />
-          </Routes>
-        </div>
+        <Wrapper>
+          <div>
+            <Routes>
+              <Route path={ROUTES.home} element={<Home />} />
+              <Route path={ROUTES.promotions} element={<Promotions />} />
+              <Route path={ROUTES.about} element={<About />} />
+              <Route path={ROUTES.delivery} element={<Delivery />} />
+              <Route path={ROUTES.care} element={<Care />} />
+              <Route path={ROUTES.contacts} element={<Contacts />} />
+              <Route path={ROUTES.faq} element={<Faq />} />
+              <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
+              <Route path={ROUTES.partner} element={<Partner />} />
+              <Route path={ROUTES.privacy} element={<Privacy />} />
+              <Route element={<ProtectedRoutes />}>
+                <SideMenu />
+                <Route path={ROUTES.account} element={<ContactDetails />} />
+                <Route
+                  path={ROUTES.changeDetails}
+                  element={<ChangeDetails />}
+                />
+              </Route>
+            </Routes>
+          </div>
+        </Wrapper>
         <Footer />
       </div>
     </Router>
