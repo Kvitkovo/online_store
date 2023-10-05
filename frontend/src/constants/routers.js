@@ -9,6 +9,8 @@ const ROUTES = {
   orderStatus: '/orderStatus',
   care: '/care',
   faq: '/faq',
+  account: '/account',
+  changeDetails: '/account/change-details',
 };
 
 export default ROUTES;
