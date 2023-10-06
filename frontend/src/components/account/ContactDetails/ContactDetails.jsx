@@ -2,8 +2,19 @@ import React from 'react';
 import styles from './ContactDetails.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const ContactDetails = () => {
+  const navigate = useNavigate();
+
+  const navigateToEdit = () => {
+    navigate('/account/change-details');
+  };
+
+  const navigateToChangePassword = () => {
+    navigate('/account/change-password');
+  };
+
   return (
     <div className={styles.contactDetails}>
       <h2> Контактні дані</h2>
@@ -30,11 +41,13 @@ const ContactDetails = () => {
           variant="no-border"
           label="Редагувати"
           icon={<ICONS.PencilIcon />}
+          onClick={navigateToEdit}
         />
         <Button
           variant="no-border"
           label="Змінити пароль"
           icon={<ICONS.changePassword />}
+          onClick={navigateToChangePassword}
         />
       </div>
     </div>

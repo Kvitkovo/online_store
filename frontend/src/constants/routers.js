@@ -11,6 +11,8 @@ const ROUTES = {
   faq: '/faq',
   account: '/account',
   changeDetails: '/account/change-details',
+  changePassword: '/account/change-password',
+  orders: '/account/orders',
 };
 
 export default ROUTES;

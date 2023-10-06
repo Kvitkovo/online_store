@@ -15,10 +15,11 @@ import OrderStatus from './pages/OrderStatus';
 import Partner from './pages/Partner';
 import Privacy from './pages/Privacy';
 import ContactDetails from './components/account/ContactDetails';
-import SideMenu from './components/account/SideMenu/SideMenu';
 import ChangeDetails from './components/account/ChangeDetails/ChangeDetails';
 import Wrapper from './components/Wrapper';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
+import ChangePassword from './components/account/ChangePassword';
+import Orders from './components/account/Orders';
 
 function App() {
   return (
@@ -39,12 +40,16 @@ function App() {
               <Route path={ROUTES.partner} element={<Partner />} />
               <Route path={ROUTES.privacy} element={<Privacy />} />
               <Route element={<ProtectedRoutes />}>
-                <SideMenu />
                 <Route path={ROUTES.account} element={<ContactDetails />} />
                 <Route
                   path={ROUTES.changeDetails}
                   element={<ChangeDetails />}
                 />
+                <Route
+                  path={ROUTES.changePassword}
+                  element={<ChangePassword />}
+                />
+                <Route path={ROUTES.orders} element={<Orders />} />
               </Route>
             </Routes>
           </div>
