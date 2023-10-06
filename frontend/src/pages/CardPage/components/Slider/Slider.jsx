@@ -17,7 +17,7 @@ const Slider = () => {
       <div className={styles.cardWrapper}>
         <div className={styles.cardContainer}>
           <Card
-            image="./images/bouquet.jpg"
+            image="/images/bouquet.jpg"
             title="Троянда червона"
             bouquet={true}
             discount={10}
@@ -25,7 +25,7 @@ const Slider = () => {
             price="200"
           />
           <Card
-            image="./images/bouquet.jpg"
+            image="/images/bouquet.jpg"
             title="Троянда червона"
             bouquet={true}
             discount={10}
@@ -33,7 +33,7 @@ const Slider = () => {
             price="200"
           />
           <Card
-            image="./images/bouquet.jpg"
+            image="/images/bouquet.jpg"
             title="Троянда червона"
             bouquet={true}
             discount={10}
@@ -41,7 +41,7 @@ const Slider = () => {
             price="200"
           />
           <Card
-            image="./images/bouquet.jpg"
+            image="/images/bouquet.jpg"
             title="Троянда червона"
             bouquet={true}
             discount={10}
