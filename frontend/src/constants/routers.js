@@ -9,6 +9,10 @@ const ROUTES = {
   orderStatus: '/orderStatus',
   care: '/care',
   faq: '/faq',
+  account: '/account',
+  changeDetails: '/account/change-details',
+  changePassword: '/account/change-password',
+  orders: '/account/orders',
   card: '/product/:myId',
 };
 

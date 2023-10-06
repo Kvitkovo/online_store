@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ItemCard.module.scss';
 import { ICONS } from '../../../../components/ui-kit/icons';
-import Wrapper from '../../../../components/Wrapper';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
@@ -43,7 +42,7 @@ const ItemCard = ({ cardData }) => {
 
   return (
     <div>
-      <Wrapper>
+      <div>
         <div className={styles.mainContainer}>
           <Path />
           <div className={styles.itemContainer}>
@@ -121,7 +120,7 @@ const ItemCard = ({ cardData }) => {
           </div>
           <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>{' '}
-      </Wrapper>
+      </div>
       <Slider />
     </div>
   );
