@@ -21,6 +21,7 @@ public class UserRequestDto {
 
     private String firstName;
     private String lastName;
+    private String surname;
     @NotBlank
     @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     private String email;
@@ -58,5 +59,10 @@ public class UserRequestDto {
     @Schema(example = "Password", description = "User password")
     public String getPassword() {
         return password;
+    }
+
+    @Schema(example = "Valeriyovich", description = "User surname")
+    public String getSurname() {
+        return surname;
     }
 }
