@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ItemCard.module.scss';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import Wrapper from '../../../../components/Wrapper';
@@ -11,6 +11,8 @@ import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
+/* eslint-disable max-len */
+/* import { GetProductsStocks } from '../../../../services/products/productsAccess.service'; */
 
 const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
@@ -20,6 +22,24 @@ const ItemCard = ({ cardData }) => {
   const isMobile = windowWidth < 767;
 
   const size = cardData.size?.name;
+
+  const [stockInfo, setStockInfo] = useState();
+
+  useEffect(() => {
+    const getStock = async () => {
+      const productId = cardData.id;
+
+      const url = `https://195.191.104.138:4446/v1/products/stocks?products=${productId}`;
+      /* `${GetProductsStocks}stocks?products=${productId}` */
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const availableStock = data[0]?.available;
+      setStockInfo(availableStock);
+    };
+
+    getStock();
+  }, [cardData]);
 
   return (
     <div>
@@ -39,7 +59,7 @@ const ItemCard = ({ cardData }) => {
               />
               <div className={styles.itemDescriptionContainer}>
                 <h1 className={styles.itemName}>{cardData.title}</h1>
-                <Stock isInStock={true} />
+                <Stock stockInfo={stockInfo} />
                 {isDesktop && (
                   <ItemDescription description={cardData.metaDescription} />
                 )}
@@ -51,6 +71,7 @@ const ItemCard = ({ cardData }) => {
                 <PriceAndButtons
                   oldPrice={cardData.price}
                   actualPrice={cardData.priceWithDiscount}
+                  stockInfo={stockInfo}
                 />
               </div>
             </div>
@@ -68,12 +89,12 @@ const ItemCard = ({ cardData }) => {
           {isMobile && (
             <div className={styles.mobileItemCard}>
               <h1 className={styles.itemName}>{cardData.title}</h1>
-              <Stock isInStock={true} />
+              <Stock stockInfo={stockInfo} />
               <ItemImage
                 image={
                   cardData.images[0]
                     ? cardData.images[0].url
-                    : './images/no_image.jpg'
+                    : '/images/no_image.jpg'
                 }
                 discount={cardData.discount}
                 isBigCard={true}
@@ -81,6 +102,7 @@ const ItemCard = ({ cardData }) => {
               <PriceAndButtons
                 oldPrice={cardData.price}
                 actualPrice={cardData.priceWithDiscount}
+                stockInfo={stockInfo}
               />
               <ItemFeatures
                 type={cardData.category.name}
