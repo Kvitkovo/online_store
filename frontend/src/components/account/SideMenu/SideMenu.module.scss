@@ -18,4 +18,20 @@
   &:active {
     color: $on-press-color;
   }
+  &:last-of-type {
+    border-top: 1px solid $gray-light-color;
+  }
+}
+
+.active {
+  border-left: 4px solid var(--Green, #6cc25e);
+  display: block;
+  padding: 8px 16px 8px 12px;
+  color: $text-color;
+}
+
+.inactive {
+  display: block;
+  padding: 8px 16px;
+  color: $text-color;
 }
