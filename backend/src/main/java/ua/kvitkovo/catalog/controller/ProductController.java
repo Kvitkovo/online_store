@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -151,34 +152,37 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @GetMapping(path = "/filter")
     public Page<ProductResponseDto> getAllProductsByFilter(
-            @Parameter(description = "Number of page (1..N)", required = true,
-                    schema = @Schema(type = "integer", defaultValue = "1")
-            ) @RequestParam(defaultValue = "1") int page,
-            @Parameter(description = "The size of the page to be returned", required = true,
-                    schema = @Schema(type = "integer", defaultValue = "30")
-            ) @RequestParam(defaultValue = "30") int size,
-            @Parameter(description = "Get products whose price is equal to or higher than the specified price",
-                    schema = @Schema(type = "integer", defaultValue = "0")
-            ) @RequestParam(required = false, defaultValue = "0") String priceFrom,
-            @Parameter(description = "Get products whose price is equal to or less than the specified price",
-                    schema = @Schema(type = "integer", defaultValue = "5000")
-            ) @RequestParam(required = false, defaultValue = "5000") String priceTo,
-            @Parameter(description = "Get products whose name is similar to the specified term",
-                    schema = @Schema(type = "string")
-            ) @RequestParam(required = false) String title,
-            @Parameter(description = "ID of the category of which the products will be returned",
-                    schema = @Schema(type = "integer")
-            ) @RequestParam(required = false) Long categoryId,
-            @Parameter(description = "List of color identifiers",
-                    schema = @Schema(type = "array[integer]")
-            ) @RequestParam(required = false) List<Long> colors,
-            @Parameter(description = "List of sizes identifiers",
-                    schema = @Schema(type = "array[integer]")
-            ) @RequestParam(required = false) List<Long> sizes,
-            @Parameter(description = "List of product types identifiers",
-                    schema = @Schema(type = "array[integer]")
-            ) @RequestParam(required = false) List<Long> types,
-            @Parameter(description = "Promotional product",
+        @Parameter(description = "Number of page (1..N)", required = true,
+            schema = @Schema(type = "integer", defaultValue = "1")
+        ) @RequestParam(defaultValue = "1") int page,
+        @Parameter(description = "The size of the page to be returned", required = true,
+            schema = @Schema(type = "integer", defaultValue = "30")
+        ) @RequestParam(defaultValue = "30") int size,
+        @Parameter(description = "Get products whose price is equal to or higher than the specified price",
+            schema = @Schema(type = "integer", defaultValue = "0")
+        ) @RequestParam(required = false, defaultValue = "0")
+        @Min(value = 0, message = "priceFrom should not be less than 0") Integer priceFrom,
+        @Parameter(description = "Get products whose price is equal to or less than the specified price",
+            schema = @Schema(type = "integer", defaultValue = "5000")
+        ) @RequestParam(required = false, defaultValue = "5000")
+        @Min(value = 0, message = "priceTo should not be less than 0") Integer priceTo,
+        @Parameter(description = "Get products whose name is similar to the specified term",
+            schema = @Schema(type = "string")
+        ) @RequestParam(required = false) String title,
+        @Parameter(description = "ID of the category of which the products will be returned",
+            schema = @Schema(type = "integer")
+        ) @RequestParam(required = false)
+        @Min(value = 1, message = "categoryId should not be less than 1") Long categoryId,
+        @Parameter(description = "List of color identifiers",
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> colors,
+        @Parameter(description = "List of sizes identifiers",
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> sizes,
+        @Parameter(description = "List of product types identifiers",
+            schema = @Schema(type = "array[integer]")
+        ) @RequestParam(required = false) List<Long> types,
+        @Parameter(description = "Promotional product",
                     schema = @Schema(type = "boolean")
             ) @RequestParam(required = false) Boolean discount,
             @Parameter(description = "Sort direction (ASC, DESC)",

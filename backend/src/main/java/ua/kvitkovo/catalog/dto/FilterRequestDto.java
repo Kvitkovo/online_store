@@ -1,5 +1,6 @@
 package ua.kvitkovo.catalog.dto;
 
+import jakarta.validation.constraints.Min;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class FilterRequestDto {
 
     private String title;
-    private String priceFrom;
-    private String priceTo;
+    private Integer priceFrom;
+    private Integer priceTo;
     private Long categoryId;
     private List<Long> colors;
     private List<Long> sizes;

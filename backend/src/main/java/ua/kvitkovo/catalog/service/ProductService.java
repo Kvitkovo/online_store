@@ -209,16 +209,16 @@ public class ProductService {
     private void addPriceToFilter(FilterRequestDto filter, Root<Object> root,
                                   List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceTo() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
-                    new BigDecimal(filter.getPriceTo())));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("priceWithDiscount"),
+                new BigDecimal(filter.getPriceTo())));
         }
     }
 
     private void addPriceFromFilter(FilterRequestDto filter, Root<Object> root,
                                     List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceFrom() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
-                    new BigDecimal(filter.getPriceFrom())));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("priceWithDiscount"),
+                new BigDecimal(filter.getPriceFrom())));
         }
     }
 

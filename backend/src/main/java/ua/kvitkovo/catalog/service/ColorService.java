@@ -12,7 +12,6 @@ import ua.kvitkovo.catalog.dto.ColorResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
 import ua.kvitkovo.catalog.entity.Color;
 import ua.kvitkovo.catalog.repository.ColorRepository;
-import ua.kvitkovo.catalog.validator.ColorDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -34,7 +33,6 @@ public class ColorService {
 
     private final ColorRepository colorRepository;
     private final ColorDtoMapper colorMapper;
-    private final ColorDtoValidator colorDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
@@ -57,15 +55,14 @@ public class ColorService {
 
     @Transactional
     public ColorResponseDto addColor(ColorRequestDto dto, BindingResult bindingResult) {
-        colorRepository.findByName(dto.getName())
-                .ifPresent(color -> {
-                    throw new ItemNotCreatedException("The color is already in the database");
-                });
-
-        colorDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
+        colorRepository.findByName(dto.getName())
+            .ifPresent(color -> {
+                throw new ItemNotCreatedException("The color is already in the database");
+            });
+
         Color color = colorMapper.mapDtoRequestToEntity(dto);
         color.setAlias(transliterateUtils.getAlias(Color.class.getSimpleName(), dto.getName()));
         color.setId(null);
@@ -76,18 +73,18 @@ public class ColorService {
 
     @Transactional
     public ColorResponseDto updateColor(Long id, ColorRequestDto dto, BindingResult bindingResult) {
-        ColorResponseDto colorResponseDto = findById(id);
-        if (!Objects.equals(dto.getName(), colorResponseDto.getName())) {
-            colorResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
-        }
-        BeanUtils.copyProperties(dto, colorResponseDto, Helper.getNullPropertyNames(dto));
-
-        Color color = colorMapper.mapDtoToEntity(colorResponseDto);
-        colorDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
 
+        ColorResponseDto colorResponseDto = findById(id);
+        if (!Objects.equals(dto.getName(), colorResponseDto.getName())) {
+            colorResponseDto.setAlias(
+                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        }
+        BeanUtils.copyProperties(dto, colorResponseDto, Helper.getNullPropertyNames(dto));
+
+        Color color = colorMapper.mapDtoToEntity(colorResponseDto);
         colorRepository.save(color);
         return colorMapper.mapEntityToDto(color);
     }
