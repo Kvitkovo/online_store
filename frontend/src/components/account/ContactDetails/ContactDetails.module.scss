@@ -1,5 +1,17 @@
 @import '../../../variables';
 
+.accountTitle {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.gridTwoBlocks {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 20px;
+}
+
 .contactDetails {
   background-color: white;
   border-radius: 8px;
@@ -8,11 +20,6 @@
 
 .contactDetails {
   padding: 20px 0 32px 26px;
-  h2 {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-  }
 }
 
 .flexFieldsAndData {
