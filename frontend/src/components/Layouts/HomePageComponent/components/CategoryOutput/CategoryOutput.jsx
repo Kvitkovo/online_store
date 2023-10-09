@@ -63,8 +63,8 @@ const CategoryOutput = ({ title, link, categoryId }) => {
                   }
                   title={card.title}
                   discount={card.discount}
-                  oldPrice={card.priceWithDiscount}
-                  price={card.price}
+                  oldPrice={card.price}
+                  price={card.priceWithDiscount}
                   key={card.id}
                 />
               ))}
