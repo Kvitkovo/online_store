@@ -10,8 +10,8 @@ import ua.kvitkovo.catalog.converter.CategoryDtoMapper;
 import ua.kvitkovo.catalog.dto.CategoryRequestDto;
 import ua.kvitkovo.catalog.dto.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.catalog.entity.CategoryStatus;
 import ua.kvitkovo.catalog.repository.CategoryRepository;
-import ua.kvitkovo.catalog.validator.CategoryDefaults;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -33,7 +33,6 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDtoMapper categoryMapper;
-    private final CategoryDefaults categoryDefaults;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
@@ -53,11 +52,21 @@ public class CategoryService {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
-        categoryDefaults.fillDefaultValues(dto);
         Category category = categoryMapper.mapDtoRequestToEntity(dto);
         category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         if (dto.getParentId() > 0) {
             category.setParent(categoryMapper.mapDtoToEntity(findById(dto.getParentId())));
+        }
+        if (dto.getMetaDescription() == null) {
+            dto.setMetaDescription("");
+        }
+
+        if (dto.getMetaKeywords() == null) {
+            dto.setMetaKeywords("");
+        }
+
+        if (dto.getStatus() == null) {
+            dto.setStatus(CategoryStatus.ACTIVE);
         }
         category.setId(null);
         categoryRepository.save(category);
@@ -80,7 +89,7 @@ public class CategoryService {
         CategoryResponseDto categoryResponseDto = findById(id);
         if (!Objects.equals(dto.getName(), categoryResponseDto.getName())) {
             categoryResponseDto.setAlias(
-                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+                    transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, categoryResponseDto, Helper.getNullPropertyNames(dto));
 

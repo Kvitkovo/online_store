@@ -11,7 +11,6 @@ import ua.kvitkovo.catalog.dto.SizeRequestDto;
 import ua.kvitkovo.catalog.dto.SizeResponseDto;
 import ua.kvitkovo.catalog.entity.Size;
 import ua.kvitkovo.catalog.repository.SizeRepository;
-import ua.kvitkovo.catalog.validator.SizeDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -33,7 +32,6 @@ public class SizeService {
 
     private final SizeRepository sizeRepository;
     private final SizeDtoMapper sizeMapper;
-    private final SizeDtoValidator sizeDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
@@ -58,7 +56,6 @@ public class SizeService {
 
     @Transactional
     public SizeResponseDto addSize(SizeRequestDto dto, BindingResult bindingResult) {
-        sizeDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
@@ -72,17 +69,15 @@ public class SizeService {
 
     @Transactional
     public SizeResponseDto updateSize(Long id, SizeRequestDto dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
+        }
         SizeResponseDto sizeResponseDto = findById(id);
         if (!Objects.equals(dto.getName(), sizeResponseDto.getName())) {
             sizeResponseDto.setAlias(transliterateUtils.getAlias(Size.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, sizeResponseDto, Helper.getNullPropertyNames(dto));
-
         Size size = sizeMapper.mapDtoToEntity(sizeResponseDto);
-        sizeDtoValidator.validate(dto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
-        }
 
         sizeRepository.save(size);
         return sizeMapper.mapEntityToDto(size);
