@@ -20,8 +20,6 @@ const ItemCard = ({ cardData }) => {
   const isTablet = windowWidth < 1023;
   const isMobile = windowWidth < 767;
 
-  const size = cardData.size?.name;
-
   const [stockInfo, setStockInfo] = useState();
 
   useEffect(() => {
@@ -65,7 +63,7 @@ const ItemCard = ({ cardData }) => {
                 <ItemFeatures
                   type={cardData.category.name}
                   color={cardData.color.name}
-                  size={size}
+                  size={cardData.size?.name}
                 />
                 <PriceAndButtons
                   oldPrice={cardData.price}
@@ -106,7 +104,7 @@ const ItemCard = ({ cardData }) => {
               <ItemFeatures
                 type={cardData.category.name}
                 color={cardData.color.name}
-                size={size}
+                size={cardData.size?.name}
               />
               <ItemDescription description={cardData.metaDescription} />
             </div>

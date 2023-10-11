@@ -9,9 +9,6 @@ import { Link } from 'react-router-dom';
 
 const Card = (props) => {
   const handleCardClick = () => {
-    if (props.onCardClick) {
-      props.onCardClick();
-    }
     window.scrollTo(0, 0);
   };
   return (
