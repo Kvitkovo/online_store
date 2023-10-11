@@ -1,0 +1,26 @@
+@import '../../../variables';
+
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  padding-left: 32px;
+}
+
+.gridTable {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  border-bottom: 1px solid $green-80-color;
+  padding: 22px 0 16px 32px;
+}
+
+.noOrders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 89px;
+
+  p {
+    padding: 56px 0 44px;
+  }
+}
