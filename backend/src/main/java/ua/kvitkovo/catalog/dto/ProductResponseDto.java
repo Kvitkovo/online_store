@@ -34,11 +34,25 @@ public class ProductResponseDto {
     private String description;
     private boolean allowAddToConstructor;
     private ProductStatus status;
-    private CategoryResponseDto category;
-    private ProductTypeResponseDto productType;
-    private ColorResponseDto color;
-    private SizeResponseDto size;
+    private Long categoryId;
+    private Long productTypeId;
+    private Long colorId;
+    private Long sizeId;
     private int stock;
+    private int inOrders;
+    private int available;
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public int getInOrders() {
+        return inOrders;
+    }
+
+    public int getAvailable() {
+        return available;
+    }
 
     private List<ImageResponseDto> images;
 
@@ -110,22 +124,6 @@ public class ProductResponseDto {
     @Schema(example = "ACTIVE", description = "Product status (ACTIVE, NO_ACTIVE)")
     public ProductStatus getStatus() {
         return status;
-    }
-
-    public CategoryResponseDto getCategory() {
-        return category;
-    }
-
-    public ProductTypeResponseDto getProductType() {
-        return productType;
-    }
-
-    public ColorResponseDto getColor() {
-        return color;
-    }
-
-    public SizeResponseDto getSize() {
-        return size;
     }
 
     public List<ImageResponseDto> getImages() {

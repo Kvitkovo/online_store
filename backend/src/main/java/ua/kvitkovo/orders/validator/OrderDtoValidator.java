@@ -52,7 +52,7 @@ public class OrderDtoValidator implements Validator {
 
         if (dto.getOrderItems() != null) {
             for (OrderItemRequestDto orderItem : dto.getOrderItems()) {
-                if (orderItem.getQty().compareTo(BigDecimal.ZERO) != 1) {
+                if (orderItem.getQty() <= 0) {
                     errors.rejectValue("orderItems", "", "quantity is not valid!");
                     break;
                 }

@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 /**
  * @author Andriy Gaponov
  */
@@ -21,7 +19,7 @@ public class OrderItemCompositionRequestDto {
     @NotNull
     private Long productId;
     @NotNull
-    private BigDecimal qty;
+    private int qty;
 
     @Schema(example = "2", description = "Product ID")
     public Long getProductId() {
@@ -29,7 +27,7 @@ public class OrderItemCompositionRequestDto {
     }
 
     @Schema(example = "5", description = "Product quantity")
-    public BigDecimal getQty() {
+    public int getQty() {
         return qty;
     }
 }

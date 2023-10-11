@@ -5,6 +5,12 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,23 +23,24 @@ import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.dto.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.ProductResponseDto;
-import ua.kvitkovo.catalog.dto.ProductStockResponseDto;
-import ua.kvitkovo.catalog.entity.*;
-import ua.kvitkovo.catalog.repository.*;
+import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.catalog.entity.Color;
+import ua.kvitkovo.catalog.entity.Product;
+import ua.kvitkovo.catalog.entity.ProductStatus;
+import ua.kvitkovo.catalog.entity.ProductType;
+import ua.kvitkovo.catalog.entity.Size;
+import ua.kvitkovo.catalog.repository.CategoryRepository;
+import ua.kvitkovo.catalog.repository.ColorRepository;
+import ua.kvitkovo.catalog.repository.ProductRepository;
+import ua.kvitkovo.catalog.repository.ProductTypeRepository;
+import ua.kvitkovo.catalog.repository.SizeRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.orders.entity.Order;
-import ua.kvitkovo.orders.entity.OrderItem;
-import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.orders.repository.OrderRepository;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Andriy Gaponov
@@ -42,6 +49,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class ProductService {
+
     private final OrderRepository orderRepository;
 
     private final ProductRepository productRepository;
@@ -59,30 +67,9 @@ public class ProductService {
     }
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
-        Product product = productRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Product not found"));
-
-        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.ACCEPT);
-        Map<Product, BigDecimal> productQtySum = orders.stream()
-                .flatMap(order -> order.getOrderItems().stream())
-                .collect(Collectors.groupingBy(
-                        OrderItem::getProduct,
-                        Collectors.reducing(BigDecimal.ZERO, OrderItem::getQty, BigDecimal::add)
-                ));
-        int inOrders = 0;
-
-        BigDecimal qty = productQtySum.get(product);
-        if (qty != null) {
-            inOrders = qty.intValue();
-        }
-
-//            result.add(ProductStockResponseDto.builder()
-//                    .productId(product.getId())
-//                    .stock(product.getStock())
-//                    .inOrders(inOrders)
-//                    .available(product.getStock() - inOrders)
-//                    .build())
-//            ;
-        return productMapper.mapEntityToDto(product);
+        return productRepository.findById(id)
+            .map(productMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 
     @Transactional
@@ -92,28 +79,29 @@ public class ProductService {
         }
 
         Product product = productMapper.mapDtoRequestToEntity(dto);
+        product.setAvailable(product.getStock());
 
         product.setCategory(
-                categoryRepository.findById(dto.getCategoryId()).
-                        orElseThrow(() -> new ItemNotFoundException("Category not found"))
+            categoryRepository.findById(dto.getCategoryId()).
+                orElseThrow(() -> new ItemNotFoundException("Category not found"))
         );
         if (dto.getSizeId() != null) {
             product.setSize(
-                    sizeRepository.findById(dto.getSizeId()).orElse(null)
+                sizeRepository.findById(dto.getSizeId()).orElse(null)
             );
         }
         if (dto.getProductTypeId() != null) {
             product.setProductType(
-                    productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
+                productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
             );
         }
         if (dto.getColorId() != null) {
             product.setColor(
-                    colorRepository.findById(dto.getColorId()).orElse(null)
+                colorRepository.findById(dto.getColorId()).orElse(null)
             );
         }
         product.setAlias(
-                transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
+            transliterateUtils.getAlias(Product.class.getSimpleName(), dto.getTitle()));
         productRepository.save(product);
 
         log.info("The Product was created");
@@ -122,7 +110,7 @@ public class ProductService {
 
     @Transactional
     public ProductResponseDto updateProduct(Long id, ProductRequestDto dto,
-                                            BindingResult bindingResult) {
+        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
@@ -130,7 +118,7 @@ public class ProductService {
         ProductResponseDto productResponseDto = findById(id);
         if (!Objects.equals(dto.getTitle(), productResponseDto.getTitle())) {
             productResponseDto.setAlias(
-                    transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
+                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
         }
         BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
 
@@ -149,13 +137,14 @@ public class ProductService {
 
     public Page<ProductResponseDto> getAllByCategory(Pageable pageable, long categoryId) {
         Category category = categoryRepository.
-                findById(categoryId).
-                orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
         List<Category> allByParent = categoryRepository.findAllByParent(category);
         allByParent.add(category);
 
-        Page<Product> products = productRepository.findAllByCategoryInAndStatusEquals(pageable, allByParent, ProductStatus.ACTIVE);
+        Page<Product> products = productRepository.findAllByCategoryInAndStatusEquals(pageable,
+            allByParent, ProductStatus.ACTIVE);
         if (products.isEmpty()) {
             return Page.empty();
         } else {
@@ -189,61 +178,61 @@ public class ProductService {
     }
 
     private void addProductTypesFilter(FilterRequestDto filter, Root<Object> root,
-                                       List<Predicate> predicates) {
+        List<Predicate> predicates) {
         if (filter.getProductTypes() != null) {
             Expression<String> inExpression = root.get("productType");
             List<ProductType> typeList = filter.getProductTypes().stream()
-                    .map(i -> productTypeRepository.findById(i)
-                            .orElseThrow(() -> new ItemNotFoundException("Product type not found")))
-                    .toList();
+                .map(i -> productTypeRepository.findById(i)
+                    .orElseThrow(() -> new ItemNotFoundException("Product type not found")))
+                .toList();
             Predicate inPredicate = inExpression.in(typeList);
             predicates.add(inPredicate);
         }
     }
 
     private void addSizesFilter(FilterRequestDto filter, Root<Object> root,
-                                List<Predicate> predicates) {
+        List<Predicate> predicates) {
         if (filter.getSizes() != null) {
             Expression<String> inExpression = root.get("size");
             List<Size> sizeList =
-                    filter.getSizes().stream()
-                            .map(i -> sizeRepository.findById(i)
-                                    .orElseThrow(() -> new ItemNotFoundException("Size not found")))
-                            .toList();
+                filter.getSizes().stream()
+                    .map(i -> sizeRepository.findById(i)
+                        .orElseThrow(() -> new ItemNotFoundException("Size not found")))
+                    .toList();
             Predicate inPredicate = inExpression.in(sizeList);
             predicates.add(inPredicate);
         }
     }
 
     private void addTitleFilter(FilterRequestDto filter, Root<Object> root,
-                                List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getTitle() != null) {
             predicates.add(
-                    criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
+                criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
         }
     }
 
     private void addPriceToFilter(FilterRequestDto filter, Root<Object> root,
-                                  List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceTo() != null) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("priceWithDiscount"),
-                    new BigDecimal(filter.getPriceTo())));
+                new BigDecimal(filter.getPriceTo())));
         }
     }
 
     private void addPriceFromFilter(FilterRequestDto filter, Root<Object> root,
-                                    List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceFrom() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("priceWithDiscount"),
-                    new BigDecimal(filter.getPriceFrom())));
+                new BigDecimal(filter.getPriceFrom())));
         }
     }
 
     private void addCategoryFilter(FilterRequestDto filter, Root<Object> root,
-                                   List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getCategoryId() != null) {
             Category category = categoryRepository.findById(filter.getCategoryId())
-                    .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
             List<Category> allByParent = categoryRepository.findAllByParent(category);
             allByParent.add(category);
@@ -254,26 +243,26 @@ public class ProductService {
     }
 
     private void addStatusFilter(FilterRequestDto filter, Root<Object> root,
-                                 List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
     }
 
     private void addDiscountFilter(FilterRequestDto filter, Root<Object> root,
-                                   List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getDiscount() != null) {
             predicates.add(
-                    criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
+                criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
         }
     }
 
     private void addColorFilter(FilterRequestDto filter, Root<Object> root,
-                                List<Predicate> predicates) {
+        List<Predicate> predicates) {
         if (filter.getColors() != null) {
             Expression<String> inExpression = root.get("color");
             List<Color> colorsList = filter.getColors().stream()
-                    .map(i -> colorRepository.findById(i)
-                            .orElseThrow(() -> new ItemNotFoundException("Color not found")))
-                    .toList();
+                .map(i -> colorRepository.findById(i)
+                    .orElseThrow(() -> new ItemNotFoundException("Color not found")))
+                .toList();
             Predicate inPredicate = inExpression.in(colorsList);
             predicates.add(inPredicate);
         }
@@ -281,7 +270,7 @@ public class ProductService {
 
     public Page<ProductResponseDto> getDiscounted(Pageable pageable) {
         Page<Product> products = productRepository.findAllByDiscountGreaterThanAndStatusEquals(
-                pageable, BigDecimal.ZERO, ProductStatus.ACTIVE);
+            pageable, BigDecimal.ZERO, ProductStatus.ACTIVE);
         if (products.isEmpty()) {
             return Page.empty();
         } else {
@@ -309,11 +298,11 @@ public class ProductService {
 
     public List<Color> getAllColorsIdByCategory(long categoryId) {
         Category category = categoryRepository.
-                findById(categoryId).
-                orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
         List<Color> colors = productRepository.findColorByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE);
+            category.getId(), ProductStatus.ACTIVE);
         if (colors.isEmpty()) {
             return Collections.EMPTY_LIST;
         } else {
@@ -323,11 +312,11 @@ public class ProductService {
 
     public List<Size> getAllSizesIdByCategory(long categoryId) {
         Category category = categoryRepository.
-                findById(categoryId).
-                orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
         List<Size> sizes = productRepository.findSizeByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE
+            category.getId(), ProductStatus.ACTIVE
         );
         if (sizes.isEmpty()) {
             return Collections.EMPTY_LIST;
@@ -338,50 +327,16 @@ public class ProductService {
 
     public List<ProductType> getAllProductTypesIdByCategory(long categoryId) {
         Category category = categoryRepository.
-                findById(categoryId).
-                orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            findById(categoryId).
+            orElseThrow(() -> new ItemNotFoundException("Category not found"));
 
         List<ProductType> types = productRepository.findProductTypesByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE
+            category.getId(), ProductStatus.ACTIVE
         );
         if (types.isEmpty()) {
             return Collections.EMPTY_LIST;
         } else {
             return types;
         }
-    }
-
-    public List<ProductStockResponseDto> getProductsStocks(List<Long> ids) {
-        List<Product> products = productRepository.findAllByIdIn(ids);
-        if (products.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<ProductStockResponseDto> result = new ArrayList<>();
-
-        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.ACCEPT);
-        Map<Product, BigDecimal> productQtySum = orders.stream()
-                .flatMap(order -> order.getOrderItems().stream())
-                .collect(Collectors.groupingBy(
-                        OrderItem::getProduct,
-                        Collectors.reducing(BigDecimal.ZERO, OrderItem::getQty, BigDecimal::add)
-                ));
-
-        for (Product product : products) {
-            int inOrders = 0;
-
-            BigDecimal qty = productQtySum.get(product);
-            if (qty != null) {
-                inOrders = qty.intValue();
-            }
-
-            result.add(ProductStockResponseDto.builder()
-                    .productId(product.getId())
-                    .stock(product.getStock())
-                    .inOrders(inOrders)
-                    .available(product.getStock() - inOrders)
-                    .build())
-            ;
-        }
-        return result;
     }
 }

@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 /**
  * @author Andriy Gaponov
  */
@@ -18,7 +16,7 @@ public class OrderItemCompositionResponseDto {
 
     private Long id;
     private ProductResponseDto product;
-    private BigDecimal qty;
+    private int qty;
 
     public Long getId() {
         return id;
@@ -28,7 +26,7 @@ public class OrderItemCompositionResponseDto {
         return product;
     }
 
-    public BigDecimal getQty() {
+    public int getQty() {
         return qty;
     }
 }

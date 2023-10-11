@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -72,6 +73,7 @@ public class OrderService {
         return order;
     }
 
+    @Transactional
     public OrderResponseDto addOrder(OrderRequestDto dto, BindingResult bindingResult) {
         orderDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -92,6 +94,27 @@ public class OrderService {
         order.setCustomer(customer);
 
         orderRepository.save(order);
+
+        Set<OrderItem> orderItems = order.getOrderItems();
+        for (OrderItem orderItem : orderItems) {
+            Set<OrderItemComposition> orderItemsCompositions = orderItem.getOrderItemsCompositions();
+            if (orderItemsCompositions.size() == 0) {
+                //product
+                Product product = orderItem.getProduct();
+                product.setStock(product.getStock() - orderItem.getQty());
+                product.setInOrders(product.getInOrders() + orderItem.getQty());
+                productRepository.save(product);
+            } else {
+                //composition
+                for (OrderItemComposition orderItemsComposition : orderItemsCompositions) {
+                    Product product = orderItemsComposition.getProduct();
+                    product.setStock(product.getStock() - orderItemsComposition.getQty());
+                    product.setInOrders(product.getInOrders() + orderItemsComposition.getQty());
+                    productRepository.save(product);
+                }
+            }
+        }
+
         log.info("The Order was created");
         return orderDtoMapper.mapEntityToDto(order);
     }
@@ -113,7 +136,8 @@ public class OrderService {
         }
 
         for (OrderItem orderItem : orderItems) {
-            BigDecimal itemSum = orderItem.getQty().multiply(orderItem.getPrice());
+            BigDecimal itemSum = orderItem.getPrice().multiply(
+                BigDecimal.valueOf(orderItem.getQty()));
             totalSum = totalSum.add(itemSum);
         }
         return totalSum;
