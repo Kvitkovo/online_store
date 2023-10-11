@@ -140,11 +140,11 @@ public class CategoryController {
     @PutMapping("/{id}")
     @ResponseBody
     public CategoryResponseDto updateCategory(
-            @RequestBody @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
-            @Parameter(description = "The ID of the category to update", required = true,
-                    schema = @Schema(type = "integer", format = "int64")
-            )
-            @PathVariable Long id, BindingResult bindingResult) {
+        @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
+        @Parameter(description = "The ID of the category to update", required = true,
+            schema = @Schema(type = "integer", format = "int64")
+        )
+        @PathVariable Long id, BindingResult bindingResult) {
         log.info("Received request to update Category - {} with id {}.", request, id);
         return categoryService.updateCategory(id, request, bindingResult);
     }

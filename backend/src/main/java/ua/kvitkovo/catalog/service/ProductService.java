@@ -20,7 +20,6 @@ import ua.kvitkovo.catalog.dto.ProductResponseDto;
 import ua.kvitkovo.catalog.dto.ProductStockResponseDto;
 import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.repository.*;
-import ua.kvitkovo.catalog.validator.ProductDtoValidator;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -50,7 +49,6 @@ public class ProductService {
     private final SizeRepository sizeRepository;
     private final ColorRepository colorRepository;
     private final ProductTypeRepository productTypeRepository;
-    private final ProductDtoValidator productDtoValidator;
     private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
     private final ProductDtoMapper productMapper;
@@ -68,7 +66,6 @@ public class ProductService {
 
     @Transactional
     public ProductResponseDto addProduct(ProductRequestDto dto, BindingResult bindingResult) {
-        productDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
         }
@@ -105,16 +102,15 @@ public class ProductService {
     @Transactional
     public ProductResponseDto updateProduct(Long id, ProductRequestDto dto,
                                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
+        }
+
         ProductResponseDto productResponseDto = findById(id);
         if (!Objects.equals(dto.getTitle(), productResponseDto.getTitle())) {
             productResponseDto.setAlias(
                     transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
         }
-        productDtoValidator.validate(dto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
-        }
-
         BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
 
         Product product = productMapper.mapDtoToEntity(productResponseDto);
@@ -209,7 +205,7 @@ public class ProductService {
     private void addPriceToFilter(FilterRequestDto filter, Root<Object> root,
                                   List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceTo() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("priceWithDiscount"),
                     new BigDecimal(filter.getPriceTo())));
         }
     }
@@ -217,7 +213,7 @@ public class ProductService {
     private void addPriceFromFilter(FilterRequestDto filter, Root<Object> root,
                                     List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getPriceFrom() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("priceWithDiscount"),
                     new BigDecimal(filter.getPriceFrom())));
         }
     }

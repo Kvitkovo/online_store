@@ -3,6 +3,7 @@ package ua.kvitkovo.catalog.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ import lombok.Setter;
 public class SizeRequestDto {
 
     @NotBlank
+    @Size(min = 1, max = 255, message
+            = "name must be between 1 and 255 characters")
     private String name;
     @Min(value = 0, message = "The value must be positive")
     private int min;
