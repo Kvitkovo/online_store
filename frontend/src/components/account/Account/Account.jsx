@@ -8,7 +8,7 @@ const Account = ({ children, title }) => {
       <h2 className={styles.accountTitle}>{title}</h2>
       <div className={styles.gridTwoBlocks}>
         <SideMenu />
-        {children}
+        <div className={styles.rightBlock}>{children}</div>
       </div>
     </div>
   );
