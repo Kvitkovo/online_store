@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SizeRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "The 'name' cannot be empty")
     @Size(min = 1, max = 255, message
             = "name must be between 1 and 255 characters")
     private String name;

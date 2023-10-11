@@ -59,9 +59,30 @@ public class ProductService {
     }
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
-        return productRepository.findById(id)
-                .map(productMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Product not found"));
+
+        List<Order> orders = orderRepository.findAllByStatus(OrderStatus.ACCEPT);
+        Map<Product, BigDecimal> productQtySum = orders.stream()
+                .flatMap(order -> order.getOrderItems().stream())
+                .collect(Collectors.groupingBy(
+                        OrderItem::getProduct,
+                        Collectors.reducing(BigDecimal.ZERO, OrderItem::getQty, BigDecimal::add)
+                ));
+        int inOrders = 0;
+
+        BigDecimal qty = productQtySum.get(product);
+        if (qty != null) {
+            inOrders = qty.intValue();
+        }
+
+//            result.add(ProductStockResponseDto.builder()
+//                    .productId(product.getId())
+//                    .stock(product.getStock())
+//                    .inOrders(inOrders)
+//                    .available(product.getStock() - inOrders)
+//                    .build())
+//            ;
+        return productMapper.mapEntityToDto(product);
     }
 
     @Transactional

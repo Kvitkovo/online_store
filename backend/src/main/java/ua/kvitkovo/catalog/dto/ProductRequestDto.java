@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "The 'title' cannot be empty")
     @Size(min = 1, max = 250, message
             = "title must be between 1 and 250 characters")
     private String title;

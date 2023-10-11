@@ -18,9 +18,9 @@ import lombok.Setter;
 public class ColorRequestDto {
 
     @Schema(example = "Зелений", description = "Color name")
-    @NotBlank
+    @NotBlank(message = "The 'name' cannot be empty")
     @Size(min = 1, max = 255, message
-        = "Name must be between 1 and 255 characters")
+            = "Name must be between 1 and 255 characters")
     private String name;
 
     @NotBlank
