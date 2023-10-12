@@ -1,6 +1,9 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -11,30 +14,22 @@ import lombok.Setter;
  */
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class SizeResponseDto {
+@AllArgsConstructor
+public class SizeRequestDto {
 
-
-    private Long id;
+    @NotBlank(message = "The 'name' cannot be empty")
+    @Size(min = 1, max = 255, message
+            = "name must be between 1 and 255 characters")
     private String name;
-    private String alias;
+    @Min(value = 0, message = "The value must be positive")
     private int min;
+    @Min(value = 0, message = "The value must be positive")
     private int max;
-
-    @Schema(example = "1", description = "Size id")
-    public Long getId() {
-        return id;
-    }
 
     @Schema(example = "35 - 65 см", description = "Size name")
     public String getName() {
         return name;
-    }
-
-    @Schema(example = "35--65-sm", description = "Size alias")
-    public String getAlias() {
-        return alias;
     }
 
     @Schema(example = "35", description = "Minimum size value in sm")

@@ -1,9 +1,5 @@
 package ua.kvitkovo.orders.service;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -12,18 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
-import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
-import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
-import ua.kvitkovo.orders.dto.OrderItemRequestDto;
-import ua.kvitkovo.orders.dto.OrderRequestDto;
-import ua.kvitkovo.orders.dto.OrderResponseDto;
+import ua.kvitkovo.orders.dto.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -39,6 +30,11 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -94,26 +90,6 @@ public class OrderService {
         order.setCustomer(customer);
 
         orderRepository.save(order);
-
-        Set<OrderItem> orderItems = order.getOrderItems();
-        for (OrderItem orderItem : orderItems) {
-            Set<OrderItemComposition> orderItemsCompositions = orderItem.getOrderItemsCompositions();
-            if (orderItemsCompositions.size() == 0) {
-                //product
-                Product product = orderItem.getProduct();
-                product.setStock(product.getStock() - orderItem.getQty());
-                product.setInOrders(product.getInOrders() + orderItem.getQty());
-                productRepository.save(product);
-            } else {
-                //composition
-                for (OrderItemComposition orderItemsComposition : orderItemsCompositions) {
-                    Product product = orderItemsComposition.getProduct();
-                    product.setStock(product.getStock() - orderItemsComposition.getQty());
-                    product.setInOrders(product.getInOrders() + orderItemsComposition.getQty());
-                    productRepository.save(product);
-                }
-            }
-        }
 
         log.info("The Order was created");
         return orderDtoMapper.mapEntityToDto(order);

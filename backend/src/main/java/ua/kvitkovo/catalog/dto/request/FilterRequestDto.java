@@ -1,4 +1,4 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

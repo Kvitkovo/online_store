@@ -16,8 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.catalog.dto.SizeRequestDto;
-import ua.kvitkovo.catalog.dto.SizeResponseDto;
+import ua.kvitkovo.catalog.dto.request.SizeRequestDto;
+import ua.kvitkovo.catalog.dto.response.SizeResponseDto;
 import ua.kvitkovo.catalog.service.SizeService;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 
