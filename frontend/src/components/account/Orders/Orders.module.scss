@@ -9,9 +9,29 @@
 
 .gridTable {
   display: grid;
-  grid-template-columns: 2fr 2fr 4fr 2fr 2fr 1fr;
-  border-bottom: 1px solid $green-80-color;
-  padding: 22px 0 16px 32px;
+  grid-template-columns: 1.5fr 1.5fr 4fr 2fr 1.5fr 0.5fr;
+  padding: 20px 32px 0;
+  grid-column-gap: 32px;
+}
+
+.arrowDown {
+  text-align: center;
+  &::after,
+  &::before {
+    width: calc((100% - 26px) / 2);
+    height: 1px;
+    border-top: 1px solid $green-80-color;
+    display: inline-block;
+    content: '';
+    padding-top: 11px;
+  }
+}
+
+.btnArrowDown {
+  display: inline-flex;
+  border-radius: 50%;
+  border: 1px solid $page-accent-color;
+  background-color: $white-color;
 }
 
 .noOrders {

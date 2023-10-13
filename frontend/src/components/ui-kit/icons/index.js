@@ -37,6 +37,7 @@ import { ReactComponent as cartEmpty } from './cartEmpty-icon.svg';
 import { ReactComponent as myBouquetEmpty } from './myBouquetEmpty-icon.svg';
 import { ReactComponent as account } from './account.svg';
 import { ReactComponent as changePassword } from './change-password.svg';
+import { ReactComponent as arrowDown } from './arrow-down.svg';
 
 // Catalog icons
 //TODO: Check icon sizes
@@ -69,6 +70,7 @@ export const ICONS = {
   InCartIcon,
   showList,
   arrowUp,
+  arrowDown,
   hideList,
   checkBox,
   checkedBox,
