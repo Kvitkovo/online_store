@@ -3,9 +3,32 @@ import styles from './Orders.module.scss';
 import Account from '../Account';
 
 const Orders = () => {
+  const data = [
+    {
+      orderNumber: '№0000000',
+      date: '01.10.2023',
+      recipient: 'Шевченко Олена Олегівна',
+      totalPrice: '0000000',
+      status: 'Новий',
+    },
+    {
+      orderNumber: '№0000000',
+      date: '02.10.2023',
+      recipient: 'Шевченко Олена Олегівна',
+      totalPrice: '0000000',
+      status: 'Новий',
+    },
+    {
+      orderNumber: '№0000000',
+      date: '03.10.2023',
+      recipient: 'Шевченко Олена Олегівна',
+      totalPrice: '0000000',
+      status: 'В обробці',
+    },
+  ];
   return (
     <Account title="Вітаємо, Олена">
-      <div className={styles.orders}>
+      <div>
         <h2 className={styles.title}> Мої замовлення</h2>
         <div className={styles.gridTable}>
           <div>Номер</div>
@@ -15,6 +38,16 @@ const Orders = () => {
           <div>Статус</div>
           <div></div>
         </div>
+        {data.map((order) => (
+          <div className={styles.gridTable} key={order.orderNumber}>
+            <div>{order.orderNumber}</div>
+            <div>{order.date}</div>
+            <div>{order.recipient}</div>
+            <div>{order.totalPrice}</div>
+            <div>{order.status}</div>
+            <div>{order.status === 'Новий' ? 'x' : ''}</div>
+          </div>
+        ))}
         <div className={styles.noOrders}>
           <p>У вас поки що немає замовлень.</p>
           <img src="/images/no_orders.jpg" alt="" />
