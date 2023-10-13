@@ -42,5 +42,5 @@ public class OrderItemComposition {
     private Product product;
 
     @Column(name = "product_qty")
-    private BigDecimal qty;
+    private int qty;
 }

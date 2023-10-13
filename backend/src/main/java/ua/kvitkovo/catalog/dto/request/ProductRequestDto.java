@@ -1,75 +1,58 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.kvitkovo.catalog.entity.ProductStatus;
-import ua.kvitkovo.images.dto.ImageResponseDto;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Andriy Gaponov
  */
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponseDto {
+@AllArgsConstructor
+public class ProductRequestDto {
 
-    private Long id;
-    private Date created;
-    private Date updated;
+    @NotBlank(message = "The 'title' cannot be empty")
+    @Size(min = 1, max = 250, message
+            = "title must be between 1 and 250 characters")
     private String title;
-    private String alias;
+    @Min(value = 0, message = "The value must be positive")
     private BigDecimal price;
+    @Min(value = 0, message = "The value must be positive")
     private BigDecimal priceWithDiscount;
+    @Min(value = 0, message = "The value must be positive")
     private BigDecimal discount;
     private String metaDescription;
     private String metaKeywords;
     private String description;
-    private boolean allowAddToConstructor;
     private ProductStatus status;
-    private CategoryResponseDto category;
-    private ProductTypeResponseDto productType;
-    private ColorResponseDto color;
-    private SizeResponseDto size;
+    @NotNull
+    private Long categoryId;
+    private Long productTypeId;
+    private Long colorId;
+    @NotNull
+    private Long sizeId;
+    private boolean allowAddToConstructor;
     private int stock;
-
-    private List<ImageResponseDto> images;
 
     @Schema(example = "25", description = "Product stock")
     public int getStock() {
         return stock;
     }
 
-    @Schema(example = "1", description = "Product id")
-    public Long getId() {
-        return id;
-    }
-
-    @Schema(description = "Date of creation of the product")
-    public Date getCreated() {
-        return created;
-    }
-
-    @Schema(description = "Date of product modification")
-    public Date getUpdated() {
-        return updated;
-    }
-
     @Schema(example = "Букет з гортензіями", description = "Product name")
     public String getTitle() {
         return title;
-    }
-
-    @Schema(example = "Buket-z-gortenziyami", description = "Product alias")
-    public String getAlias() {
-        return alias;
     }
 
     @Schema(example = "500.00", description = "Product base price")
@@ -102,33 +85,33 @@ public class ProductResponseDto {
         return description;
     }
 
-    @Schema(example = "true", description = "The product can be added to the bouquet designer (true or false)")
-    public boolean isAllowAddToConstructor() {
-        return allowAddToConstructor;
-    }
-
     @Schema(example = "ACTIVE", description = "Product status (ACTIVE, NO_ACTIVE)")
     public ProductStatus getStatus() {
         return status;
     }
 
-    public CategoryResponseDto getCategory() {
-        return category;
+    @Schema(example = "1", description = "Product category ID")
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public ProductTypeResponseDto getProductType() {
-        return productType;
+    @Schema(example = "7", description = "Product type ID")
+    public Long getProductTypeId() {
+        return productTypeId;
     }
 
-    public ColorResponseDto getColor() {
-        return color;
+    @Schema(example = "2", description = "Product color ID")
+    public Long getColorId() {
+        return colorId;
     }
 
-    public SizeResponseDto getSize() {
-        return size;
+    @Schema(example = "1", description = "Product size ID")
+    public Long getSizeId() {
+        return sizeId;
     }
 
-    public List<ImageResponseDto> getImages() {
-        return images;
+    @Schema(example = "true", description = "The product can be added to the bouquet designer (true or false)")
+    public boolean isAllowAddToConstructor() {
+        return allowAddToConstructor;
     }
 }

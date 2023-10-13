@@ -16,8 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.catalog.dto.ColorRequestDto;
-import ua.kvitkovo.catalog.dto.ColorResponseDto;
+import ua.kvitkovo.catalog.dto.request.ColorRequestDto;
+import ua.kvitkovo.catalog.dto.response.ColorResponseDto;
 import ua.kvitkovo.catalog.service.ColorService;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 

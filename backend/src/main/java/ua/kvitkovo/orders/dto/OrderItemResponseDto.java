@@ -22,7 +22,7 @@ public class OrderItemResponseDto {
     private ProductResponseDto product;
     private String productTitle;
     private BigDecimal price;
-    private BigDecimal qty;
+    private int qty;
     private Set<OrderItemCompositionResponseDto> orderItemsCompositions;
 
     @Schema(example = "12", description = "Item ID")
@@ -40,7 +40,7 @@ public class OrderItemResponseDto {
     }
 
     @Schema(example = "2", description = "Product quantity")
-    public BigDecimal getQty() {
+    public int getQty() {
         return qty;
     }
 

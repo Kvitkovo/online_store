@@ -1,8 +1,8 @@
 package ua.kvitkovo.catalog.converter;
 
 import org.mapstruct.Mapper;
-import ua.kvitkovo.catalog.dto.SizeRequestDto;
-import ua.kvitkovo.catalog.dto.SizeResponseDto;
+import ua.kvitkovo.catalog.dto.request.SizeRequestDto;
+import ua.kvitkovo.catalog.dto.response.SizeResponseDto;
 import ua.kvitkovo.catalog.entity.Size;
 
 import java.util.List;

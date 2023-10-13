@@ -1,8 +1,8 @@
 package ua.kvitkovo.catalog.converter;
 
 import org.mapstruct.Mapper;
-import ua.kvitkovo.catalog.dto.CategoryRequestDto;
-import ua.kvitkovo.catalog.dto.CategoryResponseDto;
+import ua.kvitkovo.catalog.dto.request.CategoryRequestDto;
+import ua.kvitkovo.catalog.dto.response.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
 
 import java.util.List;
