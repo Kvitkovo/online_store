@@ -38,6 +38,7 @@ import { ReactComponent as myBouquetEmpty } from './myBouquetEmpty-icon.svg';
 import { ReactComponent as account } from './account.svg';
 import { ReactComponent as changePassword } from './change-password.svg';
 import { ReactComponent as arrowDown } from './arrow-down.svg';
+import { ReactComponent as deleteIcon } from './delete-icon.svg';
 
 // Catalog icons
 //TODO: Check icon sizes
@@ -92,6 +93,7 @@ export const ICONS = {
   myBouquetEmpty,
   account,
   changePassword,
+  deleteIcon,
   akciyna_cena,
   bukety_z_kvitiv,
   dekor,

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
+import IconButton from '../../ui-kit/components/IconButton';
 
 const Orders = () => {
   const data = [
@@ -48,7 +49,13 @@ const Orders = () => {
                 <div>{order.recipient}</div>
                 <div>{order.totalPrice} грн</div>
                 <div>{order.status}</div>
-                <div>{order.status === 'Новий' ? 'x' : ''}</div>
+                <div>
+                  {order.status === 'Новий' ? (
+                    <IconButton icon={<ICONS.deleteIcon />}></IconButton>
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
               <div className={styles.arrowDown}>
                 <button className={styles.btnArrowDown}>
