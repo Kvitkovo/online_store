@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
+import ua.kvitkovo.orders.dto.admin.OrderAdminResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface OrderDtoMapper {
     Order mapDtoToEntity(OrderResponseDto dto);
 
     OrderResponseDto mapEntityToDto(Order order);
+
+    OrderAdminResponseDto mapEntityToDtoForAdmin(Order order);
 
     List<OrderResponseDto> mapEntityToDto(List<Order> entities);
 }

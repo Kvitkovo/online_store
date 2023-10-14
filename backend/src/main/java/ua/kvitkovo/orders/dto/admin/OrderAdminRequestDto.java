@@ -1,4 +1,4 @@
-package ua.kvitkovo.orders.dto;
+package ua.kvitkovo.orders.dto.admin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.entity.OrderStatus;
 
 import java.util.Date;
