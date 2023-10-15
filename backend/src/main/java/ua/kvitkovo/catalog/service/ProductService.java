@@ -23,6 +23,7 @@ import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.orders.repository.OrderRepository;
+import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
@@ -39,6 +40,7 @@ import java.util.*;
 public class ProductService {
 
     private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -51,12 +53,12 @@ public class ProductService {
 
     public Collection<ProductResponseDto> getAll() {
         List<Product> products = productRepository.findAll();
-        return productMapper.mapEntityToDto(products, orderRepository);
+        return productMapper.mapEntityToDto(products, orderService);
     }
 
     public ProductResponseDto findById(long id) throws ItemNotFoundException {
         ProductResponseDto dto = productRepository.findById(id)
-                .map(product -> productMapper.mapEntityToDto(product, orderRepository))
+            .map(product -> productMapper.mapEntityToDto(product, orderService))
                 .orElseThrow(() -> new ItemNotFoundException("Product not found"));
         return dto;
     }
@@ -92,7 +94,7 @@ public class ProductService {
         productRepository.save(product);
 
         log.info("The Product was created");
-        return productMapper.mapEntityToDto(product, orderRepository);
+        return productMapper.mapEntityToDto(product, orderService);
     }
 
     @Transactional
@@ -103,7 +105,7 @@ public class ProductService {
         }
 
         ProductResponseDto productResponseDto = productRepository.findById(id)
-                .map(product -> productMapper.mapEntityToDto(product, orderRepository))
+            .map(product -> productMapper.mapEntityToDto(product, orderService))
                 .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
         if (!Objects.equals(dto.getTitle(), productResponseDto.getTitle())) {
@@ -116,13 +118,13 @@ public class ProductService {
         product.setId(id);
 
         productRepository.save(product);
-        return productMapper.mapEntityToDto(product, orderRepository);
+        return productMapper.mapEntityToDto(product, orderService);
     }
 
     @Transactional
     public void deleteProduct(long id) {
         ProductResponseDto productResponseDto = productRepository.findById(id)
-                .map(product -> productMapper.mapEntityToDto(product, orderRepository))
+            .map(product -> productMapper.mapEntityToDto(product, orderService))
                 .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
         productRepository.deleteById(productResponseDto.getId());
@@ -141,7 +143,7 @@ public class ProductService {
         if (products.isEmpty()) {
             return Page.empty();
         } else {
-            return products.map(product -> productMapper.mapEntityToDto(product, orderRepository));
+            return products.map(product -> productMapper.mapEntityToDto(product, orderService));
         }
     }
 
@@ -166,7 +168,7 @@ public class ProductService {
         if (products.isEmpty()) {
             return Page.empty();
         } else {
-            return products.map(product -> productMapper.mapEntityToDto(product, orderRepository));
+            return products.map(product -> productMapper.mapEntityToDto(product, orderService));
         }
     }
 
@@ -267,7 +269,7 @@ public class ProductService {
         if (products.isEmpty()) {
             return Page.empty();
         } else {
-            return products.map(product -> productMapper.mapEntityToDto(product, orderRepository));
+            return products.map(product -> productMapper.mapEntityToDto(product, orderService));
         }
     }
 
@@ -277,7 +279,7 @@ public class ProductService {
         });
         product.setStatus(ProductStatus.ACTIVE);
         productRepository.save(product);
-        return productMapper.mapEntityToDto(product, orderRepository);
+        return productMapper.mapEntityToDto(product, orderService);
     }
 
     public ProductResponseDto disableProduct(Long id) {
@@ -286,7 +288,7 @@ public class ProductService {
         });
         product.setStatus(ProductStatus.NO_ACTIVE);
         productRepository.save(product);
-        return productMapper.mapEntityToDto(product, orderRepository);
+        return productMapper.mapEntityToDto(product, orderService);
     }
 
     public List<Color> getAllColorsIdByCategory(long categoryId) {

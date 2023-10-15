@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.kvitkovo.orders.dto.OrderAdminRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
+import ua.kvitkovo.orders.dto.admin.OrderAdminRequestDto;
 import ua.kvitkovo.users.validator.EmailValidator;
 
 import java.math.BigDecimal;
