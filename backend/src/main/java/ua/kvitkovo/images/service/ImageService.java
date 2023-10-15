@@ -19,6 +19,7 @@ import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
 import ua.kvitkovo.orders.repository.OrderRepository;
+import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.Helper;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class ImageService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AwsService awsService;
+    private final OrderService orderService;
     private final ImageDtoMapper imageMapper;
     private final ProductDtoMapper productMapper;
     private final ImageResizer imageResizer;
@@ -73,7 +75,7 @@ public class ImageService {
 
     public ImageResponseDto addImageToProduct(ImageRequestDto dto) {
         ProductResponseDto productResponseDto = productRepository.findById(dto.getProductId())
-                .map(product -> productMapper.mapEntityToDto(product, orderRepository))
+            .map(product -> productMapper.mapEntityToDto(product, orderService))
                 .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
         ImageResponseDto imageResponseDto = null;

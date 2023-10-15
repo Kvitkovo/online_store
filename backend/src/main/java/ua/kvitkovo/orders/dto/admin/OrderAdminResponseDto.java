@@ -25,7 +25,7 @@ public class OrderAdminResponseDto {
     private Long id;
     private LocalDateTime created;
     private LocalDateTime updated;
-    private UserResponseDto manager;
+    private Long managerId;
     private String address;
     private String postcardText;
     private BigDecimal totalSum;
@@ -41,8 +41,8 @@ public class OrderAdminResponseDto {
     private String receiverName;
     private String receiverPhone;
     private LocalDateTime dateOfShipment;
-    private UserResponseDto customer;
-    private ShopResponseDto shop;
+    private Long customerId;
+    private Long shopId;
     private Set<OrderItemAdminResponseDto> orderItems;
 
     public Set<OrderItemAdminResponseDto> getOrderItems() {
@@ -62,10 +62,6 @@ public class OrderAdminResponseDto {
     @Schema(example = "2023-09-06T11:00:52.525", description = "Order update date")
     public LocalDateTime getUpdated() {
         return updated;
-    }
-
-    public UserResponseDto getManager() {
-        return manager;
     }
 
     @Schema(example = "Київ, вул. Михайла Грушевського, 30/1, 329", description = "Delivery address")
@@ -142,11 +138,15 @@ public class OrderAdminResponseDto {
         return dateOfShipment;
     }
 
-    public UserResponseDto getCustomer() {
-        return customer;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public ShopResponseDto getShop() {
-        return shop;
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public Long getShopId() {
+        return shopId;
     }
 }

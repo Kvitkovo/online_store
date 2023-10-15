@@ -1,5 +1,9 @@
 package ua.kvitkovo.orders.service;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -8,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -18,7 +23,11 @@ import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
-import ua.kvitkovo.orders.dto.admin.*;
+import ua.kvitkovo.orders.dto.admin.OrderAdminRequestDto;
+import ua.kvitkovo.orders.dto.admin.OrderAdminResponseDto;
+import ua.kvitkovo.orders.dto.admin.OrderItemAdminResponseDto;
+import ua.kvitkovo.orders.dto.admin.OrderItemCompositionAdminResponseDto;
+import ua.kvitkovo.orders.dto.admin.ProductAdminResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -34,10 +43,6 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
-
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Andriy Gaponov
@@ -61,12 +66,11 @@ public class OrderService {
 
     public OrderResponseDto findById(long id) throws ItemNotFoundException {
         OrderResponseDto order = orderRepository.findById(id)
-                .map(orderDtoMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+            .map(orderDtoMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Order not found"));
 
         if (!userService.isCurrentUserAdmin()
-                && userService.getCurrentUserId() != order.getCustomer()
-                .getId()) {
+            && userService.getCurrentUserId() != order.getCustomerId()) {
             throw new ItemNotFoundException("Order not found");
         }
         return order;
@@ -74,39 +78,53 @@ public class OrderService {
 
     public OrderAdminResponseDto findByIdForAdmin(Long id) {
         OrderAdminResponseDto order = orderRepository.findById(id)
-                .map(orderDtoMapper::mapEntityToDtoForAdmin)
-                .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+            .map(orderDtoMapper::mapEntityToDtoForAdmin)
+            .orElseThrow(() -> new ItemNotFoundException("Order not found"));
 
         if (!userService.isCurrentUserAdmin()
-                && userService.getCurrentUserId() != order.getCustomer()
-                .getId()) {
+            && userService.getCurrentUserId() != order.getCustomerId()) {
             throw new ItemNotFoundException("Order not found");
         }
         Set<OrderItemAdminResponseDto> orderItems = order.getOrderItems();
         for (OrderItemAdminResponseDto orderItem : orderItems) {
             ProductAdminResponseDto product = orderItem.getProduct();
-            product.setAvailable(product.getStock() - getInOrders(product.getId()));
+            if (product != null) {
+                product.setAvailable(
+                    product.getStock() + orderItem.getQty() - getInOrders(product.getId()));
+            }
             Set<OrderItemCompositionAdminResponseDto> orderItemsCompositions = orderItem.getOrderItemsCompositions();
             for (OrderItemCompositionAdminResponseDto orderItemsComposition : orderItemsCompositions) {
                 ProductAdminResponseDto compositionProduct = orderItemsComposition.getProduct();
-                compositionProduct.setAvailable(compositionProduct.getStock() - getInOrders(compositionProduct.getId()));
+                if (compositionProduct != null) {
+                    compositionProduct.setAvailable(
+                        compositionProduct.getStock() + orderItemsComposition.getQty()
+                            - getInOrders(compositionProduct.getId()));
+                }
             }
         }
         return order;
     }
 
-    private int getInOrders(Long productId) {
+    public int getInOrders(Long productId) {
+        int inOrders = 0;
         List<OrderStatus> statusList = List.of(OrderStatus.ACCEPT, OrderStatus.IS_DELIVERED);
         List<Order> orders = orderRepository.findAllByStatusIn(statusList);
-        Map<Long, Integer> productQtySum = orders.stream()
-                .flatMap(order -> order.getOrderItems().stream())
-                .collect(Collectors.groupingBy(
-                        orderItem -> orderItem.getProduct().getId(),
-                        Collectors.reducing(0, OrderItem::getQty, Integer::sum)
-                ));
+        for (Order order : orders) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Product product = orderItem.getProduct();
+                if (product != null) {
+                    inOrders += orderItem.getQty();
+                }
 
-        Integer inOrders = productQtySum.get(productId);
-        return Objects.requireNonNullElse(inOrders, 0);
+                for (OrderItemComposition orderItemsComposition : orderItem.getOrderItemsCompositions()) {
+                    Product compositionProduct = orderItemsComposition.getProduct();
+                    if (compositionProduct != null) {
+                        inOrders += orderItemsComposition.getQty();
+                    }
+                }
+            }
+        }
+        return inOrders;
     }
 
     @Transactional
@@ -211,10 +229,38 @@ public class OrderService {
             .toList();
 
         for (Order order : orders) {
+            checkIfCanChangeOrder(order);
             order.setStatus(status);
             orderRepository.save(order);
+            changeStocks(order);
         }
         return orderDtoMapper.mapEntityToDto(orders);
+    }
+
+    private void checkIfCanChangeOrder(Order order) {
+        if (OrderStatus.DONE.equals(order.getStatus())) {
+            throw new ItemNotUpdatedException("Orders with the status COMPLETED cannot be changed");
+        }
+    }
+
+    private void changeStocks(Order order) {
+        if (OrderStatus.DONE.equals(order.getStatus())) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Product product = orderItem.getProduct();
+                if (product != null) {
+                    product.setStock(product.getStock() - orderItem.getQty());
+                    productRepository.save(product);
+                }
+                for (OrderItemComposition orderItemsComposition : orderItem.getOrderItemsCompositions()) {
+                    Product compositionProduct = orderItemsComposition.getProduct();
+                    if (compositionProduct != null) {
+                        compositionProduct.setStock(
+                            compositionProduct.getStock() - orderItem.getQty());
+                        productRepository.save(compositionProduct);
+                    }
+                }
+            }
+        }
     }
 
     @Transactional
@@ -229,6 +275,8 @@ public class OrderService {
         BeanUtils.copyProperties(dto, orderResponseDto, Helper.getNullPropertyNames(dto));
 
         Order order = orderDtoMapper.mapDtoToEntity(orderResponseDto);
+        checkIfCanChangeOrder(order);
+
         order.setId(id);
         order.setShop(shopRepository.findById(dto.getShopId())
             .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
@@ -240,6 +288,7 @@ public class OrderService {
         order.setTotalSum(calculateTotalSum(order));
 
         orderRepository.save(order);
+        changeStocks(order);
         return orderDtoMapper.mapEntityToDto(order);
     }
 
