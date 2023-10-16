@@ -1,4 +1,4 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

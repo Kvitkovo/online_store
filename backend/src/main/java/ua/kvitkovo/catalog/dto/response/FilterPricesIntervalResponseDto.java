@@ -1,11 +1,12 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 /**
  * @author Andriy Gaponov

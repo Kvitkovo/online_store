@@ -1,4 +1,4 @@
-package ua.kvitkovo.orders.dto;
+package ua.kvitkovo.orders.dto.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,17 +12,17 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemCompositionResponseDto {
+public class OrderItemCompositionAdminResponseDto {
 
     private Long id;
-    private ProductResponseDto product;
+    private ProductAdminResponseDto product;
     private int qty;
 
     public Long getId() {
         return id;
     }
 
-    public ProductResponseDto getProduct() {
+    public ProductAdminResponseDto getProduct() {
         return product;
     }
 

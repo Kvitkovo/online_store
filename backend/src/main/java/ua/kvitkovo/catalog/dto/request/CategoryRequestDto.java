@@ -1,7 +1,9 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -18,8 +20,11 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
 @AllArgsConstructor
 public class CategoryRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "The 'name' cannot be empty")
+    @Size(min = 1, max = 255, message
+            = "Name must be between 1 and 255 characters")
     private String name;
+    @Min(value = 0, message = "parentId should not be less than 0")
     private long parentId;
     private String metaDescription;
     private String metaKeywords;

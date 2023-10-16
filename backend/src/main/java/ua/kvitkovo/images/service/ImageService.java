@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.aws.AwsService;
 import ua.kvitkovo.catalog.converter.ProductDtoMapper;
-import ua.kvitkovo.catalog.dto.ProductResponseDto;
+import ua.kvitkovo.catalog.dto.response.ProductResponseDto;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
-import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.images.converter.ImageDtoMapper;
@@ -19,6 +18,8 @@ import ua.kvitkovo.images.dto.ImageRequestDto;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
+import ua.kvitkovo.orders.repository.OrderRepository;
+import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.Helper;
 
 import java.io.File;
@@ -35,9 +36,10 @@ import java.util.Objects;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-    private final ProductService productService;
+    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AwsService awsService;
+    private final OrderService orderService;
     private final ImageDtoMapper imageMapper;
     private final ProductDtoMapper productMapper;
     private final ImageResizer imageResizer;
@@ -72,8 +74,9 @@ public class ImageService {
     }
 
     public ImageResponseDto addImageToProduct(ImageRequestDto dto) {
-
-        ProductResponseDto productResponseDto = productService.findById(dto.getProductId());
+        ProductResponseDto productResponseDto = productRepository.findById(dto.getProductId())
+            .map(product -> productMapper.mapEntityToDto(product, orderService))
+                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
         ImageResponseDto imageResponseDto = null;
         try {

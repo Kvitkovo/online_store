@@ -26,7 +26,7 @@ public class OrderItemRequestDto {
     @NotNull
     private BigDecimal price;
     @NotNull
-    private BigDecimal qty;
+    private int qty;
     private Set<OrderItemCompositionRequestDto> orderItemsCompositions;
 
     @Schema(example = "1", description = "Product ID")
@@ -45,7 +45,7 @@ public class OrderItemRequestDto {
     }
 
     @Schema(example = "2", description = "Product quantity")
-    public BigDecimal getQty() {
+    public int getQty() {
         return qty;
     }
 

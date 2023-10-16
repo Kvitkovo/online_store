@@ -1,4 +1,4 @@
-package ua.kvitkovo.orders.dto;
+package ua.kvitkovo.orders.dto.admin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -16,21 +16,21 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemResponseDto {
+public class OrderItemAdminResponseDto {
 
     private Long id;
-    private ProductResponseDto product;
+    private ProductAdminResponseDto product;
     private String productTitle;
     private BigDecimal price;
     private int qty;
-    private Set<OrderItemCompositionResponseDto> orderItemsCompositions;
+    private Set<OrderItemCompositionAdminResponseDto> orderItemsCompositions;
 
     @Schema(example = "12", description = "Item ID")
     public Long getId() {
         return id;
     }
 
-    public ProductResponseDto getProduct() {
+    public ProductAdminResponseDto getProduct() {
         return product;
     }
 
@@ -49,7 +49,7 @@ public class OrderItemResponseDto {
         return productTitle;
     }
 
-    public Set<OrderItemCompositionResponseDto> getOrderItemsCompositions() {
+    public Set<OrderItemCompositionAdminResponseDto> getOrderItemsCompositions() {
         return orderItemsCompositions;
     }
 }

@@ -1,10 +1,11 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.catalog.entity.ProductAccessibility;
 import ua.kvitkovo.catalog.entity.ProductStatus;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 
@@ -34,18 +35,33 @@ public class ProductResponseDto {
     private String description;
     private boolean allowAddToConstructor;
     private ProductStatus status;
-    private CategoryResponseDto category;
-    private ProductTypeResponseDto productType;
-    private ColorResponseDto color;
-    private SizeResponseDto size;
-    private int stock;
+    private Long categoryId;
+    private Long productTypeId;
+    private Long colorId;
+    private Long sizeId;
+    private ProductAccessibility available;
+
+    public Long getProductTypeId() {
+        return productTypeId;
+    }
+
+    public Long getColorId() {
+        return colorId;
+    }
+
+    public Long getSizeId() {
+        return sizeId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public ProductAccessibility getAvailable() {
+        return available;
+    }
 
     private List<ImageResponseDto> images;
-
-    @Schema(example = "25", description = "Product stock")
-    public int getStock() {
-        return stock;
-    }
 
     @Schema(example = "1", description = "Product id")
     public Long getId() {
@@ -110,22 +126,6 @@ public class ProductResponseDto {
     @Schema(example = "ACTIVE", description = "Product status (ACTIVE, NO_ACTIVE)")
     public ProductStatus getStatus() {
         return status;
-    }
-
-    public CategoryResponseDto getCategory() {
-        return category;
-    }
-
-    public ProductTypeResponseDto getProductType() {
-        return productType;
-    }
-
-    public ColorResponseDto getColor() {
-        return color;
-    }
-
-    public SizeResponseDto getSize() {
-        return size;
     }
 
     public List<ImageResponseDto> getImages() {

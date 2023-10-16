@@ -1,9 +1,10 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "The 'title' cannot be empty")
+    @Size(min = 1, max = 250, message
+            = "title must be between 1 and 250 characters")
     private String title;
     @Min(value = 0, message = "The value must be positive")
     private BigDecimal price;

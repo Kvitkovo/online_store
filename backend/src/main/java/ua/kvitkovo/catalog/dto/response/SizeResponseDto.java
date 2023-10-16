@@ -1,8 +1,6 @@
-package ua.kvitkovo.catalog.dto;
+package ua.kvitkovo.catalog.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -13,20 +11,30 @@ import lombok.Setter;
  */
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class SizeRequestDto {
+@NoArgsConstructor
+public class SizeResponseDto {
 
-    @NotBlank
+
+    private Long id;
     private String name;
-    @Min(value = 0, message = "The value must be positive")
+    private String alias;
     private int min;
-    @Min(value = 0, message = "The value must be positive")
     private int max;
+
+    @Schema(example = "1", description = "Size id")
+    public Long getId() {
+        return id;
+    }
 
     @Schema(example = "35 - 65 см", description = "Size name")
     public String getName() {
         return name;
+    }
+
+    @Schema(example = "35--65-sm", description = "Size alias")
+    public String getAlias() {
+        return alias;
     }
 
     @Schema(example = "35", description = "Minimum size value in sm")
