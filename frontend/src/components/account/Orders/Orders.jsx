@@ -3,6 +3,7 @@ import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
+import OrderItem from './components/OrderItem';
 
 const Orders = () => {
   const data = [
@@ -64,7 +65,15 @@ const Orders = () => {
               </div>
             </>
           ))}
-
+        <OrderItem
+          city="Київ"
+          street="Михайла Грушевського"
+          house="30\1"
+          apartment="329"
+          recipient="Шевченко Олена Олегівна"
+          phone="+38(067)0000000"
+          quantity="4"
+        />
         {!data && (
           <div className={styles.noOrders}>
             <p>У вас поки що немає замовлень.</p>
