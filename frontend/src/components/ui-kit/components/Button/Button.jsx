@@ -11,14 +11,18 @@ const Button = memo(
     icon,
     onClick,
     disabled = false,
+    isFullWidth,
   }) => {
     const buttonClasses = useMemo(() => {
       const classes = [styles.button, styles[variant]];
       if (padding && styles[padding]) {
         classes.push(styles[padding]);
       }
+      if (isFullWidth) {
+        classes.push(styles['full-width']);
+      }
       return classes.join(' ');
-    }, [variant, padding]);
+    }, [variant, padding, isFullWidth]);
 
     const containerStyle = useMemo(() => {
       return {

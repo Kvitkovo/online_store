@@ -1,0 +1,82 @@
+@import 'src/_variables.scss';
+@import 'src/_mixins.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $page-background-color;
+  height: 64px;
+  font-size: 24px;
+  line-height: 130%;
+  padding-top: 16px;
+  padding-bottom: 17px;
+  width: 100%;
+}
+.iconContainer {
+  display: flex;
+  justify-self: flex-end;
+  margin-right: 20px;
+}
+.headerContent {
+  margin: 0 auto;
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 46px 56px;
+}
+.callback {
+  font-size: 20px;
+  line-height: 130%;
+  font-weight: 400;
+  text-align: center;
+}
+.enterData {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 130%;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+.dataContainer {
+  margin-bottom: 16px;
+}
+
+.dataInput {
+  width: 316px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid $gray-dark-color;
+  background: $white-color;
+  margin-top: 16px;
+}
+.dataTextarea {
+  height: 126px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+.labelData {
+  font-weight: 400;
+  line-height: 150%;
+}
+.commentContainer {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+.dataTextarea {
+  &::-webkit-scrollbar {
+    width: 4px;
+    flex-shrink: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $page-accent-color;
+  }
+}
+.button {
+  width: 316px;
+}

@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './ItemCard.module.scss';
-import { ICONS } from '../../../../components/ui-kit/icons';
-import IconButton from '../../../../components/ui-kit/components/IconButton';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
 import ItemFeatures from '../ItemFeatures/ItemFeatures';
@@ -38,13 +36,6 @@ const ItemCard = () => {
             </div>
           </div>
           {isTablet && <ItemDescription />}
-          <div className={styles.helpButton}>
-            <IconButton
-              icon={<ICONS.QuestionIcon />}
-              isBackground={true}
-              isRound={true}
-            />
-          </div>
         </div>
         {isMobile && (
           <div className={styles.mobileItemCard}>
@@ -60,13 +51,6 @@ const ItemCard = () => {
             <ItemDescription />
           </div>
         )}
-        <div className={styles.helpButton}>
-          <IconButton
-            icon={<ICONS.QuestionIcon />}
-            isBackground={true}
-            isRound={true}
-          />
-        </div>
         <h2 className={styles.previous}>Раніше переглянуті</h2>
       </div>{' '}
       <Slider />
