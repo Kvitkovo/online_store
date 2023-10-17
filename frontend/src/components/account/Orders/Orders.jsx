@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
@@ -6,6 +6,8 @@ import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 
 const Orders = () => {
+  const [showOrdersDetails, setShowOrderDetails] = useState({});
+
   const data = [
     {
       orderNumber: '№0000001',
@@ -29,6 +31,13 @@ const Orders = () => {
       status: 'В обробці',
     },
   ];
+
+  const handleClick = (index) => {
+    setShowOrderDetails({
+      ...showOrdersDetails,
+      [index]: !showOrdersDetails[index],
+    });
+  };
   return (
     <Account title="Вітаємо, Олена">
       <div>
@@ -45,7 +54,9 @@ const Orders = () => {
           data.map((order) => (
             <div key={order.orderNumber}>
               <div className={styles.gridTable}>
-                <div>{order.orderNumber}</div>
+                <div onClick={() => handleClick(order.orderNumber)}>
+                  {order.orderNumber}
+                </div>
                 <div>{order.date}</div>
                 <div>{order.recipient}</div>
                 <div>{order.totalPrice} грн</div>
@@ -58,22 +69,30 @@ const Orders = () => {
                   )}
                 </div>
               </div>
+              {showOrdersDetails[order.orderNumber] && (
+                <OrderItem
+                  city="Київ"
+                  street="Михайла Грушевського"
+                  house="30\1"
+                  apartment="329"
+                  recipient="Шевченко Олена Олегівна"
+                  phone="+38(067)0000000"
+                  quantity="4"
+                />
+              )}
               <div className={styles.arrowDown}>
-                <button className={styles.btnArrowDown}>
+                <button
+                  className={styles.btnArrowDown}
+                  onClick={() => {
+                    handleClick(order.orderNumber);
+                  }}
+                >
                   {<ICONS.arrowDown />}
                 </button>
               </div>
             </div>
           ))}
-        <OrderItem
-          city="Київ"
-          street="Михайла Грушевського"
-          house="30\1"
-          apartment="329"
-          recipient="Шевченко Олена Олегівна"
-          phone="+38(067)0000000"
-          quantity="4"
-        />
+
         {!data && (
           <div className={styles.noOrders}>
             <p>У вас поки що немає замовлень.</p>
