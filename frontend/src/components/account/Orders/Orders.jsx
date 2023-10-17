@@ -43,8 +43,8 @@ const Orders = () => {
         </div>
         {data &&
           data.map((order) => (
-            <>
-              <div className={styles.gridTable} key={order.orderNumber}>
+            <div key={order.orderNumber}>
+              <div className={styles.gridTable}>
                 <div>{order.orderNumber}</div>
                 <div>{order.date}</div>
                 <div>{order.recipient}</div>
@@ -63,7 +63,7 @@ const Orders = () => {
                   {<ICONS.arrowDown />}
                 </button>
               </div>
-            </>
+            </div>
           ))}
         <OrderItem
           city="Київ"
