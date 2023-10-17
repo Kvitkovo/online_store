@@ -17,6 +17,7 @@ import ua.kvitkovo.catalog.converter.ProductDtoMapper;
 import ua.kvitkovo.catalog.dto.request.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.request.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseDto;
+import ua.kvitkovo.catalog.dto.response.ProductResponseForCardDto;
 import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.repository.*;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
@@ -56,9 +57,9 @@ public class ProductService {
         return productMapper.mapEntityToDto(products, orderService);
     }
 
-    public ProductResponseDto findById(long id) throws ItemNotFoundException {
-        ProductResponseDto dto = productRepository.findById(id)
-            .map(product -> productMapper.mapEntityToDto(product, orderService))
+    public ProductResponseForCardDto findById(long id) throws ItemNotFoundException {
+        ProductResponseForCardDto dto = productRepository.findById(id)
+                .map(product -> productMapper.mapEntityToCardDto(product, orderService))
                 .orElseThrow(() -> new ItemNotFoundException("Product not found"));
         return dto;
     }
