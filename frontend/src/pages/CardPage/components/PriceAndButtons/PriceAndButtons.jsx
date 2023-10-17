@@ -9,7 +9,7 @@ import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 const PriceAndButtons = ({ actualPrice, oldPrice, stockInfo }) => {
   const { width } = useWindowSize();
-  const isInStock = stockInfo > 0;
+  const isInStock = stockInfo === 'AVAILABLE';
   return (
     <div>
       <div className={styles.desktopContainer}>

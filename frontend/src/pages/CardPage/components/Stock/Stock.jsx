@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Stock.module.scss';
 
 const Stock = ({ stockInfo }) => {
-  const isInStock = stockInfo > 0;
+  const isInStock = stockInfo === 'AVAILABLE';
   return (
     <div>
       <p
