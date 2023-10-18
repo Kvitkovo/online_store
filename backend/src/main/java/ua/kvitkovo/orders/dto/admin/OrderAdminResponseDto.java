@@ -1,10 +1,11 @@
-package ua.kvitkovo.orders.dto;
+package ua.kvitkovo.orders.dto.admin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.orders.dto.UserResponseDto;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
 
@@ -19,7 +20,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderResponseDto {
+public class OrderAdminResponseDto {
 
     private Long id;
     private LocalDateTime created;
@@ -42,9 +43,9 @@ public class OrderResponseDto {
     private LocalDateTime dateOfShipment;
     private Long customerId;
     private Long shopId;
-    private Set<OrderItemResponseDto> orderItems;
+    private Set<OrderItemAdminResponseDto> orderItems;
 
-    public Set<OrderItemResponseDto> getOrderItems() {
+    public Set<OrderItemAdminResponseDto> getOrderItems() {
         return orderItems;
     }
 
@@ -137,15 +138,15 @@ public class OrderResponseDto {
         return dateOfShipment;
     }
 
+    public Long getManagerId() {
+        return managerId;
+    }
+
     public Long getCustomerId() {
         return customerId;
     }
 
     public Long getShopId() {
         return shopId;
-    }
-
-    public Long getManagerId() {
-        return managerId;
     }
 }

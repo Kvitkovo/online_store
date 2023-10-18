@@ -28,9 +28,9 @@ public class FilterController {
 
     @Operation(summary = "Get list for filter settings")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Successful operation")
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
-    @GetMapping(path = "/")
+    @GetMapping
     public Map<String, Map<Long, ?>> getFilter() {
         return filterService.getFilter();
     }

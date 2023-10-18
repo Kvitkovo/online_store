@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.catalog.dto.request.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.request.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseDto;
+import ua.kvitkovo.catalog.dto.response.ProductResponseForCardDto;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ErrorResponse;
@@ -71,23 +72,23 @@ public class ProductController {
     @Operation(summary = "Get Product by ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ProductResponseDto.class))
+                @Content(mediaType = "application/json", schema =
+                @Schema(implementation = ProductResponseForCardDto.class))
         }),
-        @ApiResponse(responseCode = "404", description = "Product not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+            @ApiResponse(responseCode = "404", description = "Product not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
     })
     @GetMapping("/{id}")
     @ResponseBody
-    public ProductResponseDto getProductById(
-        @Parameter(description = "The ID of the product to retrieve", required = true,
-            schema = @Schema(type = "integer", format = "int64")
-        )
-        @PathVariable Long id) {
+    public ProductResponseForCardDto getProductById(
+            @Parameter(description = "The ID of the product to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         log.info("Received request to get the Product with id - {}.", id);
-        ProductResponseDto productResponseDto = productService.findById(id);
+        ProductResponseForCardDto productResponseDto = productService.findById(id);
         log.info("the Product with id - {} was retrieved - {}.", id, productResponseDto);
         return productResponseDto;
     }
