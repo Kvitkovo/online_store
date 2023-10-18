@@ -1,18 +1,18 @@
 import React from 'react';
-import styles from './SupportMessage.module.scss';
-import Modals from '../Modals';
-import IconButton from '../../ui-kit/components/IconButton';
-import { ICONS } from '../../ui-kit/icons';
-import Button from '../../ui-kit/components/Button';
+import styles from './SupportPhone.module.scss';
+import Modals from '../../Modals';
+import IconButton from '../../../ui-kit/components/IconButton';
+import { ICONS } from '../../../ui-kit/icons';
+import Button from '../../../ui-kit/components/Button';
 
-const SupportMessage = ({ toggleSupportMessage }) => {
+const SupportPhone = ({ toggleSupportPhone }) => {
   return (
-    <Modals type="support" onClick={toggleSupportMessage}>
+    <Modals type="support" onClick={toggleSupportPhone}>
       <div className={styles.header}>
         <div className={styles.headerContent}> Підтримка</div>
         <div className={styles.iconContainer}>
           <IconButton
-            onClick={toggleSupportMessage}
+            onClick={toggleSupportPhone}
             icon={<ICONS.closeMobile />}
           />
         </div>
@@ -20,9 +20,9 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
       <div className={styles.formContainer}>
         <form className={styles.supportForm}>
-          <p className={styles.callback}>Напишіть і ми звʼяжемося з вами.</p>
+          <p className={styles.callback}>Бажаєте, ми вам передзвонимо?</p>
           <p className={styles.enterData}>
-            Залиште вашу електронну пошту та напишіть повідомлення.
+            Введіть номер телефону та ім’я, і ми зв’яжемося з вами.
           </p>
 
           <div className={styles.dataContainer}>
@@ -38,20 +38,20 @@ const SupportMessage = ({ toggleSupportMessage }) => {
           </div>
 
           <div className={styles.dataContainer}>
-            <label className={styles.labelData} htmlFor="email">
-              Ел. пошта
+            <label className={styles.labelData} htmlFor="phone">
+              Номер телефону
             </label>
             <br />
             <input
               className={styles.dataInput}
-              type="email"
-              placeholder="Введіть електронну пошту"
+              type="phone"
+              placeholder="+38(0XX)XXX-XX-XX"
             />
           </div>
 
           <div className={styles.commentContainer}>
             <label className={styles.labelData} htmlFor="message">
-              Повідомлення
+              Коментар
             </label>
             <br />
             <textarea
@@ -61,7 +61,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
           <div className={styles.button}>
             <Button
               variant="primary"
-              label="Надіслати"
+              label="Замовити дзвінок"
               padding="padding-sm"
               isFullWidth={true}
             />
@@ -72,4 +72,4 @@ const SupportMessage = ({ toggleSupportMessage }) => {
   );
 };
 
-export default SupportMessage;
+export default SupportPhone;

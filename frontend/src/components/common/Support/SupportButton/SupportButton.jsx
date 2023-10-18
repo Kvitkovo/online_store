@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './SupportButton.module.scss';
-import IconButton from '../IconButton';
-import { ICONS } from '../../icons';
 import { useModalEffect } from '../../../../hooks/useModalEffect';
+import IconButton from '../../../ui-kit/components/IconButton';
+import { ICONS } from '../../../ui-kit/icons';
 
 const SupportButton = ({
   isPhoneModalOpen,

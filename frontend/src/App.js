@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Promotions from './pages/Promotions';
@@ -20,20 +20,9 @@ import Wrapper from './components/Wrapper';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
-import SupportButton from './components/ui-kit/components/SupportButton';
-import SupportPhone from './components/common/SupportPhone/SupportPhone';
-import SupportMessage from './components/common/SupportMessage/SupportMessage';
+import SupportModal from './components/common/Support/SupportModal';
 
 function App() {
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
-  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
-
-  const togglePhoneButton = () => {
-    setIsPhoneModalOpen((prev) => !prev);
-  };
-  const toggleMessageButton = () => {
-    setIsMessageModalOpen((prev) => !prev);
-  };
   return (
     <Router>
       <div className="App">
@@ -65,18 +54,7 @@ function App() {
               </Route>
             </Routes>
           </div>
-          <SupportButton
-            isPhoneModalOpen={isPhoneModalOpen}
-            isMessageModalOpen={isMessageModalOpen}
-            togglePhoneButton={togglePhoneButton}
-            toggleMessageButton={toggleMessageButton}
-          />
-          {isPhoneModalOpen && (
-            <SupportPhone toggleSupportPhone={togglePhoneButton} />
-          )}
-          {isMessageModalOpen && (
-            <SupportMessage toggleSupportMessage={toggleMessageButton} />
-          )}
+          <SupportModal />
         </Wrapper>
         <Footer />
       </div>
