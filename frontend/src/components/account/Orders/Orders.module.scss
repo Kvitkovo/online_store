@@ -27,14 +27,28 @@
   }
 }
 
-.btnArrowDown {
+.btn {
   display: inline-flex;
   border-radius: 50%;
   border: 1px solid $page-accent-color;
-  background-color: $white-color;
   cursor: pointer;
 }
 
+.btnArrowDown {
+  background-color: $white-color;
+}
+
+.btnArrowUp {
+  background-color: $page-accent-color;
+}
+
+.number {
+  text-decoration: underline;
+}
+
+.numberActive {
+  color: $page-accent-color;
+}
 .noOrders {
   display: flex;
   flex-direction: column;

@@ -52,6 +52,11 @@ const Orders = () => {
             <div key={order.orderNumber}>
               <div className={styles.gridTable}>
                 <div
+                  className={
+                    showOrdersDetails === order.orderNumber
+                      ? `${styles.number}`
+                      : `${styles.numberActive}  + ' ' + ${styles.number}`
+                  }
                   onClick={() =>
                     setShowOrderDetails(
                       order.orderNumber === showOrdersDetails
@@ -87,7 +92,11 @@ const Orders = () => {
               )}
               <div className={styles.arrowDown}>
                 <button
-                  className={styles.btnArrowDown}
+                  className={
+                    showOrdersDetails === order.orderNumber
+                      ? `${styles.btnArrowUp} + ' ' + ${styles.btn}`
+                      : `${styles.btnArrowDown}  + ' ' + ${styles.btn}`
+                  }
                   onClick={() =>
                     setShowOrderDetails(
                       order.orderNumber === showOrdersDetails
@@ -96,7 +105,11 @@ const Orders = () => {
                     )
                   }
                 >
-                  {<ICONS.arrowDown />}
+                  {showOrdersDetails === order.orderNumber ? (
+                    <ICONS.arrowUpWhite />
+                  ) : (
+                    <ICONS.arrowDown />
+                  )}
                 </button>
               </div>
             </div>
