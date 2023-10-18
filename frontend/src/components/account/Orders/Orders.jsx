@@ -6,7 +6,7 @@ import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 
 const Orders = () => {
-  const [showOrdersDetails, setShowOrderDetails] = useState({});
+  const [showOrdersDetails, setShowOrderDetails] = useState(null);
 
   const data = [
     {
@@ -32,12 +32,9 @@ const Orders = () => {
     },
   ];
 
-  const handleClick = (index) => {
-    setShowOrderDetails({
-      ...showOrdersDetails,
-      [index]: !showOrdersDetails[index],
-    });
-  };
+  // const handleClick = () => {
+  //   setShowOrderDetails(!showOrdersDetails);
+  // };
   return (
     <Account title="Вітаємо, Олена">
       <div>
@@ -54,7 +51,15 @@ const Orders = () => {
           data.map((order) => (
             <div key={order.orderNumber}>
               <div className={styles.gridTable}>
-                <div onClick={() => handleClick(order.orderNumber)}>
+                <div
+                  onClick={() =>
+                    setShowOrderDetails(
+                      order.orderNumber === showOrdersDetails
+                        ? null
+                        : order.orderNumber,
+                    )
+                  }
+                >
                   {order.orderNumber}
                 </div>
                 <div>{order.date}</div>
@@ -69,7 +74,7 @@ const Orders = () => {
                   )}
                 </div>
               </div>
-              {showOrdersDetails[order.orderNumber] && (
+              {showOrdersDetails === order.orderNumber && (
                 <OrderItem
                   city="Київ"
                   street="Михайла Грушевського"
@@ -83,9 +88,13 @@ const Orders = () => {
               <div className={styles.arrowDown}>
                 <button
                   className={styles.btnArrowDown}
-                  onClick={() => {
-                    handleClick(order.orderNumber);
-                  }}
+                  onClick={() =>
+                    setShowOrderDetails(
+                      order.orderNumber === showOrdersDetails
+                        ? null
+                        : order.orderNumber,
+                    )
+                  }
                 >
                   {<ICONS.arrowDown />}
                 </button>
