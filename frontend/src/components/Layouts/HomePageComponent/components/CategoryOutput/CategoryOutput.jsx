@@ -67,7 +67,7 @@ const CategoryOutput = ({ title, link, categoryId }) => {
                   oldPrice={card.price}
                   price={card.priceWithDiscount}
                   key={card.id}
-                  data={card}
+                  id={card.id}
                 />
               ))}
           </div>

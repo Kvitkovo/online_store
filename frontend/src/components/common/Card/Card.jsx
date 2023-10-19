@@ -13,7 +13,7 @@ const Card = (props) => {
   };
   return (
     <div className={styles.card} onClick={handleCardClick}>
-      <Link to={`/product/${props.data?.id}`} className={styles.link}>
+      <Link to={`/product/${props.id}`} className={styles.link}>
         <img
           src={props.image}
           alt="букет"
