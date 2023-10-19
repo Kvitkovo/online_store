@@ -8,6 +8,7 @@ import './App.scss';
 import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
+import CardPage from './pages/CardPage/CardPage';
 import Care from './pages/Care';
 import Contacts from './pages/Contacts';
 import Faq from './pages/Faq';
@@ -40,6 +41,7 @@ function App() {
               <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
               <Route path={ROUTES.partner} element={<Partner />} />
               <Route path={ROUTES.privacy} element={<Privacy />} />
+              <Route path={ROUTES.card} element={<CardPage />} />
               <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.account} element={<ContactDetails />} />
                 <Route
