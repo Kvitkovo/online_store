@@ -1,18 +1,22 @@
 import React from 'react';
 import styles from './ItemFeatures.module.scss';
 
-const ItemFeatures = () => {
+const ItemFeatures = ({ type, color, size }) => {
   return (
     <div className={styles.features}>
       <p>
-        Вид квітів: <span className={styles.type}> Троянди</span>
+        Вид квітів: <span className={styles.type}> {type} </span>
       </p>
+
       <p>
-        Колір: <span className={styles.type}>Червоний</span>{' '}
+        Колір: <span className={styles.type}> {color} </span>{' '}
       </p>
-      <p>
-        Висота букета: <span className={styles.type}>55-60см</span>{' '}
-      </p>
+
+      {size && (
+        <p>
+          Висота букета: <span className={styles.type}> {size} </span>{' '}
+        </p>
+      )}
     </div>
   );
 };

@@ -7,41 +7,54 @@ import { ICONS } from '../../../../components/ui-kit/icons';
 import Button from '../../../../components/ui-kit/components/Button';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
-const PriceAndButtons = () => {
+const PriceAndButtons = ({ actualPrice, oldPrice, stockInfo }) => {
   const { width } = useWindowSize();
+  const isInStock = stockInfo === 'AVAILABLE';
   return (
     <div>
       <div className={styles.desktopContainer}>
-        <div className={styles.price}>
-          <DiscountPrice oldPrice={4864} actualPrice={4000} />
-        </div>
-
-        <div className={styles.buttons}>
-          <Button
-            variant="primary"
-            label="Додати у кошик"
-            padding="padding-sm"
-            icon={<ICONS.toCart />}
-          />
-          <div className={styles.bouquetDesktop}>
-            <Button
-              variant="no-border"
-              label="Додати до букету"
-              padding="padding-header-sm"
-              reverse="true"
-              icon={<ICONS.toBouquet />}
+        {isInStock ? (
+          <>
+            <div className={styles.price}>
+              <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
+            </div>
+            <div className={styles.buttons}>
+              <Button
+                variant="primary"
+                label="Додати у кошик"
+                padding="padding-sm"
+                icon={<ICONS.toCart />}
+              />
+              <div className={styles.bouquetDesktop}>
+                <Button
+                  variant="no-border"
+                  label="Додати до букету"
+                  padding="padding-header-sm"
+                  reverse="true"
+                  icon={<ICONS.toBouquet />}
+                />
+              </div>
+              <div className={styles.bouquetTablet}>
+                {' '}
+                <IconButton icon={<ICONS.BouquetIcon />} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <DiscountPrice
+              oldPrice={oldPrice}
+              actualPrice={actualPrice}
+              isActive="NO_ACTIVE"
             />
-          </div>
-          <div className={styles.bouquetTablet}>
-            {' '}
-            <IconButton icon={<ICONS.BouquetIcon />} />
-          </div>
-        </div>
+            <p className={styles.outOfStock}>Немає в наявності</p>
+          </>
+        )}
       </div>
-      {width < 767 ? (
+      {width < 767 && isInStock ? (
         <>
           <div className={styles.priceMobile}>
-            <DiscountPrice oldPrice={4864} actualPrice={4000} />
+            <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
             <span className={styles.bouquetMobile}>
               <IconButton icon={<ICONS.BouquetIcon />} />
             </span>
@@ -55,7 +68,17 @@ const PriceAndButtons = () => {
             isFullWidth={true}
           />
         </>
-      ) : null}
+      ) : null}{' '}
+      {!isInStock && width < 767 && (
+        <>
+          <DiscountPrice
+            oldPrice={oldPrice}
+            actualPrice={actualPrice}
+            isActive="NO_ACTIVE"
+          />
+          <p className={styles.outOfStock}>Немає в наявності</p>
+        </>
+      )}
     </div>
   );
 };

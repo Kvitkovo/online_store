@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './Stock.module.scss';
 
-const Stock = (props) => {
+const Stock = ({ stockInfo }) => {
+  const isInStock = stockInfo === 'AVAILABLE';
   return (
     <div>
       <p
         className={`${styles.Stock} ${
-          props.isInStock ? styles.isInStock : styles.outOfStock
+          isInStock ? styles.isInStock : styles.outOfStock
         }`}
       >
-        {props.isInStock ? 'Є в наявності' : 'Товар закінчився'}
+        {isInStock ? 'Є в наявності' : 'Товар закінчився'}
       </p>
     </div>
   );

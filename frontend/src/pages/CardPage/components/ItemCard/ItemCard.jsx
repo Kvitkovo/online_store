@@ -11,7 +11,7 @@ import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
 
-const ItemCard = () => {
+const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
   const windowWidth = width;
   const isDesktop = windowWidth > 1023;
@@ -20,24 +20,75 @@ const ItemCard = () => {
 
   return (
     <div>
-      <div className={styles.mainContainer}>
-        <Path />
-        <div className={styles.itemContainer}>
-          <div className={styles.itemBlock}>
-            <ItemImage
-              image="./images/itemCard.jpg"
-              discount={15}
-              isBigCard={true}
-            />
-            <div className={styles.itemDescriptionContainer}>
-              <h1 className={styles.itemName}>{'Букет "101 троянда"'}</h1>
-              <Stock isInStock={true} />
-              {isDesktop && <ItemDescription />}
-              <ItemFeatures />
-              <PriceAndButtons />
+      <div>
+        <div className={styles.mainContainer}>
+          <Path />
+          <div className={styles.itemContainer}>
+            <div className={styles.itemBlock}>
+              <ItemImage
+                image={
+                  cardData.images[0]
+                    ? cardData.images[0].url
+                    : '/images/no_image.jpg'
+                }
+                discount={cardData.discount}
+                isBigCard={true}
+              />
+              <div className={styles.itemDescriptionContainer}>
+                <h1 className={styles.itemName}>{cardData.title}</h1>
+                <Stock stockInfo={cardData?.available} />
+                {isDesktop && (
+                  <ItemDescription description={cardData.metaDescription} />
+                )}
+                <ItemFeatures
+                  type={cardData.categoryName}
+                  color={cardData.colorName}
+                  size={cardData?.sizeName}
+                />
+                <PriceAndButtons
+                  oldPrice={cardData.price}
+                  actualPrice={cardData.priceWithDiscount}
+                  stockInfo={cardData?.available}
+                />
+              </div>
+            </div>
+            {isTablet && (
+              <ItemDescription description={cardData.metaDescription} />
+            )}
+            <div className={styles.helpButton}>
+              <IconButton
+                icon={<ICONS.QuestionIcon />}
+                isBackground={true}
+                isRound={true}
+              />
             </div>
           </div>
-          {isTablet && <ItemDescription />}
+          {isMobile && (
+            <div className={styles.mobileItemCard}>
+              <h1 className={styles.itemName}>{cardData.title}</h1>
+              <Stock stockInfo={cardData?.available} />
+              <ItemImage
+                image={
+                  cardData.images[0]
+                    ? cardData.images[0].url
+                    : '/images/no_image.jpg'
+                }
+                discount={cardData.discount}
+                isBigCard={true}
+              />
+              <PriceAndButtons
+                oldPrice={cardData.price}
+                actualPrice={cardData.priceWithDiscount}
+                stockInfo={cardData?.available}
+              />
+              <ItemFeatures
+                type={cardData.categoryId}
+                color={cardData.colorName}
+                size={cardData?.sizeName}
+              />
+              <ItemDescription description={cardData.metaDescription} />
+            </div>
+          )}
           <div className={styles.helpButton}>
             <IconButton
               icon={<ICONS.QuestionIcon />}
@@ -45,30 +96,9 @@ const ItemCard = () => {
               isRound={true}
             />
           </div>
+          <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>
-        {isMobile && (
-          <div className={styles.mobileItemCard}>
-            <h1 className={styles.itemName}>Букет &rdquo;101&rdquo; троянда</h1>
-            <Stock isInStock={true} />
-            <ItemImage
-              image="./images/itemCard.jpg"
-              discount={15}
-              isBigCard={true}
-            />
-            <PriceAndButtons />
-            <ItemFeatures />
-            <ItemDescription />
-          </div>
-        )}
-        <div className={styles.helpButton}>
-          <IconButton
-            icon={<ICONS.QuestionIcon />}
-            isBackground={true}
-            isRound={true}
-          />
-        </div>
-        <h2 className={styles.previous}>Раніше переглянуті</h2>
-      </div>{' '}
+      </div>
       <Slider />
     </div>
   );

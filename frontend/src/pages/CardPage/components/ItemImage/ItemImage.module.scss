@@ -2,9 +2,14 @@
 
 .itemImage {
   position: relative;
+  padding: 28px 16px 0;
   img {
-    padding: 28px 16px;
+    width: 506px;
+    height: 575px;
   }
+}
+.hide {
+  display: none;
 }
 .discount {
   position: absolute;

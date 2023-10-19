@@ -13,6 +13,7 @@ const ROUTES = {
   changeDetails: '/account/change-details',
   changePassword: '/account/change-password',
   orders: '/account/orders',
+  card: '/product/:myId',
 };
 
 export default ROUTES;
