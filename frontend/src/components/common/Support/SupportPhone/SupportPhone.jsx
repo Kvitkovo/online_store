@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './SupportPhone.module.scss';
 import Modals from '../../Modals';
 import IconButton from '../../../ui-kit/components/IconButton';
@@ -6,6 +6,22 @@ import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 
 const SupportPhone = ({ toggleSupportPhone }) => {
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+
+  const validatePhone = (value) => /^\+380 \d{2} \d{7}$/.test(value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !phone) {
+      alert('Введіть своЇ дані');
+    } else if (validatePhone(phone) && name) {
+      alert('Дані введено вірно: ' + name + ' ' + phone);
+    } else {
+      alert('Невірний формат номеру телефона');
+    }
+  };
+
   return (
     <Modals type="support" onClick={toggleSupportPhone}>
       <div className={styles.header}>
@@ -19,7 +35,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
       </div>
 
       <div className={styles.formContainer}>
-        <form className={styles.supportForm}>
+        <form className={styles.supportForm} onSubmit={handleSubmit}>
           <p className={styles.callback}>Бажаєте, ми вам передзвонимо?</p>
           <p className={styles.enterData}>
             Введіть номер телефону та ім’я, і ми зв’яжемося з вами.
@@ -29,11 +45,14 @@ const SupportPhone = ({ toggleSupportPhone }) => {
             <label className={styles.labelData} htmlFor="name">
               Ваше ім’я
             </label>
-            <br />
+
             <input
+              id="name"
+              name="name"
               className={styles.dataInput}
               type="text"
               placeholder="Як до вас звертатись?"
+              onChange={(e) => setName(e.target.value.trim())}
             />
           </div>
 
@@ -41,11 +60,15 @@ const SupportPhone = ({ toggleSupportPhone }) => {
             <label className={styles.labelData} htmlFor="phone">
               Номер телефону
             </label>
-            <br />
+
             <input
+              id="phone"
               className={styles.dataInput}
-              type="phone"
-              placeholder="+38(0XX)XXX-XX-XX"
+              type="tel"
+              pattern="^\+380 \d{2} \d{7}$"
+              placeholder="+380 XX XXXXXXX"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
 
@@ -53,8 +76,9 @@ const SupportPhone = ({ toggleSupportPhone }) => {
             <label className={styles.labelData} htmlFor="message">
               Коментар
             </label>
-            <br />
+
             <textarea
+              id="message"
               className={`${styles.dataInput} ${styles.dataTextarea}`}
             ></textarea>
           </div>
@@ -64,6 +88,8 @@ const SupportPhone = ({ toggleSupportPhone }) => {
               label="Замовити дзвінок"
               padding="padding-sm"
               isFullWidth={true}
+              type="submit"
+              onClick={handleSubmit}
             />
           </div>
         </form>
