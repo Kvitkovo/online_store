@@ -26,6 +26,7 @@ public class CategoryResponseDto {
     private String description;
     private CategoryStatus status;
     private CategoryIcon icon;
+    private boolean hasSubCategory;
 
     @Schema(example = "SALE", description = "Category icon")
     public CategoryIcon getIcon() {
@@ -70,5 +71,9 @@ public class CategoryResponseDto {
     @Schema(example = "ACTIVE", description = "Category status (ACTIVE, NO_ACTIVE)")
     public CategoryStatus getStatus() {
         return status;
+    }
+
+    public boolean isHasSubCategory() {
+        return hasSubCategory;
     }
 }
