@@ -13,7 +13,7 @@ const CategoryList = ({
         .filter((category) => !category.parent)
         .map((category) => (
           <CatalogItem
-            key={category.id}
+            key={category.sortValue}
             category={category}
             handleCategoryClick={handleCategoryClick}
             setHoveredCategory={setHoveredCategory}

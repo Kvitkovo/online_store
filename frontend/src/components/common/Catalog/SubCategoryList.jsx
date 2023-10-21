@@ -5,7 +5,7 @@ const SubCategoryList = ({ subCategories, handleCategoryClick }) => {
   return (
     <ul className={styles.subCategoryList}>
       {subCategories.map((child) => (
-        <li key={child.id} className={styles.categoryItemWrapper}>
+        <li key={child.sortValue} className={styles.categoryItemWrapper}>
           <a
             onClick={() => handleCategoryClick(child.link)}
             className={styles.categoryLink}

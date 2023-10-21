@@ -15,7 +15,7 @@ const Catalog = ({ setIsOpen, categories }) => {
     const icon = mockData[index]?.icon;
     const bg = mockData[index]?.bg;
     const children = categories
-      .filter((child) => child.parent?.id === category.id)
+      .filter((child) => child.parent?.sortValue === category.sortValue)
       .map((child) => ({
         ...child,
         link: `${mainPath}/${child.alias.toLowerCase()}`,

@@ -3,11 +3,11 @@ import { ICONS } from '../../ui-kit/icons';
 import styles from './Catalog.module.scss';
 
 const CatalogItem = ({ category, handleCategoryClick, setHoveredCategory }) => {
-  const hasChildren = !!category?.children?.length;
+  const hasChildren = category.hasSubCategory;
 
   return (
     <li
-      key={category.id}
+      key={category.sortValue}
       className={styles.categoryItemWrapper}
       onMouseOver={() =>
         setHoveredCategory({
