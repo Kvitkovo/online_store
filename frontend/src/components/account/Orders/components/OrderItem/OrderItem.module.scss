@@ -1,49 +1,8 @@
 @import './../../../../../variables';
 
-.item {
-  margin: 10px 0;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    $gray-light-color 0 16px,
-    #0000 0 32px
-  );
-}
-
 .gridOrder {
   display: grid;
   grid-template-columns: 0.1fr 0.5fr 2fr 0.25fr 0.65fr;
   column-gap: 26px;
   padding: 16px 59px 16px 32px;
-}
-
-.flexData {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 20px 32px 0;
-
-  span {
-    font-size: 14px;
-    line-height: 24px;
-    padding-top: 8px;
-  }
-}
-
-.address div,
-.recipient div {
-  padding-top: 8px;
-}
-
-.recipient {
-  padding-top: 16px;
-}
-
-.quantity {
-  display: flex;
-  gap: 8px;
-
-  &div:nth-of-type(2) {
-    padding-left: 36px;
-  }
 }
