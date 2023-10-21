@@ -57,7 +57,7 @@ const Header = () => {
           <NavLink className={styles.logoLink} to={ROUTES.home}>
             <img
               className={styles.logo}
-              src="images/logo.svg"
+              src="/images/logo.svg"
               alt="логотип магазину 'Квітково'"
             />
           </NavLink>

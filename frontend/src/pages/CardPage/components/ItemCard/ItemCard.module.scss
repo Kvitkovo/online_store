@@ -25,12 +25,6 @@
 .itemDescriptionContainer {
   flex-direction: column;
 }
-.helpButton {
-  position: fixed;
-  z-index: 1;
-  top: 90vh;
-  left: 95vw;
-}
 .previous {
   font-size: 32px;
   padding: 6px;
@@ -102,9 +96,5 @@
     align-items: flex-end;
     margin-top: 22px;
     margin-bottom: 32px;
-  }
-  .helpButton {
-    top: 90vh;
-    left: 85vw;
   }
 }
