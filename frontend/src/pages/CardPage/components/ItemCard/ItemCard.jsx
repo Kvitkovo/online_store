@@ -38,11 +38,11 @@ const ItemCard = ({ cardData }) => {
                 <h1 className={styles.itemName}>{cardData.title}</h1>
                 <Stock stockInfo={cardData?.available} />
                 {isDesktop && (
-                  <ItemDescription description={cardData.metaDescription} />
+                  <ItemDescription description={cardData?.description} />
                 )}
                 <ItemFeatures
-                  type={cardData.categoryName}
-                  color={cardData.colorName}
+                  type={cardData?.categoryName}
+                  color={cardData?.colorName}
                   size={cardData?.sizeName}
                 />
                 <PriceAndButtons
@@ -53,15 +53,8 @@ const ItemCard = ({ cardData }) => {
               </div>
             </div>
             {isTablet && (
-              <ItemDescription description={cardData.metaDescription} />
+              <ItemDescription description={cardData?.description} />
             )}
-            <div className={styles.helpButton}>
-              <IconButton
-                icon={<ICONS.QuestionIcon />}
-                isBackground={true}
-                isRound={true}
-              />
-            </div>
           </div>
           {isMobile && (
             <div className={styles.mobileItemCard}>
@@ -82,20 +75,13 @@ const ItemCard = ({ cardData }) => {
                 stockInfo={cardData?.available}
               />
               <ItemFeatures
-                type={cardData.categoryId}
-                color={cardData.colorName}
+                type={cardData?.categoryName}
+                color={cardData?.colorName}
                 size={cardData?.sizeName}
               />
-              <ItemDescription description={cardData.metaDescription} />
+              <ItemDescription description={cardData?.description} />
             </div>
           )}
-          <div className={styles.helpButton}>
-            <IconButton
-              icon={<ICONS.QuestionIcon />}
-              isBackground={true}
-              isRound={true}
-            />
-          </div>
           <h2 className={styles.previous}>Раніше переглянуті</h2>
         </div>
       </div>
