@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Order.module.scss';
+import styles from './OrderItem.module.scss';
 
 const OrderItem = ({
   number,
@@ -21,7 +21,7 @@ const OrderItem = ({
       <div className={styles.gridOrder}>
         <div>1 {number}</div>
         <div>код {code}</div>
-        <div>Букет {item}</div>
+        <div>{item}</div>
         <div>{itemQuantity} шт</div>
         <div>{price} грн</div>
       </div>
