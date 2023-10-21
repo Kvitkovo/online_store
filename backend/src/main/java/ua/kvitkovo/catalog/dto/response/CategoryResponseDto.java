@@ -27,6 +27,7 @@ public class CategoryResponseDto {
     private CategoryStatus status;
     private CategoryIcon icon;
     private boolean hasSubCategory;
+    private int sortValue;
 
     @Schema(example = "SALE", description = "Category icon")
     public CategoryIcon getIcon() {
@@ -75,5 +76,10 @@ public class CategoryResponseDto {
 
     public boolean isHasSubCategory() {
         return hasSubCategory;
+    }
+
+    @Schema(example = "120", description = "Sort order")
+    public int getSortValue() {
+        return sortValue;
     }
 }

@@ -12,4 +12,6 @@ import java.util.List;
 public interface CategoryRepository extends CategoryRepositoryBasic {
 
     List<Category> findAllByParent(Category parent);
+
+    List<Category> findAllByOrderByParentAscSortValueAsc();
 }

@@ -22,7 +22,7 @@ public class CategoryRequestDto {
 
     @NotBlank(message = "The 'name' cannot be empty")
     @Size(min = 1, max = 255, message
-            = "Name must be between 1 and 255 characters")
+        = "Name must be between 1 and 255 characters")
     private String name;
     @Min(value = 0, message = "parentId should not be less than 0")
     private long parentId;
@@ -31,6 +31,8 @@ public class CategoryRequestDto {
     private String description;
     private CategoryStatus status;
     private CategoryIcon icon;
+    @Min(value = 0, message = "sortOrder should not be less than 0")
+    private int sortValue;
 
     @Schema(example = "SALE", description = "Category icon")
     public CategoryIcon getIcon() {
@@ -65,5 +67,10 @@ public class CategoryRequestDto {
     @Schema(example = "ACTIVE", description = "Category status (ACTIVE, NO_ACTIVE)")
     public CategoryStatus getStatus() {
         return status;
+    }
+
+    @Schema(example = "120", description = "Sort order")
+    public int getSortValue() {
+        return sortValue;
     }
 }

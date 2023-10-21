@@ -55,6 +55,9 @@ public class Category {
     @OneToMany(mappedBy = "parent")
     private Set<Category> children;
 
+    @Column(name = "sort_order")
+    private int sortValue;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
