@@ -37,7 +37,7 @@ public class CategoryService {
     private final TransliterateUtils transliterateUtils;
 
     public Collection<CategoryResponseDto> getAll() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByOrderByParentAscSortValueAsc();
         return categoryMapper.mapEntityToDto(categories);
     }
 
