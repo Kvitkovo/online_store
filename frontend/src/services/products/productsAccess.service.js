@@ -6,13 +6,9 @@ const GetDiscountedProductsUrl = `${servicedomain}/discounted`;
 const GetCategoryProductsUrl = `${servicedomain}/category`;
 const GetProductsFilterUrl = `${servicedomain}/filter`;
 const GetProductsStocksUrl = `${servicedomain}/stocks`;
-const GetProductsCategoriesUrl = `/categories`;
 
 export const GetProducts = (id) => {
   return Get(preparedUrl(id ? [servicedomain, id] : [servicedomain]));
-};
-export const GetCategories = (params) => {
-  return Get(preparedUrl([GetProductsCategoriesUrl], params));
 };
 
 export const GetDiscountedProducts = (params) => {

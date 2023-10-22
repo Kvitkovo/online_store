@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import Catalog from './Catalog';
 import { useParams } from 'react-router-dom';
 // eslint-disable-next-line max-len
-import { GetCategories } from '../../../services/products/productsAccess.service';
+import { GetCategories } from '../../../services/catalog/categoryAccess.service';
 
 const CatalogFetch = ({ setIsOpen }) => {
-  const { id } = useParams();
-  const [productData, setProductData] = useState();
+  const { sortValue } = useParams();
+  const [categoryData, setCategoryData] = useState();
 
   useEffect(() => {
-    const getProduct = async () => {
-      const response = await GetCategories(id);
-      setProductData(response);
+    const getCatalog = async () => {
+      const response = await GetCategories(sortValue);
+      setCategoryData(response);
     };
-    getProduct();
-  }, [id]);
+    getCatalog();
+  }, [sortValue]);
 
   return (
     <div>
-      {productData ? (
-        <Catalog categories={productData} setIsOpen={setIsOpen} />
+      {categoryData ? (
+        <Catalog categories={categoryData} setIsOpen={setIsOpen} />
       ) : (
         <p>Loading...</p>
       )}
