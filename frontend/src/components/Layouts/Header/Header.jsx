@@ -13,7 +13,7 @@ import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
-import Catalog from '../../common/Catalog/Catalog';
+import Catalog from '../../common/Catalog';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
