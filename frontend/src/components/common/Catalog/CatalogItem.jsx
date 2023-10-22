@@ -3,30 +3,31 @@ import { ICONS } from '../../ui-kit/icons';
 import styles from './Catalog.module.scss';
 
 const CatalogItem = ({ category, handleCategoryClick, setHoveredCategory }) => {
-  const hasChildren = category.hasSubCategory;
+  const { sortValue, children, bg, name, link, hasSubCategory, icon } =
+    category;
 
   return (
     <li
-      key={category.sortValue}
+      key={sortValue}
       className={styles.categoryItemWrapper}
       onMouseOver={() =>
         setHoveredCategory({
-          subCategories: category.children,
-          bg: category.bg,
-          name: category.name,
+          subCategories: children,
+          bg: bg,
+          name: name,
         })
       }
     >
       <a
-        onClick={() => handleCategoryClick(category.link)}
+        onClick={() => handleCategoryClick(link)}
         className={styles.categoryLink}
       >
         <span className={styles.categoryIcon}>
-          {category.icon || <ICONS.bukety_z_kvitiv />}
+          {icon || <ICONS.bukety_z_kvitiv />}
         </span>
         <div className={styles.categoryItemContent}>
-          <span className={styles.categoryItemText}>{category.name}</span>
-          {hasChildren && <ICONS.ArrowRightIcon />}
+          <span className={styles.categoryItemText}>{name}</span>
+          {hasSubCategory && <ICONS.ArrowRightIcon />}
         </div>
       </a>
     </li>
