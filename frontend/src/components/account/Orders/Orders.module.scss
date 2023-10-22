@@ -59,3 +59,13 @@
     padding: 56px 0 44px;
   }
 }
+
+.item {
+  margin: 10px 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    $gray-light-color 0 16px,
+    #0000 0 32px
+  );
+}

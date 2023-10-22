@@ -4,6 +4,7 @@ import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
+import RecipientDetails from './components/RecipientDetails/RecipientDetails';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
@@ -15,6 +16,20 @@ const Orders = () => {
       recipient: 'Шевченко Олена Олегівна',
       totalPrice: '0000000',
       status: 'Новий',
+      orderItems: [
+        {
+          code: '3',
+          item: 'Букет весняний',
+          quantity: '1',
+          price: '200',
+        },
+        {
+          code: '4',
+          item: 'Букет 101 троянда',
+          quantity: '1',
+          price: '300',
+        },
+      ],
     },
     {
       orderNumber: '№0000002',
@@ -22,6 +37,14 @@ const Orders = () => {
       recipient: 'Шевченко Олена Олегівна',
       totalPrice: '0000000',
       status: 'Новий',
+      orderItems: [
+        {
+          code: '5',
+          item: 'Букет 101 троянда',
+          quantity: '1',
+          price: '300',
+        },
+      ],
     },
     {
       orderNumber: '№0000003',
@@ -29,12 +52,17 @@ const Orders = () => {
       recipient: 'Шевченко Олена Олегівна',
       totalPrice: '0000000',
       status: 'В обробці',
+      orderItems: [
+        {
+          code: '7',
+          item: 'Букет 101 троянда',
+          quantity: '1',
+          price: '400',
+        },
+      ],
     },
   ];
 
-  // const handleClick = () => {
-  //   setShowOrderDetails(!showOrdersDetails);
-  // };
   return (
     <Account title="Вітаємо, Олена">
       <div>
@@ -80,15 +108,29 @@ const Orders = () => {
                 </div>
               </div>
               {showOrdersDetails === order.orderNumber && (
-                <OrderItem
-                  city="Київ"
-                  street="Михайла Грушевського"
-                  house="30\1"
-                  apartment="329"
-                  recipient="Шевченко Олена Олегівна"
-                  phone="+38(067)0000000"
-                  quantity="4"
-                />
+                <>
+                  <div className={styles.item}></div>
+                  {order.orderItems.map((item, index) => (
+                    <OrderItem
+                      key={index}
+                      number={index + 1}
+                      code={item.code}
+                      item={item.item}
+                      itemQuantity={item.quantity}
+                      price={item.price}
+                    />
+                  ))}
+                  <div className={styles.item}></div>
+                  <RecipientDetails
+                    city="Київ"
+                    street="Михайла Грушевського"
+                    house="30\1"
+                    apartment="329"
+                    recipient="Шевченко Олена Олегівна"
+                    phone="+38(067)0000000"
+                    quantity="4"
+                  />
+                </>
               )}
               <div className={styles.arrowDown}>
                 <button
