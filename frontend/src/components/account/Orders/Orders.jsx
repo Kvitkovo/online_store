@@ -32,11 +32,16 @@ const Orders = () => {
           price: '300',
         },
       ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
     },
     {
       orderNumber: '№0000002',
       date: '02.10.2023',
-      recipient: 'Шевченко Олена Олегівна',
+      recipient: 'Сидорчук Валерія',
       totalPrice: '0000000',
       status: 'Новий',
       orderItems: [
@@ -48,11 +53,16 @@ const Orders = () => {
           price: '300',
         },
       ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
     },
     {
       orderNumber: '№0000003',
       date: '03.10.2023',
-      recipient: 'Шевченко Олена Олегівна',
+      recipient: 'Корнійчук Наталія',
       totalPrice: '0000000',
       status: 'В обробці',
       orderItems: [
@@ -64,6 +74,11 @@ const Orders = () => {
           price: '400',
         },
       ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
     },
   ];
 
@@ -127,12 +142,12 @@ const Orders = () => {
                   ))}
                   <div className={styles.item}></div>
                   <RecipientDetails
-                    city="Київ"
-                    street="Михайла Грушевського"
-                    house="30\1"
-                    apartment="329"
-                    recipient="Шевченко Олена Олегівна"
-                    phone="+38(067)0000000"
+                    city={order.city}
+                    street={order.street}
+                    house={order.house}
+                    apartment={order.apartment}
+                    recipient={order.recipient}
+                    phone={order.phone}
                     quantity="4"
                   />
                 </>
