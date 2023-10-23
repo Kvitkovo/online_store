@@ -20,12 +20,14 @@ const Orders = () => {
         {
           code: '3',
           item: 'Букет весняний',
+          img: '/images/bouquet_order.jpg',
           quantity: '1',
           price: '200',
         },
         {
           code: '4',
           item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
           quantity: '1',
           price: '300',
         },
@@ -41,6 +43,7 @@ const Orders = () => {
         {
           code: '5',
           item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
           quantity: '1',
           price: '300',
         },
@@ -56,6 +59,7 @@ const Orders = () => {
         {
           code: '7',
           item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
           quantity: '1',
           price: '400',
         },
@@ -116,6 +120,7 @@ const Orders = () => {
                       number={index + 1}
                       code={item.code}
                       item={item.item}
+                      img={item.img}
                       itemQuantity={item.quantity}
                       price={item.price}
                     />

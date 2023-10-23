@@ -5,4 +5,11 @@
   grid-template-columns: 0.1fr 0.5fr 2fr 0.25fr 0.65fr;
   column-gap: 26px;
   padding: 16px 59px 16px 32px;
+  align-items: center;
+}
+
+.imageAndTitle {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
