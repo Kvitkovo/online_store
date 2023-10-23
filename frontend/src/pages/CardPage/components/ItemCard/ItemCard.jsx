@@ -8,8 +8,6 @@ import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
-import { ICONS } from '../../../../components/ui-kit/icons';
-import IconButton from '../../../../components/ui-kit/components/IconButton';
 
 const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();

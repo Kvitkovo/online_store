@@ -8,17 +8,15 @@ import Button from '../../../ui-kit/components/Button';
 const SupportPhone = ({ toggleSupportPhone }) => {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const validatePhone = (value) => /^\+380 \d{2} \d{7}$/.test(value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !phone) {
-      alert('Введіть своЇ дані');
-    } else if (validatePhone(phone) && name) {
+    setSubmitted(true);
+    if (validatePhone(phone) && name) {
       alert('Дані введено вірно: ' + name + ' ' + phone);
-    } else {
-      alert('Невірний формат номеру телефона');
     }
   };
 
@@ -43,7 +41,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="name">
-              Ваше ім’я
+              Ваше ім’я *
             </label>
 
             <input
@@ -54,11 +52,14 @@ const SupportPhone = ({ toggleSupportPhone }) => {
               placeholder="Як до вас звертатись?"
               onChange={(e) => setName(e.target.value.trim())}
             />
+            {submitted && !name && (
+              <p className={styles.errorMessage}>Введіть своє ім`я</p>
+            )}
           </div>
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="phone">
-              Номер телефону
+              Номер телефону *
             </label>
 
             <input
@@ -70,6 +71,14 @@ const SupportPhone = ({ toggleSupportPhone }) => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
+            {submitted && !phone && (
+              <p className={styles.errorMessage}>Ведіть номер телефону</p>
+            )}
+            {submitted && phone && !validatePhone(phone) && (
+              <p className={styles.errorMessage}>
+                Невірний формат номеру телефона
+              </p>
+            )}
           </div>
 
           <div className={styles.commentContainer}>

@@ -9,6 +9,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -18,12 +19,9 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !email || !message) {
-      alert('Введіть своЇ дані та повідомлення');
-    } else if (validateEmail(email) && name) {
+    setSubmitted(true);
+    if (validateEmail(email) && name) {
       alert('Дані введено вірно: ' + name + ' ' + email + ' ' + message);
-    } else {
-      alert('Невірний формат email');
     }
   };
 
@@ -52,7 +50,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="name">
-              Ваше ім’я
+              Ваше ім’я *
             </label>
 
             <input
@@ -63,36 +61,52 @@ const SupportMessage = ({ toggleSupportMessage }) => {
               placeholder="Як до вас звертатись?"
               onChange={(e) => setName(e.target.value.trim())}
             />
+            {submitted && !name && (
+              <p className={styles.errorMessage}>Введіть своє ім`я</p>
+            )}
           </div>
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="email">
-              Ел. пошта
+              Ел. пошта *
             </label>
 
             <input
               id="email"
               className={styles.dataInput}
               type="email"
-              pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/"
+              pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
               placeholder="Введіть електронну пошту"
               value={email}
               onChange={(e) => setEmail(e.target.value.trim())}
             />
+            {submitted && !email && (
+              <p className={styles.errorMessage}>
+                Введіть свою електронну пошту
+              </p>
+            )}
+            {submitted && email && !validateEmail(email) && (
+              <p className={styles.errorMessage}>
+                Невірний формат електронної пошти
+              </p>
+            )}
           </div>
 
           <div className={styles.commentContainer}>
             <label className={styles.labelData} htmlFor="message">
-              Повідомлення
+              Повідомлення *
             </label>
-
             <textarea
               className={`${styles.dataInput} ${styles.dataTextarea}`}
               id="message"
               value={message}
               onChange={handleTextareaChange}
             ></textarea>
+            {submitted && !message && (
+              <p className={styles.errorMessage}>Введіть повідомлення</p>
+            )}
           </div>
+
           <div className={styles.button}>
             <Button
               variant="primary"
