@@ -8,6 +8,7 @@ import RecipientDetails from './components/RecipientDetails/RecipientDetails';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
+  const [quantity, setQuantity] = useState(0);
 
   const data = [
     {
@@ -31,6 +32,13 @@ const Orders = () => {
           quantity: '1',
           price: '300',
         },
+        {
+          code: '13',
+          item: 'Букет осіння мрія',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '500',
+        },
       ],
       city: 'Київ',
       street: 'Михайла Грушевського',
@@ -51,6 +59,13 @@ const Orders = () => {
           img: '/images/bouquet_order.jpg',
           quantity: '1',
           price: '300',
+        },
+        {
+          code: '6',
+          item: 'Букет тюльпанів',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '700',
         },
       ],
       city: 'Київ',
@@ -104,13 +119,14 @@ const Orders = () => {
                       ? `${styles.number}`
                       : `${styles.numberActive}  + ' ' + ${styles.number}`
                   }
-                  onClick={() =>
+                  onClick={() => {
                     setShowOrderDetails(
                       order.orderNumber === showOrdersDetails
                         ? null
                         : order.orderNumber,
-                    )
-                  }
+                    );
+                    setQuantity(order.orderItems.length);
+                  }}
                 >
                   {order.orderNumber}
                 </div>
@@ -148,7 +164,7 @@ const Orders = () => {
                     apartment={order.apartment}
                     recipient={order.recipient}
                     phone={order.phone}
-                    quantity="4"
+                    quantity={quantity}
                   />
                 </>
               )}
@@ -159,13 +175,14 @@ const Orders = () => {
                       ? `${styles.btnArrowUp} + ' ' + ${styles.btn}`
                       : `${styles.btnArrowDown}  + ' ' + ${styles.btn}`
                   }
-                  onClick={() =>
+                  onClick={() => {
                     setShowOrderDetails(
                       order.orderNumber === showOrdersDetails
                         ? null
                         : order.orderNumber,
-                    )
-                  }
+                    );
+                    setQuantity(order.orderItems.length);
+                  }}
                 >
                   {showOrdersDetails === order.orderNumber ? (
                     <ICONS.arrowUpWhite />
