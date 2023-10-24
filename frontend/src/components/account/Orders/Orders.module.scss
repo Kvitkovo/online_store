@@ -10,8 +10,9 @@
 .gridTable {
   display: grid;
   grid-template-columns: 1.5fr 1.5fr 4fr 2fr 1.5fr 0.5fr;
-  padding: 20px 32px 0;
+  padding: 9px 32px;
   grid-column-gap: 32px;
+  align-items: center;
 }
 
 .arrowDown {
@@ -68,4 +69,10 @@
     $gray-light-color 0 16px,
     #0000 0 32px
   );
+}
+
+.line {
+  border-bottom: 1px solid $green-80-color;
+  padding-bottom: 16px;
+  margin-bottom: 14px;
 }

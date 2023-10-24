@@ -28,7 +28,7 @@ const RecipientDetails = ({
             <div>Отримувач:</div>
             <div>{recipient}</div>
             <div>
-              <span>Тел.</span> {phone}{' '}
+              <span>Тел.</span> {phone}
             </div>
           </div>
         </div>
