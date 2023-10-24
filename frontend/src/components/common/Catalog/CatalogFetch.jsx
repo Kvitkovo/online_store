@@ -11,6 +11,19 @@ const CatalogFetch = ({ setIsOpen }) => {
   useEffect(() => {
     const getCatalog = async () => {
       const response = await GetCategories(sortValue);
+      response.unshift({
+        id: 0,
+        name: 'Акційна ціна',
+        alias: 'Sale',
+        parent: null,
+        metaDescription: '',
+        metaKeywords: '',
+        description: '',
+        status: 'ACTIVE',
+        icon: 'SALE',
+        hasSubCategory: false,
+        sortValue: 0,
+      });
       setCategoryData(response);
     };
     getCatalog();

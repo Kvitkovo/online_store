@@ -17,12 +17,12 @@ export const mockContacts = [
 ];
 
 export const mockCategories = [
-  // {
-  //   id: 1,
-  //   name: 'Акційна ціна',
-  //   bg: '/images/catalog-images/background/akciyna_cena.png',
-  //   icon: <ICONS.akciyna_cena />,
-  // },
+  {
+    id: 1,
+    name: 'Акційна ціна',
+    bg: '/images/catalog-images/background/akciyna_cena.png',
+    icon: <ICONS.akciyna_cena />,
+  },
   {
     id: 2,
     name: 'Букети з квітів',
