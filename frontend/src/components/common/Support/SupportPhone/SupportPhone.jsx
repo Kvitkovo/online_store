@@ -41,7 +41,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="name">
-              Ваше ім’я *
+              Ваше ім’я <span>*</span>
             </label>
 
             <input
@@ -59,7 +59,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="phone">
-              Номер телефону *
+              Номер телефону <span>*</span>
             </label>
 
             <input

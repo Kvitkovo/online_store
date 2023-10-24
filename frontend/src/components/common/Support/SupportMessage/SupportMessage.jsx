@@ -20,7 +20,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    if (validateEmail(email) && name) {
+    if (validateEmail(email) && name && message) {
       alert('Дані введено вірно: ' + name + ' ' + email + ' ' + message);
     }
   };
@@ -50,7 +50,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="name">
-              Ваше ім’я *
+              Ваше ім’я <span>*</span>
             </label>
 
             <input
@@ -68,7 +68,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
           <div className={styles.dataContainer}>
             <label className={styles.labelData} htmlFor="email">
-              Ел. пошта *
+              Ел. пошта <span>*</span>
             </label>
 
             <input
@@ -94,7 +94,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
           <div className={styles.commentContainer}>
             <label className={styles.labelData} htmlFor="message">
-              Повідомлення *
+              Повідомлення <span>*</span>
             </label>
             <textarea
               className={`${styles.dataInput} ${styles.dataTextarea}`}
