@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
 import styles from './SupportPhone.module.scss';
 import Modals from '../../Modals';
 import IconButton from '../../../ui-kit/components/IconButton';
@@ -62,11 +63,11 @@ const SupportPhone = ({ toggleSupportPhone }) => {
               Номер телефону <span>*</span>
             </label>
 
-            <input
+            <InputMask
               id="phone"
               className={styles.dataInput}
-              type="tel"
-              pattern="^\+380 \d{2} \d{7}$"
+              mask="+380 99 9999999"
+              maskChar=""
               placeholder="+380 XX XXXXXXX"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
