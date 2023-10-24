@@ -11,7 +11,38 @@ const CatalogFetch = ({ setIsOpen }) => {
   useEffect(() => {
     const getCatalog = async () => {
       const response = await GetCategories(sortValue);
-      setCategoryData(response);
+      setCategoryData(
+        response.push({
+          id: 31,
+          name: 'Акційна ціна',
+          alias: 'Sale',
+          parent: null,
+          metaDescription: '',
+          metaKeywords: '',
+          description: '',
+          status: 'ACTIVE',
+          icon: 'SALE',
+          hasSubCategory: false,
+          sortValue: 31,
+        }),
+      );
+      // console.log(response);
+      // console.log(
+      //   response.push({
+      //     id: 0,
+      //     name: 'Акційна ціна',
+      //     alias: 'Sale',
+      //     parent: null,
+      //     metaDescription: '',
+      //     metaKeywords: '',
+      //     description: '',
+      //     status: 'ACTIVE',
+      //     icon: 'SALE',
+      //     hasSubCategory: false,
+      //     sortValue: 31,
+      //   }),
+      // );
+      // console.log(response);
     };
     getCatalog();
   }, [sortValue]);
