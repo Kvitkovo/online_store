@@ -47,6 +47,7 @@ const ItemCard = ({ cardData }) => {
                   oldPrice={cardData.price}
                   actualPrice={cardData.priceWithDiscount}
                   stockInfo={cardData?.available}
+                  addToConstructor={cardData.allowAddToConstructor}
                 />
               </div>
             </div>
@@ -71,6 +72,7 @@ const ItemCard = ({ cardData }) => {
                 oldPrice={cardData.price}
                 actualPrice={cardData.priceWithDiscount}
                 stockInfo={cardData?.available}
+                addToConstructor={cardData.allowAddToConstructor}
               />
               <ItemFeatures
                 type={cardData?.categoryName}

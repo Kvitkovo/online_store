@@ -7,9 +7,15 @@ import { ICONS } from '../../../../components/ui-kit/icons';
 import Button from '../../../../components/ui-kit/components/Button';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
-const PriceAndButtons = ({ actualPrice, oldPrice, stockInfo }) => {
+const PriceAndButtons = ({
+  actualPrice,
+  oldPrice,
+  stockInfo,
+  addToConstructor,
+}) => {
   const { width } = useWindowSize();
   const isInStock = stockInfo === 'AVAILABLE';
+  const addToBouquete = addToConstructor === true;
   return (
     <div>
       <div className={styles.desktopContainer}>
@@ -25,19 +31,26 @@ const PriceAndButtons = ({ actualPrice, oldPrice, stockInfo }) => {
                 padding="padding-sm"
                 icon={<ICONS.toCart />}
               />
-              <div className={styles.bouquetDesktop}>
-                <Button
-                  variant="no-border"
-                  label="Додати до букету"
-                  padding="padding-header-sm"
-                  reverse="true"
-                  icon={<ICONS.toBouquet />}
-                />
-              </div>
-              <div className={styles.bouquetTablet}>
-                {' '}
-                <IconButton icon={<ICONS.BouquetIcon />} />
-              </div>
+              {addToBouquete ? (
+                <div className={styles.bouquetDesktop}>
+                  <Button
+                    variant="no-border"
+                    label="Додати до букету"
+                    padding="padding-header-sm"
+                    reverse="true"
+                    icon={<ICONS.toBouquet />}
+                  />
+                </div>
+              ) : null}
+
+              <>
+                {addToBouquete ? (
+                  <div className={styles.bouquetTablet}>
+                    {' '}
+                    <IconButton icon={<ICONS.BouquetIcon />} />
+                  </div>
+                ) : null}
+              </>
             </div>
           </>
         ) : (
@@ -55,9 +68,11 @@ const PriceAndButtons = ({ actualPrice, oldPrice, stockInfo }) => {
         <>
           <div className={styles.priceMobile}>
             <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
-            <span className={styles.bouquetMobile}>
-              <IconButton icon={<ICONS.BouquetIcon />} />
-            </span>
+            {addToBouquete ? (
+              <span className={styles.bouquetMobile}>
+                <IconButton icon={<ICONS.BouquetIcon />} />
+              </span>
+            ) : null}
           </div>
           <Button
             variant="primary"
