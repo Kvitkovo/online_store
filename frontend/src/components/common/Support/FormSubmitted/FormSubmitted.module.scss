@@ -1,0 +1,22 @@
+@import 'src/_variables.scss';
+@import 'src/_mixins.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $page-background-color;
+  font-size: 24px;
+  line-height: 130%;
+  padding-top: 16px;
+  padding-bottom: 17px;
+  width: 100%;
+}
+.iconContainer {
+  display: flex;
+  justify-self: flex-end;
+  margin-right: 20px;
+}
+.headerContent {
+  margin: 0 auto;
+}

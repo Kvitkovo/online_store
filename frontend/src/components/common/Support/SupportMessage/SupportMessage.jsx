@@ -62,7 +62,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
               onChange={(e) => setName(e.target.value.trim())}
             />
             {submitted && !name && (
-              <p className={styles.errorMessage}>Введіть своє ім`я</p>
+              <p className={styles.errorMessage}>Введіть ваше ім`я</p>
             )}
           </div>
 
@@ -81,9 +81,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
               onChange={(e) => setEmail(e.target.value.trim())}
             />
             {submitted && !email && (
-              <p className={styles.errorMessage}>
-                Введіть свою електронну пошту
-              </p>
+              <p className={styles.errorMessage}>Введіть електронну пошту</p>
             )}
             {submitted && email && !validateEmail(email) && (
               <p className={styles.errorMessage}>
