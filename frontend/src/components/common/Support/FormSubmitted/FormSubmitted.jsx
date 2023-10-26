@@ -14,21 +14,19 @@ const FormSubmitted = ({ toggleSubmittedMessage }) => {
   }, [toggleSubmittedMessage]);
   return (
     <Modals type="formSubmitted" onClick={toggleSubmittedMessage}>
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}> Підтримка</div>
-          <div className={styles.iconContainer}>
-            <IconButton
-              onClick={toggleSubmittedMessage}
-              icon={<ICONS.closeMobile />}
-            />
-          </div>
+      <div className={styles.header}>
+        <div className={styles.headerContent}> Підтримка</div>
+        <div className={styles.iconContainer}>
+          <IconButton
+            onClick={toggleSubmittedMessage}
+            icon={<ICONS.closeMobile />}
+          />
         </div>
-        <div className={styles.mainContainer}>
-          <h2>Ваш запит відправлено.</h2>
-          <h3>Ми зв’яжемося з вами найближчим часом.</h3>
-          <h2>Дякуємо за звернення!</h2>
-        </div>
+      </div>
+      <div className={styles.mainContainer}>
+        <h2>Ваш запит відправлено.</h2>
+        <h3>Ми зв’яжемося з вами найближчим часом.</h3>
+        <h2>Дякуємо за звернення!</h2>
       </div>
     </Modals>
   );
