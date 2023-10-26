@@ -14,6 +14,7 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog/Catalog';
+import LoginModal from '../../common/LoginBtn/LoginModal';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -25,6 +26,7 @@ const Header = () => {
 
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   const toggleCart = () => {
     setIsOpenCart((prev) => !prev);
@@ -34,7 +36,11 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   };
 
-  useModalEffect(isOpenCart, isOpenMyBouquet);
+  const toggleLogin = () => {
+    setIsOpenLogin((prev) => !prev);
+  };
+
+  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -113,7 +119,7 @@ const Header = () => {
                 label="Увійти"
                 padding="padding-header-even"
                 icon={<ICONS.halfPerson />}
-                onClick={() => alert('clicked bouquete')}
+                onClick={toggleLogin}
               />
             </div>
 
@@ -125,6 +131,7 @@ const Header = () => {
       </header>
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
+      {isOpenLogin && <LoginModal toggleLogin={toggleLogin} />}
       <Modal
         isOpen={isCatalogOpened}
         setIsOpen={setIsCatalogOpened}

@@ -34,6 +34,11 @@
   max-height: 676px;
 }
 
+.login {
+  width: 400px;
+  height: 584px;
+}
+
 @include sm {
   .drawer {
     overflow-y: auto;
