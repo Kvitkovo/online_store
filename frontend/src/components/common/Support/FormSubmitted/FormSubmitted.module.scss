@@ -1,6 +1,9 @@
 @import 'src/_variables.scss';
 @import 'src/_mixins.scss';
 
+.content {
+  border-radius: 8px;
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -11,6 +14,7 @@
   padding-top: 16px;
   padding-bottom: 17px;
   width: 100%;
+  border-radius: 8px 8px 0 0;
 }
 .iconContainer {
   display: flex;
@@ -19,4 +23,25 @@
 }
 .headerContent {
   margin: 0 auto;
+}
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-top: 46px;
+  padding-bottom: 60px;
+  background-color: $white-color;
+  border-radius: 0 0 8px 8px;
+  h2 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 130%;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 130%;
+  }
 }

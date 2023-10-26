@@ -2,34 +2,33 @@ import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import styles from './SupportPhone.module.scss';
 import Modals from '../../Modals';
-import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
+import IconButton from '../../../ui-kit/components/IconButton';
 import Button from '../../../ui-kit/components/Button';
 import FormSubmitted from '../FormSubmitted/FormSubmitted';
+
+import { useModalEffect } from '../../../../hooks/useModalEffect';
 
 const SupportPhone = ({ toggleSupportPhone }) => {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showFormSubmitted, setShowFormSubmitted] = useState(false);
 
   const validatePhone = (value) => /^\+380 \d{2} \d{7}$/.test(value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true);
     if (validatePhone(phone) && name) {
-      setIsSubmitted(true);
+      setShowFormSubmitted(true);
     }
   };
 
-  const closeFormSubmitted = () => {
-    setIsSubmitted(false);
-  };
-
+  useModalEffect(showFormSubmitted);
   return (
     <>
-      {isSubmitted ? (
-        <FormSubmitted toggleSubmittedButton={closeFormSubmitted} />
-      ) : (
+      {!showFormSubmitted && (
         <Modals type="support" onClick={toggleSupportPhone}>
           <div className={styles.header}>
             <div className={styles.headerContent}> Підтримка</div>
@@ -42,7 +41,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
           </div>
 
           <div className={styles.formContainer}>
-            <form className={styles.supportForm} onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <p className={styles.callback}>Бажаєте, ми вам передзвонимо?</p>
               <p className={styles.enterData}>
                 Введіть номер телефону та ім’я, і ми зв’яжемося з вами.
@@ -61,7 +60,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
                   placeholder="Як до вас звертатись?"
                   onChange={(e) => setName(e.target.value.trim())}
                 />
-                {isSubmitted && !name && (
+                {submitted && !name && (
                   <p className={styles.errorMessage}>Введіть ваше ім`я</p>
                 )}
               </div>
@@ -80,10 +79,10 @@ const SupportPhone = ({ toggleSupportPhone }) => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
-                {isSubmitted && !phone && (
+                {submitted && !phone && (
                   <p className={styles.errorMessage}>Введіть номер телефону</p>
                 )}
-                {isSubmitted && phone && !validatePhone(phone) && (
+                {submitted && phone && !validatePhone(phone) && (
                   <p className={styles.errorMessage}>
                     Невірний формат номеру телефона
                   </p>
@@ -113,6 +112,14 @@ const SupportPhone = ({ toggleSupportPhone }) => {
             </form>
           </div>
         </Modals>
+      )}
+      {showFormSubmitted && (
+        <FormSubmitted
+          toggleSubmittedMessage={() => {
+            setShowFormSubmitted(false);
+            toggleSupportPhone();
+          }}
+        />
       )}
     </>
   );
