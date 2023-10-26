@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useSelector } from 'react-redux';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
 import Divider from '../../../../ui-kit/components/Divider';
@@ -10,9 +10,14 @@ import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 
 const CartItem = ({ items, count }) => {
+  const cart = useSelector((state) => state.cart);
+  // console.log(cart);
   const { width } = useWindowSize();
   return (
     <div className={styles.itemsBlock}>
+      {cart?.map((item) => {
+        <div key={item.id}>{item.id}</div>;
+      })}
       {items.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className={styles.item}>
