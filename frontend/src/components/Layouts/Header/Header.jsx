@@ -15,6 +15,7 @@ import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog/Catalog';
 import LoginModal from '../../common/LoginBtn/LoginModal';
+import RegisterModal from '../../common/LoginBtn/RegisterModal/RegisterModal';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -27,6 +28,7 @@ const Header = () => {
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenRegister, setIsOpenRegister] = useState(false);
 
   const toggleCart = () => {
     setIsOpenCart((prev) => !prev);
@@ -37,10 +39,14 @@ const Header = () => {
   };
 
   const toggleLogin = () => {
+    setIsOpenRegister(false);
     setIsOpenLogin((prev) => !prev);
   };
+  const toggleRegister = () => {
+    setIsOpenRegister((prev) => !prev);
+  };
 
-  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin);
+  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -131,7 +137,10 @@ const Header = () => {
       </header>
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
-      {isOpenLogin && <LoginModal toggleLogin={toggleLogin} />}
+      {isOpenLogin && (
+        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
+      )}
+      {isOpenRegister && <RegisterModal toggleLogin={toggleRegister} />}
       <Modal
         isOpen={isCatalogOpened}
         setIsOpen={setIsCatalogOpened}
