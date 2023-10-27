@@ -109,7 +109,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                 {submitted && password && !validatePassword(password) && (
                   <p className={styles.errorMessage}>
                     Пароль має бути не менше 8 символів, містити латинські
-                    літери та хоча б одну цифру
+                    літери та мінімум одну цифру
                   </p>
                 )}
               </div>
@@ -118,14 +118,26 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
             <div className={styles.button}>
               <Button
                 variant="primary"
-                label="Увійти"
+                label="Зареєструватися"
                 padding="padding-sm"
                 isFullWidth={true}
                 type="submit"
+                onClick={handleSubmit}
               />
             </div>
             <div>
               <p>або</p>
+            </div>
+            <div className={styles.googleLogin}>
+              <Button
+                variant="secondary"
+                label="Увійти через google"
+                padding="padding-sm"
+                icon={<ICONS.googleIcon />}
+                reverse="true"
+                isFullWidth={true}
+                onClick={() => alert('clicked add')}
+              />
             </div>
 
             <div className={styles.resetPassword}>

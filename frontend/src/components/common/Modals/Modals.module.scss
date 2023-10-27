@@ -36,7 +36,7 @@
 
 .login {
   width: 400px;
-  height: 584px;
+  height: fit-content;
 }
 
 @include sm {

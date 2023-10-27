@@ -37,8 +37,9 @@
 }
 .closeBtn {
   display: flex;
+  justify-content: flex-end;
+  margin-right: 16px;
   padding: 8px;
-  margin-right: 11.5px;
 }
 .formContainer {
   display: flex;
@@ -76,13 +77,18 @@
 }
 
 .button {
-  margin-top: 50px;
+  margin: 50px 0 16px 0;
+  width: 312px;
+}
+.googleLogin {
+  margin: 16px 0 16px 0;
   width: 312px;
 }
 
 .resetPassword {
   color: $page-accent-color;
   line-height: 130%;
+  padding: 8px;
 }
 .errorMessage {
   color: $discount-color;

@@ -3,7 +3,12 @@ import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
 
-const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
+const ClosedMenu = ({
+  toggleMenu,
+  toggleCart,
+  toggleMyBouquet,
+  toggleLogin,
+}) => {
   return (
     <div className={styles.burgerMenu}>
       <div className={styles.burgerHeader}>
@@ -21,7 +26,7 @@ const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
             />
           </div>
           <div className={styles.account}>
-            <IconButton icon={<ICONS.halfPerson />} />
+            <IconButton icon={<ICONS.halfPerson />} onClick={toggleLogin} />
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />

@@ -95,10 +95,22 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                 padding="padding-sm"
                 isFullWidth={true}
                 type="submit"
+                onClick={handleSubmit}
               />
             </div>
             <div>
               <p>або</p>
+            </div>
+            <div className={styles.googleLogin}>
+              <Button
+                variant="secondary"
+                label="Увійти через google"
+                padding="padding-sm"
+                icon={<ICONS.googleIcon />}
+                reverse="true"
+                isFullWidth={true}
+                onClick={() => alert('clicked add')}
+              />
             </div>
 
             <div className={styles.resetPassword}>

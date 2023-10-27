@@ -37,6 +37,7 @@ import { ReactComponent as cartEmpty } from './cartEmpty-icon.svg';
 import { ReactComponent as myBouquetEmpty } from './myBouquetEmpty-icon.svg';
 import { ReactComponent as account } from './account.svg';
 import { ReactComponent as changePassword } from './change-password.svg';
+import { ReactComponent as googleIcon } from './google.svg';
 
 // Catalog icons
 //TODO: Check icon sizes
@@ -90,6 +91,7 @@ export const ICONS = {
   myBouquetEmpty,
   account,
   changePassword,
+  googleIcon,
   akciyna_cena,
   bukety_z_kvitiv,
   dekor,

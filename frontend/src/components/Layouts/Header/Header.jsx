@@ -39,10 +39,11 @@ const Header = () => {
   };
 
   const toggleLogin = () => {
-    setIsOpenRegister(false);
     setIsOpenLogin((prev) => !prev);
+    setIsOpenRegister(false);
   };
   const toggleRegister = () => {
+    setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
   };
 
@@ -62,7 +63,11 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      <BurgerMenu
+        toggleCart={toggleCart}
+        toggleMyBouquet={toggleMyBouquet}
+        toggleLogin={toggleLogin}
+      />
       <header>
         <div className={styles.containerTop}>
           {' '}
@@ -140,7 +145,12 @@ const Header = () => {
       {isOpenLogin && (
         <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
       )}
-      {isOpenRegister && <RegisterModal toggleLogin={toggleRegister} />}
+      {isOpenRegister && (
+        <RegisterModal
+          toggleLogin={toggleLogin}
+          toggleRegister={toggleRegister}
+        />
+      )}
       <Modal
         isOpen={isCatalogOpened}
         setIsOpen={setIsCatalogOpened}
