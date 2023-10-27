@@ -32,5 +32,4 @@ public class DecorService {
         }
         return decorResponseDto;
     }
-
 }
