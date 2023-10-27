@@ -60,13 +60,14 @@ public class SecurityConfig {
             "/v1/sizes/**",
             "/v1/filter/**",
             "/v1/types/**",
-            "/v1/users/email/**",
+            "/v1/users/email/**"
     };
 
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
             "/v1/orders/**",
+            "/v1/decor/**",
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
@@ -74,9 +75,10 @@ public class SecurityConfig {
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
-        "/v1/users/{id:\\d+}",
-        "/v1/orders/{id:\\d+}",
-        "/v1/orders/user/current",
+            "/v1/users/{id:\\d+}",
+            "/v1/orders/{id:\\d+}",
+            "/v1/orders/user/current",
+            "/v1/decor/{id:\\d+}",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
