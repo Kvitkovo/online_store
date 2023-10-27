@@ -56,19 +56,25 @@
       max-height: 550px;
       overflow: hidden;
       overflow-y: auto;
+      @media screen and (max-width: 480px) {
+        width: 100vh;
+      }
 
       .categoryItemContent {
         width: 100%;
         display: flex;
-        gap: 16px;
-        justify-content: space-between;
+        gap: 10px;
+        // gap: 16px;
+        // justify-content: space-between;
         align-items: center;
+        @media screen and (max-width: 480px) {
+          width: 25%;
+        }
       }
 
       .contacts {
         padding-top: 12px;
         margin-top: 12px;
-        border-top: 1px solid #ebebeb;
       }
     }
 
@@ -86,4 +92,7 @@
     //TODO: Temporary solution until we get the correct image
     transform: translateX(-2px) scale(1.004);
   }
+}
+.redText {
+  color: red;
 }

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Catalog.module.scss';
-import CategoryList from './CategoryList';
+import CategoryList from './CatalogList';
 import SubCategoryList from './SubCategoryList';
 import { mockCategories as mockData } from '../../../data/catalog/contatct';
 import ROUTES from '../../../constants/routers';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const Catalog = ({ setIsOpen, categories }) => {
+  const { width } = useWindowSize();
   const navigate = useNavigate();
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
   const formatCategory = (category, index) => {
-    const mainPath = `${ROUTES.contacts}/${category.alias.toLowerCase()}`;
+    const mainPath = `${ROUTES.category}/${category.alias.toLowerCase()}`;
     const icon = mockData[index]?.icon;
     const bg = mockData[index]?.bg;
     const children = categories
@@ -48,11 +50,13 @@ const Catalog = ({ setIsOpen, categories }) => {
           />
         )}
       </div>
-      <img
-        src={hoveredCategory?.bg || mockData[0].bg}
-        alt={hoveredCategory?.name || mockData[0].name}
-        className={styles.categoryBg}
-      />
+      {width > 481 ? (
+        <img
+          src={hoveredCategory?.bg || mockData[0].bg}
+          alt={hoveredCategory?.name || mockData[0].name}
+          className={styles.categoryBg}
+        />
+      ) : null}
     </div>
   );
 };
