@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.decor.entity.DecorStatus;
 
 /**
  * @author Andriy Gaponov
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DecorRequestDto {
+public class DecorUpdateRequestDto {
 
     @NotBlank
     private String customerName;
@@ -29,6 +30,7 @@ public class DecorRequestDto {
     private String comment;
     @NotNull
     private Long shopId;
+    private DecorStatus status;
 
     public String getCustomerName() {
         return customerName;
@@ -64,5 +66,9 @@ public class DecorRequestDto {
 
     public String getComment() {
         return comment;
+    }
+
+    public DecorStatus getStatus() {
+        return status;
     }
 }
