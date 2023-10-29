@@ -60,7 +60,7 @@ public class TransliterateUtils {
         result = result.replaceAll("--", "-");
         result = result.replaceAll("---", "-");
         result = result.replaceAll("----", "-");
-        return result;
+        return result.toLowerCase();
     }
 
     public boolean checkAlias(String table, String alias) {

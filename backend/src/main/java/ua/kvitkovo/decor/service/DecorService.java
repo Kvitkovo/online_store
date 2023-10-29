@@ -15,9 +15,8 @@ import ua.kvitkovo.decor.dto.DecorUpdateRequestDto;
 import ua.kvitkovo.decor.entity.Decor;
 import ua.kvitkovo.decor.entity.DecorStatus;
 import ua.kvitkovo.decor.repository.DecorRepository;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
+import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.shop.repository.ShopRepository;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
@@ -41,28 +40,17 @@ public class DecorService {
     private final UserService userService;
     private final DecorDtoMapper decorDtoMapper;
     private final UserDtoMapper userDtoMapper;
-    private final ErrorUtils errorUtils;
 
     public DecorResponseDto findById(long id) throws ItemNotFoundException {
-        DecorResponseDto decorResponseDto = decorRepository.findById(id)
-            .map(decorDtoMapper::mapEntityToDto)
-            .orElseThrow(() -> new ItemNotFoundException("Decor order not found"));
-
-        if (!userService.isCurrentUserAdmin()
-            && userService.getCurrentUserId() != decorResponseDto.getCustomerId()) {
-            throw new ItemNotFoundException("Decor order not found");
-        }
-        return decorResponseDto;
+        return decorDtoMapper.mapEntityToDto(getDecor(id));
     }
 
     public DecorResponseDto addDecor(DecorRequestDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
-        }
+        ErrorUtils.checkItemNotCreatedException(bindingResult);
+
         Decor decor = decorDtoMapper.mapDtoRequestToEntity(dto);
         decor.setId(null);
-        decor.setShop(shopRepository.findById(dto.getShopId())
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+        decor.setShop(getShop(dto.getShopId()));
         decor.setStatus(DecorStatus.NEW);
 
         try {
@@ -70,7 +58,7 @@ public class DecorService {
             User customer = userDtoMapper.mapDtoToEntity(currentUser);
             decor.setCustomer(customer);
         } catch (Exception e) {
-            //NOP
+            log.info("A decor order was created by an unauthorized user");
         }
 
         decorRepository.save(decor);
@@ -81,12 +69,9 @@ public class DecorService {
 
     public List<DecorResponseDto> updateDecorStatus(List<Long> decorOrdersID, DecorStatus status) {
         List<Decor> decors = decorOrdersID.stream()
-            .map(id -> decorRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+            .map(id -> getDecor(id))
             .toList();
-
-        UserResponseDto currentUser = userService.getCurrentUser();
-        User manager = userDtoMapper.mapDtoToEntity(currentUser);
+        User manager = getUser(userService.getCurrentUserId());
 
         for (Decor decor : decors) {
             decor.setStatus(status);
@@ -107,22 +92,34 @@ public class DecorService {
 
     public DecorResponseDto updateDecorOrder(Long id, DecorUpdateRequestDto dto,
         BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
-        }
+        ErrorUtils.checkItemNotUpdatedException(bindingResult);
+
         DecorResponseDto decorResponseDto = findById(id);
         BeanUtils.copyProperties(dto, decorResponseDto, Helper.getNullPropertyNames(dto));
 
         Decor decor = decorDtoMapper.mapDtoToEntity(decorResponseDto);
         decor.setId(id);
-        decor.setShop(shopRepository.findById(dto.getShopId())
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+        decor.setShop(getShop(dto.getShopId()));
 
-        UserResponseDto currentUser = userService.getCurrentUser();
-        User manager = userDtoMapper.mapDtoToEntity(currentUser);
+        User manager = getUser(userService.getCurrentUserId());
         decor.setManager(manager);
 
         decorRepository.save(decor);
         return decorDtoMapper.mapEntityToDto(decor);
+    }
+
+    private Decor getDecor(long id) {
+        return decorRepository.findById(id)
+            .orElseThrow(() -> new ItemNotFoundException("Decor order not found"));
+    }
+
+    private Shop getShop(Long id) {
+        return shopRepository.findById(id)
+            .orElseThrow(() -> new ItemNotFoundException("Shop not found"));
+    }
+
+    private User getUser(Long id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new ItemNotFoundException("User not found"));
     }
 }
