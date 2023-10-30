@@ -6,15 +6,15 @@ import { ICONS } from '../../ui-kit/icons';
 import Discount from '../../ui-kit/components/Discount/Discount';
 import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { addToCart } from '../../../redux/slices/cartSlice';
 
 const Card = (props) => {
   const dispatch = useDispatch();
 
-  // const handleCardClick = () => {
-  //   window.scrollTo(0, 0);
-  // };
+  const handleCardClick = () => {
+    window.scrollTo(0, 0);
+  };
 
   const handleAddToCart = (props) => {
     dispatch(addToCart(props));
@@ -22,13 +22,20 @@ const Card = (props) => {
 
   return (
     <div className={styles.card}>
-      {/* <Link to={`/product/${props.id}`} className={styles.link}> */}
-      <img
-        src={props.image}
-        alt="букет"
-        className={inActive(props.status, styles.foto, styles.fotoInactive)}
-      />
-      <h3>{props.title}</h3>
+      <Link
+        to={`/product/${props.id}`}
+        className={styles.link}
+        onClick={handleCardClick}
+      >
+        <div>
+          <img
+            src={props.image}
+            alt="букет"
+            className={inActive(props.status, styles.foto, styles.fotoInactive)}
+          />
+          <h3>{props.title}</h3>
+        </div>
+      </Link>
       <div
         className={
           props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
@@ -69,7 +76,6 @@ const Card = (props) => {
           </div>
         </div>
       </div>
-      {/* </Link> */}
     </div>
   );
 };
