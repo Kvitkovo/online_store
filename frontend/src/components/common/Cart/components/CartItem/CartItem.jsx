@@ -10,21 +10,17 @@ import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 
 const CartItem = ({ items, count }) => {
-  const cart = useSelector((state) => state.cart);
-  // console.log(cart);
+  const cart = useSelector((state) => state.cartSliceReducer.cartItems);
   const { width } = useWindowSize();
   return (
     <div className={styles.itemsBlock}>
-      {cart?.map((item) => {
-        <div key={item.id}>{item.id}</div>;
-      })}
-      {items.map((item, index) => (
+      {cart.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className={styles.item}>
             <div className={styles.leftBlock}>
               <IconButton icon={<ICONS.TrashIcon />} />
               <div className={styles.blockImg}>
-                <img src={item.img} alt={item.title} />
+                <img src={item.image} alt={item.title} />
                 <span>{item.title}</span>
               </div>
             </div>
@@ -40,7 +36,7 @@ const CartItem = ({ items, count }) => {
               <CountBlock count={count} />
               <DiscountPrice
                 oldPrice={item.oldPrice}
-                actualPrice={item.actualPrice}
+                actualPrice={item.price}
               />
             </div>
           </div>
