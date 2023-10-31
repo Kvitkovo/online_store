@@ -48,9 +48,9 @@ public class ShopController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Shop with id - {}.", id);
+        log.debug("Received request to get the Shop with id - {}.", id);
         ShopResponseDto shopResponseDto = shopService.findById(id);
-        log.info("the Shop with id - {} was retrieved - {}.", id, shopResponseDto);
+        log.debug("the Shop with id - {} was retrieved - {}.", id, shopResponseDto);
         return shopResponseDto;
     }
 
@@ -79,7 +79,7 @@ public class ShopController {
     public ShopResponseDto addShop(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ShopRequestDto request,
             BindingResult bindingResult) {
-        log.info("Received request to create Shop - {}.", request);
+        log.debug("Received request to create Shop - {}.", request);
         return shopService.addShop(request, bindingResult);
     }
 
@@ -110,7 +110,7 @@ public class ShopController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Shop - {} with id {}.", request, id);
+        log.debug("Received request to update Shop - {} with id {}.", request, id);
         return shopService.updateShop(id, request, bindingResult);
     }
 }

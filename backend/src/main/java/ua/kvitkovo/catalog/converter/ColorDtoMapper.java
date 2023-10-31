@@ -1,8 +1,8 @@
 package ua.kvitkovo.catalog.converter;
 
 import org.mapstruct.Mapper;
-import ua.kvitkovo.catalog.dto.ColorRequestDto;
-import ua.kvitkovo.catalog.dto.ColorResponseDto;
+import ua.kvitkovo.catalog.dto.request.ColorRequestDto;
+import ua.kvitkovo.catalog.dto.response.ColorResponseDto;
 import ua.kvitkovo.catalog.entity.Color;
 
 import java.util.List;

@@ -33,7 +33,14 @@
   max-width: 611px;
   max-height: 676px;
 }
-
+.support {
+  max-width: 460px;
+  max-height: fit-content;
+}
+.formSubmitted {
+  width: 460px;
+  height: 275px;
+}
 @include sm {
   .drawer {
     overflow-y: auto;

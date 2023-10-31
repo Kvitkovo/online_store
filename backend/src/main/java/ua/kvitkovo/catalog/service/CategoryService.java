@@ -1,28 +1,24 @@
 package ua.kvitkovo.catalog.service;
 
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.converter.CategoryDtoMapper;
-import ua.kvitkovo.catalog.dto.CategoryRequestDto;
-import ua.kvitkovo.catalog.dto.CategoryResponseDto;
+import ua.kvitkovo.catalog.dto.request.CategoryRequestDto;
+import ua.kvitkovo.catalog.dto.response.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.catalog.entity.CategoryStatus;
 import ua.kvitkovo.catalog.repository.CategoryRepository;
-import ua.kvitkovo.catalog.validator.CategoryDefaults;
-import ua.kvitkovo.catalog.validator.CategoryDtoValidator;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Andriy Gaponov
@@ -34,33 +30,39 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDtoMapper categoryMapper;
-    private final CategoryDtoValidator categoryDtoValidator;
-    private final CategoryDefaults categoryDefaults;
-    private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
     public Collection<CategoryResponseDto> getAll() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByOrderByParentAscSortValueAsc();
         return categoryMapper.mapEntityToDto(categories);
     }
 
     public CategoryResponseDto findById(long id) throws ItemNotFoundException {
         return categoryRepository.findById(id)
-                .map(categoryMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            .map(categoryMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Category not found"));
     }
 
     @Transactional
     public CategoryResponseDto addCategory(CategoryRequestDto dto, BindingResult bindingResult) {
-        categoryDtoValidator.validate(dto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
-        }
-        categoryDefaults.fillDefaultValues(dto);
+        ErrorUtils.checkItemNotCreatedException(bindingResult);
+
         Category category = categoryMapper.mapDtoRequestToEntity(dto);
-        category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        category.setAlias(
+            transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         if (dto.getParentId() > 0) {
             category.setParent(categoryMapper.mapDtoToEntity(findById(dto.getParentId())));
+        }
+        if (dto.getMetaDescription() == null) {
+            dto.setMetaDescription("");
+        }
+
+        if (dto.getMetaKeywords() == null) {
+            dto.setMetaKeywords("");
+        }
+
+        if (dto.getStatus() == null) {
+            dto.setStatus(CategoryStatus.ACTIVE);
         }
         category.setId(null);
         categoryRepository.save(category);
@@ -75,10 +77,14 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto dto, BindingResult bindingResult) {
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto dto,
+        BindingResult bindingResult) {
+        ErrorUtils.checkItemNotUpdatedException(bindingResult);
+
         CategoryResponseDto categoryResponseDto = findById(id);
         if (!Objects.equals(dto.getName(), categoryResponseDto.getName())) {
-            categoryResponseDto.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+            categoryResponseDto.setAlias(
+                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, categoryResponseDto, Helper.getNullPropertyNames(dto));
 
@@ -86,11 +92,6 @@ public class CategoryService {
             categoryResponseDto.setParent(null);
         } else {
             categoryResponseDto.setParent(findById(dto.getParentId()));
-        }
-
-        categoryDtoValidator.validate(dto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
 
         Category category = categoryMapper.mapDtoToEntity(categoryResponseDto);

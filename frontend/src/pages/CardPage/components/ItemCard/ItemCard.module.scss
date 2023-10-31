@@ -8,7 +8,7 @@
   }
 }
 .itemContainer {
-  padding: 32px 0 32px 4px;
+  padding: 32px 20px 32px 4px;
   margin-top: 22px;
   border-radius: 8px;
   background: $white-color;
@@ -24,12 +24,6 @@
 }
 .itemDescriptionContainer {
   flex-direction: column;
-}
-.helpButton {
-  position: fixed;
-  z-index: 1;
-  top: 90vh;
-  left: 95vw;
 }
 .previous {
   font-size: 32px;
@@ -102,9 +96,5 @@
     align-items: flex-end;
     margin-top: 22px;
     margin-bottom: 32px;
-  }
-  .helpButton {
-    top: 90vh;
-    left: 85vw;
   }
 }

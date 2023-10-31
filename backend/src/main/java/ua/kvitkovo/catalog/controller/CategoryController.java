@@ -16,8 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.catalog.dto.CategoryRequestDto;
-import ua.kvitkovo.catalog.dto.CategoryResponseDto;
+import ua.kvitkovo.catalog.dto.request.CategoryRequestDto;
+import ua.kvitkovo.catalog.dto.response.CategoryResponseDto;
 import ua.kvitkovo.catalog.service.CategoryService;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 
@@ -48,13 +48,13 @@ public class CategoryController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Collection<CategoryResponseDto>> getAll() {
-        log.info("Received request to get all Categories.");
+        log.debug("Received request to get all Categories.");
         Collection<CategoryResponseDto> categoryResponseDtos = categoryService.getAll();
         if (categoryResponseDtos.isEmpty()) {
-            log.info("All Categories are absent.");
+            log.debug("All Categories are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.info("All Categories were retrieved - {}.", categoryResponseDtos);
+        log.debug("All Categories were retrieved - {}.", categoryResponseDtos);
         return ResponseEntity.ok().body(categoryResponseDtos);
     }
 
@@ -76,9 +76,9 @@ public class CategoryController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Category with id - {}.", id);
+        log.debug("Received request to get the Category with id - {}.", id);
         CategoryResponseDto categoryResponseDto = categoryService.findById(id);
-        log.info("the Category with id - {} was retrieved - {}.", id, categoryResponseDto);
+        log.debug("the Category with id - {} was retrieved - {}.", id, categoryResponseDto);
         return categoryResponseDto;
     }
 
@@ -110,7 +110,7 @@ public class CategoryController {
     @ResponseBody
     public CategoryResponseDto addCategory(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request, BindingResult bindingResult) {
-        log.info("Received request to create Category - {}.", request);
+        log.debug("Received request to create Category - {}.", request);
         return categoryService.addCategory(request, bindingResult);
     }
 
@@ -140,12 +140,12 @@ public class CategoryController {
     @PutMapping("/{id}")
     @ResponseBody
     public CategoryResponseDto updateCategory(
-            @RequestBody @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
-            @Parameter(description = "The ID of the category to update", required = true,
-                    schema = @Schema(type = "integer", format = "int64")
-            )
-            @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Category - {} with id {}.", request, id);
+        @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
+        @Parameter(description = "The ID of the category to update", required = true,
+            schema = @Schema(type = "integer", format = "int64")
+        )
+        @PathVariable Long id, BindingResult bindingResult) {
+        log.debug("Received request to update Category - {} with id {}.", request, id);
         return categoryService.updateCategory(id, request, bindingResult);
     }
 
@@ -172,9 +172,9 @@ public class CategoryController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to deleteCategory the Category with id - {}.", id);
+        log.debug("Received request to deleteCategory the Category with id - {}.", id);
         categoryService.deleteCategory(id);
-        log.info("the Category with id - {} was deleted.", id);
+        log.debug("the Category with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

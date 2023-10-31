@@ -57,4 +57,32 @@ public class ShopResponseDto {
     public String getAddress() {
         return address;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
