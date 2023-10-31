@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './Catalog.module.scss';
-import CatalogItem from './CatalogItem';
+import styles from '../../Catalog.module.scss';
+import CatalogItem from '../CatalogItem/CatalogItem';
 
 const CategoryList = ({
   categories,
-  handleCategoryClick,
   setHoveredCategory,
+  handleCategoryClick,
 }) => {
   return (
     <ul className={styles.categoryList}>
@@ -15,6 +15,7 @@ const CategoryList = ({
           <CatalogItem
             key={category.sortValue}
             category={category}
+            depthLevel={0}
             handleCategoryClick={handleCategoryClick}
             setHoveredCategory={setHoveredCategory}
           />

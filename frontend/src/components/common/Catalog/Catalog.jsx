@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Catalog.module.scss';
-import CategoryList from './CatalogList';
-import SubCategoryList from './SubCategoryList';
+import CategoryList from './components/CatalogList/CatalogList';
+import SubCategoryList from './components/SubCategoryList/SubCategoryList';
 import { mockCategories as mockData } from '../../../data/catalog/contatct';
 import ROUTES from '../../../constants/routers';
 import { useWindowSize } from '../../../hooks/useWindowSize';

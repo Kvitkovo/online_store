@@ -9,6 +9,8 @@ import IconButton from '../../../../ui-kit/components/IconButton';
 import { navigationItems } from '../../../Header/navigationItems';
 import NavigationMenu from '../NavigationMenu';
 import Catalog from '../../../../common/Catalog';
+// eslint-disable-next-line max-len
+import ModalCatalog from '../../../../common/Catalog/components/ModalCatalog/ModalCatalog';
 
 const OpenMenu = ({ toggleMenu }) => {
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
@@ -36,7 +38,11 @@ const OpenMenu = ({ toggleMenu }) => {
             icon={<ICONS.mobileCatalogue />}
             onClick={catalogHandler}
           />
-          {isCatalogOpened && <Catalog setIsOpen={setIsCatalogOpened} />}
+          {isCatalogOpened && (
+            <ModalCatalog category="Каталог товарів">
+              <Catalog setIsOpen={setIsCatalogOpened} />
+            </ModalCatalog>
+          )}
         </div>
         <NavigationMenu items={navigationItems} menuType="BurgerMenu" />
         <div className={styles.divider}>

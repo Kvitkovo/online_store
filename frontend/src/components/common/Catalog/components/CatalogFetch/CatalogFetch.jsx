@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Catalog from './Catalog';
+import Catalog from '../../Catalog';
 import { useParams } from 'react-router-dom';
 // eslint-disable-next-line max-len
-import { GetCategories } from '../../../services/catalog/categoryAccess.service';
+import { GetCategories } from '../../../../../services/catalog/categoryAccess.service';
 
 const CatalogFetch = ({ setIsOpen }) => {
   const { sortValue } = useParams();
