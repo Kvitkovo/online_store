@@ -1,6 +1,7 @@
 import React from 'react';
 import CatalogItem from '../CatalogItem/CatalogItem';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import styles from '../../Catalog.module.scss';
 
 const SubCategories = ({
   depthLevel,
@@ -11,7 +12,7 @@ const SubCategories = ({
   const { width } = useWindowSize();
 
   return (
-    <ul style={{ padding: width > 481 ? 22 : 0 }}>
+    <ul className={styles.categoryList}>
       {width > 481
         ? subCategories?.length > 0 &&
           subCategories.map((child) => (

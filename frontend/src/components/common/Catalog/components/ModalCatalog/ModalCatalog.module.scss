@@ -14,13 +14,7 @@
 .drawer {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    188deg,
-    #6ec660 -112.86%,
-    #fff 27.91%,
-    #fff 57.77%,
-    #6ec660 236.93%
-  );
+  background: $background-gradient;
   position: absolute;
   left: 0;
   right: 0;
@@ -30,8 +24,11 @@
 }
 
 .iconWraper {
-  display: flex;
+  display: inline-flex;
+  padding: 9px 16px;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
+  gap: 84px;
+  background: $white-color;
+  height: 56px;
 }
