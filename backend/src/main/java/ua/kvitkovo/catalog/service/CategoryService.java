@@ -1,6 +1,9 @@
 package ua.kvitkovo.catalog.service;
 
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -12,16 +15,10 @@ import ua.kvitkovo.catalog.dto.response.CategoryResponseDto;
 import ua.kvitkovo.catalog.entity.Category;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 import ua.kvitkovo.catalog.repository.CategoryRepository;
-import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Andriy Gaponov
@@ -33,7 +30,6 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDtoMapper categoryMapper;
-    private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
     public Collection<CategoryResponseDto> getAll() {
@@ -43,17 +39,17 @@ public class CategoryService {
 
     public CategoryResponseDto findById(long id) throws ItemNotFoundException {
         return categoryRepository.findById(id)
-                .map(categoryMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Category not found"));
+            .map(categoryMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Category not found"));
     }
 
     @Transactional
     public CategoryResponseDto addCategory(CategoryRequestDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
-        }
+        ErrorUtils.checkItemNotCreatedException(bindingResult);
+
         Category category = categoryMapper.mapDtoRequestToEntity(dto);
-        category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        category.setAlias(
+            transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         if (dto.getParentId() > 0) {
             category.setParent(categoryMapper.mapDtoToEntity(findById(dto.getParentId())));
         }
@@ -81,15 +77,14 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
-        }
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto dto,
+        BindingResult bindingResult) {
+        ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
         CategoryResponseDto categoryResponseDto = findById(id);
         if (!Objects.equals(dto.getName(), categoryResponseDto.getName())) {
             categoryResponseDto.setAlias(
-                    transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, categoryResponseDto, Helper.getNullPropertyNames(dto));
 
