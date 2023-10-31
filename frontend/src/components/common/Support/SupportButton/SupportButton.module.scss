@@ -1,0 +1,26 @@
+@import '../../../../mixins';
+
+.supportButtonContainer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+  top: 70vh;
+  right: 43px;
+  height: 164px;
+}
+
+.additionalButtons {
+  display: none;
+}
+.visible {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@include sm {
+  .supportButtonContainer {
+    right: 16px;
+  }
+}

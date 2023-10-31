@@ -29,6 +29,7 @@ export const mockCategories = [
     bg: '/images/catalog-images/background/bukety_z_kvitiv.png',
     icon: <ICONS.bukety_z_kvitiv />,
   },
+
   {
     id: 3,
     name: 'Квіти поштучно',
