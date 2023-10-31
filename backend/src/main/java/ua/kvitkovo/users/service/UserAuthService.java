@@ -327,6 +327,7 @@ public class UserAuthService {
             user.setStatus(UserStatus.ACTIVE);
             user.setId(null);
 
+            user.setEmailConfirmed(true);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             userRepository.save(user);
