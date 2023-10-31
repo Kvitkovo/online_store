@@ -82,4 +82,13 @@ public class CategoryResponseDto {
     public int getSortValue() {
         return sortValue;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                '}';
+    }
 }

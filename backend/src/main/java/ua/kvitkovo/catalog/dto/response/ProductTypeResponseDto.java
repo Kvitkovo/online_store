@@ -34,4 +34,13 @@ public class ProductTypeResponseDto {
     public String getAlias() {
         return alias;
     }
+
+    @Override
+    public String toString() {
+        return "ProductTypeResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                '}';
+    }
 }

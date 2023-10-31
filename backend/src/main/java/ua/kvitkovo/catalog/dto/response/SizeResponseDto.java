@@ -46,4 +46,15 @@ public class SizeResponseDto {
     public int getMax() {
         return max;
     }
+
+    @Override
+    public String toString() {
+        return "SizeResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                ", min=" + min +
+                ", max=" + max +
+                '}';
+    }
 }
