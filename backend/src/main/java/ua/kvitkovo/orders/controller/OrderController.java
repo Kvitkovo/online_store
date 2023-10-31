@@ -58,9 +58,9 @@ public class OrderController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Color with id - {}.", id);
+        log.debug("Received request to get the Color with id - {}.", id);
         OrderResponseDto orderResponseDto = orderService.findById(id);
-        log.info("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
+        log.debug("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
         return orderResponseDto;
     }
 
@@ -82,9 +82,9 @@ public class OrderController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Color with id - {}.", id);
+        log.debug("Received request to get the Color with id - {}.", id);
         OrderAdminResponseDto orderResponseDto = orderService.findByIdForAdmin(id);
-        log.info("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
+        log.debug("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
         return orderResponseDto;
     }
 
@@ -106,7 +106,7 @@ public class OrderController {
             schema = @Schema(type = "string")
         ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection
     ) {
-        log.info("Received request to get current user Orders.");
+        log.debug("Received request to get current user Orders.");
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
             "created");
         return orderService.getActiveOrdersForCurrentUser(pageable);
@@ -130,7 +130,7 @@ public class OrderController {
             schema = @Schema(type = "string")
         ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection
     ) {
-        log.info("Received request to get all Orders.");
+        log.debug("Received request to get all Orders.");
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
             "created");
         return orderService.getAllOrders(pageable);
@@ -155,7 +155,7 @@ public class OrderController {
         ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
         @PathVariable Long id
     ) {
-        log.info("Received request to get user with ID {} Orders.", id);
+        log.debug("Received request to get user with ID {} Orders.", id);
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
             "created");
         return orderService.getAllOrdersForUser(pageable, id);
@@ -190,7 +190,7 @@ public class OrderController {
     public OrderResponseDto addOrder(
         @RequestBody @Valid @NotNull(message = "Request body is mandatory") final OrderRequestDto request,
         BindingResult bindingResult) {
-        log.info("Received request to create Order - {}.", request);
+        log.debug("Received request to create Order - {}.", request);
         return orderService.addOrder(request, bindingResult);
     }
 
@@ -222,7 +222,7 @@ public class OrderController {
     @PutMapping("/{ordersID}/setStatus")
     public List<OrderResponseDto> setOrdersStatus(@PathVariable List<Long> ordersID,
         @RequestParam OrderStatus status) {
-        log.info("Received request to set Orders with ids {} status {}.", ordersID, status);
+        log.debug("Received request to set Orders with ids {} status {}.", ordersID, status);
         return orderService.updateOrdersStatus(ordersID, status);
     }
 
@@ -247,7 +247,7 @@ public class OrderController {
     })
     @PutMapping("/{id}/cancel")
     public OrderResponseDto cancelOrder(@PathVariable Long id) {
-        log.info("Received request to cancel order with id {} status {}.", id);
+        log.debug("Received request to cancel order with id {} status {}.", id);
         return orderService.cancelOrder(id);
     }
 
@@ -282,7 +282,7 @@ public class OrderController {
             schema = @Schema(type = "integer", format = "int64")
         )
         @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Order - {} with id {}.", request, id);
+        log.debug("Received request to update Order - {} with id {}.", request, id);
         return orderService.updateOrder(id, request, bindingResult);
     }
 }

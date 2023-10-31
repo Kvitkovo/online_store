@@ -48,13 +48,13 @@ public class ProductTypeController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Collection<ProductTypeResponseDto>> getAll() {
-        log.info("Received request to get all Product types.");
+        log.debug("Received request to get all Product types.");
         Collection<ProductTypeResponseDto> productTypeResponseDtos = productTypeService.getAll();
         if (productTypeResponseDtos.isEmpty()) {
-            log.info("Product types are absent.");
+            log.debug("Product types are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.info("All Product types were retrieved - {}.", productTypeResponseDtos);
+        log.debug("All Product types were retrieved - {}.", productTypeResponseDtos);
         return ResponseEntity.ok().body(productTypeResponseDtos);
     }
 
@@ -76,9 +76,9 @@ public class ProductTypeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Product type with id - {}.", id);
+        log.debug("Received request to get the Product type with id - {}.", id);
         ProductTypeResponseDto productTypeResponseDto = productTypeService.findById(id);
-        log.info("the Product type with id - {} was retrieved - {}.", id, productTypeResponseDto);
+        log.debug("the Product type with id - {} was retrieved - {}.", id, productTypeResponseDto);
         return productTypeResponseDto;
     }
 
@@ -106,7 +106,7 @@ public class ProductTypeController {
     @ResponseBody
     public ProductTypeResponseDto addProductType(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductTypeRequestDto request, BindingResult bindingResult) {
-        log.info("Received request to create Product type - {}.", request);
+        log.debug("Received request to create Product type - {}.", request);
         return productTypeService.addProductType(request, bindingResult);
     }
 
@@ -141,7 +141,7 @@ public class ProductTypeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Product type - {} with id {}.", request, id);
+        log.debug("Received request to update Product type - {} with id {}.", request, id);
         return productTypeService.updateProductType(id, request, bindingResult);
     }
 
@@ -168,9 +168,9 @@ public class ProductTypeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete Product type with id - {}.", id);
+        log.debug("Received request to delete Product type with id - {}.", id);
         productTypeService.deleteProductType(id);
-        log.info("the Product type with id - {} was deleted.", id);
+        log.debug("the Product type with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

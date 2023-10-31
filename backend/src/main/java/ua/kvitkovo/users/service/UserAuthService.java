@@ -89,7 +89,7 @@ public class UserAuthService {
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION, fields, registeredUser);
 
-        log.info("IN register - user: {} successfully registered", registeredUser);
+        log.debug("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
@@ -130,7 +130,7 @@ public class UserAuthService {
         user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
-        log.info("user: {} successfully created", registeredUser);
+        log.debug("user: {} successfully created", registeredUser);
 
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForConfirmEmailMessage(registeredUser),
@@ -178,7 +178,7 @@ public class UserAuthService {
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
                 () -> new ItemNotFoundException("Verification code not found")
         );
-        log.info("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
+        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
         user.setStatus(UserStatus.ACTIVE);
@@ -295,14 +295,14 @@ public class UserAuthService {
             GoogleIdToken.Payload payload = idToken.getPayload();
 
             String userId = payload.getSubject();
-            log.info("User ID: " + userId);
+            log.debug("User ID: " + userId);
 
             String email = payload.getEmail();
             String name = (String) payload.get("name");
             String familyName = (String) payload.get("family_name");
             String givenName = (String) payload.get("given_name");
 
-            log.info("Name: " + name);
+            log.debug("Name: " + name);
             return getUserFromGoogle(email, givenName, familyName);
         } else {
             throw new Exception("Invalid ID token.");

@@ -52,9 +52,9 @@ public class ImageController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Image with id - {}.", id);
+        log.debug("Received request to get the Image with id - {}.", id);
         ImageResponseDto imageResponseDto = imageService.findById(id);
-        log.info("the Image with id - {} was retrieved - {}.", id, imageResponseDto);
+        log.debug("the Image with id - {} was retrieved - {}.", id, imageResponseDto);
         return imageResponseDto;
     }
 
@@ -113,7 +113,7 @@ public class ImageController {
             )
             @RequestParam("id") long id,
             @RequestParam("file") MultipartFile file) {
-        log.info("Received request to create Image");
+        log.debug("Received request to create Image");
         ImageRequestDto imageRequestDto = ImageRequestDto.builder()
                 .productId(id)
                 .file(file)
@@ -146,9 +146,9 @@ public class ImageController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete Image with id - {}.", id);
+        log.debug("Received request to delete Image with id - {}.", id);
         imageService.deleteImageById(id);
-        log.info("the Image with id - {} was deleted.", id);
+        log.debug("the Image with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -175,9 +175,9 @@ public class ImageController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete Image with id - {}.", id);
+        log.debug("Received request to delete Image with id - {}.", id);
         imageService.deleteImagesByProductId(id);
-        log.info("the Image with id - {} was deleted.", id);
+        log.debug("the Image with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -207,7 +207,7 @@ public class ImageController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to set main Image with id {}.", id);
+        log.debug("Received request to set main Image with id {}.", id);
         return imageService.setMainImage(id);
     }
 }

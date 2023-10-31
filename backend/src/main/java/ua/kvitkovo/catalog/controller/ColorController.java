@@ -48,13 +48,13 @@ public class ColorController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Collection<ColorResponseDto>> getAll() {
-        log.info("Received request to get all Colors.");
+        log.debug("Received request to get all Colors.");
         Collection<ColorResponseDto> colorResponseDtos = colorService.getAll();
         if (colorResponseDtos.isEmpty()) {
-            log.info("Colors are absent.");
+            log.debug("Colors are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.info("All Colors were retrieved - {}.", colorResponseDtos);
+        log.debug("All Colors were retrieved - {}.", colorResponseDtos);
         return ResponseEntity.ok().body(colorResponseDtos);
     }
 
@@ -76,9 +76,9 @@ public class ColorController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Color with id - {}.", id);
+        log.debug("Received request to get the Color with id - {}.", id);
         ColorResponseDto colorResponseDto = colorService.findById(id);
-        log.info("the Color with id - {} was retrieved - {}.", id, colorResponseDto);
+        log.debug("the Color with id - {} was retrieved - {}.", id, colorResponseDto);
         return colorResponseDto;
     }
 
@@ -100,9 +100,9 @@ public class ColorController {
                     schema = @Schema(type = "string")
             )
             @PathVariable String name) {
-        log.info("Received request to get the Color with name - {}.", name);
+        log.debug("Received request to get the Color with name - {}.", name);
         ColorResponseDto colorResponseDto = colorService.findByName(name);
-        log.info("the Color with name - {} was retrieved - {}.", name, colorResponseDto);
+        log.debug("the Color with name - {} was retrieved - {}.", name, colorResponseDto);
         return colorResponseDto;
     }
 
@@ -134,7 +134,7 @@ public class ColorController {
     @ResponseBody
     public ColorResponseDto addColor(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ColorRequestDto request, BindingResult bindingResult) {
-        log.info("Received request to create Color - {}.", request);
+        log.debug("Received request to create Color - {}.", request);
         return colorService.addColor(request, bindingResult);
     }
 
@@ -169,7 +169,7 @@ public class ColorController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Color - {} with id {}.", request, id);
+        log.debug("Received request to update Color - {} with id {}.", request, id);
         return colorService.updateColor(id, request, bindingResult);
     }
 
@@ -196,9 +196,9 @@ public class ColorController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete Color with id - {}.", id);
+        log.debug("Received request to delete Color with id - {}.", id);
         colorService.deleteColor(id);
-        log.info("the Color with id - {} was deleted.", id);
+        log.debug("the Color with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

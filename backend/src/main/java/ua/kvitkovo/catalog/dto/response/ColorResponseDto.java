@@ -33,4 +33,13 @@ public class ColorResponseDto {
     public String getAlias() {
         return alias;
     }
+
+    @Override
+    public String toString() {
+        return "ColorResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                '}';
+    }
 }
