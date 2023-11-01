@@ -10,18 +10,24 @@ const CatalogItem = ({
   category,
   handleCategoryClick,
   setHoveredCategory,
+  toggleMenu,
 }) => {
   const { width } = useWindowSize();
   const { sortValue, children, bg, name, link, hasSubCategory, icon } =
     category;
+
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const nameParts = name.split(' ');
   const firstPart = nameParts[0];
   const restParts = nameParts.slice(1).join(' ');
 
-  const toggleSubCategory = () => {
+  const handleClick = () => {
     if (width <= 481) {
-      setIsSubCategoryOpen(!isSubCategoryOpen);
+      isSubCategoryOpen
+        ? setIsSubCategoryOpen(false)
+        : children && children.length > 0
+        ? setIsSubCategoryOpen(true)
+        : handleCategoryClick(link);
     } else {
       handleCategoryClick(link);
     }
@@ -29,13 +35,12 @@ const CatalogItem = ({
 
   return (
     <>
-      <li key={sortValue} className={styles.categoryItemWrapper}>
+      <li
+        key={sortValue}
+        className={styles.categoryItemWrapper}
+        onClick={handleClick}
+      >
         <a
-          onClick={
-            isSubCategoryOpen
-              ? () => handleCategoryClick(link)
-              : toggleSubCategory
-          }
           className={styles.categoryLink}
           onMouseOver={() =>
             setHoveredCategory
@@ -59,8 +64,8 @@ const CatalogItem = ({
           {hasSubCategory && <ICONS.hideList className={styles.icon} />}
         </a>
       </li>
-      {isSubCategoryOpen && children && children.length > 0 && (
-        <ModalCatalog category={name}>
+      {isSubCategoryOpen && (
+        <ModalCatalog category={name} onClick={toggleMenu}>
           <SubCategories
             categories={children}
             depthLevel={depthLevel}

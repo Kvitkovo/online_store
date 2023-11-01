@@ -39,7 +39,7 @@ const OpenMenu = ({ toggleMenu }) => {
             onClick={catalogHandler}
           />
           {isCatalogOpened && (
-            <ModalCatalog category="Каталог товарів">
+            <ModalCatalog category="Каталог товарів" onClick={toggleMenu}>
               <Catalog setIsOpen={setIsCatalogOpened} />
             </ModalCatalog>
           )}

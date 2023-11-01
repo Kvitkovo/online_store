@@ -1,12 +1,12 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { ICONS } from '../../../../ui-kit/icons';
 import styles from './ModalCatalog.module.scss';
 import ButtonBack from '../ButtonBack/ButtonBack';
 import { useLocation } from 'react-router-dom';
 
-const ModalCatalog = memo(({ children, category }) => {
+const ModalCatalog = ({ children, category, onClick }) => {
   const location = useLocation();
-  const buttonBack = location.state?.from ?? `/home`;
+  const buttonBack = location.state?.from ?? `/`;
 
   return (
     <div className={styles.overlay}>
@@ -17,7 +17,10 @@ const ModalCatalog = memo(({ children, category }) => {
             <p>{category}</p>
           </div>
           <div>
-            <button style={{ border: 'none', background: 'transparent' }}>
+            <button
+              style={{ border: 'none', background: 'transparent' }}
+              onClick={onClick}
+            >
               <ICONS.closeMobile />
             </button>
           </div>
@@ -27,6 +30,6 @@ const ModalCatalog = memo(({ children, category }) => {
       </div>
     </div>
   );
-});
+};
 
 export default ModalCatalog;
