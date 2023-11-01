@@ -10,7 +10,7 @@ import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';
 
-const CartItem = ({ items, count }) => {
+const CartItem = ({ items }) => {
   const cart = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const { width } = useWindowSize();
@@ -18,6 +18,7 @@ const CartItem = ({ items, count }) => {
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart(cartItem));
   };
+
   return (
     <div className={styles.itemsBlock}>
       {cart.map((item, index) => (
@@ -44,7 +45,8 @@ const CartItem = ({ items, count }) => {
                   />
                 </div>
               )}
-              <CountBlock count={count} />
+              <CountBlock item={item} />
+
               <DiscountPrice
                 oldPrice={item.oldPrice}
                 actualPrice={item.price}
