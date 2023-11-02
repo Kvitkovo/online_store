@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
 import Divider from '../../../../ui-kit/components/Divider';
@@ -11,7 +11,6 @@ import { ICONS } from '../../../../ui-kit/icons';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';
 
 const CartItem = ({ items }) => {
-  const cart = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
@@ -21,7 +20,7 @@ const CartItem = ({ items }) => {
 
   return (
     <div className={styles.itemsBlock}>
-      {cart.map((item, index) => (
+      {items.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className={styles.item}>
             <div className={styles.leftBlock}>
