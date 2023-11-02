@@ -24,10 +24,12 @@
 .loginBtn {
   color: $page-accent-color;
   border-bottom: 2px solid $page-accent-color;
+  cursor: pointer;
 }
 
 .registerBtn {
   color: $text-color;
+  cursor: pointer;
   &:hover {
     color: $page-accent-color;
   }
@@ -82,13 +84,12 @@
 }
 .googleLogin {
   margin: 16px 0 16px 0;
-  width: 312px;
 }
-
 .resetPassword {
   color: $page-accent-color;
   line-height: 130%;
   padding: 8px;
+  cursor: pointer;
 }
 .errorMessage {
   color: $discount-color;

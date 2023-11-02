@@ -39,6 +39,11 @@
   height: fit-content;
 }
 
+.resetPassword {
+  width: 634px;
+  height: 200px;
+}
+
 @include sm {
   .drawer {
     overflow-y: auto;

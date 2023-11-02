@@ -24,10 +24,12 @@
 .registerBtn {
   color: $page-accent-color;
   border-bottom: 2px solid $page-accent-color;
+  cursor: pointer;
 }
 
 .loginBtn {
   color: $text-color;
+  cursor: pointer;
   &:hover {
     color: $page-accent-color;
   }
@@ -85,13 +87,7 @@
   width: 312px;
 }
 
-.resetPassword {
-  color: $page-accent-color;
-  line-height: 130%;
-  padding: 8px;
-}
 .errorMessage {
   color: $discount-color;
   font-size: 12px;
-  line-height: 200%;
 }

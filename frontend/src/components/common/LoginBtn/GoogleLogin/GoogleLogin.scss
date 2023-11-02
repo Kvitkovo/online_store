@@ -1,0 +1,20 @@
+@import '../../../../variables';
+
+.nsm7Bb-HzV7m-LgbsSe {
+  padding: 12px 14px 12px 23px;
+  background-color: $white-color;
+  border: 1px solid $page-accent-color;
+  border-radius: 8px;
+  &:hover {
+    background-color: $page-background-color;
+  }
+  &:active {
+    border: 1px solid $active-color;
+  }
+}
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  font-family: $font-main;
+  color: $text-color;
+  font-size: 18px;
+  font-weight: 500;
+}

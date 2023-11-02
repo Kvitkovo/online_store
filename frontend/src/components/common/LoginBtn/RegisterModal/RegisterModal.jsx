@@ -72,7 +72,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                   id="email"
                   className={styles.dataInput}
                   type="email"
-                  pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                  pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
                   placeholder="Введіть електронну пошту"
                   value={email}
                   onChange={(e) => setEmail(e.target.value.trim())}
@@ -124,24 +124,6 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                 type="submit"
                 onClick={handleSubmit}
               />
-            </div>
-            <div>
-              <p>або</p>
-            </div>
-            <div className={styles.googleLogin}>
-              <Button
-                variant="secondary"
-                label="Увійти через google"
-                padding="padding-sm"
-                icon={<ICONS.googleIcon />}
-                reverse="true"
-                isFullWidth={true}
-                onClick={() => alert('clicked add')}
-              />
-            </div>
-
-            <div className={styles.resetPassword}>
-              <p>Забули пароль?</p>
             </div>
           </form>
         </div>

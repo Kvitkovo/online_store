@@ -4,11 +4,14 @@ import styles from './LoginModal.module.scss';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
+import ResetPassword from '../ResetPassword/ResetPassword';
+import GoogleLogin from '../GoogleLogin/GoogleLogin';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -22,6 +25,9 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     if (validateEmail(email) && password) {
       alert('Form submitted');
     }
+  };
+  const toggleReset = () => {
+    setResetPassword((prev) => !prev);
   };
 
   return (
@@ -102,20 +108,13 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               <p>або</p>
             </div>
             <div className={styles.googleLogin}>
-              <Button
-                variant="secondary"
-                label="Увійти через google"
-                padding="padding-sm"
-                icon={<ICONS.googleIcon />}
-                reverse="true"
-                isFullWidth={true}
-                onClick={() => alert('clicked add')}
-              />
+              <GoogleLogin />
             </div>
 
             <div className={styles.resetPassword}>
-              <p>Забули пароль?</p>
+              <p onClick={toggleReset}>Забули пароль?</p>
             </div>
+            {resetPassword && <ResetPassword toggleReset={toggleReset} />}
           </form>
         </div>
       </Modals>
