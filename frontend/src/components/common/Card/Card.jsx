@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './Card.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
@@ -11,6 +11,7 @@ import { addToCart } from '../../../redux/slices/cartSlice';
 
 const Card = (props) => {
   const dispatch = useDispatch();
+  const [inCart, setInCart] = useState(false);
 
   const handleCardClick = () => {
     window.scrollTo(0, 0);
@@ -18,6 +19,7 @@ const Card = (props) => {
 
   const handleAddToCart = (props) => {
     dispatch(addToCart(props));
+    setInCart(true);
   };
 
   return (
@@ -67,11 +69,16 @@ const Card = (props) => {
               }
             >
               {props.bouquet && <IconButton icon={<ICONS.BouquetIcon />} />}
-              <IconButton
-                icon={<ICONS.CartIcon />}
-                isBorderYellow={true}
-                onClick={() => handleAddToCart(props)}
-              />
+              {!inCart && (
+                <IconButton
+                  icon={<ICONS.CartIcon />}
+                  isBorderYellow={true}
+                  onClick={() => handleAddToCart(props)}
+                />
+              )}
+              {inCart && (
+                <IconButton icon={<ICONS.InCartIcon />} isBorderGreen={true} />
+              )}
             </div>
           </div>
         </div>
