@@ -14,10 +14,14 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog/Catalog';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+  const count = useSelector(
+    (state) => state.cartSliceReducer.cartTotalQuantity,
+  );
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -119,7 +123,7 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
-              <div className={styles.cartQuantity}>1</div>
+              <div className={styles.cartQuantity}>{count}</div>
             </div>
           </div>
         </div>
