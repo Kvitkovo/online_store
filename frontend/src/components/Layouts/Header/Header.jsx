@@ -119,6 +119,7 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
+              <div className={styles.cartQuantity}>1</div>
             </div>
           </div>
         </div>

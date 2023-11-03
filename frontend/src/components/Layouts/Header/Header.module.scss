@@ -103,10 +103,24 @@ header {
 .cart {
   cursor: pointer;
   margin: 0 0 8px 8px;
+  display: flex;
 }
 .btnCatalogue {
   position: relative;
 }
+.cartQuantity {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background-color: #de5f38;
+  color: white;
+  font-size: 10px;
+  text-align: center;
+  position: relative;
+  left: -8px;
+  top: -6px;
+}
+
 @include md {
   header {
     .logoLink {
