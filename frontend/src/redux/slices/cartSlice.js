@@ -51,7 +51,7 @@ const cartSlice = createSlice({
       let quantity = 0;
       state.cartItems.forEach((item) => {
         total += item.price * item.cardQuantity;
-        quantity += 1;
+        quantity += item.cardQuantity;
       });
       state.cartTotalAmount = total;
       state.cartTotalQuantity = quantity;
