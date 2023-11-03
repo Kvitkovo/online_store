@@ -1,6 +1,7 @@
 package ua.kvitkovo.feedback.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -91,5 +92,29 @@ public class FeedbackMessageController {
             BindingResult bindingResult) {
         log.info("Received request to create Feedback message - {}.", request);
         return feedbackService.addPhoneFeedback(request, bindingResult);
+    }
+
+    @Operation(summary = "Get Feedback message by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = FeedbackMessageResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Feedback message not found", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @GetMapping("/{id}")
+    @ResponseBody
+    public FeedbackMessageResponseDto getFeedbackMessageById(
+            @Parameter(description = "The ID of the Feedback message to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
+        log.info("Received request to get the Feedback message with id - {}.", id);
+        FeedbackMessageResponseDto dto = feedbackService.findById(id);
+        log.info("the Feedback message with id - {} was retrieved - {}.", id, dto);
+        return dto;
     }
 }

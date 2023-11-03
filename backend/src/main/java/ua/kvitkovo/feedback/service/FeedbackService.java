@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
@@ -67,6 +68,10 @@ public class FeedbackService {
         return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
 
+    public FeedbackMessageResponseDto findById(Long id) {
+        return feedbackDtoMapper.mapEntityToDto(getFeedbackMessage(id));
+    }
+
     private void fillAuthorToMessage(FeedbackMessage feedbackMessage) {
         try {
             UserResponseDto currentUser = userService.getCurrentUser();
@@ -77,4 +82,8 @@ public class FeedbackService {
         }
     }
 
+    private FeedbackMessage getFeedbackMessage(long id) {
+        return feedbackRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Feedback message not found"));
+    }
 }
