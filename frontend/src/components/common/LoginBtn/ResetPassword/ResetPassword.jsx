@@ -4,7 +4,7 @@ import Modals from '../../Modals';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 
-const ResetPassword = ({ toggleReset }) => {
+const ResetPassword = ({ toggleReset, userEmail }) => {
   return (
     <div>
       <>
@@ -16,7 +16,7 @@ const ResetPassword = ({ toggleReset }) => {
             </div>
 
             <p className={styles.email}>Ел. пошта</p>
-            <p className={styles.emailExample}>example@gmail.com</p>
+            <p className={styles.emailExample}>{userEmail}</p>
             <p className={styles.textConfirmation}>
               Посилання на відновлення пароля відправлено на вказану ел. пошту.
             </p>

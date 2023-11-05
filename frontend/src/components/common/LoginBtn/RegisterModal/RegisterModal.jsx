@@ -4,6 +4,7 @@ import styles from './RegisterModal.module.scss';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
+import axios from 'axios';
 
 const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [name, setName] = useState('');
@@ -18,15 +19,43 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   };
 
   const validatePassword = (value) => {
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordPattern.test(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (validateEmail(email) && validatePassword(password) && name) {
-      alert('Registered');
+      try {
+        const response = await axios.post(
+          'https://api.imperiaholoda.com.ua:4446/v1/auth/register',
+          {
+            name: name,
+            email: email,
+            password: password,
+          },
+        );
+        if (response.status === 200) {
+          alert('Registration successful');
+        } else {
+          alert('Registration failed');
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error(
+            'An error occurred during registration. Status:',
+            error.response.status,
+          );
+          console.error('Response data:', error.response.data);
+        } else {
+          console.error(
+            'An error occurred during registration:',
+            error.message,
+          );
+        }
+        alert('Registration failed');
+      }
     }
   };
   return (
@@ -55,7 +84,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                 <input
                   id="name"
                   className={styles.dataInput}
-                  type="name"
+                  type="text"
                   placeholder="Введіть ваше ім’я"
                   onChange={(e) => setName(e.target.value.trim())}
                 />
@@ -72,7 +101,6 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                   id="email"
                   className={styles.dataInput}
                   type="email"
-                  pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
                   placeholder="Введіть електронну пошту"
                   value={email}
                   onChange={(e) => setEmail(e.target.value.trim())}
@@ -109,7 +137,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                 {submitted && password && !validatePassword(password) && (
                   <p className={styles.errorMessage}>
                     Пароль має бути не менше 8 символів, містити латинські
-                    літери та мінімум одну цифру
+                    літери, мінімум одну велику літеру, та мінімум одну цифру
                   </p>
                 )}
               </div>
