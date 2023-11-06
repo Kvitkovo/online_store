@@ -1,12 +1,14 @@
 package ua.kvitkovo.feedback.service;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.decor.entity.Decor;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
@@ -16,6 +18,7 @@ import ua.kvitkovo.feedback.entity.FeedbackMessage;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
+import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
@@ -74,6 +77,30 @@ public class FeedbackService {
         return feedbackDtoMapper.mapEntityToDto(getFeedbackMessage(id));
     }
 
+    public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable,
+        MessageStatus status) {
+        Page<FeedbackMessage> messages = feedbackRepository.findByStatus(status, pageable);
+        if (messages.isEmpty()) {
+            return Page.empty();
+        } else {
+            return messages.map(feedbackDtoMapper::mapEntityToDto);
+        }
+    }
+
+    public List<FeedbackMessageResponseDto> setFeedbackMessageStatus(List<Long> messageIDs,
+        MessageStatus status) {
+        List<FeedbackMessage> messages = messageIDs.stream()
+            .map(id -> feedbackRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("Feedback message not found")))
+            .toList();
+
+        for (FeedbackMessage message : messages) {
+            message.setStatus(status);
+            feedbackRepository.save(message);
+        }
+        return feedbackDtoMapper.mapEntityToDto(messages);
+    }
+
     private void fillAuthorToMessage(FeedbackMessage feedbackMessage) {
         try {
             UserResponseDto currentUser = userService.getCurrentUser();
@@ -87,9 +114,5 @@ public class FeedbackService {
     private FeedbackMessage getFeedbackMessage(long id) {
         return feedbackRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Feedback message not found"));
-    }
-
-    public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable, MessageStatus status) {
-        return null;
     }
 }

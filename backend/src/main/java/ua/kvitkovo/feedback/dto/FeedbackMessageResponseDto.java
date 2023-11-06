@@ -1,5 +1,7 @@
 package ua.kvitkovo.feedback.dto;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.*;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
@@ -11,6 +13,8 @@ import ua.kvitkovo.feedback.entity.MessageType;
 @AllArgsConstructor
 public class FeedbackMessageResponseDto {
 
+    private Long id;
+    private LocalDateTime created;
     private Long managerId;
     private Long authorId;
     private String userName;

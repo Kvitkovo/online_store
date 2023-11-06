@@ -2,6 +2,7 @@ package ua.kvitkovo.feedback.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.service.FeedbackService;
+import ua.kvitkovo.orders.dto.OrderResponseDto;
+import ua.kvitkovo.orders.entity.OrderStatus;
 
 @Tag(name = "Feedback", description = "the feedback messages API")
 @Slf4j
@@ -138,14 +142,48 @@ public class FeedbackMessageController {
                     schema = @Schema(type = "integer", defaultValue = "12")
             ) @RequestParam(defaultValue = "12") int size,
             @Parameter(description = "Sort direction (ASC, DESC)",
-                    schema = @Schema(type = "string")
+                schema = @Schema(type = "string")
             ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
-            @Parameter(description = "Message status"
-            ) @RequestParam(required = true) MessageStatus status
+        @Parameter(description = "Message status"
+        ) @RequestParam(required = true) MessageStatus status
     ) {
         log.debug("Received request to get all Feedback messages.");
         Pageable pageable = PageRequest.of(page - 1, size, Sort.Direction.valueOf(sortDirection),
-                "created");
+            "created");
         return feedbackService.getAllMessages(pageable, status);
+    }
+
+    @Operation(summary = "Set Feedback messages status")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(
+                mediaType = "application/json",
+                array = @ArraySchema(schema = @Schema(implementation = FeedbackMessageResponseDto.class))
+            )
+        }),
+        @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "404", description = "Some messages not found", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        })
+    })
+    @PutMapping("/{messageIDs}/setStatus")
+    public List<FeedbackMessageResponseDto> setFeedbackMessageStatus(
+        @PathVariable List<Long> messageIDs,
+        @RequestParam MessageStatus status) {
+        log.debug("Received request to set Feedback messages with ids {} status {}.", messageIDs,
+            status);
+        return feedbackService.setFeedbackMessageStatus(messageIDs, status);
     }
 }

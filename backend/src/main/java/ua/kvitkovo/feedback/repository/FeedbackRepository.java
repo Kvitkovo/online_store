@@ -1,6 +1,10 @@
 package ua.kvitkovo.feedback.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import ua.kvitkovo.feedback.entity.FeedbackMessage;
+import ua.kvitkovo.feedback.entity.MessageStatus;
 
 /**
  * @author Andriy Gaponov
@@ -8,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeedbackRepository extends FeedbackRepositoryBasic {
 
+    Page<FeedbackMessage> findByStatus(MessageStatus status, Pageable pageable);
 }
