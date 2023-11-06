@@ -2,7 +2,6 @@
 @import '../../../mixins';
 
 .container {
-  margin-bottom: 12px;
   padding: 24px 32px;
   overflow: hidden;
 }
@@ -23,10 +22,6 @@
   path {
     stroke: $text-color;
   }
-}
-
-.bottomBlock {
-  margin-top: auto;
 }
 
 .bottom {
@@ -57,7 +52,7 @@
 
 @include sm {
   .container {
-    padding: 16px;
+    padding: 0px;
     overflow: unset;
   }
   .title {
@@ -75,5 +70,8 @@
     b {
       margin: 0;
     }
+  }
+  .mobileBackground {
+    background: $background-gradient;
   }
 }

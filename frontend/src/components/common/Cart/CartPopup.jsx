@@ -30,7 +30,9 @@ const CartPopup = ({ toggleCart }) => {
             onClick={toggleCart}
           />
         </div>
-        {cart.length > 0 ? <CartItem items={cart} /> : <CartEmpty />}
+        <div className={styles.mobileBackground}>
+          {cart.length > 0 ? <CartItem items={cart} /> : <CartEmpty />}
+        </div>
       </div>
       <div className={styles.bottomBlock}>
         <Divider />
