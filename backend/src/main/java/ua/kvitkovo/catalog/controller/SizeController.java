@@ -48,13 +48,13 @@ public class SizeController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Collection<SizeResponseDto>> getAll() {
-        log.info("Received request to get all Sizes.");
+        log.debug("Received request to get all Sizes.");
         Collection<SizeResponseDto> sizeResponseDtos = sizeService.getAll();
         if (sizeResponseDtos.isEmpty()) {
-            log.info("Sizes are absent.");
+            log.debug("Sizes are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.info("All Sizes were retrieved - {}.", sizeResponseDtos);
+        log.debug("All Sizes were retrieved - {}.", sizeResponseDtos);
         return ResponseEntity.ok().body(sizeResponseDtos);
     }
 
@@ -76,9 +76,9 @@ public class SizeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the Size with id - {}.", id);
+        log.debug("Received request to get the Size with id - {}.", id);
         SizeResponseDto sizeResponseDto = sizeService.findById(id);
-        log.info("the Size with id - {} was retrieved - {}.", id, sizeResponseDto);
+        log.debug("the Size with id - {} was retrieved - {}.", id, sizeResponseDto);
         return sizeResponseDto;
     }
 
@@ -106,7 +106,7 @@ public class SizeController {
     @ResponseBody
     public SizeResponseDto addSize(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request, BindingResult bindingResult) {
-        log.info("Received request to create Size - {}.", request);
+        log.debug("Received request to create Size - {}.", request);
         return sizeService.addSize(request, bindingResult);
     }
 
@@ -141,7 +141,7 @@ public class SizeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update Size - {} with id {}.", request, id);
+        log.debug("Received request to update Size - {} with id {}.", request, id);
         return sizeService.updateSize(id, request, bindingResult);
     }
 
@@ -168,9 +168,9 @@ public class SizeController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete Size with id - {}.", id);
+        log.debug("Received request to delete Size with id - {}.", id);
         sizeService.deleteSize(id);
-        log.info("the Size with id - {} was deleted.", id);
+        log.debug("the Size with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

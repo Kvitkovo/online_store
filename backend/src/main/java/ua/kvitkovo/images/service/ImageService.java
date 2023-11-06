@@ -36,7 +36,6 @@ import java.util.Objects;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AwsService awsService;
     private final OrderService orderService;

@@ -1,6 +1,9 @@
 package ua.kvitkovo.catalog.service;
 
 import jakarta.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -14,14 +17,9 @@ import ua.kvitkovo.catalog.entity.Color;
 import ua.kvitkovo.catalog.repository.ColorRepository;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Andriy Gaponov
@@ -33,7 +31,6 @@ public class ColorService {
 
     private final ColorRepository colorRepository;
     private final ColorDtoMapper colorMapper;
-    private final ErrorUtils errorUtils;
     private final TransliterateUtils transliterateUtils;
 
     public Collection<ColorResponseDto> getAll() {
@@ -43,21 +40,20 @@ public class ColorService {
 
     public ColorResponseDto findById(long id) throws ItemNotFoundException {
         return colorRepository.findById(id)
-                .map(colorMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Color not found"));
+            .map(colorMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Color not found"));
     }
 
     public ColorResponseDto findByName(String name) throws ItemNotFoundException {
         return colorRepository.findByName(name)
-                .map(colorMapper::mapEntityToDto)
-                .orElseThrow(() -> new ItemNotFoundException("Color not found"));
+            .map(colorMapper::mapEntityToDto)
+            .orElseThrow(() -> new ItemNotFoundException("Color not found"));
     }
 
     @Transactional
     public ColorResponseDto addColor(ColorRequestDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
-        }
+        ErrorUtils.checkItemNotCreatedException(bindingResult);
+
         colorRepository.findByName(dto.getName())
             .ifPresent(color -> {
                 throw new ItemNotCreatedException("The color is already in the database");
@@ -73,9 +69,7 @@ public class ColorService {
 
     @Transactional
     public ColorResponseDto updateColor(Long id, ColorRequestDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
-        }
+        ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
         ColorResponseDto colorResponseDto = findById(id);
         if (!Objects.equals(dto.getName(), colorResponseDto.getName())) {
