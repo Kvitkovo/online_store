@@ -13,7 +13,7 @@ const InputSearch = memo(({ search, changeInput, clearInput }) => {
 
   return (
     <div className={styles.root}>
-      {width <= 767 ? (
+      {width <= 510 ? (
         <IconButton icon={<ICONS.back />} />
       ) : (
         <ICONS.search

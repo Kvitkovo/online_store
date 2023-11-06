@@ -62,10 +62,15 @@ const Header = () => {
           </div>
           <NavigationMenu items={navigationItems} menuType="Header" />
           <span className={styles.verticalLine}></span>
-          <div className={styles.accessIcon}>
-            <IconButton icon={<ICONS.person />} />
+          <div className={styles.tabletContacts}>
+            <div className={styles.tabletIcon}>
+              <IconButton icon={<ICONS.location />} />
+            </div>
+            <div className={styles.tabletIcon}>
+              <IconButton icon={<ICONS.phone />} />
+            </div>
           </div>
-          <button className={styles.btnLanguage}>Укр</button>
+          <p className={styles.language}>Укр</p>
         </div>
 
         <div

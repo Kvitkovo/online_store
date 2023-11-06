@@ -13,8 +13,10 @@ header {
 
 .containerTop {
   display: flex;
+  justify-content: center;
   align-items: center;
   height: 64px;
+  width: 100%;
 }
 .logoLink {
   height: 50px;
@@ -27,7 +29,7 @@ header {
 .contacts {
   display: flex;
   gap: 26px;
-  margin-right: 123px;
+  margin-right: 171px;
 }
 .location {
   display: flex;
@@ -47,26 +49,10 @@ header {
   height: 40px;
   margin: 0 12px;
 }
-.accessIcon {
-  display: flex;
-  padding: 6px;
-  margin-right: 12px;
-}
 
-.btnLanguage {
-  padding: 2px;
-  border-radius: 20px;
-  border: 1px solid $page-background-color;
-  background-color: $white-color;
-  font-size: 16px;
+.language {
   font-weight: 500;
-  font-family: $font-main;
-  color: $text-color;
-  padding: 2px 6px;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    border: 1px solid $page-accent-color;
-  }
+  line-height: 130%;
 }
 
 .containerBottom {
@@ -107,20 +93,27 @@ header {
 .btnCatalogue {
   position: relative;
 }
+.tabletContacts {
+  display: none;
+}
 @include md {
-  header {
-    .logoLink {
-      margin: 7px 174px 7px 47px;
-    }
-    .contacts {
-      display: none;
-    }
-    .btnCatalogue {
-      margin-left: 47px;
-    }
-    .searchField {
-      margin: 0 32px 0 43px;
-    }
+  .logoLink {
+    margin: 7px 170px 7px 0px;
+  }
+  .contacts {
+    display: none;
+  }
+
+  .searchField {
+    margin: 0 32px 0 43px;
+  }
+  .tabletContacts {
+    display: flex;
+    gap: 8px;
+    margin-right: 8px;
+  }
+  .tabletIcon {
+    padding: 6px;
   }
 }
 @include sm {
