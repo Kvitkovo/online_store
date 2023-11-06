@@ -3,6 +3,8 @@ package ua.kvitkovo.feedback.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -85,5 +87,9 @@ public class FeedbackService {
     private FeedbackMessage getFeedbackMessage(long id) {
         return feedbackRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Feedback message not found"));
+    }
+
+    public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable, MessageStatus status) {
+        return null;
     }
 }

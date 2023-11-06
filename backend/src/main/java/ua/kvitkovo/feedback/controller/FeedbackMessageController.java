@@ -11,12 +11,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
+import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.service.FeedbackService;
 
 @Tag(name = "Feedback", description = "the feedback messages API")
@@ -116,5 +121,31 @@ public class FeedbackMessageController {
         FeedbackMessageResponseDto dto = feedbackService.findById(id);
         log.info("the Feedback message with id - {} was retrieved - {}.", id, dto);
         return dto;
+    }
+
+    @Operation(summary = "Get all Feedback messages")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation")
+    })
+    @GetMapping
+    @ResponseBody
+    public Page<FeedbackMessageResponseDto> getAllMessages(
+
+            @Parameter(description = "Number of page (1..N)", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "1")
+            ) @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "The size of the page to be returned", required = true,
+                    schema = @Schema(type = "integer", defaultValue = "12")
+            ) @RequestParam(defaultValue = "12") int size,
+            @Parameter(description = "Sort direction (ASC, DESC)",
+                    schema = @Schema(type = "string")
+            ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
+            @Parameter(description = "Message status"
+            ) @RequestParam(required = true) MessageStatus status
+    ) {
+        log.debug("Received request to get all Feedback messages.");
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.Direction.valueOf(sortDirection),
+                "created");
+        return feedbackService.getAllMessages(pageable, status);
     }
 }
