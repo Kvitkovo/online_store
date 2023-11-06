@@ -23,29 +23,32 @@ const CartItem = ({ items }) => {
       {items.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className={styles.item}>
-            <div className={styles.leftBlock}>
-              <IconButton
-                icon={<ICONS.TrashIcon />}
-                onClick={() => {
-                  handleRemoveFromCart(item);
-                }}
-              />
-              <div className={styles.blockImg}>
-                <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
-              </div>
+            <IconButton
+              icon={<ICONS.TrashIcon />}
+              onClick={() => {
+                handleRemoveFromCart(item);
+              }}
+            />
+            <div className={styles.blockImg}>
+              <img src={item.image} alt={item.title} />
+              <span>{item.title}</span>
             </div>
-            <div className={styles.rightBlock}>
-              {item.status && (
-                <div className={styles.pencilIcon}>
-                  <IconButton
-                    icon={<ICONS.PencilIcon />}
-                    isBorderYellow={width > 767}
-                  />
-                </div>
-              )}
-              <CountBlock item={item} />
 
+            {item.status && (
+              <div className={styles.pencilIcon}>
+                <IconButton
+                  icon={<ICONS.PencilIcon />}
+                  isBorderYellow={width > 767}
+                />
+              </div>
+            )}
+
+            <CountBlock item={item} />
+            <div
+              className={`${
+                item.oldPrice === item.price ? styles.priceWithoutDiscount : ''
+              }`}
+            >
               <DiscountPrice
                 oldPrice={item.oldPrice}
                 actualPrice={item.price}

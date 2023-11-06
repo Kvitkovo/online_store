@@ -2,7 +2,7 @@
 @import '../../../../../mixins';
 
 .itemsBlock {
-  padding-right: 15px;
+  padding-right: 12px;
   margin-top: 24px;
   overflow-y: auto;
   height: 467px;
@@ -28,13 +28,13 @@
 
 .item {
   height: 98px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.leftBlock {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 16fr 5fr 5fr;
+  grid-column-gap: 31px;
   align-items: center;
+}
+.priceWithoutDiscount {
+  margin-top: -34px;
 }
 
 .blockImg {
@@ -44,19 +44,12 @@
   img {
     width: 96px;
     height: 98px;
-    margin-left: 31px;
-    margin-right: 16px;
+    margin-right: 20px;
   }
   span {
     font-weight: 500;
     line-height: 20.8px;
   }
-}
-
-.rightBlock {
-  display: flex;
-  align-items: center;
-  gap: 29px;
 }
 
 .divider {
