@@ -31,7 +31,6 @@ const CartItem = ({ items }) => {
                 }}
               />
             </div>
-
             <div className={styles.blockImg}>
               <img src={item.image} alt={item.title} />
               <span>{item.title}</span>
@@ -48,7 +47,6 @@ const CartItem = ({ items }) => {
             <div className={styles.countBlock}>
               <CountBlock item={item} />
             </div>
-
             <div
               className={
                 styles.price +
