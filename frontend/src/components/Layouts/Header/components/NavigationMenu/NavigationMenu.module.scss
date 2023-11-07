@@ -32,7 +32,7 @@ li:first-child .links {
   color: $discount-color;
 }
 
-@include md {
+@include lg {
   .headerNav {
     gap: 8px;
     ul {

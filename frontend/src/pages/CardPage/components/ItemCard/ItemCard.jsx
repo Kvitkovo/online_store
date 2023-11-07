@@ -15,9 +15,9 @@ import Slider from '../Slider';
 const ItemCard = () => {
   const { width } = useWindowSize();
   const windowWidth = width;
-  const isDesktop = windowWidth > 1023;
-  const isTablet = windowWidth < 1023;
-  const isMobile = windowWidth < 767;
+  const isDesktop = windowWidth > 1190;
+  const isTablet = windowWidth < 1190;
+  const isMobile = windowWidth < 860;
 
   return (
     <div>

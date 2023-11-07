@@ -41,22 +41,21 @@
   border: none;
 }
 
-@include md {
-  .root {
-    width: 354px;
-    .input {
-      width: 266px;
-    }
-  }
-}
-
-@include sm {
+@include lg {
   .root {
     width: 346px;
     .input {
       width: 255px;
       padding: 6px;
       margin-left: 0;
+    }
+  }
+}
+@include md {
+  .root {
+    width: 354px;
+    .input {
+      width: 266px;
     }
   }
 }

@@ -45,7 +45,7 @@ header {
   margin-right: 130px;
 }
 .verticalLine {
-  border-left: 1px solid $page-accent-color;
+  border-left: 1px solid $gray-light-color;
   height: 40px;
   margin: 0 12px;
 }
@@ -96,14 +96,16 @@ header {
 .tabletContacts {
   display: none;
 }
-@include md {
+@include lg {
   .logoLink {
-    margin: 7px 170px 7px 0px;
+    margin: 7px 162px 7px 0px;
   }
   .contacts {
     display: none;
   }
-
+  .verticalLine {
+    margin: 0 8px;
+  }
   .searchField {
     margin: 0 32px 0 43px;
   }
@@ -116,7 +118,7 @@ header {
     padding: 6px;
   }
 }
-@include sm {
+@include md {
   header {
     display: none;
   }

@@ -98,12 +98,12 @@
   display: block;
 }
 
-@include sm {
+@include md {
   .burgerMenu {
     display: flex;
   }
 }
-@include xs {
+@include sm {
   .searchField {
     display: none;
   }
