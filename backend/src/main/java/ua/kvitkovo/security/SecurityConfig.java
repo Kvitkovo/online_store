@@ -66,6 +66,8 @@ public class SecurityConfig {
             "/v1/users/changePassword/**",
             "/v1/orders/**",
             "/v1/decor/**",
+            "/v1/feedback/email",
+            "/v1/feedback/phone",
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
