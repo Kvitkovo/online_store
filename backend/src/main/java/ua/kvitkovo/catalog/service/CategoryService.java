@@ -1,12 +1,10 @@
 package ua.kvitkovo.catalog.service;
 
 import jakarta.transaction.Transactional;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.converter.CategoryDtoMapper;
@@ -20,6 +18,10 @@ import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+
 /**
  * @author Andriy Gaponov
  */
@@ -32,6 +34,7 @@ public class CategoryService {
     private final CategoryDtoMapper categoryMapper;
     private final TransliterateUtils transliterateUtils;
 
+    @Cacheable("categories")
     public Collection<CategoryResponseDto> getAll() {
         List<Category> categories = categoryRepository.findAllByOrderByParentAscSortValueAsc();
         return categoryMapper.mapEntityToDto(categories);
