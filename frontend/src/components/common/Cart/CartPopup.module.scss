@@ -2,7 +2,7 @@
 @import '../../../mixins';
 
 .container {
-  padding: 24px 32px;
+  padding: 24px 32px 12px;
   overflow: hidden;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .bottom {
-  padding: 24px 26px;
+  padding: 24px 26px 24px 32px;
   display: flex;
   justify-content: space-between;
 }
