@@ -29,4 +29,12 @@ public class FilterPricesIntervalResponseDto {
     public BigDecimal getMaxPrice() {
         return maxPrice;
     }
+
+    @Override
+    public String toString() {
+        return "FilterPricesIntervalResponseDto{" +
+                "minPrice=" + minPrice +
+                ", maxPrice=" + maxPrice +
+                '}';
+    }
 }

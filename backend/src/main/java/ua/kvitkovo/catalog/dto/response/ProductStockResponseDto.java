@@ -34,4 +34,14 @@ public class ProductStockResponseDto {
     public int getAvailable() {
         return available;
     }
+
+    @Override
+    public String toString() {
+        return "ProductStockResponseDto{" +
+                "productId=" + productId +
+                ", stock=" + stock +
+                ", inOrders=" + inOrders +
+                ", available=" + available +
+                '}';
+    }
 }

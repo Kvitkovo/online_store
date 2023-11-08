@@ -21,6 +21,7 @@ import Wrapper from './components/Wrapper';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
+import SupportModal from './components/common/Support/SupportModal';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
               </Route>
             </Routes>
           </div>
+          <SupportModal />
         </Wrapper>
         <Footer />
       </div>

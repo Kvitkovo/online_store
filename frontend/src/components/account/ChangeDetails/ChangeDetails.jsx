@@ -1,7 +1,12 @@
 import React from 'react';
+import Account from '../Account';
 
-const ChangeData = () => {
-  return <div>Контактні дані</div>;
+const ChangeDetails = () => {
+  return (
+    <Account title="Редагування особистої інформації">
+      <h2> Контактні дані</h2>
+    </Account>
+  );
 };
 
-export default ChangeData;
+export default ChangeDetails;

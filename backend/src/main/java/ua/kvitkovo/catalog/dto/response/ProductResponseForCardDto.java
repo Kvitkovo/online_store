@@ -131,4 +131,16 @@ public class ProductResponseForCardDto {
     public List<ImageResponseDto> getImages() {
         return images;
     }
+
+    @Override
+    public String toString() {
+        return "ProductResponseForCardDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", alias='" + alias + '\'' +
+                ", price=" + price +
+                ", priceWithDiscount=" + priceWithDiscount +
+                ", status=" + status +
+                '}';
+    }
 }
