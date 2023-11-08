@@ -41,7 +41,7 @@
   border: none;
 }
 
-/* @include md {
+@include md {
   .root {
     width: 354px;
     .input {
@@ -59,4 +59,4 @@
       margin-left: 0;
     }
   }
-} */
+}
