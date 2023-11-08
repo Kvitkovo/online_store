@@ -47,18 +47,21 @@ const Slider = React.memo(({ data }) => {
       breakpoints: {
         320: {
           slidesPerView: 2,
+          spaceBetween: 8,
         },
-        768: {
+        868: {
           slidesPerView: 3,
         },
-        1020: {
+        1190: {
           slidesPerView: 4,
         },
       },
       injectStyles: [
-        `.swiper-wrapper {z-index: 0;} :host {
-        z-index: 0;
-      }`,
+        `.swiper-wrapper {z-index: 0;} 
+        :host {
+          z-index: 0;
+        } 
+        .swiper {overflow-y: visible}`,
       ],
     };
 

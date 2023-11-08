@@ -1,5 +1,7 @@
 @import '../../../../mixins';
-
+.swiper {
+  overflow-y: visible;
+}
 .sliderContainer {
   position: relative;
 }
@@ -16,6 +18,12 @@
 .arrowRight {
   right: -30px;
   top: calc(50% - 22px);
+}
+
+@include md {
+  .arrowContainer {
+    display: none;
+  }
 }
 
 @include md {
