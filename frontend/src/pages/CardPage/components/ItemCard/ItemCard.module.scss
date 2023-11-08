@@ -7,6 +7,9 @@
     padding: 7px 9px;
   }
 }
+.mainContainer {
+  margin: auto 0;
+}
 .itemContainer {
   padding: 32px 20px 32px 4px;
   margin-top: 22px;
@@ -44,11 +47,13 @@
     margin: 16px 47px;
     margin-bottom: 16px;
   }
+  .mainContainer {
+    width: 906px;
+  }
+
   .itemContainer {
     flex-direction: column;
     padding: 32px 20px 0px 4px;
-    width: 906px;
-    margin-left: 47px;
   }
   .itemBlock {
     gap: 92px;
