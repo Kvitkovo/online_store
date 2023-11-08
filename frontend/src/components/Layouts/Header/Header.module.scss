@@ -24,7 +24,7 @@ header {
 }
 .logoLink {
   height: 50px;
-  margin: 7px 32px 0px 0px;
+  margin: 7px 32px 0 0;
   cursor: pointer;
 }
 .logo {
@@ -33,7 +33,6 @@ header {
 .contacts {
   display: flex;
   gap: 26px;
-  /*  margin-right: 171px; */
 }
 .location {
   display: flex;
@@ -66,6 +65,7 @@ header {
 .containerBottom {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   justify-content: space-between;
   padding: 0 64px;
   height: 64px;
@@ -85,8 +85,11 @@ header {
 }
 .searchField {
   display: flex;
+  max-width: 526px;
+  width: 100%;
   margin: 0 32px 0 43px;
 }
+
 .containerBottomRight {
   display: flex;
   align-items: center;
@@ -113,9 +116,6 @@ header {
   .containerTop {
     padding: 0 48px;
   }
-  /*   .containerTopLeft {
-    margin: 0 auto;
-  } */
   .contacts {
     display: none;
   }
@@ -125,12 +125,6 @@ header {
   .containerBottom {
     padding: 0 48px;
   }
-  /*   .btnCatalogue {
-    margin: 0 auto;
-  } */
-  /*   .searchField {
-    margin: 0 32px 0 43px;
-  } */
   .tabletContacts {
     display: flex;
     gap: 8px;

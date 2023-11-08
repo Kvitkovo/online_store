@@ -88,12 +88,11 @@ const Header = () => {
                 onClick={catalogHandler}
               />
             </div>
-
-            <div className={styles.searchField}>
-              <InputSearch />
-            </div>
           </div>
 
+          <div className={styles.searchField}>
+            <InputSearch />
+          </div>
           <div className={styles.containerBottomRight}>
             <Button
               variant="no-border"
