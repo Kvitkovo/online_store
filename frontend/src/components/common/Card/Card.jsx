@@ -18,6 +18,7 @@ const Card = (props) => {
   };
 
   const handleAddToCart = (props) => {
+    // console.log('Props from smal card: ', props);
     dispatch(addToCart(props));
     setInCart(true);
   };

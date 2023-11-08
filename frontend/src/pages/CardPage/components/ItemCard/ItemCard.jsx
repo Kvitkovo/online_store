@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ItemCard.module.scss';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
@@ -8,6 +8,8 @@ import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../../redux/slices/cartSlice';
 
 const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
@@ -15,6 +17,15 @@ const ItemCard = ({ cardData }) => {
   const isDesktop = windowWidth > 1023;
   const isTablet = windowWidth < 1023;
   const isMobile = windowWidth < 767;
+
+  const dispatch = useDispatch();
+  const [inCart, setInCart] = useState(false);
+
+  const handleAddToCart = ({ image, title, discount, oldPrice, price, id }) => {
+    // console.log({ image, title, discount, oldPrice, price, id });
+    dispatch(addToCart({ image, title, discount, oldPrice, price, id }));
+    setInCart(true);
+  };
 
   return (
     <div>
@@ -48,6 +59,18 @@ const ItemCard = ({ cardData }) => {
                   actualPrice={cardData.priceWithDiscount}
                   stockInfo={cardData?.available}
                   addToConstructor={cardData.allowAddToConstructor}
+                  addToCart={() =>
+                    handleAddToCart(
+                      cardData.images[0]
+                        ? cardData.images[0]
+                        : '/images/no_image.jpg',
+                      cardData.title,
+                      cardData.discount,
+                      cardData.oldPrice,
+                      cardData.price,
+                      cardData.id,
+                    )
+                  }
                 />
               </div>
             </div>
@@ -68,12 +91,15 @@ const ItemCard = ({ cardData }) => {
                 discount={cardData.discount}
                 isBigCard={true}
               />
-              <PriceAndButtons
-                oldPrice={cardData.price}
-                actualPrice={cardData.priceWithDiscount}
-                stockInfo={cardData?.available}
-                addToConstructor={cardData.allowAddToConstructor}
-              />
+              {!inCart ? (
+                <PriceAndButtons
+                  oldPrice={cardData.price}
+                  actualPrice={cardData.priceWithDiscount}
+                  stockInfo={cardData?.available}
+                  addToConstructor={cardData.allowAddToConstructor}
+                  addToCart={() => handleAddToCart(cardData)}
+                />
+              ) : null}
               <ItemFeatures
                 type={cardData?.categoryName}
                 color={cardData?.colorName}

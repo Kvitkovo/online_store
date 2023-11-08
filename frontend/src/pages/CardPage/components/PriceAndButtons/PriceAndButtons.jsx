@@ -12,6 +12,7 @@ const PriceAndButtons = ({
   oldPrice,
   stockInfo,
   addToConstructor,
+  addToCart,
 }) => {
   const { width } = useWindowSize();
   const isInStock = stockInfo === 'AVAILABLE';
@@ -30,6 +31,7 @@ const PriceAndButtons = ({
                 label="Додати у кошик"
                 padding="padding-sm"
                 icon={<ICONS.toCart />}
+                onClick={addToCart}
               />
               {addToBouquete ? (
                 <div className={styles.bouquetDesktop}>
@@ -79,7 +81,7 @@ const PriceAndButtons = ({
             label="Додати у кошик"
             padding="padding-sm"
             icon={<ICONS.toCart />}
-            onClick={() => alert('clicked cart')}
+            onClick={addToCart}
             isFullWidth={true}
           />
         </>
