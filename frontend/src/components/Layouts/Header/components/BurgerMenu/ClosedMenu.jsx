@@ -33,7 +33,11 @@ const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />
-            <div className={styles.cartQuantity}>{cart.cartTotalQuantity}</div>
+            {cart.cartTotalQuantity != 0 ? (
+              <div className={styles.cartQuantity}>
+                {cart.cartTotalQuantity}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

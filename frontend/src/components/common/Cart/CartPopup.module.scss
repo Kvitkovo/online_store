@@ -52,13 +52,20 @@
 
 @include sm {
   .container {
-    padding: 16px;
+    padding: 0;
     overflow: unset;
+  }
+  .headerBlock {
+    display: grid;
+    grid-template-columns: 11.5fr 0.5fr;
+    padding: 0 16px;
   }
   .title {
     font-size: 22px;
     font-weight: 600;
     line-height: 28.6px;
+    justify-self: center;
+    padding-left: 24px;
   }
   .bottom {
     padding: 16px 16px 46px;
