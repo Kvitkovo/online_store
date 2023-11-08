@@ -5,7 +5,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   background-color: $white-color;
   font-weight: 400;
   box-shadow: $box-shadow;
@@ -13,10 +12,15 @@ header {
 
 .containerTop {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 64px;
   width: 100%;
+  padding: 0 64px;
+}
+.containerTopLeft {
+  display: flex;
+  align-items: center;
 }
 .logoLink {
   height: 50px;
@@ -29,7 +33,7 @@ header {
 .contacts {
   display: flex;
   gap: 26px;
-  margin-right: 171px;
+  /*  margin-right: 171px; */
 }
 .location {
   display: flex;
@@ -54,16 +58,22 @@ header {
   font-weight: 500;
   line-height: 130%;
 }
+.containerTopRight {
+  display: flex;
+  align-items: center;
+}
 
 .containerBottom {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 64px;
   height: 64px;
   z-index: 1;
   width: 100%;
   box-shadow: $box-shadow;
 }
+
 .sticky {
   position: fixed;
   width: 100%;
@@ -75,13 +85,16 @@ header {
 }
 .searchField {
   display: flex;
-  margin: 0 93px 0 48px;
+  margin: 0 32px 0 43px;
 }
-.action {
+.containerBottomRight {
   display: flex;
   align-items: center;
-
   gap: 12px;
+}
+.containerBottomLeft {
+  display: flex;
+  align-items: center;
 }
 .login {
   margin-bottom: 8px;
@@ -97,18 +110,27 @@ header {
   display: none;
 }
 @include lg {
-  .logoLink {
-    margin: 7px 162px 7px 0px;
+  .containerTop {
+    padding: 0 48px;
   }
+  /*   .containerTopLeft {
+    margin: 0 auto;
+  } */
   .contacts {
     display: none;
   }
   .verticalLine {
     margin: 0 8px;
   }
-  .searchField {
-    margin: 0 32px 0 43px;
+  .containerBottom {
+    padding: 0 48px;
   }
+  /*   .btnCatalogue {
+    margin: 0 auto;
+  } */
+  /*   .searchField {
+    margin: 0 32px 0 43px;
+  } */
   .tabletContacts {
     display: flex;
     gap: 8px;

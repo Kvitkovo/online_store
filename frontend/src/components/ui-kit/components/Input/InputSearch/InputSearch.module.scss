@@ -4,7 +4,7 @@
 .root {
   display: flex;
   align-items: center;
-  width: 526px;
+  max-width: 526px;
   height: 44px;
   border: 1px solid $gray-dark-color;
   border-radius: 8px;
@@ -31,7 +31,7 @@
 }
 
 .input {
-  width: 438px;
+  max-width: 438px;
   height: 36px;
   padding: 6px;
   margin-left: 6px;
@@ -41,7 +41,7 @@
   border: none;
 }
 
-@include lg {
+/* @include lg {
   .root {
     width: 346px;
     .input {
@@ -59,3 +59,4 @@
     }
   }
 }
+ */
