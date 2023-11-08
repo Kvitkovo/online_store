@@ -88,3 +88,10 @@
   font-weight: 700;
   font-size: 16px;
 }
+
+.disabled {
+  background-color: $gray-light-color;
+  color: $white-color;
+  font-size: 18px;
+  cursor: auto;
+}

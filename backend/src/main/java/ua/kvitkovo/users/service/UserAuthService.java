@@ -1,5 +1,11 @@
 package ua.kvitkovo.users.service;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +20,7 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.Role;
@@ -36,6 +43,8 @@ import java.util.*;
 @Service
 public class UserAuthService {
 
+    @Value("${google.clientID}")
+    private String googleClientId;
     private final NotificationService emailService;
     private final ResetPasswordRequestDtoValidator resetPasswordRequestDtoValidator;
     private final ChangePasswordRequestDtoValidator changePasswordRequestDtoValidator;
@@ -80,7 +89,7 @@ public class UserAuthService {
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION, fields, registeredUser);
 
-        log.info("IN register - user: {} successfully registered", registeredUser);
+        log.debug("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
@@ -121,7 +130,7 @@ public class UserAuthService {
         user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
-        log.info("user: {} successfully created", registeredUser);
+        log.debug("user: {} successfully created", registeredUser);
 
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForConfirmEmailMessage(registeredUser),
@@ -169,7 +178,7 @@ public class UserAuthService {
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
                 () -> new ItemNotFoundException("Verification code not found")
         );
-        log.info("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
+        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
         user.setStatus(UserStatus.ACTIVE);
@@ -272,5 +281,60 @@ public class UserAuthService {
 
         userRepository.save(user);
         return userMapper.mapEntityToDto(user);
+    }
+
+    public User loginGoogle(AuthenticationGoogleRequestDto requestDto) throws Exception {
+        HttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                .setAudience(Collections.singletonList(googleClientId))
+                .build();
+        GoogleIdToken idToken = verifier.verify(requestDto.getToken());
+        if (idToken != null) {
+            GoogleIdToken.Payload payload = idToken.getPayload();
+
+            String userId = payload.getSubject();
+            log.debug("User ID: " + userId);
+
+            String email = payload.getEmail();
+            String name = (String) payload.get("name");
+            String familyName = (String) payload.get("family_name");
+            String givenName = (String) payload.get("given_name");
+
+            log.debug("Name: " + name);
+            return getUserFromGoogle(email, givenName, familyName);
+        } else {
+            throw new Exception("Invalid ID token.");
+        }
+    }
+
+    private User getUserFromGoogle(String email, String firstName, String lastName) {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        User user = null;
+
+        if (!byEmail.isPresent()) {
+            user = new User();
+            Role roleUser = roleRepository.findByName("ROLE_USER").orElseThrow(() -> {
+                throw new ItemNotFoundException("Role not found");
+            });
+            List<Role> userRoles = new ArrayList<>();
+            userRoles.add(roleUser);
+            user.setEmail(email);
+
+            user.setPassword(passwordEncoder.encode(Helper.getRandomString(10)));
+            user.setRoles(userRoles);
+            user.setStatus(UserStatus.ACTIVE);
+            user.setId(null);
+
+            user.setEmailConfirmed(true);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            userRepository.save(user);
+
+        } else {
+            user = byEmail.get();
+        }
+        return user;
     }
 }

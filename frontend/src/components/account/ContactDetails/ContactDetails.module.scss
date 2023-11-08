@@ -1,0 +1,39 @@
+@import '../../../variables';
+
+.block {
+  padding-left: 40px;
+}
+
+.accountTitle {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.flexFieldsAndData {
+  display: flex;
+  gap: 134px;
+  padding: 34px 0 16px;
+
+  p {
+    padding-bottom: 18px;
+    line-height: 24px;
+  }
+}
+
+.fields {
+  color: $gray-dark-color;
+}
+
+.flexButtons {
+  display: flex;
+  gap: 16px;
+
+  button {
+    padding: 8px;
+  }
+
+  & :first-child {
+    padding-left: 0;
+  }
+}

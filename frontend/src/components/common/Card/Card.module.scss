@@ -1,8 +1,8 @@
 @import '../../../variables';
-
+@import '../../../mixins';
 .card {
   width: 280px;
-  background-color: white;
+  background-color: $white-color;
   border-radius: 8px;
   position: relative;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.08);
@@ -38,7 +38,7 @@
     position: absolute;
     top: 20px;
     right: 0px;
-    color: #fff;
+    color: $white-color;
   }
   .cardInfo {
     padding: 12px;
@@ -66,11 +66,19 @@
   }
 
   .inactive {
-    color: #dbdbdb;
+    color: $gray-light-color;
   }
   .icons {
     display: flex;
     align-items: center;
     gap: 16px;
+  }
+  .link {
+    color: $text-color;
+  }
+}
+@include sm {
+  .card {
+    flex: 0 0 auto;
   }
 }

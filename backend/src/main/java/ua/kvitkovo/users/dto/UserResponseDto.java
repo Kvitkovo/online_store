@@ -24,6 +24,7 @@ public class UserResponseDto {
     private long id;
     private String firstName;
     private String lastName;
+    private String surname;
     private String email;
     private String phone;
     private UserStatus status;
@@ -64,6 +65,11 @@ public class UserResponseDto {
         return lastName;
     }
 
+    @Schema(example = "Valeriyovich", description = "User surname")
+    public String getSurname() {
+        return surname;
+    }
+
     @Schema(example = "test@mail.com", description = "User email")
     public String getEmail() {
         return email;
@@ -90,5 +96,15 @@ public class UserResponseDto {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    @Override
+    public String toString() {
+        return "UserResponseDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

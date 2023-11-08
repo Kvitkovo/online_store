@@ -23,7 +23,7 @@ public class SwaggerConfig {
                         ("Bearer Authentication", createAPIKeyScheme()))
                 .info(new Info().title("Team Challenge online store")
                         .description("Kvitkovo API.")
-                        .version("1.0").contact(new Contact().name("Andriy Gaponov")
+                        .version("1.0").contact(new Contact().name("Andrii Haponov")
                                 .email("wmconstructor@gmail.com").url("https://www.linkedin.com/in/andriy-gaponov/"))
                 );
     }

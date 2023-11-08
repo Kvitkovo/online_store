@@ -3,7 +3,7 @@ import OpenMenu from './OpenMenu';
 import ClosedMenu from './ClosedMenu';
 import { useLocation } from 'react-router-dom';
 
-const BurgerMenu = () => {
+const BurgerMenu = ({ toggleCart, toggleMyBouquet }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -19,7 +19,11 @@ const BurgerMenu = () => {
       {isOpen ? (
         <OpenMenu toggleMenu={toggleMenu} />
       ) : (
-        <ClosedMenu toggleMenu={toggleMenu} />
+        <ClosedMenu
+          toggleMenu={toggleMenu}
+          toggleCart={toggleCart}
+          toggleMyBouquet={toggleMyBouquet}
+        />
       )}
     </>
   );

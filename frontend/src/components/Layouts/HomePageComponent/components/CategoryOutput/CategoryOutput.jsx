@@ -12,6 +12,7 @@ import {
 const CategoryOutput = ({ title, link, categoryId }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const getData = useCallback(
     async (title) => {
       setIsLoading(true);
@@ -63,9 +64,10 @@ const CategoryOutput = ({ title, link, categoryId }) => {
                   }
                   title={card.title}
                   discount={card.discount}
-                  oldPrice={card.priceWithDiscount}
-                  price={card.price}
+                  oldPrice={card.price}
+                  price={card.priceWithDiscount}
                   key={card.id}
+                  id={card.id}
                 />
               ))}
           </div>

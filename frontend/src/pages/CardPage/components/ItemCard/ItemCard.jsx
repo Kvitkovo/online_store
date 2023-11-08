@@ -1,8 +1,5 @@
 import React from 'react';
 import styles from './ItemCard.module.scss';
-import { ICONS } from '../../../../components/ui-kit/icons';
-import Wrapper from '../../../../components/Wrapper';
-import IconButton from '../../../../components/ui-kit/components/IconButton';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
 import ItemFeatures from '../ItemFeatures/ItemFeatures';
@@ -12,7 +9,7 @@ import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
 
-const ItemCard = () => {
+const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
   const windowWidth = width;
   const isDesktop = windowWidth > 1190;
@@ -21,59 +18,73 @@ const ItemCard = () => {
 
   return (
     <div>
-      <Wrapper>
+      <div>
         <div className={styles.mainContainer}>
           <Path />
           <div className={styles.itemContainer}>
             <div className={styles.itemBlock}>
               <ItemImage
-                image="./images/itemCard.jpg"
-                discount={15}
+                image={
+                  cardData.images[0]
+                    ? cardData.images[0].url
+                    : '/images/no_image.jpg'
+                }
+                discount={cardData.discount}
                 isBigCard={true}
               />
               <div className={styles.itemDescriptionContainer}>
-                <h1 className={styles.itemName}>{'Букет "101 троянда"'}</h1>
-                <Stock isInStock={true} />
-                {isDesktop && <ItemDescription />}
-                <ItemFeatures />
-                <PriceAndButtons />
+                <h1 className={styles.itemName}>{cardData.title}</h1>
+                <Stock stockInfo={cardData?.available} />
+                {isDesktop && (
+                  <ItemDescription description={cardData?.description} />
+                )}
+                <ItemFeatures
+                  type={cardData?.categoryName}
+                  color={cardData?.colorName}
+                  size={cardData?.sizeName}
+                />
+                <PriceAndButtons
+                  oldPrice={cardData.price}
+                  actualPrice={cardData.priceWithDiscount}
+                  stockInfo={cardData?.available}
+                  addToConstructor={cardData.allowAddToConstructor}
+                />
               </div>
             </div>
-            {isTablet && <ItemDescription />}
-            <div className={styles.helpButton}>
-              <IconButton
-                icon={<ICONS.QuestionIcon />}
-                isBackground={true}
-                isRound={true}
-              />
-            </div>
+            {isTablet && (
+              <ItemDescription description={cardData?.description} />
+            )}
           </div>
           {isMobile && (
             <div className={styles.mobileItemCard}>
-              <h1 className={styles.itemName}>
-                Букет &rdquo;101&rdquo; троянда
-              </h1>
-              <Stock isInStock={true} />
+              <h1 className={styles.itemName}>{cardData.title}</h1>
+              <Stock stockInfo={cardData?.available} />
               <ItemImage
-                image="./images/itemCard.jpg"
-                discount={15}
+                image={
+                  cardData.images[0]
+                    ? cardData.images[0].url
+                    : '/images/no_image.jpg'
+                }
+                discount={cardData.discount}
                 isBigCard={true}
               />
-              <PriceAndButtons />
-              <ItemFeatures />
-              <ItemDescription />
+              <PriceAndButtons
+                oldPrice={cardData.price}
+                actualPrice={cardData.priceWithDiscount}
+                stockInfo={cardData?.available}
+                addToConstructor={cardData.allowAddToConstructor}
+              />
+              <ItemFeatures
+                type={cardData?.categoryName}
+                color={cardData?.colorName}
+                size={cardData?.sizeName}
+              />
+              <ItemDescription description={cardData?.description} />
             </div>
           )}
-          <div className={styles.helpButton}>
-            <IconButton
-              icon={<ICONS.QuestionIcon />}
-              isBackground={true}
-              isRound={true}
-            />
-          </div>
           <h2 className={styles.previous}>Раніше переглянуті</h2>
-        </div>{' '}
-      </Wrapper>
+        </div>
+      </div>
       <Slider />
     </div>
   );

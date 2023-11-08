@@ -28,7 +28,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -39,7 +39,7 @@ public class OrderItem {
     private BigDecimal price;
 
     @Column(name = "product_qty")
-    private BigDecimal qty;
+    private int qty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderItem")
     private Set<OrderItemComposition> orderItemsCompositions;

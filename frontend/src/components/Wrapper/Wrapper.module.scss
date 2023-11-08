@@ -1,9 +1,14 @@
+@import '../../mixins';
+@import '../../variables';
+
 .wrapper {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  min-height: 64vh;
+  background: $background-gradient;
 }
 
 .container {
+  margin: 0 auto;
   max-width: 1180px;
+  padding: 20px 0 46px;
 }

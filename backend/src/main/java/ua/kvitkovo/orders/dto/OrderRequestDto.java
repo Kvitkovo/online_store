@@ -3,10 +3,9 @@ package ua.kvitkovo.orders.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.Set;
 
@@ -14,84 +13,60 @@ import java.util.Set;
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequestDto {
 
-    private String postcardText;
-    @NotBlank
-    private String customerName;
-    @NotBlank
-    private String customerPhone;
-    @NotBlank
-    private String customerEmail;
-    private String addressCity;
-    private String addressStreet;
-    private String addressHouse;
-    private String addressApartment;
-    private String receiverName;
-    private String receiverPhone;
-    @NotNull
-    private Long shopId;
-    private Set<OrderItemRequestDto> orderItems;
-
+    @Size(max = 100, message = "postcardText must be less than 100 characters.")
     @Schema(example = "Вітаю зі святом!", description = "Postcard text")
-    public String getPostcardText() {
-        return postcardText;
-    }
+    private String postcardText;
 
+    @NotBlank
+    @Size(max = 255, message = "customerName must be less than 255 characters.")
     @Schema(example = "Andriy", description = "Customer name")
-    public String getCustomerName() {
-        return customerName;
-    }
+    private String customerName;
 
+    @NotBlank
+    @Size(max = 255, message = "customerPhone must be less than 255 characters.")
+    @Pattern(regexp = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}$")
     @Schema(example = "099-123-45-67", description = "Customer phone")
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
+    private String customerPhone;
 
+    @NotBlank
+    @Size(max = 255, message = "customerEmail must be less than 255 characters.")
+    @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     @Schema(example = "test@mail.com", description = "Customer email")
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
+    private String customerEmail;
 
+    @Size(max = 255, message = "addressCity must be less than 255 characters.")
     @Schema(example = "Київ", description = "City of delivery address")
-    public String getAddressCity() {
-        return addressCity;
-    }
+    private String addressCity;
 
+    @Size(max = 255, message = "addressStreet must be less than 255 characters.")
     @Schema(example = "вул. Михайла Грушевського", description = "Street of delivery address")
-    public String getAddressStreet() {
-        return addressStreet;
-    }
+    private String addressStreet;
 
+    @Size(max = 255, message = "addressHouse must be less than 255 characters.")
     @Schema(example = "30/1", description = "House of delivery address")
-    public String getAddressHouse() {
-        return addressHouse;
-    }
+    private String addressHouse;
 
+    @Size(max = 255, message = "addressApartment must be less than 255 characters.")
     @Schema(example = "329", description = "Apartment of delivery address")
-    public String getAddressApartment() {
-        return addressApartment;
-    }
+    private String addressApartment;
 
+    @Size(max = 255, message = "receiverName must be less than 255 characters.")
     @Schema(example = "Шевченко Олена Олегівна", description = "Receiver name")
-    public String getReceiverName() {
-        return receiverName;
-    }
+    private String receiverName;
 
+    @Size(max = 255, message = "receiverPhone must be less than 255 characters.")
     @Schema(example = "099-123-45-00", description = "Receiver phone")
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
+    private String receiverPhone;
 
+    @NotNull
     @Schema(example = "1", description = "Shop ID")
-    public Long getShopId() {
-        return shopId;
-    }
+    private Long shopId;
 
-    public Set<OrderItemRequestDto> getOrderItems() {
-        return orderItems;
-    }
+    private Set<OrderItemRequestDto> orderItems;
 }

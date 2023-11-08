@@ -4,7 +4,7 @@ import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import InputSearch from '../../../../ui-kit/components/Input/InputSearch';
 
-const ClosedMenu = ({ toggleMenu }) => {
+const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
   return (
     <div className={styles.burgerMenu}>
       <div className={styles.burgerHeader}>
@@ -19,13 +19,16 @@ const ClosedMenu = ({ toggleMenu }) => {
             <IconButton icon={<ICONS.searchMobile />} />
           </div>
           <div className={styles.bouquet}>
-            <IconButton icon={<ICONS.BouquetIcon />} />
+            <IconButton
+              icon={<ICONS.BouquetIcon />}
+              onClick={toggleMyBouquet}
+            />
           </div>
           <div className={styles.account}>
             <IconButton icon={<ICONS.halfPerson />} />
           </div>
           <div className={styles.cart}>
-            <IconButton icon={<ICONS.CartIcon />} />
+            <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />
           </div>
         </div>
       </div>

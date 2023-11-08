@@ -1,7 +1,7 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
-.descriptioContainer {
+.descriptionContainer {
   margin: 8px 16px 32px 0;
 }
 
@@ -15,6 +15,9 @@
   line-height: 130%;
 }
 @include md {
+  .descriptionContainer {
+    margin: 8px 20px 32px 20px;
+  }
   .itemDescription {
     margin-right: 0;
     line-height: 148%;
@@ -22,6 +25,9 @@
 }
 
 @include sm {
+  .descriptionContainer {
+    margin: 0;
+  }
   .itemDescription {
     margin-top: 16px;
     margin-bottom: 44px;

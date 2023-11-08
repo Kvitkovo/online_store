@@ -1,0 +1,30 @@
+.flexData {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px 32px 0;
+
+  span {
+    font-size: 14px;
+    line-height: 24px;
+    padding-top: 8px;
+  }
+}
+
+.address div,
+.recipient div {
+  padding-top: 8px;
+}
+
+.recipient {
+  padding-top: 16px;
+}
+
+.quantity {
+  display: flex;
+  gap: 8px;
+
+  &div:nth-of-type(2) {
+    padding-left: 36px;
+  }
+}

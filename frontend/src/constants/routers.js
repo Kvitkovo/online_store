@@ -3,13 +3,17 @@ const ROUTES = {
   promotions: '/promotions',
   about: '/about',
   delivery: '/delivery',
-  handling: '/handling',
   contacts: '/contacts',
   partner: '/partner',
   privacy: '/privacy',
   orderStatus: '/orderStatus',
   care: '/care',
   faq: '/faq',
+  account: '/account',
+  changeDetails: '/account/change-details',
+  changePassword: '/account/change-password',
+  orders: '/account/orders',
+  card: '/product/:myId',
 };
 
 export default ROUTES;
