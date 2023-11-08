@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import styles from './BurgerMenu.module.scss';
 import { NavLink } from 'react-router-dom';
@@ -9,8 +10,8 @@ import IconButton from '../../../../ui-kit/components/IconButton';
 import { navigationItems } from '../../../Header/navigationItems';
 import NavigationMenu from '../NavigationMenu';
 import Catalog from '../../../../common/Catalog';
-// eslint-disable-next-line max-len
 import ModalCatalog from '../../../../common/Catalog/components/ModalCatalog/ModalCatalog';
+import ParentComponent from '../../../../common/Catalog/components/ModalCatalog/ParentComponent';
 
 const OpenMenu = ({ toggleMenu }) => {
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
@@ -39,7 +40,11 @@ const OpenMenu = ({ toggleMenu }) => {
             onClick={catalogHandler}
           />
           {isCatalogOpened && (
-            <ModalCatalog category="Каталог товарів" onClick={toggleMenu}>
+            <ModalCatalog>
+              <ParentComponent
+                category="Каталог товарів"
+                toggleMenu={toggleMenu}
+              />
               <Catalog setIsOpen={setIsCatalogOpened} />
             </ModalCatalog>
           )}

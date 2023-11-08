@@ -18,43 +18,43 @@ export const mockContacts = [
 
 export const mockCategories = [
   {
-    id: 1,
+    sortValue: 0,
     name: 'Акційна ціна',
     bg: '/images/catalog-images/background/akciyna_cena.png',
     icon: <ICONS.akciyna_cena />,
   },
   {
-    id: 2,
+    sortValue: 1,
     name: 'Букети з квітів',
     bg: '/images/catalog-images/background/bukety_z_kvitiv.png',
     icon: <ICONS.bukety_z_kvitiv />,
   },
   {
-    id: 3,
+    sortValue: 2,
     name: 'Квіти поштучно',
     bg: '/images/catalog-images/background/kvity_po_shtuchno.png',
     icon: <ICONS.kvity_po_shtuchno />,
   },
   {
-    id: 4,
+    sortValue: 3,
     name: 'Весільні букети',
     bg: '/images/catalog-images/background/vesilni.png',
     icon: <ICONS.vesilni />,
   },
   {
-    id: 5,
+    sortValue: 4,
     name: 'Квіти у кошику',
     bg: '/images/catalog-images/background/kvity_u_koshyku.png',
     icon: <ICONS.kvity_u_koshyku />,
   },
   {
-    id: 6,
+    sortValue: 5,
     name: 'Кімнатні квіти',
     bg: '/images/catalog-images/background/hatni.png',
     icon: <ICONS.hatni />,
   },
   {
-    id: 7,
+    sortValue: 6,
     name: 'Декор із квітів',
     bg: '/images/catalog-images/background/dekor.png',
     icon: <ICONS.dekor />,

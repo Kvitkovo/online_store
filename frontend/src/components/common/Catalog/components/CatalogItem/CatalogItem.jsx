@@ -4,13 +4,13 @@ import styles from '../../Catalog.module.scss';
 import SubCategories from '../SubCategoryList/SubCategoryList';
 import ModalCatalog from '../ModalCatalog/ModalCatalog';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import ParentComponent from '../ModalCatalog/ParentComponent';
 
 const CatalogItem = ({
   depthLevel,
   category,
   handleCategoryClick,
   setHoveredCategory,
-  toggleMenu,
 }) => {
   const { width } = useWindowSize();
   const { sortValue, children, bg, name, link, hasSubCategory, icon } =
@@ -31,6 +31,10 @@ const CatalogItem = ({
     } else {
       handleCategoryClick(link);
     }
+  };
+
+  const handleSubCategoryToggle = () => {
+    setIsSubCategoryOpen(!isSubCategoryOpen);
   };
 
   return (
@@ -65,7 +69,11 @@ const CatalogItem = ({
         </a>
       </li>
       {isSubCategoryOpen && (
-        <ModalCatalog category={name} onClick={toggleMenu}>
+        <ModalCatalog>
+          <ParentComponent
+            category={name}
+            toggleMenu={handleSubCategoryToggle}
+          />
           <SubCategories
             categories={children}
             depthLevel={depthLevel}
