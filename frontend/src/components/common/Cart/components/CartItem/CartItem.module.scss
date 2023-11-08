@@ -57,13 +57,13 @@
   .itemsBlock {
     overflow-y: hidden;
     height: 100%;
-    padding-right: 0;
+    padding: 0 16px;
   }
   .item {
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    padding: 12px 16px;
+    padding: 12px 0px;
   }
   .leftBlock {
     justify-content: space-between;
