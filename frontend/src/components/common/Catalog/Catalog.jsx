@@ -14,7 +14,7 @@ const Catalog = ({ setIsOpen, categories }) => {
 
   const formatCategory = (category, index) => {
     const mainPath = `${ROUTES.category}/${category.alias.toLowerCase()}`;
-    const icon = mockData[index]?.icon;
+    const icon = category.icon;
     const bg = mockData[index]?.bg;
     const children = categories
       .filter((child) => child.parent?.sortValue === category.sortValue)
@@ -23,7 +23,7 @@ const Catalog = ({ setIsOpen, categories }) => {
         link: `${mainPath}/${child.alias.toLowerCase()}`,
       }));
 
-    return { ...category, children, icon, bg, link: mainPath };
+    return { ...category, children, bg, icon, link: mainPath };
   };
 
   const formattedCategories = categories

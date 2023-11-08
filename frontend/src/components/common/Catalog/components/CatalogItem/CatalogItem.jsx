@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import { ICONS } from '../../../../ui-kit/icons';
 import styles from '../../Catalog.module.scss';
@@ -56,7 +57,13 @@ const CatalogItem = ({
               : null
           }
         >
-          <span className={styles.categoryIcon}>{icon}</span>
+          {icon && (
+            <img
+              src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
+              alt={icon}
+            />
+          )}
+
           <div className={styles.categoryItemContent}>
             {firstPart === 'Акційна' ? (
               <span className={styles.redText}>{firstPart}</span>
