@@ -77,7 +77,7 @@
     color: $text-color;
   }
 }
-@include sm {
+@include md {
   .card {
     width: 162px;
   }

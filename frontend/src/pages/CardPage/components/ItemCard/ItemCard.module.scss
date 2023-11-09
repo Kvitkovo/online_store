@@ -9,6 +9,7 @@
 }
 .mainContainer {
   margin: 0 auto;
+  width: 1180px;
 }
 .itemContainer {
   padding: 32px 20px 32px 4px;
@@ -38,6 +39,15 @@
 .mobileTop {
   display: none;
 }
+@include lg {
+  .mainContainer {
+    width: 906px;
+  }
+  .itemBlock {
+    gap: 92px;
+  }
+}
+
 @include md {
   .itemContainer {
     overflow: hidden;
@@ -47,14 +57,15 @@
     margin-top: 16px;
   }
   .mainContainer {
-    width: 906px;
+    width: 690px;
   }
 
   .itemContainer {
     flex-direction: column;
+    margin-bottom: 46px;
   }
   .itemBlock {
-    gap: 92px;
+    gap: 30px;
   }
   .itemImage {
     img {
@@ -72,9 +83,6 @@
   .itemDescription {
     padding-bottom: 32px;
   }
-  .previous {
-    margin-top: 46px;
-  }
 }
 @include sm {
   .mobileItemCard {
@@ -82,6 +90,9 @@
     flex-direction: column;
     background-color: $white-color;
     padding: 16px;
+    margin-bottom: 54px;
+  }
+  .mainContainer {
     width: 100%;
   }
   .itemContainer {
@@ -98,5 +109,8 @@
     align-items: flex-end;
     margin-top: 22px;
     margin-bottom: 32px;
+  }
+  .previous {
+    margin: 0 16px;
   }
 }

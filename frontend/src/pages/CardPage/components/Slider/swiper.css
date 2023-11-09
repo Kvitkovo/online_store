@@ -1,0 +1,8 @@
+.swiper-pagination-bullet-active {
+  border-radius: 2px;
+  background-color: #6cc25e;
+}
+
+.swiper-button-disabled {
+  display: none;
+}

@@ -15,7 +15,9 @@ const ItemCard = ({ cardData }) => {
   const isDesktop = windowWidth > 1023;
   const isTablet = windowWidth < 1024 && windowWidth > 767;
   const isMobile = windowWidth < 768;
-  const recentlyViewed = localStorage.getItem('recentlyViewed').split(',');
+  const recentlyViewed = Array.from(
+    JSON.parse(localStorage.getItem('recentlyViewed')),
+  );
 
   return (
     <div className={styles.mainContainer}>
@@ -58,7 +60,7 @@ const ItemCard = ({ cardData }) => {
           <Stock stockInfo={cardData?.available} />
           <ItemImage
             image={
-              cardData.images[0]
+              cardData.images.length > 0
                 ? cardData.images[0].url
                 : '/images/no_image.jpg'
             }
@@ -79,7 +81,7 @@ const ItemCard = ({ cardData }) => {
           <ItemDescription description={cardData?.description} />
         </div>
       )}
-      {recentlyViewed.length > 1 && (
+      {recentlyViewed && (
         <>
           <h2 className={styles.previous}>Раніше переглянуті</h2>
           <Slider data={recentlyViewed} />
