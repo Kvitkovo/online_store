@@ -59,7 +59,11 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      <BurgerMenu
+        toggleCart={toggleCart}
+        toggleMyBouquet={toggleMyBouquet}
+        cartQuantity={cart.cartTotalQuantity}
+      />
       <header>
         <div className={styles.containerTop}>
           {' '}
