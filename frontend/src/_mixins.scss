@@ -13,3 +13,10 @@
     @content;
   }
 }
+
+// Large devices
+@mixin lg {
+  @media screen and (max-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
