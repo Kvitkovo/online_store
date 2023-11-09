@@ -11,13 +11,18 @@ const Card = (props) => {
   const handleCardClick = () => {
     window.scrollTo(0, 0);
   };
+
   return (
     <div className={styles.card} onClick={handleCardClick}>
       <Link to={`/product/${props.id}`} className={styles.link}>
         <img
           src={props.image}
           alt="букет"
-          className={inActive(props.status, styles.foto, styles.fotoInactive)}
+          className={inActive(
+            props.available,
+            styles.foto,
+            styles.fotoInactive,
+          )}
         />
         <h3>{props.title}</h3>
         <div
@@ -30,11 +35,15 @@ const Card = (props) => {
         <div className={styles.cardInfo}>
           <div className={styles.textFlex}>
             <p
-              className={inActive(props.status, styles.price, styles.inactive)}
+              className={inActive(
+                props.available,
+                styles.price,
+                styles.inactive,
+              )}
             >
               Ціна
             </p>
-            {props.status === 'NO_ACTIVE' && (
+            {props.available === 'UNAVAILABLE' && (
               <p className={styles.outOfStock}>Немає в наявності</p>
             )}
           </div>
@@ -42,12 +51,12 @@ const Card = (props) => {
             <DiscountPrice
               oldPrice={props.oldPrice}
               actualPrice={props.price}
-              isActive={props.status}
+              isActive={props.available}
             />
             <div className={styles.cardFlexBottom}>
               <div
                 className={
-                  props.status === 'NO_ACTIVE'
+                  props.available === 'UNAVAILABLE'
                     ? `${styles.hide}`
                     : `${styles.icons}`
                 }

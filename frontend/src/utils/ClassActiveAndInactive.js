@@ -1,4 +1,5 @@
-export const inActive = (status, classNameActive, classNameInActive) => {
-  if (status === 'NO_ACTIVE') return classNameActive + ' ' + classNameInActive;
+export const inActive = (available, classNameActive, classNameInActive) => {
+  if (available === 'UNAVAILABLE')
+    return classNameActive + ' ' + classNameInActive;
   else return classNameActive;
 };
