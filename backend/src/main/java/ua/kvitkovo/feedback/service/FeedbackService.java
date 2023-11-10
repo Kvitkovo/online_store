@@ -90,6 +90,7 @@ public class FeedbackService {
         }
     }
 
+    @Transactional
     public List<FeedbackMessageResponseDto> setFeedbackMessageStatus(List<Long> messageIDs,
                                                                      MessageStatus status) {
         List<FeedbackMessage> messages = messageIDs.stream()
