@@ -1,14 +1,12 @@
 package ua.kvitkovo.feedback.service;
 
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.decor.entity.Decor;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
@@ -18,12 +16,14 @@ import ua.kvitkovo.feedback.entity.FeedbackMessage;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
-import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -90,15 +90,19 @@ public class FeedbackService {
     public List<FeedbackMessageResponseDto> setFeedbackMessageStatus(List<Long> messageIDs,
         MessageStatus status) {
         List<FeedbackMessage> messages = messageIDs.stream()
-            .map(id -> feedbackRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Feedback message not found")))
-            .toList();
+                .map(id -> feedbackRepository.findById(id)
+                        .orElseThrow(() -> new ItemNotFoundException("Feedback message not found")))
+                .toList();
 
         for (FeedbackMessage message : messages) {
             message.setStatus(status);
             feedbackRepository.save(message);
         }
         return feedbackDtoMapper.mapEntityToDto(messages);
+    }
+
+    public void deleteClosedMessages(LocalDate dateEndMessage) {
+
     }
 
     private void fillAuthorToMessage(FeedbackMessage feedbackMessage) {
