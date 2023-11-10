@@ -1,12 +1,14 @@
 package ua.kvitkovo.feedback.service;
 
 import jakarta.transaction.Transactional;
+import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
@@ -66,8 +68,8 @@ public class FeedbackService {
                 .userName(dto.getUserName())
                 .messageText(dto.getMessageText())
                 .type(MessageType.PHONE)
-                .status(MessageStatus.NEW)
-                .build();
+            .status(MessageStatus.NEW)
+            .build();
         fillAuthorToMessage(feedbackMessage);
 
         feedbackRepository.save(feedbackMessage);
@@ -76,12 +78,44 @@ public class FeedbackService {
         return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
 
+    @Transactional
+    public FeedbackMessageResponseDto addFeedbackMessageWithFile(Long mainImageId, String message,
+        MultipartFile file) {
+
+        FeedbackMessage feedbackMessage = feedbackRepository.findById(mainImageId)
+            .orElseThrow(
+                () -> new ItemNotFoundException("Feedback message not found"));
+
+        FeedbackMessage answerMessage = FeedbackMessage.builder()
+            .messageText(message)
+            .type(MessageType.ANSWER)
+            .mainMessage(feedbackMessage)
+            .build();
+        fillAuthorToMessage(answerMessage);
+
+        String fileUrl = feedBackMessageFileService.sendFile(file);
+
+        FeedbackMessageFile messageFile = FeedbackMessageFile.builder()
+            .message(answerMessage)
+            .fileUrl(fileUrl)
+            .name(file.getOriginalFilename())
+            .build();
+
+        Set<FeedbackMessageFile> files = new HashSet<>();
+        files.add(messageFile);
+
+        feedbackMessage.setFiles(files);
+
+        feedbackRepository.save(feedbackMessage);
+        return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
+    }
+
     public FeedbackMessageResponseDto findById(Long id) {
         return feedbackDtoMapper.mapEntityToDto(getFeedbackMessage(id));
     }
 
     public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable,
-                                                           MessageStatus status) {
+        MessageStatus status) {
         Page<FeedbackMessage> messages = feedbackRepository.findByStatus(status, pageable);
         if (messages.isEmpty()) {
             return Page.empty();
