@@ -31,7 +31,7 @@ public class OrderRequestDto {
     @NotBlank
     @Size(max = 255, message = "customerPhone must be less than 255 characters.")
     @Pattern(regexp = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}$")
-    @Schema(example = "+38099-123-45-67", description = "Customer phone")
+    @Schema(example = "+380991234567", description = "Customer phone")
     private String customerPhone;
 
     @NotBlank
@@ -62,7 +62,7 @@ public class OrderRequestDto {
 
     @Size(max = 255, message = "receiverPhone must be less than 255 characters.")
     @Pattern(regexp = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}$")
-    @Schema(example = "+38099-123-45-00", description = "Receiver phone")
+    @Schema(example = "+380991234500", description = "Receiver phone")
     private String receiverPhone;
 
     @NotNull
