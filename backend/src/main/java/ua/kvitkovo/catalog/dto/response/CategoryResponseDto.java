@@ -1,10 +1,7 @@
 package ua.kvitkovo.catalog.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ua.kvitkovo.catalog.entity.CategoryIcon;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
@@ -12,74 +9,51 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryResponseDto {
 
-    private Long id;
-    private String name;
-    private String alias;
-    private CategoryResponseDto parent;
-    private String metaDescription;
-    private String metaKeywords;
-    private String description;
-    private CategoryStatus status;
-    private CategoryIcon icon;
-    private boolean hasSubCategory;
-    private int sortValue;
-
-    @Schema(example = "SALE", description = "Category icon")
-    public CategoryIcon getIcon() {
-        return icon;
-    }
-
     @Schema(example = "1", description = "ID category")
-    public Long getId() {
-        return id;
-    }
+    private Long id;
 
     @Schema(example = "Букети", description = "Category name")
-    public String getName() {
-        return name;
-    }
+    private String name;
 
     @Schema(example = "Buketi", description = "Category alias")
-    public String getAlias() {
-        return alias;
-    }
+    private String alias;
 
     @Schema(example = "Buketi", description = "Parent category or null")
-    public CategoryResponseDto getParent() {
-        return parent;
-    }
+    private CategoryResponseDto parent;
 
     @Schema(example = "Купити букети в Києві", description = "Category meta description (for seo optimization)")
-    public String getMetaDescription() {
-        return metaDescription;
-    }
+    private String metaDescription;
 
     @Schema(example = "купити букет, квіти, квіти на замовлення", description = "Category meta keywords (for seo optimization)")
-    public String getMetaKeywords() {
-        return metaKeywords;
-    }
+    private String metaKeywords;
 
     @Schema(example = "ВЕСІЛЬНІ БУКЕТИ, БУКЕТИ ДЛЯ НАРЕЧЕНОЇ, БУТОНЬЄРКИ, БУКЕТИ ДЛЯ ГОСТЕЙ НА ВЕСІЛЛЯ - У КИЄВІ.", description = "Category description")
-    public String getDescription() {
-        return description;
-    }
+    private String description;
 
     @Schema(example = "ACTIVE", description = "Category status (ACTIVE, NO_ACTIVE)")
-    public CategoryStatus getStatus() {
-        return status;
-    }
+    private CategoryStatus status;
 
-    public boolean isHasSubCategory() {
-        return hasSubCategory;
-    }
+    @Schema(example = "SALE", description = "Category icon")
+    private CategoryIcon icon;
+
+    @Schema(example = "True", description = "A category has children")
+    private boolean hasSubCategory;
 
     @Schema(example = "120", description = "Sort order")
-    public int getSortValue() {
-        return sortValue;
+    private int sortValue;
+
+    @Override
+    public String toString() {
+        return "CategoryResponseDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                '}';
     }
 }

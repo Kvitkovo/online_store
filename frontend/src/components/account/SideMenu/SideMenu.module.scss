@@ -3,7 +3,6 @@
 .menuAccount {
   background-color: white;
   border-radius: 8px;
-  margin-top: 22px;
 }
 
 .menuItem {
@@ -23,7 +22,7 @@
 }
 
 .active {
-  border-left: 4px solid var(--Green, #6cc25e);
+  border-left: 4px solid $page-accent-color;
   display: block;
   padding: 8px 16px 8px 12px;
   color: $text-color;

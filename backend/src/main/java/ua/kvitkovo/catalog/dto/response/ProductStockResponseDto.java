@@ -1,37 +1,37 @@
 package ua.kvitkovo.catalog.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
 /**
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductStockResponseDto {
 
+    @Schema(example = "1", description = "Product ID")
     private Long productId;
+
+    @Schema(example = "25", description = "Product stock")
     private int stock;
+
+    @Schema(example = "5", description = "Quantity of products in active orders")
     private int inOrders;
+
+    @Schema(example = "20", description = "Quantity of products available")
     private int available;
 
-    public int getInOrders() {
-        return inOrders;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public int getAvailable() {
-        return available;
+    @Override
+    public String toString() {
+        return "ProductStockResponseDto{" +
+                "productId=" + productId +
+                ", stock=" + stock +
+                ", inOrders=" + inOrders +
+                ", available=" + available +
+                '}';
     }
 }

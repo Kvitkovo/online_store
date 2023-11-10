@@ -1,12 +1,8 @@
 package ua.kvitkovo.orders.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ua.kvitkovo.orders.entity.OrderStatus;
-import ua.kvitkovo.shop.dto.ShopResponseDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,136 +12,74 @@ import java.util.Set;
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderResponseDto {
 
-    private Long id;
-    private LocalDateTime created;
-    private LocalDateTime updated;
-    private Long managerId;
-    private String address;
-    private String postcardText;
-    private BigDecimal totalSum;
-    private String comment;
-    private OrderStatus status;
-    private String customerName;
-    private String customerPhone;
-    private String customerEmail;
-    private String addressCity;
-    private String addressStreet;
-    private String addressHouse;
-    private String addressApartment;
-    private String receiverName;
-    private String receiverPhone;
-    private LocalDateTime dateOfShipment;
-    private Long customerId;
-    private Long shopId;
-    private Set<OrderItemResponseDto> orderItems;
-
-    public Set<OrderItemResponseDto> getOrderItems() {
-        return orderItems;
-    }
-
     @Schema(example = "24", description = "Order ID")
-    public Long getId() {
-        return id;
-    }
+    private Long id;
 
     @Schema(example = "2023-09-06T11:00:52.525", description = "Order creation date")
-    public LocalDateTime getCreated() {
-        return created;
-    }
+    private LocalDateTime created;
 
     @Schema(example = "2023-09-06T11:00:52.525", description = "Order update date")
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
+    private LocalDateTime updated;
+
+    @Schema(example = "1", description = "Manager ID")
+    private Long managerId;
 
     @Schema(example = "Київ, вул. Михайла Грушевського, 30/1, 329", description = "Delivery address")
-    public String getAddress() {
-        return address;
-    }
+    private String address;
 
     @Schema(example = "Вітаю зі святом!", description = "Postcard text")
-    public String getPostcardText() {
-        return postcardText;
-    }
+    private String postcardText;
 
     @Schema(example = "2000.00", description = "Order total sum")
-    public BigDecimal getTotalSum() {
-        return totalSum;
-    }
+    private BigDecimal totalSum;
 
     @Schema(example = "підняти на другий поверх", description = "Order comment")
-    public String getComment() {
-        return comment;
-    }
+    private String comment;
 
-    public OrderStatus getStatus() {
-        return status;
-    }
+    @Schema(example = "ACCEPT", description = "Order status")
+    private OrderStatus status;
 
     @Schema(example = "Andriy", description = "Customer name")
-    public String getCustomerName() {
-        return customerName;
-    }
+    private String customerName;
 
     @Schema(example = "099-123-45-67", description = "Customer phone number")
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
+    private String customerPhone;
 
     @Schema(example = "test@mail.com", description = "Customer email")
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
+    private String customerEmail;
 
     @Schema(example = "Київ", description = "City of delivery address")
-    public String getAddressCity() {
-        return addressCity;
-    }
+    private String addressCity;
 
     @Schema(example = "вул. Михайла Грушевського", description = "Street of delivery address")
-    public String getAddressStreet() {
-        return addressStreet;
-    }
+    private String addressStreet;
 
     @Schema(example = "30/1", description = "House of delivery address")
-    public String getAddressHouse() {
-        return addressHouse;
-    }
+    private String addressHouse;
 
     @Schema(example = "329", description = "Apartment of delivery address")
-    public String getAddressApartment() {
-        return addressApartment;
-    }
+    private String addressApartment;
 
     @Schema(example = "Шевченко Олена Олегівна", description = "Receiver name")
-    public String getReceiverName() {
-        return receiverName;
-    }
+    private String receiverName;
 
     @Schema(example = "099-123-45-00", description = "Receiver phone number")
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
+    private String receiverPhone;
 
     @Schema(example = "2023-09-06T15:00:00.525", description = "Order delivery date")
-    public LocalDateTime getDateOfShipment() {
-        return dateOfShipment;
-    }
+    private LocalDateTime dateOfShipment;
 
-    public Long getCustomerId() {
-        return customerId;
-    }
+    @Schema(example = "1", description = "Customer ID")
+    private Long customerId;
 
-    public Long getShopId() {
-        return shopId;
-    }
+    @Schema(example = "1", description = "Shop ID")
+    private Long shopId;
 
-    public Long getManagerId() {
-        return managerId;
-    }
+    private Set<OrderItemResponseDto> orderItems;
 }

@@ -1,9 +1,5 @@
 package ua.kvitkovo.orders.service;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -23,11 +19,7 @@ import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
-import ua.kvitkovo.orders.dto.admin.OrderAdminRequestDto;
-import ua.kvitkovo.orders.dto.admin.OrderAdminResponseDto;
-import ua.kvitkovo.orders.dto.admin.OrderItemAdminResponseDto;
-import ua.kvitkovo.orders.dto.admin.OrderItemCompositionAdminResponseDto;
-import ua.kvitkovo.orders.dto.admin.ProductAdminResponseDto;
+import ua.kvitkovo.orders.dto.admin.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
 import ua.kvitkovo.orders.entity.OrderItemComposition;
@@ -43,6 +35,11 @@ import ua.kvitkovo.users.repository.UserRepository;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Andriy Gaponov
@@ -64,13 +61,13 @@ public class OrderService {
     private final UserService userService;
     private final UserDtoMapper userDtoMapper;
 
-    public OrderResponseDto findById(long id) throws ItemNotFoundException {
+    public OrderResponseDto findById(Long id) throws ItemNotFoundException {
         OrderResponseDto order = orderRepository.findById(id)
-            .map(orderDtoMapper::mapEntityToDto)
-            .orElseThrow(() -> new ItemNotFoundException("Order not found"));
+                .map(orderDtoMapper::mapEntityToDto)
+                .orElseThrow(() -> new ItemNotFoundException("Order not found"));
 
         if (!userService.isCurrentUserAdmin()
-            && userService.getCurrentUserId() != order.getCustomerId()) {
+                && userService.getCurrentUserId() != order.getCustomerId()) {
             throw new ItemNotFoundException("Order not found");
         }
         return order;
@@ -278,10 +275,12 @@ public class OrderService {
         checkIfCanChangeOrder(order);
 
         order.setId(id);
+        order.setCustomer(userRepository.findById(orderResponseDto.getCustomerId())
+                .orElseThrow(() -> new ItemNotFoundException("Customer not found")));
         order.setShop(shopRepository.findById(dto.getShopId())
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+                .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
         order.setManager(userRepository.findById(dto.getManagerId())
-            .orElseThrow(() -> new ItemNotFoundException("User not found")));
+                .orElseThrow(() -> new ItemNotFoundException("User not found")));
         order.setAddress(getFullTextAddress(order));
 
         order.setOrderItems(getOrderItemsFromDtosRequest(order, dto.getOrderItems()));
