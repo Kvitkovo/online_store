@@ -30,7 +30,9 @@ const Card = (props) => {
             props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
           }
         >
-          <Discount discount={props.discount} />
+          {props.available === 'AVAILABLE' && (
+            <Discount discount={props.discount} />
+          )}
         </div>
         <div className={styles.cardInfo}>
           <div className={styles.textFlex}>
