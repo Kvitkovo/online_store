@@ -18,7 +18,6 @@ import ua.kvitkovo.images.dto.ImageRequestDto;
 import ua.kvitkovo.images.dto.ImageResponseDto;
 import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.images.repository.ImageRepository;
-import ua.kvitkovo.orders.repository.OrderRepository;
 import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.Helper;
 
@@ -105,8 +104,8 @@ public class ImageService {
             throw new ItemNotFoundException("Image not found");
         });
 
-        awsService.deleteFile(catalogName, getFileNameAws(image.getUrl()));
-        awsService.deleteFile(catalogName, getFileNameAws(image.getUrlSmall()));
+        awsService.deleteFile(catalogName, awsService.getFileNameAws(image.getUrl()));
+        awsService.deleteFile(catalogName, awsService.getFileNameAws(image.getUrlSmall()));
 
         imageRepository.delete(image);
 
@@ -180,13 +179,5 @@ public class ImageService {
         sb.append(suffix);
         sb.append(".webp");
         return sb.toString();
-    }
-
-    private String getFileNameAws(String urlString) {
-        String[] strings = urlString.split("/");
-        if (strings.length == 6) {
-            return strings[5];
-        }
-        return "";
     }
 }

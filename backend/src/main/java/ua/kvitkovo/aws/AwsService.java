@@ -46,4 +46,12 @@ public class AwsService {
     public void deleteFile(String awsCatalog, String fileName) {
         s3client.deleteObject(bucketName, awsCatalog + fileName);
     }
+
+    public String getFileNameAws(String urlString) {
+        String[] strings = urlString.split("/");
+        if (strings.length == 6) {
+            return strings[5];
+        }
+        return "";
+    }
 }

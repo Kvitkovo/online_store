@@ -13,6 +13,7 @@ import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
 import ua.kvitkovo.feedback.entity.FeedbackMessage;
+import ua.kvitkovo.feedback.entity.FeedbackMessageFile;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
@@ -24,6 +25,7 @@ import ua.kvitkovo.utils.ErrorUtils;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final UserService userService;
+    private final FeedBackMessageFileService feedBackMessageFileService;
     private final FeedbackDtoMapper feedbackDtoMapper;
     private final UserDtoMapper userDtoMapper;
 
@@ -78,7 +81,7 @@ public class FeedbackService {
     }
 
     public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable,
-        MessageStatus status) {
+                                                           MessageStatus status) {
         Page<FeedbackMessage> messages = feedbackRepository.findByStatus(status, pageable);
         if (messages.isEmpty()) {
             return Page.empty();
@@ -88,7 +91,7 @@ public class FeedbackService {
     }
 
     public List<FeedbackMessageResponseDto> setFeedbackMessageStatus(List<Long> messageIDs,
-        MessageStatus status) {
+                                                                     MessageStatus status) {
         List<FeedbackMessage> messages = messageIDs.stream()
                 .map(id -> feedbackRepository.findById(id)
                         .orElseThrow(() -> new ItemNotFoundException("Feedback message not found")))
@@ -101,8 +104,20 @@ public class FeedbackService {
         return feedbackDtoMapper.mapEntityToDto(messages);
     }
 
+    @Transactional
     public void deleteClosedMessages(LocalDate dateEndMessage) {
+        List<FeedbackMessage> oldClosedMessages = feedbackRepository.findByStatusAndCreatedLessThan(
+                MessageStatus.CLOSED,
+                dateEndMessage
+        );
 
+        for (FeedbackMessage message : oldClosedMessages) {
+            Set<FeedbackMessageFile> files = message.getFiles();
+            for (FeedbackMessageFile file : files) {
+                feedBackMessageFileService.deleteFile(file.getFileUrl());
+            }
+            feedbackRepository.delete(message);
+        }
     }
 
     private void fillAuthorToMessage(FeedbackMessage feedbackMessage) {

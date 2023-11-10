@@ -15,7 +15,7 @@ public class DeleteOldFeedbackMessagesScheduler {
     private final FeedbackService feedbackService;
 
     @Scheduled(cron = "0 0 0 * * ?")
-    public void performMonthlyTask() {
+    public void performTask() {
         log.info("start delete old feedback message");
         LocalDate currentDate = LocalDate.now();
         LocalDate newDate = currentDate.minusMonths(1);
