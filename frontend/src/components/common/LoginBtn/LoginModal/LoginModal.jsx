@@ -4,7 +4,7 @@ import styles from './LoginModal.module.scss';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
-import ResetPassword from '../ResetPassword';
+import ResetPassword from '../ConfirmationModals/ResetPassword';
 import GoogleLogin from '../GoogleLogin';
 import axios from 'axios';
 
