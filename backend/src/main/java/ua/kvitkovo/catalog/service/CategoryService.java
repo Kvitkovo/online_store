@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.converter.CategoryDtoMapper;
@@ -34,7 +33,6 @@ public class CategoryService {
     private final CategoryDtoMapper categoryMapper;
     private final TransliterateUtils transliterateUtils;
 
-    @Cacheable("categories")
     public Collection<CategoryResponseDto> getAll() {
         List<Category> categories = categoryRepository.findAllByOrderByParentAscSortValueAsc();
         return categoryMapper.mapEntityToDto(categories);
