@@ -16,13 +16,13 @@
 
 // Large devices
 @mixin lg {
-  @media screen and (max-width: #{$breakpoint-lg}) {
+  @media screen and (min-width: #{$breakpoint-lg}) {
     @content;
   }
 }
 
-@mixin xl {
-  @media screen and (min-width: #{$breakpoint-xl}) {
-    @content;
-  }
-}
+// @mixin xl {
+//   @media screen and (min-width: #{$breakpoint-xl}) {
+//     @content;
+//   }
+// }

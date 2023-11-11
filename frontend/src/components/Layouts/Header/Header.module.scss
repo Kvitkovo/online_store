@@ -113,24 +113,24 @@ header {
   display: none;
 }
 
-@include xl {
-  .containerTop,
-  .containerBottom {
-    justify-content: center;
-  }
-  .containerTopLeft {
-    margin-right: 171px;
-  }
-}
-.searchField {
-  margin-right: 93px;
-}
+// @include xl {
+//   .containerTop,
+//   .containerBottom {
+//     justify-content: center;
+//   }
+//   .containerTopLeft {
+//     margin-right: 171px;
+//   }
+// }
+// .searchField {
+//   margin-right: 93px;
+// }
 @include lg {
   .containerTop {
     padding: 0 48px;
   }
   .contacts {
-    display: none;
+    display: flex;
   }
   .verticalLine {
     margin: 0 8px;
@@ -139,12 +139,23 @@ header {
     padding: 0 48px;
   }
   .tabletContacts {
-    display: flex;
-    gap: 8px;
-    margin-right: 8px;
+    display: none;
   }
   .tabletIcon {
     padding: 6px;
+  }
+
+  .searchField {
+    min-width: 528px;
+    margin: 0 93px 0 48px;
+  }
+  .containerBottom {
+    justify-content: center;
+  }
+  .containerTop {
+    justify-content: space-between;
+    width: 1180px;
+    padding: 0;
   }
 }
 @include md {
