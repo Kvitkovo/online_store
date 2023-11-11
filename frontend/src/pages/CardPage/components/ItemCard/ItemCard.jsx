@@ -12,9 +12,9 @@ import Slider from '../Slider';
 const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
   const windowWidth = width;
-  const isDesktop = windowWidth > 1023;
-  const isTablet = windowWidth < 1024 && windowWidth > 767;
-  const isMobile = windowWidth < 768;
+  const isDesktop = windowWidth > 1190;
+  const isTablet = windowWidth < 1190;
+  const isMobile = windowWidth < 860;
   const recentlyViewed = Array.from(
     JSON.parse(localStorage.getItem('recentlyViewed')),
   );

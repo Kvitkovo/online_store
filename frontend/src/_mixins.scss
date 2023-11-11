@@ -14,6 +14,10 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+// Large devices
+>>>>>>> ecbb0f6c45a15bfc7935b73a5fd2450873cbe190
 @mixin lg {
   @media screen and (max-width: #{$breakpoint-lg}) {
     @content;
