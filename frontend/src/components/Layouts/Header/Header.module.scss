@@ -112,6 +112,19 @@ header {
 .tabletContacts {
   display: none;
 }
+
+@include xl {
+  .containerTop,
+  .containerBottom {
+    justify-content: center;
+  }
+  .containerTopLeft {
+    margin-right: 171px;
+  }
+}
+.searchField {
+  margin-right: 93px;
+}
 @include lg {
   .containerTop {
     padding: 0 48px;
