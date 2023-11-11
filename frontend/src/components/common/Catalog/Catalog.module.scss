@@ -7,9 +7,6 @@
   z-index: 9999;
   left: 0;
 
-  @media screen and (min-width: 481px) {
-    top: 75px;
-  }
   .itemsWrapper {
     display: flex;
     background-color: $white-color;
@@ -36,9 +33,6 @@
       transition: all 0.3s ease-in-out;
       padding: 4px 10px;
       cursor: pointer;
-      @include sm {
-        padding: 12px 10px;
-      }
       &:hover {
         border-radius: 26px;
         background: $page-background-color;
@@ -56,9 +50,6 @@
       max-height: 550px;
       overflow: hidden;
       overflow-y: auto;
-      @media screen and (max-width: 480px) {
-        width: 100vw;
-      }
 
       .categoryItemContent {
         display: flex;
@@ -88,8 +79,6 @@
 }
 .redText {
   color: $discount-color;
-  font-size: 16px;
-  font-style: normal;
   font-weight: 700;
   line-height: 130%;
 }
@@ -100,4 +89,16 @@
 .categoryItemText,
 .redText {
   margin-right: 5px;
+}
+
+@include sm {
+  .categoryWrapper {
+    top: 75px;
+  }
+  .categoryItemWrapper {
+    padding: 12px 10px;
+  }
+  .categoryList {
+    width: 100vw;
+  }
 }

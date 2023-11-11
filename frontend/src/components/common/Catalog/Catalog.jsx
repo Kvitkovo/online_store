@@ -50,7 +50,7 @@ const Catalog = ({ setIsOpen, categories }) => {
           />
         )}
       </div>
-      {width > 481 ? (
+      {width > 510 ? (
         <img
           src={hoveredCategory?.bg || mockData[0].bg}
           alt={hoveredCategory?.name || mockData[0].name}
