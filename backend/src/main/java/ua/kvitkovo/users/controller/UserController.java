@@ -63,9 +63,9 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to get the User with id - {}.", id);
+        log.debug("Received request to get the User with id - {}.", id);
         UserResponseDto user = userService.findById(id);
-        log.info("the Size with id - {} was retrieved - {}.", id, user);
+        log.debug("the Size with id - {} was retrieved - {}.", id, user);
         return user;
     }
 
@@ -108,9 +108,9 @@ public class UserController {
                     schema = @Schema(type = "string")
             )
             @PathVariable String code) {
-        log.info("Received request to confirm user mail with Verification code - {}.", code);
+        log.debug("Received request to confirm user mail with Verification code - {}.", code);
         userAuthService.confirmEmail(code);
-        log.info("Email confirmed");
+        log.debug("Email confirmed");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -129,9 +129,9 @@ public class UserController {
                     schema = @Schema(type = "string")
             )
             @PathVariable String email) {
-        log.info("Received request to reset password with email - {}.", email);
+        log.debug("Received request to reset password with email - {}.", email);
         userAuthService.sendResetPassword(email);
-        log.info("Email send to {} for reset password", email);
+        log.debug("Email send to {} for reset password", email);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -152,9 +152,9 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequestDto requestDto,
                                               BindingResult bindingResult) {
-        log.info("Received request to reset user password with Verification code.");
+        log.debug("Received request to reset user password with Verification code.");
         userAuthService.resetPassword(requestDto, bindingResult);
-        log.info("Password reset");
+        log.debug("Password reset");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -171,9 +171,9 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDto changePasswordRequestDto,
                                                BindingResult bindingResult) {
-        log.info("Received request to change user password.");
+        log.debug("Received request to change user password.");
         userAuthService.changePassword(changePasswordRequestDto, bindingResult);
-        log.info("Password changed");
+        log.debug("Password changed");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -201,9 +201,9 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to delete User with id - {}.", id);
+        log.debug("Received request to delete User with id - {}.", id);
         userService.delete(id);
-        log.info("the User with id - {} was deleted.", id);
+        log.debug("the User with id - {} was deleted.", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -231,7 +231,7 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to enable User with id {}.", id);
+        log.debug("Received request to enable User with id {}.", id);
         return userService.enableUser(id);
     }
 
@@ -259,7 +259,7 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
-        log.info("Received request to disable User with id {}.", id);
+        log.debug("Received request to disable User with id {}.", id);
         return userService.disableUser(id);
     }
 
@@ -318,7 +318,7 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update User - {} with id {}.", request, id);
+        log.debug("Received request to update User - {} with id {}.", request, id);
         return userAuthService.updateUser(id, request, bindingResult);
     }
 
@@ -354,7 +354,7 @@ public class UserController {
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id, BindingResult bindingResult) {
-        log.info("Received request to update User - {} with id {}.", request, id);
+        log.debug("Received request to update User - {} with id {}.", request, id);
         return userAuthService.updateEmployee(id, request, bindingResult);
     }
 }

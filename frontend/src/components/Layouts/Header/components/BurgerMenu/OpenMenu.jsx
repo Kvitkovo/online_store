@@ -74,7 +74,6 @@ const OpenMenu = ({ toggleMenu }) => {
         <p className={styles.addition}>
           {' '}
           <span className={styles.language}>Укр</span>{' '}
-          <IconButton icon={<ICONS.person />} />
         </p>
       </div>
     </div>

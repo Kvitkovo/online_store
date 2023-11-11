@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
+import InputSearch from '../../../../ui-kit/components/Input/InputSearch';
 
 const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
   return (
@@ -10,8 +11,11 @@ const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
         <div className={styles.burgerIcon} onClick={toggleMenu}>
           <IconButton icon={<ICONS.burgerMenu />} />
         </div>
+        <div className={styles.searchField}>
+          <InputSearch />
+        </div>
         <div className={styles.actionIcons}>
-          <div className={styles.search}>
+          <div className={styles.searchMobile}>
             <IconButton icon={<ICONS.searchMobile />} />
           </div>
           <div className={styles.bouquet}>

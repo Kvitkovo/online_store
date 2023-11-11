@@ -1,0 +1,21 @@
+create TABLE decor (
+	id bigint NOT NULL AUTO_INCREMENT,
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON update CURRENT_TIMESTAMP,
+	decor_status varchar(50) NOT NULL DEFAULT 'NEW',
+	decor_comment TEXT,
+	customer_id bigint DEFAULT NULL,
+	customer_name VARCHAR(255) NULL,
+	customer_phone VARCHAR(255) NULL,
+	customer_email VARCHAR(255) NULL,
+	address_city VARCHAR(255) NULL,
+	address_street VARCHAR(255) NULL,
+	address_house VARCHAR(255) NULL,
+	address_apartment VARCHAR(255) NULL,
+	user_id bigint NULL DEFAULT NULL,
+	shop_id bigint NOT NULL,
+	CONSTRAINT decor_pkey PRIMARY KEY (id),
+	CONSTRAINT decor_fk_users FOREIGN KEY (customer_id) REFERENCES users(id),
+	CONSTRAINT decor_fk_users_2 FOREIGN KEY (user_id) REFERENCES users(id),
+	CONSTRAINT decor_fk_shops FOREIGN KEY (shop_id) REFERENCES shops(id)
+);

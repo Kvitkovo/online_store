@@ -27,6 +27,7 @@ export const mockCategories = [
     name: 'Букети з квітів',
     bg: '/images/catalog-images/background/bukety_z_kvitiv.png',
   },
+
   {
     sortValue: 2,
     name: 'Квіти поштучно',

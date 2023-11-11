@@ -12,9 +12,9 @@ import Slider from '../Slider';
 const ItemCard = ({ cardData }) => {
   const { width } = useWindowSize();
   const windowWidth = width;
-  const isDesktop = windowWidth > 1023;
-  const isTablet = windowWidth < 1023;
-  const isMobile = windowWidth < 767;
+  const isDesktop = windowWidth > 1190;
+  const isTablet = windowWidth < 1190;
+  const isMobile = windowWidth < 860;
 
   return (
     <div>
@@ -47,6 +47,7 @@ const ItemCard = ({ cardData }) => {
                   oldPrice={cardData.price}
                   actualPrice={cardData.priceWithDiscount}
                   stockInfo={cardData?.available}
+                  addToConstructor={cardData.allowAddToConstructor}
                 />
               </div>
             </div>
@@ -71,6 +72,7 @@ const ItemCard = ({ cardData }) => {
                 oldPrice={cardData.price}
                 actualPrice={cardData.priceWithDiscount}
                 stockInfo={cardData?.available}
+                addToConstructor={cardData.allowAddToConstructor}
               />
               <ItemFeatures
                 type={cardData?.categoryName}

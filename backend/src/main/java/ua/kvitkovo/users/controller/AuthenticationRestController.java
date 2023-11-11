@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.kvitkovo.errorhandling.ErrorResponse;
+import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
 import ua.kvitkovo.security.jwt.AuthenticationRequestDto;
 import ua.kvitkovo.security.jwt.JwtResponseDto;
 import ua.kvitkovo.security.jwt.JwtTokenProvider;
@@ -88,5 +89,30 @@ public class AuthenticationRestController {
     public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult) {
         userAuthService.register(requestDto, bindingResult);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Login in and returns the authentication token with Google token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully authenticated", content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = JwtResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "It indicates that the server can not or will not process " +
+                    "the request due to an apparent client error",
+                    content = {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ErrorResponse.class))
+                    })
+    })
+    @PostMapping("google")
+    public ResponseEntity google(@RequestBody AuthenticationGoogleRequestDto requestDto) {
+        try {
+            User user = userAuthService.loginGoogle(requestDto);
+            String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
+            JwtResponseDto response = new JwtResponseDto(user.getEmail(), token);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            throw new BadCredentialsException("Invalid token");
+        }
     }
 }

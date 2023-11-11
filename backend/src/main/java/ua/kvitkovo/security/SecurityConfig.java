@@ -30,16 +30,14 @@ import ua.kvitkovo.security.jwt.JwtTokenProvider;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-
+    private static final String ADMIN_ENDPOINT = "/v1/admin/**";
     @Autowired
     private UserDetailsService userDetailsService;
 
-    private static final String ADMIN_ENDPOINT = "/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "/v1/auth/login";
-    private static final String REGISTER_ENDPOINT = "/v1/auth/register";
     private static final String[] ALL_PERMITTED_ENDPOINTS = {
-            LOGIN_ENDPOINT,
-            REGISTER_ENDPOINT,
+            "/v1/auth/login",
+            "/v1/auth/google",
+            "/v1/auth/register",
             // -- Swagger UI v2
             "/v2/api-docs",
             "/swagger-resources",
@@ -60,23 +58,27 @@ public class SecurityConfig {
             "/v1/sizes/**",
             "/v1/filter/**",
             "/v1/types/**",
-            "/v1/users/email/**",
+            "/v1/users/email/**"
     };
 
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
             "/v1/orders/**",
+            "/v1/decor/**",
+            "/v1/feedback/email",
+            "/v1/feedback/phone",
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
-            "/v1/orders/{id:\\d+}/cancel",
+            "/v1/orders/{id:[-]?\\d+}/cancel",
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
-        "/v1/users/{id:\\d+}",
-        "/v1/orders/{id:\\d+}",
-        "/v1/orders/user/current",
+            "/v1/users/{id:[-]?\\d+}",
+            "/v1/orders/{id:[-]?\\d+}",
+            "/v1/orders/user/current",
+            "/v1/decor/{id:[-]?\\d+}",
     };
 
     private final JwtTokenProvider jwtTokenProvider;
