@@ -23,23 +23,17 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   useEffect(() => {
     const login = async () => {
       if (validateEmail(email) && password) {
-        try {
-          const response = await axios.post(
-            'https://api.imperiaholoda.com.ua:4446/v1/auth/login',
-            {
-              email: email,
-              password: password,
-            },
-          );
-          if (response.status === 200) {
-            const token = response.data.token;
-            /*  console.log('Token:', token); */
-            alert('Login successful:', token);
-          } else {
-            alert('Login failed');
-          }
-        } catch (error) {
-          console.error('An error occurred during login:', error);
+        const response = await axios.post(
+          'https://api.imperiaholoda.com.ua:4446/v1/auth/login',
+          {
+            email: email,
+            password: password,
+          },
+        );
+        if (response.status === 200) {
+          const token = response.data.token;
+          alert('Login successful:', token);
+        } else {
           alert('Login failed');
         }
       }

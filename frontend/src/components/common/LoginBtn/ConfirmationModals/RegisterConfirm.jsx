@@ -15,14 +15,14 @@ const RegisterConfirm = ({ toggleModal, userEmail }) => {
           </div>
 
           <p className={styles.email}>
-            {`На вашу електрону пошту`}, {}
+            {`На Вашу електронну пошту`} {}
             <span className={styles.emailExample}> {userEmail} </span>
             {}
-            {`було відправленно лист
+            {`було відправлено лист
               з посиланням.`}
           </p>
           <p className={styles.textConfirmation}>
-            Перейдіть за посиланням для успішного завершеня реєстрації.
+            Перейдіть за посиланням для успішного завершення реєстрації.
           </p>
         </div>
       </Modals>
