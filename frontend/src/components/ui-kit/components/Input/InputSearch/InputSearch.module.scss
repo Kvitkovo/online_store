@@ -4,7 +4,7 @@
 .root {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 526px;
   height: 44px;
   border: 1px solid $gray-dark-color;
   border-radius: 8px;
@@ -40,7 +40,11 @@
   outline: none;
   border: none;
 }
-
+@include lg {
+  .root {
+    width: 100%;
+  }
+}
 @include md {
   .root {
     width: 354px;
