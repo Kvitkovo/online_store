@@ -2,11 +2,11 @@
 /* eslint-disable import/no-unresolved */
 import React, { useRef, useEffect } from 'react';
 import styles from './Slider.module.scss';
-import './swiper.css';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import Card from '../../../../components/common/Card/Card';
 import { register } from 'swiper/element/bundle';
+import './swiper.scss';
 
 const Slider = React.memo(({ data }) => {
   const swiperElRef = useRef(null);
@@ -81,27 +81,31 @@ const Slider = React.memo(({ data }) => {
         </div>
       )}
       <div>
-        <swiper-container ref={swiperElRef} init={false}>
-          {data.map((card) => {
-            return (
-              <swiper-slide key={card.id}>
-                <Card
-                  image={
-                    card.images?.length > 0
-                      ? card.images[0]?.urlSmall
-                      : '../images/no_image.jpg'
-                  }
-                  title={card.title}
-                  discount={card.discount}
-                  oldPrice={card.price}
-                  price={card.priceWithDiscount}
-                  id={card.id}
-                />
-              </swiper-slide>
-            );
-          })}
-        </swiper-container>
-        <div className={`swiper-pagination ${styles.pagination}`}> </div>
+        {data.length > 1 && (
+          <>
+            <swiper-container ref={swiperElRef} init={false}>
+              {data.map((card, idx, arr) => {
+                return idx !== arr.length - 1 ? (
+                  <swiper-slide key={card.id}>
+                    <Card
+                      image={
+                        card.images?.length > 0
+                          ? card.images[0]?.urlSmall
+                          : '../images/no_image.jpg'
+                      }
+                      title={card.title}
+                      discount={card.discount}
+                      oldPrice={card.price}
+                      price={card.priceWithDiscount}
+                      id={card.id}
+                    />
+                  </swiper-slide>
+                ) : null;
+              })}
+            </swiper-container>
+            <div className={`swiper-pagination ${styles.pagination}`}> </div>
+          </>
+        )}
       </div>
       {data.length > 4 && (
         <div

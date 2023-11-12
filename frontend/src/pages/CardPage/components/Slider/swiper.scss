@@ -1,6 +1,8 @@
+@import '../../../../_variables.scss';
+
 .swiper-pagination-bullet-active {
   border-radius: 2px;
-  background-color: #6cc25e;
+  background-color: $page-accent-color;
 }
 
 .swiper-button-disabled {

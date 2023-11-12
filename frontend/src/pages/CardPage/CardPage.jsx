@@ -15,7 +15,7 @@ const CardPage = React.memo(() => {
     );
 
     const filteredRecentlyViewed = storedRecentlyViewed.filter((item) => {
-      return item.id != myId;
+      return item.id !== +myId;
     });
     filteredRecentlyViewed.push(response);
 

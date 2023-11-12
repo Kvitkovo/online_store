@@ -1,4 +1,5 @@
 @import '../../../../mixins';
+@import '../../../../variables';
 
 .sliderContainer {
   position: relative;
@@ -27,7 +28,7 @@
 }
 .paginationBullet {
   display: block;
-  background-color: #dbdbdb;
+  background-color: $gray-light-color;
   height: 8px;
   width: 100%;
 }
