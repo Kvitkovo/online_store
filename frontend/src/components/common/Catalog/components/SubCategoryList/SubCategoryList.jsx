@@ -13,7 +13,7 @@ const SubCategories = ({
 
   return (
     <ul className={styles.categoryList}>
-      {width > 481
+      {width > 510
         ? subCategories?.length > 0 &&
           subCategories.map((child) => (
             <CatalogItem

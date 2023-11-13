@@ -23,7 +23,7 @@ const CatalogItem = ({
   const restParts = nameParts.slice(1).join(' ');
 
   const handleClick = () => {
-    if (width <= 481) {
+    if (width <= 510) {
       isSubCategoryOpen
         ? setIsSubCategoryOpen(false)
         : children && children.length > 0
