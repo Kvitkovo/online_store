@@ -24,9 +24,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordPattern.test(value);
   };
-  const toggleModal = () => {
-    setRegistrationSuccess((prev) => !prev);
-  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -49,7 +47,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   return (
     <>
       {registrationSuccess ? (
-        <RegisterLetter userEmail={email} toggleModal={toggleModal} />
+        <RegisterLetter userEmail={email} toggleModal={toggleRegister} />
       ) : (
         <Modals type="login" onClick={toggleRegister}>
           <div className={styles.header}>
