@@ -1,0 +1,35 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $page-blur-color;
+  z-index: 999;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  background: $background-gradient;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.iconWraper {
+  display: inline-flex;
+  padding: 9px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 84px;
+  background: $white-color;
+  height: 56px;
+  width: 100%;
+}
