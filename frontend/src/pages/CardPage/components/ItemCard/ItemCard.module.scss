@@ -11,8 +11,6 @@
   margin: 0 auto;
   width: 1180px;
 }
-// .itemContainer {
-// }
 .itemBlock {
   display: grid;
   grid-template-areas:
@@ -20,7 +18,8 @@
     'image image image image image .  stock stock stock stock stock stock'
     'image image image image image .  description description description description description description'
     'image image image image image .  features features features features features features'
-    'image image image image image .  price price price price price price';
+    'image image image image image .  price price price price price price'
+    'image image image image image . . . . . . .';
 
   padding: 32px 20px 32px 16px;
   margin-top: 22px;

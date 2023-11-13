@@ -16,7 +16,6 @@ const ItemCard = ({ cardData }) => {
   return (
     <div className={styles.mainContainer}>
       <Path />
-      {/* <div className={styles.itemContainer}> */}
       <div className={styles.itemBlock}>
         <div className={styles.caption}>
           <h1 className={styles.itemName}>{cardData.title}</h1>
@@ -57,7 +56,6 @@ const ItemCard = ({ cardData }) => {
           <ItemDescription description={cardData?.description} />
         </div>
       </div>
-      {/* </div> */}
       {recentlyViewed.length > 1 && (
         <>
           <h2 className={styles.previous}>Раніше переглянуті</h2>

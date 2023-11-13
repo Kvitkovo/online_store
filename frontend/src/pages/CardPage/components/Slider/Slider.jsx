@@ -10,7 +10,7 @@ import './swiper.scss';
 
 const Slider = React.memo(({ data }) => {
   const swiperElRef = useRef(null);
-  const showNavigation = data.length > 4;
+  const showNavigation = data.length > 5;
 
   useEffect(() => {
     register();
