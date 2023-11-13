@@ -7,27 +7,28 @@ import { GetCategories } from '../../../../../services/catalog/categoryAccess.se
 const CatalogFetch = ({ setIsOpen }) => {
   const { sortValue } = useParams();
   const [categoryData, setCategoryData] = useState();
+  const promotionalPrice = {
+    id: 0,
+    name: 'Акційна ціна',
+    alias: 'Sale',
+    parent: null,
+    metaDescription: '',
+    metaKeywords: '',
+    description: '',
+    status: 'ACTIVE',
+    icon: 'SALE',
+    hasSubCategory: false,
+    sortValue: 0,
+  };
 
   useEffect(() => {
     const getCatalog = async () => {
       const response = await GetCategories(sortValue);
-      response.unshift({
-        id: 0,
-        name: 'Акційна ціна',
-        alias: 'Sale',
-        parent: null,
-        metaDescription: '',
-        metaKeywords: '',
-        description: '',
-        status: 'ACTIVE',
-        icon: 'SALE',
-        hasSubCategory: false,
-        sortValue: 0,
-      });
+      response.unshift(promotionalPrice);
       setCategoryData(response);
     };
     getCatalog();
-  }, [sortValue]);
+  });
 
   return (
     <div>
