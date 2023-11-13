@@ -38,6 +38,8 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
         },
       );
       if (response.status === 200) {
+        const token = response.data.token;
+        localStorage.setItem('authToken', token);
         setRegistrationSuccess(true);
       } else {
         alert('Registration failed');
