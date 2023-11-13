@@ -12,7 +12,7 @@ header {
 
 .containerTop {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 64px;
   width: 100%;
@@ -21,6 +21,7 @@ header {
 .containerTopLeft {
   display: flex;
   align-items: center;
+  margin-right: 171px;
 }
 .logoLink {
   height: 50px;
@@ -43,6 +44,7 @@ header {
   padding: 8px;
   gap: 8px;
   color: $text-color;
+  white-space: nowrap;
 }
 .iconButton {
   margin-right: 130px;
@@ -65,8 +67,7 @@ header {
 .containerBottom {
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0 64px;
   height: 64px;
   z-index: 1;
@@ -87,7 +88,7 @@ header {
   display: flex;
   max-width: 526px;
   width: 100%;
-  margin: 0 32px 0 43px;
+  margin: 0 93px 0 48px;
 }
 
 .containerBottomRight {
@@ -112,9 +113,14 @@ header {
 .tabletContacts {
   display: none;
 }
+
 @include lg {
   .containerTop {
     padding: 0 48px;
+    justify-content: space-between;
+  }
+  .containerTopLeft {
+    margin-right: 0;
   }
   .contacts {
     display: none;
@@ -124,6 +130,9 @@ header {
   }
   .containerBottom {
     padding: 0 48px;
+  }
+  .searchField {
+    margin: 0 32px 0 43px;
   }
   .tabletContacts {
     display: flex;
