@@ -5,7 +5,7 @@ import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 import axios from 'axios';
-import RegisterConfirm from '../ConfirmationModals/RegisterConfirm';
+import RegisterLetter from '../ConfirmationModals/RegisterLetter';
 
 const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [name, setName] = useState('');
@@ -49,7 +49,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   return (
     <>
       {registrationSuccess ? (
-        <RegisterConfirm userEmail={email} toggleModal={toggleModal} />
+        <RegisterLetter userEmail={email} toggleModal={toggleModal} />
       ) : (
         <Modals type="login" onClick={toggleRegister}>
           <div className={styles.header}>

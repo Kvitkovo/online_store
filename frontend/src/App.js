@@ -22,6 +22,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
+import RegisterConfirm from './components/common/LoginBtn/RegisterConfirm';
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
                   element={<ChangePassword />}
                 />
                 <Route path={ROUTES.orders} element={<Orders />} />
+                <Route
+                  path={ROUTES.emailConfirmation}
+                  element={<RegisterConfirm />}
+                />
               </Route>
             </Routes>
           </div>

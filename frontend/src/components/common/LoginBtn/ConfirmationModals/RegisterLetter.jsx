@@ -4,7 +4,7 @@ import Modals from '../../Modals';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 
-const RegisterConfirm = ({ toggleModal, userEmail }) => {
+const RegisterLetter = ({ toggleModal, userEmail }) => {
   return (
     <div>
       <Modals type="confirmation">
@@ -29,4 +29,4 @@ const RegisterConfirm = ({ toggleModal, userEmail }) => {
     </div>
   );
 };
-export default RegisterConfirm;
+export default RegisterLetter;
