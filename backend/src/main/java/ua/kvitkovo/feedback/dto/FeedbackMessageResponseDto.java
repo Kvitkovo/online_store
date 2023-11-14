@@ -1,10 +1,10 @@
 package ua.kvitkovo.feedback.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.*;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter

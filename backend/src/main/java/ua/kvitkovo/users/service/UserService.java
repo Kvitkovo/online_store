@@ -2,7 +2,6 @@ package ua.kvitkovo.users.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -35,7 +34,6 @@ public class UserService {
         return userMapper.mapEntityToDto(users);
     }
 
-    @Cacheable("user_email")
     public User findByUsername(String username) throws ItemNotFoundException {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> {
@@ -45,7 +43,6 @@ public class UserService {
         return user;
     }
 
-    @Cacheable("user")
     public UserResponseDto findById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::mapEntityToDto)

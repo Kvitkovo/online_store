@@ -17,16 +17,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.service.FeedbackService;
-import ua.kvitkovo.orders.dto.OrderResponseDto;
-import ua.kvitkovo.orders.entity.OrderStatus;
 
 @Tag(name = "Feedback", description = "the feedback messages API")
 @Slf4j
@@ -97,21 +97,57 @@ public class FeedbackMessageController {
     @PostMapping("/phone")
     @ResponseBody
     public FeedbackMessageResponseDto addPhoneFeedback(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final FeedbackMessagePhoneRequestDto request,
-            BindingResult bindingResult) {
+        @RequestBody @Valid @NotNull(message = "Request body is mandatory") final FeedbackMessagePhoneRequestDto request,
+        BindingResult bindingResult) {
         log.info("Received request to create Feedback message - {}.", request);
         return feedbackService.addPhoneFeedback(request, bindingResult);
     }
 
+    @Operation(summary = "Add a new answer Feedback message")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = FeedbackMessageResponseDto.class))
+        }),
+        @ApiResponse(responseCode = "400", description =
+            "The Feedback message has already been added " +
+                "or some data is missing", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        }),
+        @ApiResponse(responseCode = "404", description = "Main message not found", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
+        })
+    })
+    @PostMapping(path = "/answer", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseBody
+    public FeedbackMessageResponseDto addFeedbackMessageWithFile(
+        @RequestParam(value = "mainImageId", required = true) Long mainImageId,
+        @RequestParam(value = "message", required = true) String message,
+        @RequestParam(value = "file", required = false) MultipartFile file) {
+        log.info("Received request to create answer Feedback message to message {} with id {}.",
+            message);
+        return feedbackService.addFeedbackMessageWithFile(mainImageId, message, file);
+    }
+
     @Operation(summary = "Get Feedback message by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = FeedbackMessageResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Feedback message not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
+        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = FeedbackMessageResponseDto.class))
+        }),
+        @ApiResponse(responseCode = "404", description = "Feedback message not found", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ErrorResponse.class))
             })
     })
     @GetMapping("/{id}")
