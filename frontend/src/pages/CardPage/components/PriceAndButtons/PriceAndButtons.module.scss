@@ -36,10 +36,10 @@
   }
 }
 @include sm {
-  .desktopContainer {
-    display: none;
-  }
-  .priceMobile {
+  // .desktopContainer {
+  //   display: none;
+  // }
+  .price {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
