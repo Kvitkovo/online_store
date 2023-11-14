@@ -15,26 +15,19 @@ import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog/Catalog';
 import { useSelector } from 'react-redux';
-// import { calculateTotal } from '../../../redux/slices/cartSlice';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
 
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(calculateTotal());
-  //   console.log(cart.cartTotalQuantity);
-  // }, [cart, dispatch]);
 
   const productQuantity = useMemo(() => {
-    let quantity = 0;
-    cartItems.forEach((item) => {
-      quantity += item.cardQuantity;
-    });
-    // console.log(quantity);
+    let InitialValue = 0;
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.cardQuantity,
+      InitialValue,
+    );
     return quantity;
   }, [cartItems]);
 
