@@ -1,15 +1,24 @@
-import React from 'react';
+/* eslint-disable max-len */
+import React, { useState } from 'react';
 import styles from './BurgerMenu.module.scss';
 import { NavLink } from 'react-router-dom';
 import Button from '../../../../ui-kit/components/Button';
 import { ICONS } from '../../../../ui-kit/icons';
 import Divider from '../../../../ui-kit/components/Divider';
-import ROUTES from '../../../../../constants/routers';
+import ROUTES from '../../../../../constants/ROUTES';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { navigationItems } from '../../../Header/navigationItems';
 import NavigationMenu from '../NavigationMenu';
+import Catalog from '../../../../common/Catalog';
+import ModalCatalog from '../../../../common/Catalog/components/ModalCatalog/ModalCatalog';
+import ParentComponent from '../../../../common/Catalog/components/ModalCatalog/ParentComponent';
 
 const OpenMenu = ({ toggleMenu }) => {
+  const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
+  const catalogHandler = () => {
+    setIsCatalogOpened((prev) => !prev);
+  };
   return (
     <div className={styles.openMenu}>
       <div className={styles.containerTop}>
@@ -28,8 +37,17 @@ const OpenMenu = ({ toggleMenu }) => {
             padding="padding-header-even"
             reverse="true"
             icon={<ICONS.mobileCatalogue />}
-            onClick={() => alert('clicked bouquete')}
+            onClick={catalogHandler}
           />
+          {isCatalogOpened && (
+            <ModalCatalog>
+              <ParentComponent
+                category="Каталог товарів"
+                toggleMenu={toggleMenu}
+              />
+              <Catalog setIsOpen={setIsCatalogOpened} />
+            </ModalCatalog>
+          )}
         </div>
         <NavigationMenu items={navigationItems} menuType="BurgerMenu" />
         <div className={styles.divider}>

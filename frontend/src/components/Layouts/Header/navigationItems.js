@@ -1,4 +1,4 @@
-import ROUTES from '../../../constants/routers';
+import ROUTES from '../../../constants/ROUTES';
 
 export const navigationItems = [
   {

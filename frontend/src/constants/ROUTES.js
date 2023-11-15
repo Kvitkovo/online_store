@@ -15,6 +15,7 @@ const ROUTES = {
   orders: '/account/orders',
   card: '/product/:myId',
   emailConfirmation: '/user/email/:code/confirm/',
+  category: '/category',
 };
 
 export default ROUTES;

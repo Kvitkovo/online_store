@@ -2,17 +2,16 @@
 @import 'src/_mixins.scss';
 
 footer {
-  max-width: 1440px;
-  margin: 0 auto;
   height: 337px;
-  padding: 32px 130px;
+  padding: 32px 0px;
   background-color: $text-color;
 }
 
 .container {
-  max-width: 1056px;
+  max-width: 1180px;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
 }
 
 section {
@@ -56,7 +55,7 @@ section {
   margin-top: 24px;
 }
 
-@include md {
+@include lg {
   footer {
     height: 100%;
     padding: 32px 102px 0 47px;

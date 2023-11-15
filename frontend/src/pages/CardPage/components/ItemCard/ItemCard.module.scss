@@ -7,24 +7,50 @@
     padding: 7px 9px;
   }
 }
-.itemContainer {
-  padding: 32px 20px 32px 4px;
+.mainContainer {
+  margin: 0 auto;
+  width: 1180px;
+}
+.itemBlock {
+  display: grid;
+  grid-template-areas:
+    'image image image image image . caption caption caption caption caption caption'
+    'image image image image image .  stock stock stock stock stock stock'
+    'image image image image image .  description description description description description description'
+    'image image image image image .  features features features features features features'
+    'image image image image image .  price price price price price price'
+    'image image image image image . . . . . . .';
+
+  padding: 32px 20px 32px 16px;
   margin-top: 22px;
   border-radius: 8px;
   background: $white-color;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
 }
+.cardImage {
+  grid-area: image;
+  margin-right: 74px;
+}
+.caption {
+  grid-area: caption;
+}
+.stock {
+  grid-area: stock;
+}
+.description {
+  grid-area: description;
+}
+.features {
+  grid-area: features;
+}
+.price {
+  grid-area: price;
+}
 .itemName {
   font-weight: 500;
   padding: 6px 0;
 }
-.itemBlock {
-  display: flex;
-  gap: 58px;
-}
-.itemDescriptionContainer {
-  flex-direction: column;
-}
+
 .previous {
   font-size: 32px;
   padding: 6px;
@@ -32,69 +58,65 @@
   margin-bottom: 32px;
   font-weight: 500;
 }
-.mobileTop {
-  display: none;
+
+@include lg {
+  .itemBlock {
+    display: grid;
+    grid-template-areas:
+      'image image image image image . caption caption caption caption caption caption'
+      'image image image image image .  stock stock stock stock stock stock'
+      'image image image image image .  features features features features features features'
+      'image image image image image .  price price price price price price'
+      'description description description description description description description description description description description description';
+  }
+  .mainContainer {
+    width: 906px;
+  }
+  .cardImage {
+    margin-right: 92px;
+  }
 }
+
 @include md {
-  .itemContainer {
+  .itemBlock {
     overflow: hidden;
+    margin-bottom: 46px;
   }
   .path {
     font-size: 14px;
-    margin: 16px 47px;
-    margin-bottom: 16px;
+    margin-top: 16px;
   }
-  .itemContainer {
-    flex-direction: column;
-    padding: 32px 20px 0px 4px;
-    width: 906px;
-    margin-left: 47px;
+  .mainContainer {
+    max-width: 690px;
   }
-  .itemBlock {
-    gap: 92px;
-  }
-  .itemImage {
-    img {
-      width: 352px;
-      height: 400px;
-    }
-  }
-  .descriptioContainer {
-    display: none;
-  }
-  .descriptionContainerTablet {
-    display: block;
-    margin-left: 20px;
+  .cardImage {
+    margin-right: 30px;
   }
   .itemDescription {
     padding-bottom: 32px;
   }
-  .previous {
-    margin-top: 46px;
-  }
 }
 @include sm {
-  .mobileItemCard {
+  .itemBlock {
     display: flex;
     flex-direction: column;
     background-color: $white-color;
     padding: 16px;
-    width: 100%;
+    margin-bottom: 38px;
   }
-  .itemContainer {
-    display: none;
+  .mainContainer {
+    width: 100%;
   }
   .itemName {
     font-size: 26px;
     font-weight: 500;
-    //margin-top: 16px;
     margin-bottom: 8px;
   }
-  .priceMobile {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 22px;
-    margin-bottom: 32px;
+  .previous {
+    margin: 0 16px;
+  }
+  .cardImage {
+    margin-right: 0;
+    align-self: center;
   }
 }

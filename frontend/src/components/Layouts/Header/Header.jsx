@@ -5,15 +5,15 @@ import styles from './Header.module.scss';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
 import InputSearch from '../../ui-kit/components/Input/InputSearch';
-import ROUTES from '../../../constants/routers';
+import ROUTES from '../../../constants/ROUTES';
 import IconButton from '../../ui-kit/components/IconButton';
 import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
 import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
-import MyBouquet from '../../common/MyBouquet/MyBouquet';
+import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
-import Catalog from '../../common/Catalog/Catalog';
+import Catalog from '../../common/Catalog';
 import LoginModal from '../../common/LoginBtn/LoginModal';
 import RegisterModal from '../../common/LoginBtn/RegisterModal/RegisterModal';
 

@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .oldPrice {
   font-size: 18px;
@@ -29,4 +30,19 @@
 
 .inactive {
   color: $gray-light-color;
+}
+
+@include sm {
+  .oldPrice {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .actualPrice {
+    font-size: 17px;
+    line-height: 22px;
+  }
+  .currency {
+    font-size: 16px;
+    line-height: 21px;
+  }
 }
