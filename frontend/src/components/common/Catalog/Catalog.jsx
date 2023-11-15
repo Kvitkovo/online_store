@@ -4,7 +4,7 @@ import styles from './Catalog.module.scss';
 import CategoryList from './components/CatalogList/CatalogList';
 import SubCategoryList from './components/SubCategoryList/SubCategoryList';
 import { mockCategories as mockData } from '../../../data/catalog/contatct';
-import ROUTES from '../../../constants/ROUTES';
+import ROUTES from '../../../constants/routers';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const Catalog = ({ setIsOpen, categories }) => {

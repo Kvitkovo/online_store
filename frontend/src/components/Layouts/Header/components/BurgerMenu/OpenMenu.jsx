@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Button from '../../../../ui-kit/components/Button';
 import { ICONS } from '../../../../ui-kit/icons';
 import Divider from '../../../../ui-kit/components/Divider';
-import ROUTES from '../../../../../constants/ROUTES';
+import ROUTES from '../../../../../constants/routers';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { navigationItems } from '../../../Header/navigationItems';
 import NavigationMenu from '../NavigationMenu';
