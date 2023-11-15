@@ -13,9 +13,10 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState('');
 
   const validateEmail = (value) => {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,4}$/;
     const disallowedPattern = /\.ru$/i;
     return emailPattern.test(value) && !disallowedPattern.test(value);
   };
@@ -29,20 +30,24 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
     e.preventDefault();
     setSubmitted(true);
     if (validateEmail(email) && validatePassword(password) && name) {
-      const response = await axios.post(
-        'https://api.imperiaholoda.com.ua:4446/v1/auth/register',
-        {
-          firstName: name,
-          email: email,
-          password: password,
-        },
-      );
-      if (response.status === 200) {
-        const token = response.data.token;
-        localStorage.setItem('authToken', token);
-        setRegistrationSuccess(true);
-      } else {
-        alert('Registration failed');
+      try {
+        const response = await axios.post(
+          'https://api.imperiaholoda.com.ua:4446/v1/auth/register',
+          {
+            firstName: name,
+            email: email,
+            password: password,
+          },
+        );
+        if (response.status === 200) {
+          const token = response.data.token;
+          localStorage.setItem('authToken', token);
+          setRegistrationSuccess(true);
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          setEmailExistsError('Електронна пошта вже зареєстрована!');
+        }
       }
     }
   };
@@ -97,8 +102,14 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                     type="email"
                     placeholder="Введіть електронну пошту"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value.trim())}
+                    onChange={(e) => {
+                      setEmail(e.target.value.trim());
+                      setEmailExistsError('');
+                    }}
                   />
+                  {submitted && emailExistsError && (
+                    <p className={styles.errorMessage}>{emailExistsError}</p>
+                  )}
                   {submitted && !email && (
                     <p className={styles.errorMessage}>
                       Введіть електронну пошту

@@ -1,8 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+/* import ContactDetails from '../../../account/ContactDetails'; */
+import LoginModal from '../LoginModal';
+import RegisterModal from '../RegisterModal/RegisterModal';
 
 const RegisterConfirm = () => {
+  const [isOpenLogin, setIsOpenLogin] = useState(true);
+  const [isOpenRegister, setIsOpenRegister] = useState(false);
+
+  const toggleLogin = () => {
+    setIsOpenLogin((prev) => !prev);
+    setIsOpenRegister(false);
+  };
+  const toggleRegister = () => {
+    setIsOpenLogin(false);
+    setIsOpenRegister((prev) => !prev);
+  };
   const { code } = useParams();
 
   useEffect(() => {
@@ -22,7 +36,17 @@ const RegisterConfirm = () => {
 
   return (
     <div>
-      <p>Confirming registration...</p>
+      {isOpenLogin && (
+        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
+      )}
+      {isOpenRegister && (
+        <RegisterModal
+          toggleLogin={toggleLogin}
+          toggleRegister={toggleRegister}
+        />
+      )}
+
+      {/* <ContactDetails /> */}
     </div>
   );
 };
