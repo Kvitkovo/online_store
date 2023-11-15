@@ -16,7 +16,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [emailExistsError, setEmailExistsError] = useState('');
 
   const validateEmail = (value) => {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const disallowedPattern = /\.ru$/i;
     return emailPattern.test(value) && !disallowedPattern.test(value);
   };

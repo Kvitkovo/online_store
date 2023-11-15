@@ -18,9 +18,10 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const validateEmail = (value) => {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const disallowedPattern = /\.ru$/i;
     return emailPattern.test(value) && !disallowedPattern.test(value);
   };
@@ -45,13 +46,13 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
             },
           },
         );
-
         if (response.status === 200) {
           handleSuccessfulLogin();
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          setEmailError('Електронна пошта не зареєстрована!');
+          setPasswordError('Невірна пошта та/або пароль!');
+          setEmailError('Невірна пошта та/або пароль!');
         }
       }
     }
@@ -151,6 +152,9 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                   />
                   {submitted && !password && (
                     <p className={styles.errorMessage}>Введіть пароль</p>
+                  )}
+                  {submitted && passwordError && (
+                    <p className={styles.errorMessage}>{passwordError}</p>
                   )}
                 </div>
               </div>

@@ -1,52 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-/* import ContactDetails from '../../../account/ContactDetails'; */
-import LoginModal from '../LoginModal';
-import RegisterModal from '../RegisterModal/RegisterModal';
+import ContactDetails from '../../../account/ContactDetails';
+import HomePageComponent from '../../../Layouts/HomePageComponent';
 
 const RegisterConfirm = () => {
-  const [isOpenLogin, setIsOpenLogin] = useState(true);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
-
-  const toggleLogin = () => {
-    setIsOpenLogin((prev) => !prev);
-    setIsOpenRegister(false);
-  };
-  const toggleRegister = () => {
-    setIsOpenLogin(false);
-    setIsOpenRegister((prev) => !prev);
-  };
   const { code } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const confirmRegistration = async () => {
-      const response = await axios.get(
-        `https://api.imperiaholoda.com.ua:4446/v1/users/email/${code}/confirm`,
-      );
-      if (response.status === 200) {
-        alert('Registration confirmed!');
-      } else {
-        alert('Registration confirmation failed');
+      try {
+        /* eslint-disable max-len */
+        const response = await axios.get(
+          `https://api.imperiaholoda.com.ua:4446/v1/users/email/${code}/confirm`,
+        );
+        if (response.status === 200) {
+          navigate('/account');
+          alert('Пошту підтверджено!');
+        }
+      } catch (error) {
+        navigate('/');
+        alert('Пошту не підтверджено!');
       }
     };
 
     confirmRegistration();
-  }, [code]);
+  }, [code, navigate]);
 
   return (
     <div>
-      {isOpenLogin && (
-        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
-      )}
-      {isOpenRegister && (
-        <RegisterModal
-          toggleLogin={toggleLogin}
-          toggleRegister={toggleRegister}
-        />
-      )}
-
-      {/* <ContactDetails /> */}
+      <ContactDetails />
+      <HomePageComponent />
     </div>
   );
 };
