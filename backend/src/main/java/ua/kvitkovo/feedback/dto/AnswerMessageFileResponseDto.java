@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackMessageFileResponseDto {
+public class AnswerMessageFileResponseDto {
 
     private Long id;
     private String name;

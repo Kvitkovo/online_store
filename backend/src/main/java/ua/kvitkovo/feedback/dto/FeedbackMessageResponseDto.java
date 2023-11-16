@@ -6,7 +6,7 @@ import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,5 +27,5 @@ public class FeedbackMessageResponseDto {
     private MessageStatus status;
     private MessageType type;
     private Long mainMessageId;
-    private Set<FeedbackMessageFileResponseDto> files;
+    private List<AnswerMessageResponseDto> answers;
 }

@@ -1,8 +1,8 @@
 package ua.kvitkovo.feedback.converter;
 
 import org.mapstruct.Mapper;
-import ua.kvitkovo.feedback.dto.FeedbackMessageFileResponseDto;
-import ua.kvitkovo.feedback.entity.FeedbackMessageFile;
+import ua.kvitkovo.feedback.dto.AnswerMessageFileResponseDto;
+import ua.kvitkovo.feedback.entity.AnswerFeedbackMessageFile;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FeedbackFileDtoMapper {
 
-    FeedbackMessageFileResponseDto mapEntityToDto(FeedbackMessageFile feedbackMessage);
+    AnswerMessageFileResponseDto mapEntityToDto(AnswerFeedbackMessageFile feedbackMessage);
 
-    List<FeedbackMessageFileResponseDto> mapEntityToDto(List<FeedbackMessageFile> feedbackMessages);
+    List<AnswerMessageFileResponseDto> mapEntityToDto(List<AnswerFeedbackMessageFile> feedbackMessages);
 }

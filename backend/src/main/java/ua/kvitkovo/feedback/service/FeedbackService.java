@@ -10,11 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
+import ua.kvitkovo.feedback.dto.AnswerMessageResponseDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
+import ua.kvitkovo.feedback.entity.AnswerFeedbackMessageFile;
 import ua.kvitkovo.feedback.entity.FeedbackMessage;
-import ua.kvitkovo.feedback.entity.FeedbackMessageFile;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
@@ -101,13 +102,13 @@ public class FeedbackService {
             newFileName = Helper.getRandomString(8) + "_" + feedbackMessage.getId() + "_" + file.getOriginalFilename();
             String fileUrl = feedBackMessageFileService.sendFile(file, newFileName);
             if (!fileUrl.isEmpty()) {
-                FeedbackMessageFile messageFile = FeedbackMessageFile.builder()
+                AnswerFeedbackMessageFile messageFile = AnswerFeedbackMessageFile.builder()
                         .message(answerMessage)
                         .fileUrl(fileUrl)
                         .name(newFileName)
                         .build();
 
-                Set<FeedbackMessageFile> files = new HashSet<>();
+                Set<AnswerFeedbackMessageFile> files = new HashSet<>();
                 files.add(messageFile);
                 answerMessage.setFiles(files);
             }
@@ -123,12 +124,20 @@ public class FeedbackService {
 
     public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable,
         MessageStatus status) {
-        Page<FeedbackMessage> messages = feedbackRepository.findByStatus(status, pageable);
+        Page<FeedbackMessage> messages = feedbackRepository.findByStatusAndTypeNot(status, MessageType.ANSWER, pageable);
         if (messages.isEmpty()) {
             return Page.empty();
         } else {
-            return messages.map(feedbackDtoMapper::mapEntityToDto);
+            Page<FeedbackMessageResponseDto> messagesDtos = messages.map(feedbackDtoMapper::mapEntityToDto);
+            for (FeedbackMessageResponseDto messagesDto : messagesDtos) {
+                messagesDto.setAnswers(getAnswers(messagesDto.getMainMessageId()));
+            }
+            return messagesDtos;
         }
+    }
+
+    private List<AnswerMessageResponseDto> getAnswers(Long mainMessageId) {
+        return feedbackRepository.findAnswersByMainMessageId(MessageStatus.NEW, MessageType.ANSWER, mainMessageId);
     }
 
     @Transactional
@@ -154,8 +163,8 @@ public class FeedbackService {
         );
 
         for (FeedbackMessage message : oldClosedMessages) {
-            Set<FeedbackMessageFile> files = message.getFiles();
-            for (FeedbackMessageFile file : files) {
+            Set<AnswerFeedbackMessageFile> files = message.getFiles();
+            for (AnswerFeedbackMessageFile file : files) {
                 feedBackMessageFileService.deleteFile(file.getFileUrl());
             }
             feedbackRepository.delete(message);
