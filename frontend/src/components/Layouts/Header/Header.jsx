@@ -4,7 +4,6 @@ import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
-import InputSearch from '../../ui-kit/components/Input/InputSearch';
 import ROUTES from '../../../constants/routers';
 import IconButton from '../../ui-kit/components/IconButton';
 import { navigationItems } from './navigationItems';
@@ -14,6 +13,7 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
+import SearchField from '../../common/SearchField/SearchField';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -34,6 +34,9 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   };
 
+  const performSearch = (query) => {
+    alert('Search:', query);
+  };
   useModalEffect(isOpenCart, isOpenMyBouquet);
 
   useEffect(() => {
@@ -107,7 +110,7 @@ const Header = () => {
           </div>
 
           <div className={styles.searchField}>
-            <InputSearch />
+            <SearchField onSearch={performSearch} />
           </div>
           <div className={styles.containerBottomRight}>
             <Button
