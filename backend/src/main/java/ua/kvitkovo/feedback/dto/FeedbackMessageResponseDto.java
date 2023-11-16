@@ -18,7 +18,7 @@ public class FeedbackMessageResponseDto {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
-    private Long managerId;
+    private ManagerResponseDto manager;
     private Long authorId;
     private String userName;
     private String userPhone;

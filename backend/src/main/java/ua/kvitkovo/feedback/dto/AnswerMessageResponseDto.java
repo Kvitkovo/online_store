@@ -18,5 +18,6 @@ public class AnswerMessageResponseDto {
     private LocalDateTime created;
     private String messageText;
     private Boolean fromUser;
+    private ManagerResponseDto manager;
     private Set<AnswerMessageFileResponseDto> files;
 }

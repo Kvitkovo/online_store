@@ -38,6 +38,10 @@ public class AnswerMessage {
     @JoinColumn(name = "feedback_message_id", nullable = false)
     private FeedbackMessage message;
 
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private User manager;
+
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "message", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<AnswerFeedbackMessageFile> files;
 }

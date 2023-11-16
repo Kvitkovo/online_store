@@ -91,11 +91,13 @@ public class FeedbackService {
         FeedbackMessage feedbackMessage = feedbackRepository.findById(mainImageId)
             .orElseThrow(
                 () -> new ItemNotFoundException("Feedback message not found"));
+        feedbackMessage.setManager(userDtoMapper.mapDtoToEntity(userService.getCurrentUser()));
 
         AnswerMessage answerMessage = AnswerMessage.builder()
             .messageText(message)
             .fromUser(false)
             .message(feedbackMessage)
+            .manager(feedbackMessage.getManager())
             .build();
 
         String newFileName;
@@ -119,6 +121,7 @@ public class FeedbackService {
         answerRepository.save(answerMessage);
 
         feedbackMessage.getAnswers().add(answerMessage);
+
         return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
 

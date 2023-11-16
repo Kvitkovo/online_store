@@ -23,7 +23,9 @@ CREATE TABLE feedback_answers (
 	from_user BIT(1) NULL DEFAULT 0,
   message_text TEXT,
 	feedback_message_id bigint NOT NULL,
+	manager_id bigint NULL DEFAULT NULL,
 	CONSTRAINT feedback_answers_pkey PRIMARY KEY (id),
+	CONSTRAINT feedback_answers_fk_users FOREIGN KEY (manager_id) REFERENCES users(id),
 	CONSTRAINT answers_messages_fk_feedback_messages FOREIGN KEY (feedback_message_id) REFERENCES feedback_messages(id)
 );
 
