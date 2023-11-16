@@ -10,15 +10,28 @@
   right: 43px;
   height: 164px;
 }
-
 .additionalButtons {
-  display: none;
-}
-.visible {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
+
+.phoneBtn {
+  transform: 0.2s ease-in-out;
+  transition-delay: 0.1s;
+}
+.messageBtn {
+  transform: 0.5s ease-in-out;
+  transition-delay: 0.5s;
+}
+
+.phoneBtn.visible,
+.messageBtn.visible {
+  opacity: 1;
+}
+
 @include md {
   .supportButtonContainer {
     right: 27px;

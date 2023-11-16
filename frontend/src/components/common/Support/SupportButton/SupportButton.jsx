@@ -21,37 +21,39 @@ const SupportButton = ({
   };
 
   useModalEffect(isPhoneModalOpen, isMessageModalOpen);
-
   return (
     <div className={styles.supportButtonContainer}>
       <div
         className={`${styles.additionalButtons} ${
-          isOpen ? styles.visible : ''
+          isOpen ? styles.messageBtn + ' ' + styles.visible : ''
         }`}
       >
-        <div>
-          <IconButton
-            icon={<ICONS.MessageIcon />}
-            isBackground={true}
-            isRound={true}
-            onClick={() => {
-              toggleMessageButton();
-              setIsOpen(false);
-            }}
-          />
-        </div>
-        <div>
-          <IconButton
-            icon={<ICONS.PhoneIcon />}
-            isBackground={true}
-            isRound={true}
-            onClick={() => {
-              togglePhoneButton();
-              setIsOpen(false);
-            }}
-          />
-        </div>
+        <IconButton
+          icon={<ICONS.MessageIcon />}
+          isBackground={true}
+          isRound={true}
+          onClick={() => {
+            toggleMessageButton();
+            setIsOpen(false);
+          }}
+        />
       </div>
+      <div
+        className={`${styles.additionalButtons} ${
+          isOpen ? styles.phoneBtn + ' ' + styles.visible : ''
+        }`}
+      >
+        <IconButton
+          icon={<ICONS.PhoneIcon />}
+          isBackground={true}
+          isRound={true}
+          onClick={() => {
+            togglePhoneButton();
+            setIsOpen(false);
+          }}
+        />
+      </div>
+
       <div className={styles.mainButton}>
         {isOpen ? (
           <IconButton
