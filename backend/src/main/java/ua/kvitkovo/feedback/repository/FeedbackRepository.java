@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface FeedbackRepository extends FeedbackRepositoryBasic {
 
-    Page<FeedbackMessage> findByStatusAndTypeNot(MessageStatus status, MessageType type, Pageable pageable);
+    Page<FeedbackMessage> findByStatus(MessageStatus status, Pageable pageable);
 
     List<FeedbackMessage> findByStatusAndCreatedLessThan(MessageStatus status, LocalDate date);
 }

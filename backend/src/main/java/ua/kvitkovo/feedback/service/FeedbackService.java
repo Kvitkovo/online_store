@@ -15,9 +15,11 @@ import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
 import ua.kvitkovo.feedback.entity.AnswerFeedbackMessageFile;
+import ua.kvitkovo.feedback.entity.AnswerMessage;
 import ua.kvitkovo.feedback.entity.FeedbackMessage;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.entity.MessageType;
+import ua.kvitkovo.feedback.repository.AnswerRepository;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
@@ -37,6 +39,7 @@ import java.util.Set;
 public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final AnswerRepository answerRepository;
     private final UserService userService;
     private final FeedBackMessageFileService feedBackMessageFileService;
     private final FeedbackDtoMapper feedbackDtoMapper;
@@ -81,41 +84,42 @@ public class FeedbackService {
     }
 
     @Transactional
-    public FeedbackMessageResponseDto addFeedbackMessageWithFile(Long mainImageId, String message,
+    public FeedbackMessageResponseDto addFeedbackMessageWithFileFromAdminPanel(Long mainImageId,
+        String message,
         MultipartFile file) {
 
         FeedbackMessage feedbackMessage = feedbackRepository.findById(mainImageId)
             .orElseThrow(
                 () -> new ItemNotFoundException("Feedback message not found"));
 
-        FeedbackMessage answerMessage = FeedbackMessage.builder()
-                .messageText(message)
-                .type(MessageType.ANSWER)
-                .status(MessageStatus.NEW)
-                .mainMessage(feedbackMessage)
-                .userName(userService.getCurrentUser().getFirstName())
-                .build();
-        fillAuthorToMessage(answerMessage);
+        AnswerMessage answerMessage = AnswerMessage.builder()
+            .messageText(message)
+            .fromUser(false)
+            .message(feedbackMessage)
+            .build();
 
         String newFileName;
+        Set<AnswerFeedbackMessageFile> files = new HashSet<>();
         if (file != null) {
-            newFileName = Helper.getRandomString(8) + "_" + feedbackMessage.getId() + "_" + file.getOriginalFilename();
+            newFileName = Helper.getRandomString(8) + "_" + feedbackMessage.getId() + "_"
+                + file.getOriginalFilename();
             String fileUrl = feedBackMessageFileService.sendFile(file, newFileName);
             if (!fileUrl.isEmpty()) {
                 AnswerFeedbackMessageFile messageFile = AnswerFeedbackMessageFile.builder()
-                        .message(answerMessage)
-                        .fileUrl(fileUrl)
-                        .name(newFileName)
-                        .build();
+                    .message(answerMessage)
+                    .fileUrl(fileUrl)
+                    .name(newFileName)
+                    .build();
 
-                Set<AnswerFeedbackMessageFile> files = new HashSet<>();
                 files.add(messageFile);
-                answerMessage.setFiles(files);
             }
         }
+        answerMessage.setFiles(files);
 
-        feedbackRepository.save(answerMessage);
-        return feedbackDtoMapper.mapEntityToDto(answerMessage);
+        answerRepository.save(answerMessage);
+
+        feedbackMessage.getAnswers().add(answerMessage);
+        return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
 
     public FeedbackMessageResponseDto findById(Long id) {
@@ -124,20 +128,13 @@ public class FeedbackService {
 
     public Page<FeedbackMessageResponseDto> getAllMessages(Pageable pageable,
         MessageStatus status) {
-        Page<FeedbackMessage> messages = feedbackRepository.findByStatusAndTypeNot(status, MessageType.ANSWER, pageable);
+        Page<FeedbackMessage> messages = feedbackRepository.findByStatus(status, pageable);
         if (messages.isEmpty()) {
             return Page.empty();
         } else {
             Page<FeedbackMessageResponseDto> messagesDtos = messages.map(feedbackDtoMapper::mapEntityToDto);
-            for (FeedbackMessageResponseDto messagesDto : messagesDtos) {
-                messagesDto.setAnswers(getAnswers(messagesDto.getMainMessageId()));
-            }
             return messagesDtos;
         }
-    }
-
-    private List<AnswerMessageResponseDto> getAnswers(Long mainMessageId) {
-        return feedbackRepository.findAnswersByMainMessageId(MessageStatus.NEW, MessageType.ANSWER, mainMessageId);
     }
 
     @Transactional
@@ -163,9 +160,12 @@ public class FeedbackService {
         );
 
         for (FeedbackMessage message : oldClosedMessages) {
-            Set<AnswerFeedbackMessageFile> files = message.getFiles();
-            for (AnswerFeedbackMessageFile file : files) {
-                feedBackMessageFileService.deleteFile(file.getFileUrl());
+            Set<AnswerMessage> answers = message.getAnswers();
+            for (AnswerMessage answer : answers) {
+                Set<AnswerFeedbackMessageFile> files = answer.getFiles();
+                for (AnswerFeedbackMessageFile file : files) {
+                    feedBackMessageFileService.deleteFile(file.getFileUrl());
+                }
             }
             feedbackRepository.delete(message);
         }

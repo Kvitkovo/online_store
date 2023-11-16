@@ -21,8 +21,7 @@ public interface FeedbackDtoMapper {
 
     @Mappings({
             @Mapping(target = "managerId", source = "manager.id"),
-            @Mapping(target = "authorId", source = "author.id"),
-            @Mapping(target = "mainMessageId", source = "mainMessage.id"),
+            @Mapping(target = "authorId", source = "author.id")
     })
     FeedbackMessageResponseDto mapEntityToDto(FeedbackMessage feedbackMessage);
 

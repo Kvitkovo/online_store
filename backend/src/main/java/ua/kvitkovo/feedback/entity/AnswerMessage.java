@@ -28,13 +28,8 @@ public class AnswerMessage {
     @Column(name = "created")
     private LocalDateTime created;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User author;
-
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private User manager;
+    @Column(name = "from_user")
+    private Boolean fromUser;
 
     @Column(name = "message_text")
     private String messageText;

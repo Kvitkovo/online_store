@@ -26,6 +26,5 @@ public class FeedbackMessageResponseDto {
     private String messageText;
     private MessageStatus status;
     private MessageType type;
-    private Long mainMessageId;
     private List<AnswerMessageResponseDto> answers;
 }

@@ -136,7 +136,7 @@ public class FeedbackMessageController {
         @RequestParam(value = "file", required = false) MultipartFile file) {
         log.info("Received request to create answer Feedback message to message {} with id {}.",
             message);
-        return feedbackService.addFeedbackMessageWithFile(mainImageId, message, file);
+        return feedbackService.addFeedbackMessageWithFileFromAdminPanel(mainImageId, message, file);
     }
 
     @Operation(summary = "Get Feedback message by ID")
