@@ -15,3 +15,9 @@
 .outOfStock {
   background: #efefef;
 }
+
+@include sm {
+  .Stock {
+    margin-bottom: 0;
+  }
+}

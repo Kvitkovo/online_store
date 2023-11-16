@@ -1,8 +1,6 @@
 @import '../../../../mixins';
 
 .itemImage {
-  position: relative;
-  padding: 28px 16px 0;
   img {
     width: 506px;
     height: 575px;
@@ -11,13 +9,8 @@
 .hide {
   display: none;
 }
-.discount {
-  position: absolute;
-  left: 16px;
-  top: 0px;
-}
 
-@include md {
+@include lg {
   .itemImage {
     img {
       width: 352px;
@@ -26,15 +19,15 @@
   }
 }
 @include sm {
-  .itemImage {
-    display: flex;
-    justify-content: center;
-    text-align: right;
-    img {
-      width: 331px;
-      height: 332px;
-    }
+  // .itemImage {
+  //   display: flex;
+  //   justify-content: center;
+  //   text-align: right;
+  img {
+    width: 331px;
+    height: 332px;
   }
+  // }
   .discount {
     right: 0;
   }
