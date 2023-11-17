@@ -23,10 +23,9 @@ const Header = () => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
   const productQuantity = useMemo(() => {
-    let InitialValue = 0;
     const quantity = cartItems.reduce(
       (accumulator, item) => accumulator + item.cardQuantity,
-      InitialValue,
+      0,
     );
     return quantity;
   }, [cartItems]);

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Modals from '../Modals';
 import CartItem from './components/CartItem';
 import CartEmpty from './components/CartEmpty';
@@ -9,16 +9,9 @@ import IconButton from '../../ui-kit/components/IconButton';
 
 import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
-import { calculateTotal } from '../../../redux/slices/cartSlice';
 
 const CartPopup = ({ toggleCart }) => {
   const cart = useSelector((state) => state.cartSliceReducer.cartItems);
-  const total = useSelector((state) => state.cartSliceReducer.cartTotalAmount);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(calculateTotal());
-  });
 
   return (
     <Modals type="cart" onClick={toggleCart}>
@@ -40,7 +33,6 @@ const CartPopup = ({ toggleCart }) => {
           <div className={styles.total}>
             Разом:
             <b>
-              {total}
               <span className={styles.currency}>грн</span>
             </b>
           </div>
