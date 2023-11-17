@@ -10,17 +10,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
-import ua.kvitkovo.feedback.dto.AnswerMessageResponseDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
-import ua.kvitkovo.feedback.entity.AnswerFeedbackMessageFile;
-import ua.kvitkovo.feedback.entity.AnswerMessage;
-import ua.kvitkovo.feedback.entity.FeedbackMessage;
-import ua.kvitkovo.feedback.entity.MessageStatus;
-import ua.kvitkovo.feedback.entity.MessageType;
+import ua.kvitkovo.feedback.entity.*;
 import ua.kvitkovo.feedback.repository.AnswerRepository;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
+import ua.kvitkovo.notifications.NotificationService;
+import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
@@ -31,6 +29,7 @@ import ua.kvitkovo.utils.Helper;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -42,6 +41,7 @@ public class FeedbackService {
     private final AnswerRepository answerRepository;
     private final UserService userService;
     private final FeedBackMessageFileService feedBackMessageFileService;
+    private final NotificationService emailService;
     private final FeedbackDtoMapper feedbackDtoMapper;
     private final UserDtoMapper userDtoMapper;
 
@@ -121,6 +121,13 @@ public class FeedbackService {
         answerRepository.save(answerMessage);
 
         feedbackMessage.getAnswers().add(answerMessage);
+
+        NotificationUser notificationUser = NotificationUser.build(feedbackMessage);
+        Map<String, Object> fields = Map.of(
+                "files", files,
+                "message", message
+        );
+        emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);
 
         return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
