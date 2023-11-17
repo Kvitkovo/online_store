@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Modals from '../Modals';
 import CartItem from './components/CartItem';
@@ -11,7 +11,15 @@ import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 
 const CartPopup = ({ toggleCart }) => {
-  const cart = useSelector((state) => state.cartSliceReducer.cartItems);
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+
+  const productTotal = useMemo(() => {
+    let total = 0;
+    cartItems.forEach((element) => {
+      total += element.cardQuantity * element.price;
+    });
+    return total;
+  }, [cartItems]);
 
   return (
     <Modals type="cart" onClick={toggleCart}>
@@ -24,7 +32,11 @@ const CartPopup = ({ toggleCart }) => {
           />
         </div>
         <div className={styles.mobileBackground}>
-          {cart.length > 0 ? <CartItem items={cart} /> : <CartEmpty />}
+          {cartItems.length > 0 ? (
+            <CartItem items={cartItems} />
+          ) : (
+            <CartEmpty />
+          )}
         </div>
       </div>
       <div className={styles.bottomBlock}>
@@ -33,15 +45,16 @@ const CartPopup = ({ toggleCart }) => {
           <div className={styles.total}>
             Разом:
             <b>
+              {productTotal}
               <span className={styles.currency}>грн</span>
             </b>
           </div>
           <Button
             label="Оформити замовлення"
-            variant={cart.length > 0 ? 'primary' : 'disabled'}
+            variant={cartItems.length > 0 ? 'primary' : 'disabled'}
             padding="padding-even"
             onClick={toggleCart}
-            disabled={cart.length === 0}
+            disabled={cartItems.length === 0}
           />
         </div>
       </div>
