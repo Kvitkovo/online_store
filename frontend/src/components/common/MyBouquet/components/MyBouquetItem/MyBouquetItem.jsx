@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CountBlock from '../../../Cart/components/CountBlock';
+// import CountBlock from '../../../Cart/components/CountBlock';
 import Divider from '../../../../ui-kit/components/Divider';
 import IconButton from '../../../../ui-kit/components/IconButton';
 
@@ -21,7 +21,8 @@ const MyBouquetItem = ({ items, count }) => {
               </div>
             </div>
             <div className={styles.rightBlock}>
-              <CountBlock count={count} />
+              {/* <CountBlock count={count} /> */}
+              {count}
               <div className={styles.price}>
                 <b>{item.price}</b>
                 <span>грн</span>
