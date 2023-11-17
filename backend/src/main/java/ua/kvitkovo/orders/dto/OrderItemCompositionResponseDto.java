@@ -1,32 +1,23 @@
 package ua.kvitkovo.orders.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
 /**
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemCompositionResponseDto {
 
+    @Schema(example = "1", description = "Order item ID")
     private Long id;
+
     private ProductResponseDto product;
+
+    @Schema(example = "5", description = "Product quantity")
     private int qty;
-
-    public Long getId() {
-        return id;
-    }
-
-    public ProductResponseDto getProduct() {
-        return product;
-    }
-
-    public int getQty() {
-        return qty;
-    }
 }

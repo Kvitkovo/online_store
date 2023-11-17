@@ -5,12 +5,6 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -24,23 +18,17 @@ import ua.kvitkovo.catalog.dto.request.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.request.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseForCardDto;
-import ua.kvitkovo.catalog.entity.Category;
-import ua.kvitkovo.catalog.entity.Color;
-import ua.kvitkovo.catalog.entity.Product;
-import ua.kvitkovo.catalog.entity.ProductStatus;
-import ua.kvitkovo.catalog.entity.ProductType;
-import ua.kvitkovo.catalog.entity.Size;
-import ua.kvitkovo.catalog.repository.CategoryRepository;
-import ua.kvitkovo.catalog.repository.ColorRepository;
-import ua.kvitkovo.catalog.repository.ProductRepository;
-import ua.kvitkovo.catalog.repository.ProductTypeRepository;
-import ua.kvitkovo.catalog.repository.SizeRepository;
+import ua.kvitkovo.catalog.entity.*;
+import ua.kvitkovo.catalog.repository.*;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.orders.repository.OrderRepository;
 import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @author Andriy Gaponov
@@ -111,16 +99,40 @@ public class ProductService {
 
         ProductResponseDto productResponseDto = productRepository.findById(id)
             .map(product -> productMapper.mapEntityToDto(product, orderService))
-            .orElseThrow(() -> new ItemNotFoundException("Product not found"));
+                .orElseThrow(() -> new ItemNotFoundException("Product not found"));
 
         if (!Objects.equals(dto.getTitle(), productResponseDto.getTitle())) {
             productResponseDto.setAlias(
-                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
+                    transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getTitle()));
         }
         BeanUtils.copyProperties(dto, productResponseDto, Helper.getNullPropertyNames(dto));
 
         Product product = productMapper.mapDtoToEntity(productResponseDto);
         product.setId(id);
+        product.setCategory(
+                categoryRepository.findById(dto.getCategoryId()).
+                        orElseThrow(() -> new ItemNotFoundException("Category not found"))
+        );
+        if (dto.getSizeId() != null) {
+            product.setSize(
+                    sizeRepository.findById(dto.getSizeId()).orElse(null)
+            );
+        }
+        if (dto.getProductTypeId() != null) {
+            product.setProductType(
+                    productTypeRepository.findById(dto.getProductTypeId()).orElse(null)
+            );
+        } else {
+            product.setProductType(null);
+        }
+
+        if (dto.getColorId() != null) {
+            product.setColor(
+                    colorRepository.findById(dto.getColorId()).orElse(null)
+            );
+        } else {
+            product.setColor(null);
+        }
 
         productRepository.save(product);
         return productMapper.mapEntityToDto(product, orderService);

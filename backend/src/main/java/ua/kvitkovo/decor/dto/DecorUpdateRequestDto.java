@@ -2,16 +2,14 @@ package ua.kvitkovo.decor.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ua.kvitkovo.decor.entity.DecorStatus;
 
 /**
  * @author Andriy Gaponov
  */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,44 +29,4 @@ public class DecorUpdateRequestDto {
     @NotNull
     private Long shopId;
     private DecorStatus status;
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public String getAddressStreet() {
-        return addressStreet;
-    }
-
-    public String getAddressHouse() {
-        return addressHouse;
-    }
-
-    public String getAddressApartment() {
-        return addressApartment;
-    }
-
-    public Long getShopId() {
-        return shopId;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public DecorStatus getStatus() {
-        return status;
-    }
 }

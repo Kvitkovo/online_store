@@ -1,6 +1,6 @@
 package ua.kvitkovo.decor.service;
 
-import java.util.List;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +26,8 @@ import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 
+import java.util.List;
+
 /**
  * @author Andriy Gaponov
  */
@@ -45,6 +47,7 @@ public class DecorService {
         return decorDtoMapper.mapEntityToDto(getDecor(id));
     }
 
+    @Transactional
     public DecorResponseDto addDecor(DecorRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotCreatedException(bindingResult);
 
@@ -67,10 +70,11 @@ public class DecorService {
         return decorDtoMapper.mapEntityToDto(decor);
     }
 
+    @Transactional
     public List<DecorResponseDto> updateDecorStatus(List<Long> decorOrdersID, DecorStatus status) {
         List<Decor> decors = decorOrdersID.stream()
-            .map(id -> getDecor(id))
-            .toList();
+                .map(id -> getDecor(id))
+                .toList();
         User manager = getUser(userService.getCurrentUserId());
 
         for (Decor decor : decors) {
@@ -90,8 +94,9 @@ public class DecorService {
         }
     }
 
+    @Transactional
     public DecorResponseDto updateDecorOrder(Long id, DecorUpdateRequestDto dto,
-        BindingResult bindingResult) {
+                                             BindingResult bindingResult) {
         ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
         DecorResponseDto decorResponseDto = findById(id);

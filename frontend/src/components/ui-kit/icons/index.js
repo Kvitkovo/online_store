@@ -20,7 +20,6 @@ import { ReactComponent as hideList } from './icon-arrow-right.svg';
 import { ReactComponent as checkBox } from './icon-checkbox.svg';
 import { ReactComponent as checkedBox } from './icon-checkbox-checked.svg';
 import { ReactComponent as location } from './location-icon.svg';
-import { ReactComponent as person } from './person-icon.svg';
 import { ReactComponent as halfPerson } from './halfPerson-icon.svg';
 import { ReactComponent as phone } from './phone-icon.svg';
 import { ReactComponent as facebook } from './facebook.svg';
@@ -40,18 +39,6 @@ import { ReactComponent as changePassword } from './change-password.svg';
 import { ReactComponent as arrowDown } from './arrow-down.svg';
 import { ReactComponent as deleteIcon } from './delete-icon.svg';
 import { ReactComponent as arrowUpWhite } from './arrow-up-white.svg';
-
-// Catalog icons
-//TODO: Check icon sizes
-//TODO: Icon naming
-/* eslint-disable max-len */
-import { ReactComponent as akciyna_cena } from './catalog-icons/akciyna_cena.svg';
-import { ReactComponent as bukety_z_kvitiv } from './catalog-icons/bukety_z_kvitiv.svg';
-import { ReactComponent as kvity_po_shtuchno } from './catalog-icons/kvity_po_shtuchno.svg';
-import { ReactComponent as kvity_u_koshyku } from './catalog-icons/kvity_u_koshyku.svg';
-import { ReactComponent as dekor } from './catalog-icons/dekor.svg';
-import { ReactComponent as hatni } from './catalog-icons/hatni.svg';
-import { ReactComponent as vesilni } from './catalog-icons/vesilni.svg';
 
 export const ICONS = {
   addComponent,
@@ -77,7 +64,6 @@ export const ICONS = {
   checkBox,
   checkedBox,
   location,
-  person,
   halfPerson,
   phone,
   instagram,
@@ -96,11 +82,4 @@ export const ICONS = {
   changePassword,
   deleteIcon,
   arrowUpWhite,
-  akciyna_cena,
-  bukety_z_kvitiv,
-  dekor,
-  hatni,
-  kvity_po_shtuchno,
-  kvity_u_koshyku,
-  vesilni,
 };
