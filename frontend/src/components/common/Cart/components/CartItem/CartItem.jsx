@@ -64,11 +64,7 @@ const CartItem = ({ items }) => {
               />
             </div>
           </div>
-          {index < items.length - 1 && (
-            <div className={styles.divider}>
-              <Divider />
-            </div>
-          )}
+          {index < items.length - 1 && <Divider />}
         </React.Fragment>
       ))}
     </div>
