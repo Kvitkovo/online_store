@@ -110,18 +110,19 @@ const Header = () => {
             <InputSearch />
           </div>
           <div className={styles.containerBottomRight}>
-            <Button
-              variant="no-border"
-              label="Зібрати букет"
-              padding="padding-header-sm"
-              icon={<ICONS.toBouquet />}
-              onClick={toggleMyBouquet}
-            />
+            <div className={styles.bouquete}>
+              <Button
+                variant="no-border"
+                label="Зібрати букет"
+                icon={<ICONS.toBouquet />}
+                onClick={toggleMyBouquet}
+              />
+            </div>
+
             <div className={styles.login}>
               <Button
                 variant="no-border"
                 label="Увійти"
-                padding="padding-header-even"
                 icon={<ICONS.halfPerson />}
                 onClick={() => alert('clicked bouquete')}
               />
