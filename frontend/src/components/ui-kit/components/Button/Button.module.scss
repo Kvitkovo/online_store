@@ -82,6 +82,22 @@
     align-self: center;
   }
 }
+
+.no-border-hovered {
+  color: $text-color;
+  background-color: $white-color;
+  font-size: 16px;
+  .label {
+    align-self: center;
+  }
+  &:hover {
+    color: $page-accent-color;
+  }
+  &:active {
+    color: $active-color;
+  }
+}
+
 .bg-inherit {
   background-color: inherit;
   color: $text-color;

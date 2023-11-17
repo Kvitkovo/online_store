@@ -71,6 +71,26 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     localStorage.setItem('authToken', token);
     handleSuccessfulLogin();
   };
+
+  const handleResetPassword = async () => {
+    if (validateEmail(email)) {
+      try {
+        /* eslint-disable max-len */
+        const response = await axios.post(
+          `https://api.imperiaholoda.com.ua:4446/v1/users/resetPassword/${email}`,
+        );
+
+        if (response.status === 200) {
+          setResetPasswordClicked(true);
+          toggleReset();
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          alert('Електрона пошта не зареєстрована');
+        }
+      }
+    }
+  };
   const toggleReset = () => {
     setResetPassword((prev) => !prev);
   };
@@ -96,7 +116,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               <div className={styles.dataContainer}>
                 <div className={styles.emailContainer}>
                   <label className={styles.labelData} htmlFor="email">
-                    Ел. пошта <span>*</span>
+                    Ел. пошта {submitted && !email && <span>*</span>}
                   </label>
 
                   <input
@@ -138,7 +158,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
 
                 <div className={styles.passwordContainer}>
                   <label className={styles.labelData} htmlFor="password">
-                    Пароль <span>*</span>
+                    Пароль {submitted && !password && <span>*</span>}
                   </label>
 
                   <input
@@ -182,14 +202,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               </div>
 
               <div className={styles.resetPassword}>
-                <p
-                  onClick={() => {
-                    setResetPasswordClicked(true);
-                    toggleReset();
-                  }}
-                >
-                  Забули пароль?
-                </p>
+                <p onClick={handleResetPassword}>Забули пароль?</p>
               </div>
               {resetPasswordClicked &&
                 resetPassword &&

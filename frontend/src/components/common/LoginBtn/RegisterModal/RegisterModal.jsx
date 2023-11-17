@@ -77,7 +77,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
               <div className={styles.dataContainer}>
                 <div className={styles.nameContainer}>
                   <label className={styles.labelData} htmlFor="name">
-                    Ім’я <span>*</span>
+                    Ім’я {submitted && !name && <span>*</span>}
                   </label>
 
                   <input
@@ -93,7 +93,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                 </div>
                 <div className={styles.emailContainer}>
                   <label className={styles.labelData} htmlFor="email">
-                    Ел. пошта <span>*</span>
+                    Ел. пошта {submitted && !email && <span>*</span>}
                   </label>
 
                   <input
@@ -124,7 +124,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
 
                 <div className={styles.paswordContainer}>
                   <label className={styles.labelData} htmlFor="password">
-                    Пароль <span>*</span>
+                    Пароль {submitted && !password && <span>*</span>}
                   </label>
 
                   <input
