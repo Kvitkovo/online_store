@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
@@ -13,20 +13,22 @@ import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
-import Catalog from '../../common/Catalog/Catalog';
-import { useDispatch, useSelector } from 'react-redux';
-import { calculateTotal } from '../../../redux/slices/cartSlice';
+import Catalog from '../../common/Catalog';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
 
-  const cart = useSelector((state) => state.cartSliceReducer);
-  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
-  useEffect(() => {
-    dispatch(calculateTotal());
-  }, [cart, dispatch]);
+  const productQuantity = useMemo(() => {
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.cardQuantity,
+      0,
+    );
+    return quantity;
+  }, [cartItems]);
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -59,56 +61,70 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      <BurgerMenu
+        toggleCart={toggleCart}
+        toggleMyBouquet={toggleMyBouquet}
+        cartQuantity={productQuantity}
+      />
       <header>
         <div className={styles.containerTop}>
-          {' '}
-          <NavLink className={styles.logoLink} to={ROUTES.home}>
-            <img
-              className={styles.logo}
-              src="/images/logo.svg"
-              alt="логотип магазину 'Квітково'"
-            />
-          </NavLink>
-          <div className={styles.contacts}>
-            <div className={styles.location}>
-              <Button
-                variant="no-border"
-                label="Київ"
-                padding="padding-header-even"
-                reverse="true"
-                icon={<ICONS.location />}
+          <div className={styles.containerTopLeft}>
+            <NavLink className={styles.logoLink} to={ROUTES.home}>
+              <img
+                className={styles.logo}
+                src="images/logo.svg"
+                alt="логотип магазину 'Квітково'"
               />
+            </NavLink>
+            <div className={styles.contacts}>
+              <div className={styles.location}>
+                <Button
+                  variant="no-border"
+                  label="Київ"
+                  padding="padding-header-even"
+                  reverse="true"
+                  icon={<ICONS.location />}
+                />
+              </div>
+              <a className={styles.phoneLink} href="tel:+380937777777">
+                <ICONS.phone className={styles.phoneIcon} />
+                (093) 777-77-77
+              </a>
             </div>
-            <a className={styles.phoneLink} href="tel:+380937777777">
-              <ICONS.phone className={styles.phoneIcon} />
-              (093) 777-77-77
-            </a>
           </div>
-          <NavigationMenu items={navigationItems} menuType="Header" />
-          <span className={styles.verticalLine}></span>
-          <div className={styles.accessIcon}>
-            <IconButton icon={<ICONS.person />} />
+          <div className={styles.containerTopRight}>
+            <NavigationMenu items={navigationItems} menuType="Header" />
+            <span className={styles.verticalLine}></span>
+            <div className={styles.tabletContacts}>
+              <div className={styles.tabletIcon}>
+                <IconButton icon={<ICONS.location />} />
+              </div>
+              <div className={styles.tabletIcon}>
+                <IconButton icon={<ICONS.phone />} />
+              </div>
+            </div>
+            <p className={styles.language}>Укр</p>
           </div>
-          <button className={styles.btnLanguage}>Укр</button>
         </div>
 
         <div
           className={`${styles.containerBottom} ${sticky ? styles.sticky : ''}`}
         >
-          <div className={styles.btnCatalogue} id="catalog">
-            <Button
-              variant="primary"
-              padding="padding-even"
-              label="Каталог товарів"
-              onClick={catalogHandler}
-            />
+          <div className={styles.containerBottomLeft}>
+            <div className={styles.btnCatalogue} id="catalog">
+              <Button
+                variant="primary"
+                padding="padding-even"
+                label="Каталог товарів"
+                onClick={catalogHandler}
+              />
+            </div>
           </div>
 
           <div className={styles.searchField}>
             <InputSearch />
           </div>
-          <div className={styles.action}>
+          <div className={styles.containerBottomRight}>
             <Button
               variant="no-border"
               label="Зібрати букет"
@@ -128,10 +144,8 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
-              {cart.cartTotalQuantity != 0 ? (
-                <div className={styles.cartQuantity}>
-                  {cart.cartTotalQuantity}
-                </div>
+              {productQuantity !== 0 ? (
+                <div className={styles.cartQuantity}>{productQuantity}</div>
               ) : null}
             </div>
           </div>

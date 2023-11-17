@@ -19,6 +19,11 @@
   flex-direction: column;
   gap: 16px;
 }
+@include md {
+  .supportButtonContainer {
+    right: 27px;
+  }
+}
 @include sm {
   .supportButtonContainer {
     right: 16px;

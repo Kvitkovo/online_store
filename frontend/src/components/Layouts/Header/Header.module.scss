@@ -5,7 +5,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   background-color: $white-color;
   font-weight: 400;
   box-shadow: $box-shadow;
@@ -13,12 +12,20 @@ header {
 
 .containerTop {
   display: flex;
+  justify-content: center;
   align-items: center;
   height: 64px;
+  width: 100%;
+  padding: 0 64px;
+}
+.containerTopLeft {
+  display: flex;
+  align-items: center;
+  margin-right: 171px;
 }
 .logoLink {
   height: 50px;
-  margin: 7px 32px 0px 0px;
+  margin: 7px 32px 0 0;
   cursor: pointer;
 }
 .logo {
@@ -27,7 +34,6 @@ header {
 .contacts {
   display: flex;
   gap: 26px;
-  margin-right: 123px;
 }
 .location {
   display: flex;
@@ -38,64 +44,61 @@ header {
   padding: 8px;
   gap: 8px;
   color: $text-color;
+  white-space: nowrap;
 }
 .iconButton {
   margin-right: 130px;
 }
 .verticalLine {
-  border-left: 1px solid $page-accent-color;
+  border-left: 1px solid $gray-light-color;
   height: 40px;
   margin: 0 12px;
 }
-.accessIcon {
-  display: flex;
-  padding: 6px;
-  margin-right: 12px;
-}
 
-.btnLanguage {
-  padding: 2px;
-  border-radius: 20px;
-  border: 1px solid $page-background-color;
-  background-color: $white-color;
-  font-size: 16px;
+.language {
   font-weight: 500;
-  font-family: $font-main;
-  color: $text-color;
-  padding: 2px 6px;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    border: 1px solid $page-accent-color;
-  }
+  line-height: 130%;
+}
+.containerTopRight {
+  display: flex;
+  align-items: center;
 }
 
 .containerBottom {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 64px;
   height: 64px;
   z-index: 1;
   width: 100%;
   box-shadow: $box-shadow;
 }
+
 .sticky {
   position: fixed;
   width: 100%;
   top: 0;
   right: 0;
   left: 0;
-  height: 80px;
+  height: 64px;
   background-color: $white-color;
 }
 .searchField {
   display: flex;
+  max-width: 526px;
+  width: 100%;
   margin: 0 93px 0 48px;
 }
-.action {
+
+.containerBottomRight {
   display: flex;
   align-items: center;
-
   gap: 12px;
+}
+.containerBottomLeft {
+  display: flex;
+  align-items: center;
 }
 .login {
   margin-bottom: 8px;
@@ -108,11 +111,15 @@ header {
 .btnCatalogue {
   position: relative;
 }
+.tabletContacts {
+  display: none;
+}
+
 .cartQuantity {
   height: 14px;
   width: 14px;
   border-radius: 50%;
-  background-color: $cart-color;
+  background-color: $discount-color;
   color: $white-color;
   font-size: 10px;
   text-align: center;
@@ -121,23 +128,36 @@ header {
   top: -6px;
 }
 
-@include md {
-  header {
-    .logoLink {
-      margin: 7px 174px 7px 47px;
-    }
-    .contacts {
-      display: none;
-    }
-    .btnCatalogue {
-      margin-left: 47px;
-    }
-    .searchField {
-      margin: 0 32px 0 43px;
-    }
+@include lg {
+  .containerTop {
+    padding: 0 48px;
+    justify-content: space-between;
+  }
+  .containerTopLeft {
+    margin-right: 0;
+  }
+  .contacts {
+    display: none;
+  }
+  .verticalLine {
+    margin: 0 8px;
+  }
+  .containerBottom {
+    padding: 0 48px;
+  }
+  .searchField {
+    margin: 0 32px 0 43px;
+  }
+  .tabletContacts {
+    display: flex;
+    gap: 8px;
+    margin-right: 8px;
+  }
+  .tabletIcon {
+    padding: 6px;
   }
 }
-@include sm {
+@include md {
   header {
     display: none;
   }

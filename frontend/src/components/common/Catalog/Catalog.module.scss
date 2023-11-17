@@ -1,15 +1,15 @@
 @import '../../../variables';
+@import '../../../mixins';
 
 .categoryWrapper {
   display: flex;
   position: absolute;
   z-index: 9999;
-  top: 75px;
   left: 0;
 
   .itemsWrapper {
     display: flex;
-    background-color: #fff;
+    background-color: $white-color;
     border-radius: 8px 0 0 8px;
     border: none;
 
@@ -18,12 +18,7 @@
       display: flex;
       gap: 10px;
       align-items: center;
-      color: var(--Black, #242424);
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 130%; /* 20.8px */
-      text-transform: capitalize;
+      color: $text-color;
       min-height: 24px;
 
       .categoryIcon {
@@ -36,39 +31,34 @@
 
     .categoryItemWrapper {
       transition: all 0.3s ease-in-out;
-      border-radius: 26px;
       padding: 4px 10px;
       cursor: pointer;
+      &:hover {
+        border-radius: 26px;
+        background: $page-background-color;
+      }
 
       .categoryIcon {
         min-width: 24px;
-      }
-
-      &:hover {
-        background-color: #f1ffef;
       }
     }
 
     .categoryList {
       display: flex;
       flex-direction: column;
-      padding: 12px 22px;
+      padding: 12px 16px;
       max-height: 550px;
       overflow: hidden;
       overflow-y: auto;
 
       .categoryItemContent {
-        width: 100%;
         display: flex;
-        gap: 16px;
-        justify-content: space-between;
         align-items: center;
       }
 
       .contacts {
         padding-top: 12px;
         margin-top: 12px;
-        border-top: 1px solid #ebebeb;
       }
     }
 
@@ -85,5 +75,30 @@
   .categoryBg {
     //TODO: Temporary solution until we get the correct image
     transform: translateX(-2px) scale(1.004);
+  }
+}
+.redText {
+  color: $discount-color;
+  font-weight: 700;
+  line-height: 130%;
+}
+.icon {
+  margin-left: auto;
+}
+
+.categoryItemText,
+.redText {
+  margin-right: 5px;
+}
+
+@include sm {
+  .categoryWrapper {
+    top: 75px;
+  }
+  .categoryItemWrapper {
+    padding: 12px 10px;
+  }
+  .categoryList {
+    width: 100vw;
   }
 }

@@ -1,25 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { calculateTotal } from '../../../../../redux/slices/cartSlice';
+import InputSearch from '../../../../ui-kit/components/Input/InputSearch';
 
-const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
-  const cart = useSelector((state) => state.cartSliceReducer);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(calculateTotal());
-  }, [cart, dispatch]);
-
+const ClosedMenu = ({
+  toggleMenu,
+  toggleCart,
+  toggleMyBouquet,
+  cartQuantity,
+}) => {
   return (
     <div className={styles.burgerMenu}>
       <div className={styles.burgerHeader}>
         <div className={styles.burgerIcon} onClick={toggleMenu}>
           <IconButton icon={<ICONS.burgerMenu />} />
         </div>
+        <div className={styles.searchField}>
+          <InputSearch />
+        </div>
         <div className={styles.actionIcons}>
-          <div className={styles.search}>
+          <div className={styles.searchMobile}>
             <IconButton icon={<ICONS.searchMobile />} />
           </div>
           <div className={styles.bouquet}>
@@ -33,10 +34,8 @@ const ClosedMenu = ({ toggleMenu, toggleCart, toggleMyBouquet }) => {
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />
-            {cart.cartTotalQuantity != 0 ? (
-              <div className={styles.cartQuantity}>
-                {cart.cartTotalQuantity}
-              </div>
+            {cartQuantity !== 0 ? (
+              <div className={styles.cartQuantity}>{cartQuantity}</div>
             ) : null}
           </div>
         </div>

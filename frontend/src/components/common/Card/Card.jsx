@@ -34,7 +34,11 @@ const Card = (props) => {
           <img
             src={props.image}
             alt="букет"
-            className={inActive(props.status, styles.foto, styles.fotoInactive)}
+            className={inActive(
+              props.available,
+              styles.foto,
+              styles.fotoInactive,
+            )}
           />
           <h3>{props.title}</h3>
         </div>
@@ -44,14 +48,18 @@ const Card = (props) => {
           props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
         }
       >
-        <Discount discount={props.discount} />
+        {props.available === 'AVAILABLE' && (
+          <Discount discount={props.discount} />
+        )}
       </div>
       <div className={styles.cardInfo}>
         <div className={styles.textFlex}>
-          <p className={inActive(props.status, styles.price, styles.inactive)}>
+          <p
+            className={inActive(props.available, styles.price, styles.inactive)}
+          >
             Ціна
           </p>
-          {props.status === 'NO_ACTIVE' && (
+          {props.available === 'UNAVAILABLE' && (
             <p className={styles.outOfStock}>Немає в наявності</p>
           )}
         </div>
@@ -59,12 +67,12 @@ const Card = (props) => {
           <DiscountPrice
             oldPrice={props.oldPrice}
             actualPrice={props.price}
-            isActive={props.status}
+            isActive={props.available}
           />
           <div className={styles.cardFlexBottom}>
             <div
               className={
-                props.status === 'NO_ACTIVE'
+                props.available === 'UNAVAILABLE'
                   ? `${styles.hide}`
                   : `${styles.icons}`
               }
