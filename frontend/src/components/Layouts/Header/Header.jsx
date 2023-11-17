@@ -135,7 +135,7 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
-              {productQuantity != 0 ? (
+              {productQuantity !== 0 ? (
                 <div className={styles.cartQuantity}>{productQuantity}</div>
               ) : null}
             </div>
