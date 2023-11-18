@@ -1,5 +1,6 @@
 package ua.kvitkovo.notifications;
 
+import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Andriy Gaponov
@@ -30,6 +33,12 @@ public class EmailService implements NotificationService {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
+    @Value("${spring.mail.password}")
+    private String emailPassword;
+
+    @Value("${spring.mail.properties.mail.imap.host}")
+    private String imapHost;
+
     @Override
     public void send(NotificationType type, Map<String, Object> fields, NotificationUser user) {
         log.info("send message to {} with text: {}", user.getEmail(), fields.get("link"));
@@ -45,6 +54,11 @@ public class EmailService implements NotificationService {
             case ANSWER_FEEDBACK_MESSAGE ->
                     sendEmailMessage("Служба підтримки Kvitkovo", "email/answer-message.html", fields, user);
         }
+    }
+
+    @Override
+    public void get() {
+        receiveEmails();
     }
 
     private void sendEmailMessage(String subject, String template, Map<String, Object> fields, NotificationUser user) {
@@ -66,6 +80,35 @@ public class EmailService implements NotificationService {
         } catch (Exception e) {
             log.info("Email not send");
             log.info(e.getMessage());
+        }
+    }
+
+    public void receiveEmails() {
+        try {
+            Properties properties = new Properties();
+            properties.setProperty("mail.store.protocol", "imaps");
+
+            Session session = Session.getDefaultInstance(properties, null);
+            Store store = session.getStore("imaps");
+            store.connect(imapHost, emailFrom, emailPassword);
+
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_ONLY);
+
+            Message[] messages = inbox.getMessages();
+            for (Message message : messages) {
+                System.out.println("Subject: " + message.getSubject());
+                System.out.println("From: " + message.getFrom()[0]);
+                System.out.println("Date: " + message.getSentDate());
+                System.out.println("Content: " + message.getContent());
+                System.out.println("------------------------------------------------------------");
+            }
+
+            inbox.close(false);
+            store.close();
+
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
         }
     }
 }

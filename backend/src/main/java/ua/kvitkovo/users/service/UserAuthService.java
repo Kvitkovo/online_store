@@ -345,4 +345,8 @@ public class UserAuthService {
         }
         return user;
     }
+
+    public void test() {
+        emailService.get();
+    }
 }

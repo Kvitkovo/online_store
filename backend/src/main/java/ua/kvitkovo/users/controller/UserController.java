@@ -357,4 +357,11 @@ public class UserController {
         log.debug("Received request to update User - {} with id {}.", request, id);
         return userAuthService.updateEmployee(id, request, bindingResult);
     }
+
+    @PostMapping("/test")
+    @ResponseBody
+    public ResponseEntity<Void> test() {
+        userAuthService.test();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
