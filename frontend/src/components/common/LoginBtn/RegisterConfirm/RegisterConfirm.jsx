@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContactDetails from '../../../account/ContactDetails';
 import HomePageComponent from '../../../Layouts/HomePageComponent';
+import ResentLink from '../ConfirmationModals/ResentLink';
 
 const RegisterConfirm = () => {
   const { code } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const confirmRegistration = async () => {
@@ -20,8 +22,10 @@ const RegisterConfirm = () => {
           alert('Пошту підтверджено!');
         }
       } catch (error) {
-        navigate('/');
-        alert('Пошту не підтверджено!');
+        if (error.response && error.response.status === 404) {
+          setError(error);
+          console.error('Error confirming email:', error);
+        }
       }
     };
 
@@ -30,8 +34,14 @@ const RegisterConfirm = () => {
 
   return (
     <div>
-      <ContactDetails />
-      <HomePageComponent />
+      {error ? (
+        <ResentLink onClose={() => navigate('/')} />
+      ) : (
+        <>
+          <ContactDetails />
+          <HomePageComponent />
+        </>
+      )}
     </div>
   );
 };

@@ -86,10 +86,17 @@
   margin: 16px 0 16px 0;
 }
 .resetPassword {
+  border: none;
+  background: none;
   color: $page-accent-color;
   line-height: 130%;
   padding: 8px;
+  font-size: 14px;
+  font-family: $font-main;
   cursor: pointer;
+  &:focus {
+    color: $on-press-color;
+  }
 }
 .errorMessage {
   color: $discount-color;

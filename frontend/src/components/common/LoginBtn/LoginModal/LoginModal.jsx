@@ -19,6 +19,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [resetEmailError, setResetEmailError] = useState('');
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -52,7 +53,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setPasswordError('Невірна пошта та/або пароль!');
-          setEmailError('Невірна пошта та/або пароль!');
         }
       }
     }
@@ -86,7 +86,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          alert('Електрона пошта не зареєстрована');
+          setResetEmailError('Електрона пошта не зареєстрована!');
         }
       }
     }
@@ -154,6 +154,9 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                       Невірний формат електронної пошти
                     </p>
                   )}
+                  {submitted && resetEmailError && (
+                    <p className={styles.errorMessage}>{resetEmailError}</p>
+                  )}
                 </div>
 
                 <div className={styles.passwordContainer}>
@@ -202,7 +205,13 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               </div>
 
               <div className={styles.resetPassword}>
-                <p onClick={handleResetPassword}>Забули пароль?</p>
+                <button
+                  className={styles.resetPassword}
+                  onClick={handleResetPassword}
+                  type="submit"
+                >
+                  Забули пароль?
+                </button>
               </div>
               {resetPasswordClicked &&
                 resetPassword &&
