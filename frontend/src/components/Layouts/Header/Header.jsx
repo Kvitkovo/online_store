@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
@@ -14,10 +14,21 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+
+  const productQuantity = useMemo(() => {
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.cardQuantity,
+      0,
+    );
+    return quantity;
+  }, [cartItems]);
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -50,7 +61,11 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      <BurgerMenu
+        toggleCart={toggleCart}
+        toggleMyBouquet={toggleMyBouquet}
+        cartQuantity={productQuantity}
+      />
       <header>
         <div className={styles.containerTop}>
           <div className={styles.containerTopLeft}>
@@ -130,6 +145,9 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
+              {productQuantity !== 0 ? (
+                <div className={styles.cartQuantity}>{productQuantity}</div>
+              ) : null}
             </div>
           </div>
         </div>
