@@ -174,14 +174,15 @@ public class UserAuthService {
         return baseSiteUrl + "/user/email/" + user.getEmailConfirmCode() + "/confirm";
     }
 
-    public void confirmEmail(String code) throws ItemNotFoundException {
+    public User confirmEmail(String code) throws ItemNotFoundException {
         if (code == null || code.isEmpty()) {
             throw new ItemNotFoundException("Verification code not found");
         }
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
-                () -> new ItemNotFoundException("Verification code not found")
+            () -> new ItemNotFoundException("Verification code not found")
         );
-        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
+        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user,
+            code);
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
         user.setStatus(UserStatus.ACTIVE);
@@ -194,6 +195,7 @@ public class UserAuthService {
                 "link", baseSiteUrl
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, notificationUser);
+        return user;
     }
 
     public void sendResetPassword(String email) {
