@@ -35,19 +35,20 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     private static final String[] ALL_PERMITTED_ENDPOINTS = {
-            "/v1/auth/login",
-            "/v1/auth/google",
-            "/v1/auth/register",
-            // -- Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            // -- Swagger UI v3 (OpenAPI)
-            "/v3/api-docs/**",
+        "/v1/auth/login",
+        "/v1/auth/google",
+        "/v1/auth/register",
+        "/v1/auth/send-email-confirm-code",
+        // -- Swagger UI v2
+        "/v2/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**",
+        // -- Swagger UI v3 (OpenAPI)
+        "/v3/api-docs/**",
             "/swagger-ui/**",
     };
     private static final String[] GET_PERMITTED_ENDPOINTS = {

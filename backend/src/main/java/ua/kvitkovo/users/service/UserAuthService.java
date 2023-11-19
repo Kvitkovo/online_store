@@ -13,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,7 @@ import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
+import ua.kvitkovo.security.jwt.AuthenticationRequestDto;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.Role;
@@ -59,6 +62,7 @@ public class UserAuthService {
     private final UpdateUserRequestDtoValidator updateUserRequestDtoValidator;
     private final EmployeeRequestDtoValidator employeeRequestDtoValidator;
     private final RoleRepository roleRepository;
+    private final AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Value("${site.base.url}")
@@ -100,7 +104,27 @@ public class UserAuthService {
         return userMapper.mapEntityToDto(registeredUser);
     }
 
-    public UserResponseDto addUser(CreateUserRequestDto userRequestDto, BindingResult bindingResult) {
+    public void sendConfirmEmail(AuthenticationRequestDto requestDto) {
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(requestDto.getEmail(),
+                requestDto.getPassword()));
+        User user = userRepository.findByEmail(requestDto.getEmail())
+            .orElseThrow(() -> new ItemNotUpdatedException("User not found"));
+
+        if (user.isEmailConfirmed()) {
+            throw new ItemNotUpdatedException("The email is already confirmed");
+        }
+        NotificationUser notificationUser = NotificationUser.build(user);
+
+        Map<String, Object> fields = Map.of(
+            "link", constructUrlForConfirmEmailMessage(user),
+            "userName", user.getFirstName()
+        );
+        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
+    }
+
+    public UserResponseDto addUser(CreateUserRequestDto userRequestDto,
+        BindingResult bindingResult) {
         createUserRequestDtoValidator.validate(userRequestDto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
@@ -108,7 +132,8 @@ public class UserAuthService {
         User user = userMapper.mapDtoRequestToDto(userRequestDto);
 
         if (userRequestDto.getPositionId() != null) {
-            user.setPosition(positionRepository.findById(userRequestDto.getPositionId()).orElseThrow(
+            user.setPosition(
+                positionRepository.findById(userRequestDto.getPositionId()).orElseThrow(
                     () -> {
                         throw new ItemNotFoundException("Position not found");
                     }
