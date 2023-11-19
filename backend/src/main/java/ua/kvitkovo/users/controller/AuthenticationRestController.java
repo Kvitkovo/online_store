@@ -80,26 +80,43 @@ public class AuthenticationRestController {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "The User has already been added " +
                     "or some data is missing",
-                    content = {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ErrorResponse.class))
-                    })
+                content = {
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ErrorResponse.class))
+                })
     })
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody UserRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity register(@RequestBody UserRequestDto requestDto,
+        BindingResult bindingResult) {
         userAuthService.register(requestDto, bindingResult);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Send confirm code on email", description = "")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successful operation"),
+        @ApiResponse(responseCode = "404", description = "User not found",
+            content = {
+                @Content(mediaType = "application/json", schema =
+                @Schema(implementation = ErrorResponse.class))
+            })
+    })
+    @PostMapping("send-email-confirm-code")
+    public ResponseEntity sendConfirmEmail(@RequestBody AuthenticationRequestDto requestDto) {
+        userAuthService.sendConfirmEmail(requestDto);
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Login in and returns the authentication token with Google token")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully authenticated", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = JwtResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "It indicates that the server can not or will not process " +
-                    "the request due to an apparent client error",
-                    content = {
+        @ApiResponse(responseCode = "200", description = "Successfully authenticated", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = JwtResponseDto.class))
+        }),
+        @ApiResponse(responseCode = "400", description =
+            "It indicates that the server can not or will not process " +
+                "the request due to an apparent client error",
+            content = {
                             @Content(mediaType = "application/json", schema =
                             @Schema(implementation = ErrorResponse.class))
                     })
