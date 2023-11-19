@@ -15,9 +15,9 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "feedback_messages")
+@Table(name = "feedback_answers")
 @EntityListeners(AuditingEntityListener.class)
-public class FeedbackMessage {
+public class AnswerMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,34 +28,20 @@ public class FeedbackMessage {
     @Column(name = "created")
     private LocalDateTime created;
 
+    @Column(name = "from_user")
+    private Boolean fromUser;
+
+    @Column(name = "message_text")
+    private String messageText;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User author;
+    @JoinColumn(name = "feedback_message_id", nullable = false)
+    private FeedbackMessage message;
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private User manager;
 
-    @Column(name = "message_status")
-    @Enumerated(EnumType.STRING)
-    private MessageStatus status;
-
-    @Column(name = "message_type")
-    @Enumerated(EnumType.STRING)
-    private MessageType type;
-
-    @Column(name = "user_name")
-    private String userName;
-
-    @Column(name = "user_email")
-    private String userEmail;
-
-    @Column(name = "user_phone")
-    private String userPhone;
-
-    @Column(name = "message_text")
-    private String messageText;
-
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "message", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<AnswerMessage> answers;
+    private Set<AnswerFeedbackMessageFile> files;
 }

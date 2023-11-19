@@ -1,5 +1,6 @@
 package ua.kvitkovo.orders.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import ua.kvitkovo.orders.entity.OrderStatus;
@@ -22,9 +23,11 @@ public class OrderResponseDto {
     private Long id;
 
     @Schema(example = "2023-09-06T11:00:52.525", description = "Order creation date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
 
     @Schema(example = "2023-09-06T11:00:52.525", description = "Order update date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updated;
 
     @Schema(example = "1", description = "Manager ID")

@@ -20,6 +20,7 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
@@ -82,12 +83,13 @@ public class UserAuthService {
         user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(registeredUser);
 
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForConfirmEmailMessage(registeredUser),
                 "userName", user.getFirstName()
         );
-        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, registeredUser);
+        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
 
         log.debug("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
@@ -130,6 +132,8 @@ public class UserAuthService {
         user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(registeredUser);
+
         log.debug("user: {} successfully created", registeredUser);
 
         Map<String, Object> fields = Map.of(
@@ -137,8 +141,7 @@ public class UserAuthService {
                 "userName", user.getFirstName(),
                 "password", newPassword
         );
-        emailService.send(NotificationType.CREATE_NEW_USER, fields, registeredUser);
-
+        emailService.send(NotificationType.CREATE_NEW_USER, fields, notificationUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
@@ -184,11 +187,13 @@ public class UserAuthService {
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
 
+        NotificationUser notificationUser = NotificationUser.build(user);
+
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно підтвердили пошту.",
                 "link", baseSiteUrl
         );
-        emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, user);
+        emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, notificationUser);
     }
 
     public void sendResetPassword(String email) {
@@ -201,10 +206,11 @@ public class UserAuthService {
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForResetPasswordEmailMessage(user)
         );
-        emailService.send(NotificationType.RESET_PASSWORD, fields, user);
+        emailService.send(NotificationType.RESET_PASSWORD, fields, notificationUser);
     }
 
 
@@ -227,11 +233,12 @@ public class UserAuthService {
         user.setPassword(passwordEncoder.encode(resetPasswordRequestDto.getNewPassword()));
         user.setEmailConfirmCode("");
         userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
                 "link", baseSiteUrl
         );
-        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }
 
     public void changePassword(ChangePasswordRequestDto changePasswordRequestDto,
@@ -246,11 +253,12 @@ public class UserAuthService {
         );
         user.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
         userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
                 "link", baseSiteUrl
         );
-        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }
 
     public UserResponseDto updateEmployee(Long id, EmployeeUpdateRequestDto dto, BindingResult bindingResult) {
