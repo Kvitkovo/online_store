@@ -6,6 +6,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -82,12 +83,16 @@ public class UserAuthService {
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         user.setEmailConfirmed(false);
 
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime dateEnding = currentDate.plusHours(1);
+        user.setCodeVerificationEnd(dateEnding);
+
         User registeredUser = userRepository.save(user);
         NotificationUser notificationUser = NotificationUser.build(registeredUser);
 
         Map<String, Object> fields = Map.of(
-                "link", constructUrlForConfirmEmailMessage(registeredUser),
-                "userName", user.getFirstName()
+            "link", constructUrlForConfirmEmailMessage(registeredUser),
+            "userName", user.getFirstName()
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
 
@@ -175,12 +180,19 @@ public class UserAuthService {
     }
 
     public User confirmEmail(String code) throws ItemNotFoundException {
+        boolean codeActive = true;
         if (code == null || code.isEmpty()) {
             throw new ItemNotFoundException("Verification code not found");
         }
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
             () -> new ItemNotFoundException("Verification code not found")
         );
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (currentDate.isAfter(user.getCodeVerificationEnd())) {
+            user.setCodeVerificationEnd(null);
+            user.setEmailConfirmCode(null);
+            codeActive = false;
+        }
         log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user,
             code);
         user.setEmailConfirmed(true);
@@ -188,13 +200,19 @@ public class UserAuthService {
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
 
-        NotificationUser notificationUser = NotificationUser.build(user);
+        if (codeActive) {
+            NotificationUser notificationUser = NotificationUser.build(user);
 
-        Map<String, Object> fields = Map.of(
+            Map<String, Object> fields = Map.of(
                 "message", "Ви успішно підтвердили пошту.",
                 "link", baseSiteUrl
-        );
-        emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, notificationUser);
+            );
+            emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields,
+                notificationUser);
+        } else {
+            throw new ItemNotFoundException("Verification code not found");
+        }
+
         return user;
     }
 
