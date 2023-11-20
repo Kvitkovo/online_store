@@ -1,0 +1,37 @@
+@import './../../variables';
+
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sortBlock {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  background-color: $white-color;
+  border-radius: 8px;
+}
+
+.sortTitle {
+  margin-right: 16px;
+}
+
+.sortDropdown {
+  position: relative;
+  z-index: 1;
+  align-self: start;
+}
+.cards {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.mainContent {
+  width: 880px;
+}
