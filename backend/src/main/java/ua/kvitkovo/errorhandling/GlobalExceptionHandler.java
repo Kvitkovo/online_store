@@ -23,6 +23,15 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(AccessDeniedException.class)
+    private ResponseEntity<ErrorResponse> handleException(AccessDeniedException exception) {
+        ErrorResponse response = new ErrorResponse(
+                "You don't have required role to perform this action.",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     private ResponseEntity<ErrorResponse> handleException(BadCredentialsException exception) {
         ErrorResponse response = new ErrorResponse(

@@ -65,14 +65,14 @@ public class SecurityConfig {
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
-            "/v1/orders/**",
-            "/v1/decor/**",
+            "/v1/orders",
+            "/v1/decor",
             "/v1/feedback/email",
             "/v1/feedback/phone",
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
-            "/v1/orders/{id:[-]?\\d+}/cancel",
+            "/v1/orders/*/cancel",
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
@@ -95,7 +95,7 @@ public class SecurityConfig {
                 .disable()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ALL_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(AUTH_PERMITTED_ENDPOINTS).authenticated()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
