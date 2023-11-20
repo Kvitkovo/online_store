@@ -95,7 +95,7 @@ public class SecurityConfig {
                 .disable()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ALL_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(AUTH_PERMITTED_ENDPOINTS).authenticated()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
