@@ -6,12 +6,15 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -20,7 +23,9 @@ import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
+import ua.kvitkovo.security.jwt.AuthenticationRequestDto;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.Role;
@@ -57,6 +62,7 @@ public class UserAuthService {
     private final UpdateUserRequestDtoValidator updateUserRequestDtoValidator;
     private final EmployeeRequestDtoValidator employeeRequestDtoValidator;
     private final RoleRepository roleRepository;
+    private final AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Value("${site.base.url}")
@@ -81,19 +87,44 @@ public class UserAuthService {
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         user.setEmailConfirmed(false);
 
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime dateEnding = currentDate.plusHours(1);
+        user.setCodeVerificationEnd(dateEnding);
+
         User registeredUser = userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(registeredUser);
 
         Map<String, Object> fields = Map.of(
-                "link", constructUrlForConfirmEmailMessage(registeredUser),
-                "userName", user.getFirstName()
+            "link", constructUrlForConfirmEmailMessage(registeredUser),
+            "userName", user.getFirstName()
         );
-        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, registeredUser);
+        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
 
         log.debug("IN register - user: {} successfully registered", registeredUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
-    public UserResponseDto addUser(CreateUserRequestDto userRequestDto, BindingResult bindingResult) {
+    public void sendConfirmEmail(AuthenticationRequestDto requestDto) {
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(requestDto.getEmail(),
+                requestDto.getPassword()));
+        User user = userRepository.findByEmail(requestDto.getEmail())
+            .orElseThrow(() -> new ItemNotUpdatedException("User not found"));
+
+        if (user.isEmailConfirmed()) {
+            throw new ItemNotUpdatedException("The email is already confirmed");
+        }
+        NotificationUser notificationUser = NotificationUser.build(user);
+
+        Map<String, Object> fields = Map.of(
+            "link", constructUrlForConfirmEmailMessage(user),
+            "userName", user.getFirstName()
+        );
+        emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
+    }
+
+    public UserResponseDto addUser(CreateUserRequestDto userRequestDto,
+        BindingResult bindingResult) {
         createUserRequestDtoValidator.validate(userRequestDto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(errorUtils.getErrorsString(bindingResult));
@@ -101,7 +132,8 @@ public class UserAuthService {
         User user = userMapper.mapDtoRequestToDto(userRequestDto);
 
         if (userRequestDto.getPositionId() != null) {
-            user.setPosition(positionRepository.findById(userRequestDto.getPositionId()).orElseThrow(
+            user.setPosition(
+                positionRepository.findById(userRequestDto.getPositionId()).orElseThrow(
                     () -> {
                         throw new ItemNotFoundException("Position not found");
                     }
@@ -130,6 +162,8 @@ public class UserAuthService {
         user.setEmailConfirmed(false);
 
         User registeredUser = userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(registeredUser);
+
         log.debug("user: {} successfully created", registeredUser);
 
         Map<String, Object> fields = Map.of(
@@ -137,8 +171,7 @@ public class UserAuthService {
                 "userName", user.getFirstName(),
                 "password", newPassword
         );
-        emailService.send(NotificationType.CREATE_NEW_USER, fields, registeredUser);
-
+        emailService.send(NotificationType.CREATE_NEW_USER, fields, notificationUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
@@ -171,24 +204,41 @@ public class UserAuthService {
         return baseSiteUrl + "/user/email/" + user.getEmailConfirmCode() + "/confirm";
     }
 
-    public void confirmEmail(String code) throws ItemNotFoundException {
+    public User confirmEmail(String code) throws ItemNotFoundException {
+        boolean codeActive = true;
         if (code == null || code.isEmpty()) {
             throw new ItemNotFoundException("Verification code not found");
         }
         User user = userRepository.findByEmailConfirmCode(code).orElseThrow(
-                () -> new ItemNotFoundException("Verification code not found")
+            () -> new ItemNotFoundException("Verification code not found")
         );
-        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user, code);
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (currentDate.isAfter(user.getCodeVerificationEnd())) {
+            user.setCodeVerificationEnd(null);
+            user.setEmailConfirmCode(null);
+            codeActive = false;
+        }
+        log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user,
+            code);
         user.setEmailConfirmed(true);
         user.setEmailConfirmCode("");
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
 
-        Map<String, Object> fields = Map.of(
+        if (codeActive) {
+            NotificationUser notificationUser = NotificationUser.build(user);
+
+            Map<String, Object> fields = Map.of(
                 "message", "Ви успішно підтвердили пошту.",
                 "link", baseSiteUrl
-        );
-        emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields, user);
+            );
+            emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields,
+                notificationUser);
+        } else {
+            throw new ItemNotFoundException("Verification code not found");
+        }
+
+        return user;
     }
 
     public void sendResetPassword(String email) {
@@ -201,10 +251,11 @@ public class UserAuthService {
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForResetPasswordEmailMessage(user)
         );
-        emailService.send(NotificationType.RESET_PASSWORD, fields, user);
+        emailService.send(NotificationType.RESET_PASSWORD, fields, notificationUser);
     }
 
 
@@ -227,11 +278,12 @@ public class UserAuthService {
         user.setPassword(passwordEncoder.encode(resetPasswordRequestDto.getNewPassword()));
         user.setEmailConfirmCode("");
         userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
                 "link", baseSiteUrl
         );
-        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }
 
     public void changePassword(ChangePasswordRequestDto changePasswordRequestDto,
@@ -246,11 +298,12 @@ public class UserAuthService {
         );
         user.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
         userRepository.save(user);
+        NotificationUser notificationUser = NotificationUser.build(user);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
                 "link", baseSiteUrl
         );
-        emailService.send(NotificationType.CHANGE_PASSWORD, fields, user);
+        emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }
 
     public UserResponseDto updateEmployee(Long id, EmployeeUpdateRequestDto dto, BindingResult bindingResult) {

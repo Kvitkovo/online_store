@@ -14,10 +14,11 @@ const CartPopup = ({ toggleCart }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
   const productTotal = useMemo(() => {
-    let total = 0;
-    cartItems.forEach((element) => {
-      total += element.cardQuantity * element.price;
-    });
+    const total = cartItems.reduce(
+      (accumulator, element) =>
+        accumulator + element.cardQuantity * element.price,
+      0,
+    );
     return total;
   }, [cartItems]);
 

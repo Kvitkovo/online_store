@@ -1,5 +1,6 @@
 package ua.kvitkovo.catalog.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.kvitkovo.catalog.entity.ProductType;
 
@@ -8,4 +9,5 @@ import ua.kvitkovo.catalog.entity.ProductType;
  */
 public interface ProductTypeRepository extends JpaRepository<ProductType, Long> {
 
+    List<ProductType> findAllByNameLike(String name);
 }

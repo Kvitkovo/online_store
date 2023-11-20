@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "feedback_files")
-public class FeedbackMessageFile {
+public class AnswerFeedbackMessageFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class FeedbackMessageFile {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "feedback_message_id", nullable = false)
-    private FeedbackMessage message;
+    @JoinColumn(name = "answer_message_id", nullable = false)
+    private AnswerMessage message;
 
     @Column(name = "file_name", nullable = false)
     private String name;

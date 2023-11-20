@@ -2,6 +2,8 @@ package ua.kvitkovo.catalog.service;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
@@ -218,9 +220,16 @@ public class ProductService {
 
     private void addTitleFilter(FilterRequestDto filter, Root<Object> root,
         List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+        Predicate titlePredicate = null;
+        Predicate productTypePredicate = null;
         if (filter.getTitle() != null) {
-            predicates.add(
-                criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%"));
+            titlePredicate = criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%");
+
+            Join<Object, Object> productTypeJoin = root.join("productType", JoinType.INNER);
+            productTypePredicate = criteriaBuilder.like(productTypeJoin.get("name"),
+                "%" + filter.getTitle() + "%");
+
+            predicates.add(criteriaBuilder.or(titlePredicate, productTypePredicate));
         }
     }
 
