@@ -72,7 +72,7 @@ public class SecurityConfig {
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
-            "/v1/orders/{id:[-]?\\d+}/cancel",
+            "/v1/orders/*/cancel",
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
