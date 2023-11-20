@@ -1,0 +1,17 @@
+@import '../../../../variables';
+
+.dropdown {
+  padding: 8px 8px 8px 12px;
+  background-color: #fff;
+  border: 1px solid $gray-dark-color;
+  border-radius: 8px;
+  min-width: 248px;
+  max-width: max-content;
+  &__option {
+    padding-top: 8px;
+  }
+  &__choosen {
+    display: flex;
+    justify-content: space-between;
+  }
+}
