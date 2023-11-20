@@ -33,6 +33,7 @@ public interface ProductDtoMapper {
 
     @Mappings({
             @Mapping(target = "categoryName", source = "category.name"),
+            @Mapping(target = "categoryId", source = "category.id"),
             @Mapping(target = "productTypeName", source = "productType.name"),
             @Mapping(target = "colorName", source = "color.name"),
             @Mapping(target = "sizeName", source = "size.name"),
