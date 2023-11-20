@@ -65,8 +65,8 @@ public class SecurityConfig {
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
-            "/v1/orders/**",
-            "/v1/decor/**",
+            "/v1/orders",
+            "/v1/decor",
             "/v1/feedback/email",
             "/v1/feedback/phone",
     };
