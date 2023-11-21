@@ -23,6 +23,15 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(AccessDeniedException.class)
+    private ResponseEntity<ErrorResponse> handleException(AccessDeniedException exception) {
+        ErrorResponse response = new ErrorResponse(
+                "You don't have required role to perform this action.",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     private ResponseEntity<ErrorResponse> handleException(BadCredentialsException exception) {
         ErrorResponse response = new ErrorResponse(
@@ -85,22 +94,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
-        HttpMessageNotReadableException exception,
-        HttpHeaders headers, HttpStatusCode status,
-        WebRequest request) {
+            HttpMessageNotReadableException exception,
+            HttpHeaders headers, HttpStatusCode status,
+            WebRequest request) {
         ErrorResponse response = new ErrorResponse(
-            exception.getMessage(), System.currentTimeMillis()
+                exception.getMessage(), System.currentTimeMillis()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-        MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
-        WebRequest request) {
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+            WebRequest request) {
         ErrorResponse response = new ErrorResponse(
-            ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage(),
-            System.currentTimeMillis()
+                ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage(),
+                System.currentTimeMillis()
         );
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }

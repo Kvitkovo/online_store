@@ -8,6 +8,7 @@ const ClosedMenu = ({
   toggleMenu,
   toggleCart,
   toggleMyBouquet,
+  cartQuantity,
   toggleLogin,
 }) => {
   return (
@@ -34,6 +35,9 @@ const ClosedMenu = ({
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />
+            {cartQuantity !== 0 ? (
+              <div className={styles.cartQuantity}>{cartQuantity}</div>
+            ) : null}
           </div>
         </div>
       </div>

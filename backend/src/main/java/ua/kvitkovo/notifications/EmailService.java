@@ -10,7 +10,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import ua.kvitkovo.users.entity.User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class EmailService implements NotificationService {
     private String emailFrom;
 
     @Override
-    public void send(NotificationType type, Map<String, Object> fields, User user) {
+    public void send(NotificationType type, Map<String, Object> fields, NotificationUser user) {
         log.info("send message to {} with text: {}", user.getEmail(), fields.get("link"));
         switch (type) {
             case MAIL_CONFIRMATION -> sendEmailMessage("Підтвердження пошти", "email/confirm-email.html", fields, user);
@@ -43,10 +42,12 @@ public class EmailService implements NotificationService {
                     sendEmailMessage("Ви успішно змінили пароль", "email/reset-password-successfully.html", fields, user);
             case CREATE_NEW_USER ->
                     sendEmailMessage("Вас було зареєстровано на сайті", "email/confirm-email-after_admin-add-user.html", fields, user);
+            case ANSWER_FEEDBACK_MESSAGE ->
+                    sendEmailMessage("Служба підтримки Kvitkovo", "email/answer-message.html", fields, user);
         }
     }
 
-    private void sendEmailMessage(String subject, String template, Map<String, Object> fields, User user) {
+    private void sendEmailMessage(String subject, String template, Map<String, Object> fields, NotificationUser user) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = null;
         try {
@@ -63,7 +64,8 @@ public class EmailService implements NotificationService {
             mimeMessageHelper.setText(emailContent, true);
             emailSender.send(message);
         } catch (Exception e) {
-            //NOP
+            log.info("Email not send");
+            log.info(e.getMessage());
         }
     }
 }
