@@ -4,8 +4,6 @@ import Button from '../components/ui-kit/components/Button';
 import Checkbox from '../components/ui-kit/components/Checkbox/Checkbox';
 import Divider from '../components/ui-kit/components/Divider/Divider';
 import Filter from '../components/ui-kit/components/Filter/Filter';
-/* eslint-disable max-len */
-import ResentLink from '../components/common/LoginBtn/ConfirmationModals/ResentLink';
 
 function About() {
   const [isChecked, setIsChecked] = useState(false);
@@ -14,7 +12,6 @@ function About() {
   };
   return (
     <div>
-      <ResentLink />
       <Checkbox
         label="Акційна ціна"
         checked={isChecked}

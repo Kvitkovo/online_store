@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
+import logo from '../../ui-kit/icons/logo/logo.svg';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
 import InputSearch from '../../ui-kit/components/Input/InputSearch';
@@ -86,7 +87,7 @@ const Header = () => {
             <NavLink className={styles.logoLink} to={ROUTES.home}>
               <img
                 className={styles.logo}
-                src="images/logo.svg"
+                src={logo}
                 alt="логотип магазину 'Квітково'"
               />
             </NavLink>
