@@ -16,6 +16,7 @@ const ROUTES = {
   card: '/product/:myId',
   emailConfirmation: '/user/email/:code/confirm/',
   category: '/category',
+  passwordReset: '/user/resetPassword/:code',
 };
 
 export default ROUTES;

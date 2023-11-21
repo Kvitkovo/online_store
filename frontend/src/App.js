@@ -8,7 +8,7 @@ import './App.scss';
 import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
-import CardPage from './pages/CardPage/CardPage';
+import CardPage from './pages/CardPage';
 import Care from './pages/Care';
 import Contacts from './pages/Contacts';
 import Faq from './pages/Faq';
@@ -16,9 +16,9 @@ import OrderStatus from './pages/OrderStatus';
 import Partner from './pages/Partner';
 import Privacy from './pages/Privacy';
 import ContactDetails from './components/account/ContactDetails';
-import ChangeDetails from './components/account/ChangeDetails/ChangeDetails';
+import ChangeDetails from './components/account/ChangeDetails';
 import Wrapper from './components/Wrapper';
-import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
+import ProtectedRoutes from './components/ProtectedRoutes';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
@@ -57,6 +57,10 @@ function App() {
                 <Route
                   path={ROUTES.emailConfirmation}
                   element={<RegisterConfirm />}
+                />
+                <Route
+                  path={ROUTES.passwordReset}
+                  element={<ChangePassword />}
                 />
               </Route>
             </Routes>

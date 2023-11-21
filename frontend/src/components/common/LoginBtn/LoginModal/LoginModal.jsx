@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
