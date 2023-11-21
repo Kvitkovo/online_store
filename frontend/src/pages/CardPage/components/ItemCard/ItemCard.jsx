@@ -18,8 +18,7 @@ const ItemCard = ({ cardData }) => {
   const dispatch = useDispatch();
   // const [inCart, setInCart] = useState(false);
 
-  const handleAddToCart = ({ image, title, discount, oldPrice, price, id }) => {
-    // console.log({ image, title, discount, oldPrice, price, id });
+  const handleAddToCart = (image, title, discount, oldPrice, price, id) => {
     dispatch(addToCart({ image, title, discount, oldPrice, price, id }));
     // setInCart(true);
   };
@@ -57,11 +56,11 @@ const ItemCard = ({ cardData }) => {
             addToCart={() =>
               handleAddToCart(
                 cardData.images[0]
-                  ? cardData.images[0]
+                  ? cardData.images[0].url
                   : '/images/no_image.jpg',
                 cardData.title,
                 cardData.discount,
-                cardData.oldPrice,
+                cardData.priceWithDiscount,
                 cardData.price,
                 cardData.id,
               )
