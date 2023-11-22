@@ -20,13 +20,15 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [resetEmailError, setResetEmailError] = useState('');
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const disallowedPattern = /\.ru$/i;
     return emailPattern.test(value) && !disallowedPattern.test(value);
   };
+
+  const isResetPasswordValid =
+    resetPasswordClicked && resetPassword && email && validateEmail(email);
 
   const handleSuccessfulLogin = () => {
     navigate('/account');
@@ -63,8 +65,23 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     e.preventDefault();
     setSubmitted(true);
     setEmailError('');
+    setPasswordError('');
+
+    if (!email) {
+      setEmailError('Введіть електронну пошту');
+      return;
+    } else if (!validateEmail(email)) {
+      setEmailError('Невірний формат електронної пошти');
+      return;
+    }
+
+    if (!password) {
+      setPasswordError('Введіть пароль');
+      return;
+    }
     await login();
   };
+
   const handleGoogleLogin = async (token) => {
     await axios.post('https://api.imperiaholoda.com.ua:4446/v1/auth/google', {
       token,
@@ -87,7 +104,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          setResetEmailError('Електрона пошта не зареєстрована!');
+          setEmailError('Електрона пошта не зареєстрована!');
         }
       }
     }
@@ -135,29 +152,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                   {submitted && emailError && (
                     <p className={styles.errorMessage}>{emailError}</p>
                   )}
-                  {submitted && !email && (
-                    <p className={styles.errorMessage}>
-                      Введіть електронну пошту
-                    </p>
-                  )}
-                  {submitted && email && !validateEmail(email) && (
-                    <p className={styles.errorMessage}>
-                      Невірний формат електронної пошти
-                    </p>
-                  )}
-                  {resetPassword && !email && (
-                    <p className={styles.errorMessage}>
-                      Введіть електронну пошту
-                    </p>
-                  )}
-                  {resetPassword && email && !validateEmail(email) && (
-                    <p className={styles.errorMessage}>
-                      Невірний формат електронної пошти
-                    </p>
-                  )}
-                  {submitted && resetEmailError && (
-                    <p className={styles.errorMessage}>{resetEmailError}</p>
-                  )}
                 </div>
 
                 <div className={styles.passwordContainer}>
@@ -174,9 +168,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  {submitted && !password && (
-                    <p className={styles.errorMessage}>Введіть пароль</p>
-                  )}
                   {submitted && passwordError && (
                     <p className={styles.errorMessage}>{passwordError}</p>
                   )}
@@ -214,12 +205,9 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                   Забули пароль?
                 </button>
               </div>
-              {resetPasswordClicked &&
-                resetPassword &&
-                email &&
-                validateEmail(email) && (
-                  <ResetPassword toggleReset={toggleReset} userEmail={email} />
-                )}
+              {isResetPasswordValid && (
+                <ResetPassword toggleReset={toggleReset} userEmail={email} />
+              )}
             </form>
           </div>
         </Modals>
