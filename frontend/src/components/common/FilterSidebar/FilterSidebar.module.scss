@@ -25,15 +25,14 @@
 
 .rangeContainer {
   width: 220px;
-}
-.discountPrice {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
-.checkbox {
-  width: 24px;
-  height: 24px;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  appearance: textfield;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ICONS } from '../../icons';
 import styles from './DropDownList.module.scss';
+import Checkbox from '../Checkbox/Checkbox';
 
 const DropDownList = ({ title, children, data, setData }) => {
   const [open, setOpen] = useState(false);
@@ -25,9 +26,9 @@ const DropDownList = ({ title, children, data, setData }) => {
       <div className={styles.dropdown}>
         <div className={styles.dropdownTitle} onClick={handleClick}>
           {open ? (
-            <ICONS.arrowUp className={styles.dropdownIcon} />
-          ) : (
             <ICONS.showList className={styles.dropdownIcon} />
+          ) : (
+            <ICONS.hideList className={styles.dropdownIcon} />
           )}
           <span>{title}</span>
         </div>
@@ -37,15 +38,13 @@ const DropDownList = ({ title, children, data, setData }) => {
           <ul className={styles.listData}>
             {data.map((option) => (
               <li key={option.id} className={styles.listItem}>
-                <input
-                  type="checkbox"
+                <Checkbox
+                  label={option.name}
                   checked={option.checked}
-                  className={styles.checkbox}
                   onChange={(event) =>
                     handleCheckboxChange(event, setData, option)
                   }
                 />
-                <span>{option.name}</span>
               </li>
             ))}
           </ul>

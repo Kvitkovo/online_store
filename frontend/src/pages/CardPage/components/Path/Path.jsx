@@ -17,8 +17,8 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
         </Link>
         {currentPageData && (
           <>
-            <ICONS.arrowRight />
-            {currentPageType === 'category' ? (
+            <ICONS.pathArrow />
+            {currentPageType === 'category' || currentPageType === 'section' ? (
               <span className={styles.navigation}>{currentPageData.name}</span>
             ) : (
               <Link
@@ -35,7 +35,7 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
             )}
             {currentPageType === 'product' && (
               <>
-                <ICONS.arrowRight />
+                <ICONS.pathArrow />
                 <span className={styles.navigation}>
                   {currentPageData.title}
                 </span>

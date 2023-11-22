@@ -7,8 +7,11 @@
   border-radius: 8px;
   min-width: 248px;
   max-width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   &__option {
-    padding-top: 8px;
+    line-height: 24px;
   }
   &__choosen {
     display: flex;

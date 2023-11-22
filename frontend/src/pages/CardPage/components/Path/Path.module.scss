@@ -8,6 +8,13 @@
 
 .navigationLink {
   color: $text-color;
+  font-size: 14px;
+  line-height: 130%;
+}
+
+.navigation {
+  font-size: 14px;
+  line-height: 130%;
 }
 @include md {
   .path {

@@ -9,6 +9,7 @@ import {
   GetProductTypes,
   GetSizes,
 } from '../../../services/catalog/categoryAccess.service';
+import Checkbox from '../../ui-kit/components/Checkbox/Checkbox';
 
 const FilterSidebar = () => {
   const [price, setPrice] = useState([99, 99999]);
@@ -51,6 +52,8 @@ const FilterSidebar = () => {
             type="number"
             className={styles.price}
             value={price[0]}
+            min={99}
+            max={99999}
             onChange={changeStartPrice}
           />
           <ICONS.dash className={styles.priceDevider} />
@@ -58,6 +61,8 @@ const FilterSidebar = () => {
             type="number"
             className={styles.price}
             value={price[1]}
+            min={99}
+            max={99999}
             onChange={changeEndPrice}
           />
         </div>
@@ -67,16 +72,11 @@ const FilterSidebar = () => {
             handleSliderChange={handleSliderChange}
           />
         </div>
-        <label htmlFor="discountPrice" className={styles.discountPrice}>
-          <input
-            type="checkbox"
-            id="discountPrice"
-            checked={discountPrice}
-            className={styles.checkbox}
-            onChange={(event) => setDiscountPrice(event.target.checked)}
-          />
-          Акційна ціна
-        </label>
+        <Checkbox
+          label={'Акційна ціна'}
+          checked={discountPrice}
+          onChange={(event) => setDiscountPrice(event.target.checked)}
+        />
       </DropDownList>
 
       <Devider />
