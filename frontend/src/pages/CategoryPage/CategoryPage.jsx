@@ -1,33 +1,39 @@
 /* eslint-disable max-len */
 import React, { useEffect, useCallback, useState } from 'react';
 import { GetProductsCategory } from '../../services/products/productsAccess.service';
+import { GetCategory } from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
-// import Path from '../CardPage/components/Path';
+import Path from '../CardPage/components/Path';
 import Card from '../../components/common/Card';
 import Pagination from '../../components/ui-kit/components/Pagination/Pagination';
 import { useParams } from 'react-router-dom';
 import DropDown from '../../components/ui-kit/components/DropDown';
 
 const CategoryPage = () => {
-  const { myId } = useParams();
+  const { categoryId } = useParams();
   const [productsInCategory, setProductsInCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentCategory, setCurrentCategory] = useState(null);
   const sortOptions = ['від дешевих до дорогих', 'від дорогих до дешевих'];
+
   const getData = useCallback(async () => {
     try {
       const products = await GetProductsCategory({
         page: currentPage,
         size: 12,
-        categoryId: +myId,
+        categoryId: +categoryId,
       });
+      const category = await GetCategory(categoryId);
+      setCurrentCategory(category);
       setProductsInCategory(products.content);
-      setIsLoading(false);
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [myId, currentPage]);
+  }, [categoryId, currentPage]);
 
   useEffect(() => {
     getData();
@@ -35,8 +41,8 @@ const CategoryPage = () => {
 
   return (
     <>
-      <div className={styles.path}>{/* <Path /> */}</div>
-      <h2 className={styles.title}>categoryName</h2>
+      <Path currentPageData={currentCategory} currentPageType={'category'} />
+      <h2 className={styles.title}>{currentCategory?.name}</h2>
       <div className={styles.mainContainer}>
         <div className={styles.filterContainer}>
           <FilterSidebar />
@@ -48,36 +54,36 @@ const CategoryPage = () => {
               <DropDown initualValue={0} options={sortOptions} />
             </div>
           </div>
-          {isLoading ? (
-            'Loading ...'
-          ) : (
-            <>
-              <div className={styles.cards}>
-                {productsInCategory.map((product) => (
-                  <Card
-                    image={
-                      product.images[0]
-                        ? product.images[0].urlSmall
-                        : './images/no_image.jpg'
-                    }
-                    title={product.title}
-                    discount={product.discount}
-                    oldPrice={product.price}
-                    price={product.priceWithDiscount}
-                    available={product.available}
-                    key={product.id}
-                    id={product.id}
+          {isLoading
+            ? 'Loading ...'
+            : productsInCategory && (
+                <>
+                  <div className={styles.cards}>
+                    {productsInCategory.map((product) => (
+                      <Card
+                        image={
+                          product.images[0]
+                            ? product.images[0].urlSmall
+                            : './images/no_image.jpg'
+                        }
+                        title={product.title}
+                        discount={product.discount}
+                        oldPrice={product.price}
+                        price={product.priceWithDiscount}
+                        available={product.available}
+                        key={product.id}
+                        id={product.id}
+                      />
+                    ))}
+                  </div>
+                  <Pagination
+                    onPageChange={setCurrentPage}
+                    totalCount={productsInCategory.length}
+                    currentPage={currentPage}
+                    pageSize={12}
                   />
-                ))}
-              </div>
-              <Pagination
-                onPageChange={setCurrentPage}
-                totalCount={productsInCategory.length}
-                currentPage={currentPage}
-                pageSize={12}
-              />
-            </>
-          )}
+                </>
+              )}
         </div>
       </div>
     </>

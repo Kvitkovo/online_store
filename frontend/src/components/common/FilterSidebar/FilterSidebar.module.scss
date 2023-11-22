@@ -1,0 +1,39 @@
+@import './../../../variables';
+
+.filterContainer {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.displayPrice {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+.price {
+  width: 75px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid $gray-dark-color;
+  background: $white-color;
+}
+.priceDevider {
+  align-self: center;
+}
+
+.rangeContainer {
+  width: 220px;
+}
+.discountPrice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+}
