@@ -1,0 +1,22 @@
+.dropdownTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listData {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.listItem {
+  display: flex;
+  gap: 6px;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+}
