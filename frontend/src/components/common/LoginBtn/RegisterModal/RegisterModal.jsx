@@ -6,6 +6,7 @@ import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 import axios from 'axios';
 import RegisterLetter from '../ConfirmationModals/RegisterLetter';
+import PasswordChecklist from 'react-password-checklist';
 
 const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [name, setName] = useState('');
@@ -136,13 +137,31 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+
                   {submitted && !password && (
                     <p className={styles.errorMessage}>Введіть пароль</p>
                   )}
                   {submitted && password && !validatePassword(password) && (
-                    <p className={styles.errorMessage}>
-                      Пароль має бути не менше 8 символів, містити латинські
-                      літери, мінімум одну велику літеру, та мінімум одну цифру
+                    <p>
+                      <PasswordChecklist
+                        className={styles.errorMessage}
+                        rules={[
+                          'minLength',
+                          'number',
+                          'capital',
+                          'lowercase',
+                          'letter',
+                        ]}
+                        minLength={8}
+                        value={password}
+                        messages={{
+                          letter: 'Латинські літери.',
+                          minLength: 'Не менше 8 символів.',
+                          number: 'Мінімум одна цифра',
+                          capital: 'Мінімум одна велика літера.',
+                          lowercase: 'Мінімум одна маленька літера.',
+                        }}
+                      />
                     </p>
                   )}
                 </div>
