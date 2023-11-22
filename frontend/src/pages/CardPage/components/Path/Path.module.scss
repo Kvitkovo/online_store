@@ -2,9 +2,12 @@
 @import '../../../../mixins';
 
 .path {
-  span {
-    padding: 7px 9px;
-  }
+  display: flex;
+  align-items: center;
+}
+
+.navigationLink {
+  color: $text-color;
 }
 @include md {
   .path {
