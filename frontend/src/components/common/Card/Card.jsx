@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Card.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
@@ -8,8 +8,10 @@ import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
 import { Link } from 'react-router-dom';
 import { addToCart } from '../../../redux/slices/cartSlice';
+import { isItemInCart } from '../../../utils/isItemInCart';
 
 const Card = (props) => {
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const [inCart, setInCart] = useState(false);
 
@@ -17,10 +19,15 @@ const Card = (props) => {
     window.scrollTo(0, 0);
   };
 
+  useEffect(() => {
+    setInCart(false);
+    if (isItemInCart(cartItems, props.id)) {
+      setInCart(true);
+    }
+  }, [cartItems, props.id]);
+
   const handleAddToCart = (props) => {
-    // console.log('Props from smal card: ', props);
     dispatch(addToCart(props));
-    setInCart(true);
   };
 
   return (
