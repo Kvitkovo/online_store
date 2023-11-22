@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
+import ua.kvitkovo.errorhandling.AccessDeniedException;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -263,6 +264,11 @@ public class OrderService {
     @Transactional
     public OrderResponseDto updateOrder(Long id, OrderAdminRequestDto dto,
         BindingResult bindingResult) {
+
+        if (!userService.isCurrentUserAdmin()) {
+            throw new AccessDeniedException();
+        }
+
         OrderResponseDto orderResponseDto = findById(id);
         orderAdminDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {

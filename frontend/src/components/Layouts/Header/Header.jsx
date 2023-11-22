@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
+import logo from '../../ui-kit/icons/logo/logo.svg';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
 import InputSearch from '../../ui-kit/components/Input/InputSearch';
@@ -14,10 +15,21 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+
+  const productQuantity = useMemo(() => {
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.cardQuantity,
+      0,
+    );
+    return quantity;
+  }, [cartItems]);
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -50,14 +62,18 @@ const Header = () => {
   }, []);
   return (
     <div>
-      <BurgerMenu toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      <BurgerMenu
+        toggleCart={toggleCart}
+        toggleMyBouquet={toggleMyBouquet}
+        cartQuantity={productQuantity}
+      />
       <header>
         <div className={styles.containerTop}>
           <div className={styles.containerTopLeft}>
             <NavLink className={styles.logoLink} to={ROUTES.home}>
               <img
                 className={styles.logo}
-                src="images/logo.svg"
+                src={logo}
                 alt="логотип магазину 'Квітково'"
               />
             </NavLink>
@@ -110,18 +126,19 @@ const Header = () => {
             <InputSearch />
           </div>
           <div className={styles.containerBottomRight}>
-            <Button
-              variant="no-border"
-              label="Зібрати букет"
-              padding="padding-header-sm"
-              icon={<ICONS.toBouquet />}
-              onClick={toggleMyBouquet}
-            />
+            <div className={styles.bouquete}>
+              <Button
+                variant="no-border"
+                label="Зібрати букет"
+                icon={<ICONS.toBouquet />}
+                onClick={toggleMyBouquet}
+              />
+            </div>
+
             <div className={styles.login}>
               <Button
                 variant="no-border"
                 label="Увійти"
-                padding="padding-header-even"
                 icon={<ICONS.halfPerson />}
                 onClick={() => alert('clicked bouquete')}
               />
@@ -129,6 +146,9 @@ const Header = () => {
 
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />} />
+              {productQuantity !== 0 ? (
+                <div className={styles.cartQuantity}>{productQuantity}</div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -35,19 +35,20 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     private static final String[] ALL_PERMITTED_ENDPOINTS = {
-            "/v1/auth/login",
-            "/v1/auth/google",
-            "/v1/auth/register",
-            // -- Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            // -- Swagger UI v3 (OpenAPI)
-            "/v3/api-docs/**",
+        "/v1/auth/login",
+        "/v1/auth/google",
+        "/v1/auth/register",
+        "/v1/auth/send-email-confirm-code",
+        // -- Swagger UI v2
+        "/v2/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**",
+        // -- Swagger UI v3 (OpenAPI)
+        "/v3/api-docs/**",
             "/swagger-ui/**",
     };
     private static final String[] GET_PERMITTED_ENDPOINTS = {
@@ -64,14 +65,14 @@ public class SecurityConfig {
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
-            "/v1/orders/**",
-            "/v1/decor/**",
+            "/v1/orders",
+            "/v1/decor",
             "/v1/feedback/email",
             "/v1/feedback/phone",
     };
 
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
-            "/v1/orders/{id:[-]?\\d+}/cancel",
+            "/v1/orders/*/cancel",
     };
 
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
@@ -94,7 +95,7 @@ public class SecurityConfig {
                 .disable()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ALL_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(AUTH_PERMITTED_ENDPOINTS).authenticated()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")

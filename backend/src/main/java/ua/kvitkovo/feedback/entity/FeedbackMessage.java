@@ -6,7 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ua.kvitkovo.users.entity.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -26,7 +26,7 @@ public class FeedbackMessage {
 
     @CreatedDate
     @Column(name = "created")
-    private LocalDate created;
+    private LocalDateTime created;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -56,10 +56,6 @@ public class FeedbackMessage {
     @Column(name = "message_text")
     private String messageText;
 
-    @ManyToOne
-    @JoinColumn(name = "main_message_id")
-    private FeedbackMessage mainMessage;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "message", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<FeedbackMessageFile> files;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "message", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<AnswerMessage> answers;
 }
