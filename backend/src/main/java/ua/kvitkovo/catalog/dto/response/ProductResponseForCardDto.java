@@ -59,6 +59,9 @@ public class ProductResponseForCardDto {
     @Schema(example = "ACTIVE", description = "Product status (ACTIVE, NO_ACTIVE)")
     private ProductStatus status;
 
+    @Schema(example = "1", description = "Category ID")
+    private Long categoryId;
+
     @Schema(example = "Букети", description = "Category name")
     private String categoryName;
 
