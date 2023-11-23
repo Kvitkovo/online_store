@@ -67,11 +67,12 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     setEmailError('');
     setPasswordError('');
 
-    if (!email) {
-      setEmailError('Введіть електронну пошту');
-      return;
-    } else if (!validateEmail(email)) {
-      setEmailError('Невірний формат електронної пошти');
+    if (!email || !validateEmail(email)) {
+      setEmailError(
+        !email
+          ? 'Введіть електронну пошту'
+          : 'Невірний формат електронної пошти',
+      );
       return;
     }
 

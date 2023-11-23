@@ -14,7 +14,30 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [emailExistsError, setEmailExistsError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleEmailBlur = () => {
+    setSubmitted(true);
+    if (!email) {
+      setEmailError('Введіть електронну пошту');
+    } else if (!validateEmail(email)) {
+      setEmailError('Невірний формат електронної пошти');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handlePasswordBlur = () => {
+    setSubmitted(true);
+    if (!password) {
+      setPasswordError('Введіть пароль');
+    } else if (!validatePassword(password)) {
+      setPasswordError('Невірний формат паролю');
+    } else {
+      setPasswordError('');
+    }
+  };
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -47,7 +70,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          setEmailExistsError('Електронна пошта вже зареєстрована!');
+          setEmailError('Електронна пошта вже зареєстрована!');
         }
       }
     }
@@ -105,21 +128,12 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value.trim());
-                      setEmailExistsError('');
+                      setEmailError('');
                     }}
+                    onBlur={handleEmailBlur}
                   />
-                  {submitted && emailExistsError && (
-                    <p className={styles.errorMessage}>{emailExistsError}</p>
-                  )}
-                  {submitted && !email && (
-                    <p className={styles.errorMessage}>
-                      Введіть електронну пошту
-                    </p>
-                  )}
-                  {submitted && email && !validateEmail(email) && (
-                    <p className={styles.errorMessage}>
-                      Невірний формат електронної пошти
-                    </p>
+                  {submitted && emailError && (
+                    <p className={styles.errorMessage}>{emailError}</p>
                   )}
                 </div>
 
@@ -136,33 +150,29 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                     placeholder="Введіть ваш пароль"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onBlur={handlePasswordBlur}
                   />
 
-                  {submitted && !password && (
-                    <p className={styles.errorMessage}>Введіть пароль</p>
-                  )}
-                  {submitted && password && !validatePassword(password) && (
-                    <p>
-                      <PasswordChecklist
-                        className={styles.errorMessage}
-                        rules={[
-                          'minLength',
-                          'number',
-                          'capital',
-                          'lowercase',
-                          'letter',
-                        ]}
-                        minLength={8}
-                        value={password}
-                        messages={{
-                          letter: 'Латинські літери.',
-                          minLength: 'Не менше 8 символів.',
-                          number: 'Мінімум одна цифра',
-                          capital: 'Мінімум одна велика літера.',
-                          lowercase: 'Мінімум одна маленька літера.',
-                        }}
-                      />
-                    </p>
+                  {submitted && passwordError && (
+                    <PasswordChecklist
+                      className={styles.errorMessage}
+                      rules={[
+                        'minLength',
+                        'number',
+                        'capital',
+                        'lowercase',
+                        'letter',
+                      ]}
+                      minLength={8}
+                      value={password}
+                      messages={{
+                        letter: 'Латинські літери.',
+                        minLength: 'Не менше 8 символів.',
+                        number: 'Мінімум одна цифра',
+                        capital: 'Мінімум одна велика літера.',
+                        lowercase: 'Мінімум одна маленька літера.',
+                      }}
+                    />
                   )}
                 </div>
               </div>

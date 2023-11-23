@@ -19,7 +19,6 @@ const RegisterConfirm = () => {
         );
         if (response.status === 200) {
           navigate('/account');
-          alert('Пошту підтверджено!');
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
