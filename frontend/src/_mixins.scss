@@ -20,3 +20,10 @@
     @content;
   }
 }
+
+//Style for titel(h2)
+@mixin title {
+  font-size: 32px;
+  line-height: 24px;
+  font-weight: 400;
+}
