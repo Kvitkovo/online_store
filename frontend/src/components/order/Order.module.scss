@@ -1,6 +1,33 @@
 @import '../../mixins';
+@import '../../variables';
 
-.title {
-  @include title;
-  margin: 46px 0 22px;
+.order {
+  .title {
+    @include title;
+    margin: 46px 0 22px;
+  }
+
+  .mainGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 21px;
+  }
+
+  .contactDetails {
+    background-color: $white-color;
+  }
+
+  .cart {
+    background-color: $white-color;
+  }
+
+  .subtitle {
+    @include subtitle;
+    span {
+      font-size: 26px;
+      font-weight: 500;
+      color: $page-accent-color;
+      margin-right: 6px;
+    }
+  }
 }

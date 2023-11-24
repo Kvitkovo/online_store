@@ -21,9 +21,16 @@
   }
 }
 
-//Style for titel(h2)
+// Style for titel (h2)
 @mixin title {
   font-size: 32px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+// Style for subtitle (h3)
+@mixin subtitle {
+  font-size: 20px;
   line-height: 24px;
   font-weight: 400;
 }
