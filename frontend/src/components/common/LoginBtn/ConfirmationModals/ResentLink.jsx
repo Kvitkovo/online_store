@@ -4,33 +4,10 @@ import Modals from '../../Modals';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
-import axios from 'axios';
 
-const ResentLink = ({ email, password, onClose }) => {
+const ResentLink = ({ onClose }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [timer, setTimer] = useState(60);
-
-  const handleClick = async () => {
-    setIsButtonDisabled(true);
-    setTimer(60);
-
-    try {
-      const response = await axios.post(
-        'https://api.imperiaholoda.com.ua:4446/v1/auth/send-email-confirm-code',
-        {
-          email: email,
-          password: password,
-        },
-      );
-      alert(response);
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-      }, 60000);
-    } catch (error) {
-      console.error('Error sending confirmation link:', error);
-      setIsButtonDisabled(false);
-    }
-  };
 
   useEffect(() => {
     let interval;
@@ -42,6 +19,13 @@ const ResentLink = ({ email, password, onClose }) => {
     return () => clearInterval(interval);
   }, [isButtonDisabled]);
 
+  const handleClick = () => {
+    setIsButtonDisabled(true);
+    setTimer(60);
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+    }, 60000);
+  };
   return (
     <div>
       <Modals type="confirmation">
