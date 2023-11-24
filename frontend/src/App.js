@@ -22,6 +22,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
+import Order from './components/order/Order';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
               <Route path={ROUTES.partner} element={<Partner />} />
               <Route path={ROUTES.privacy} element={<Privacy />} />
               <Route path={ROUTES.card} element={<CardPage />} />
+              <Route path={ROUTES.order} element={<Order />} />
               <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.account} element={<ContactDetails />} />
                 <Route
