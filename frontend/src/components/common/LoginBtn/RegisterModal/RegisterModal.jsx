@@ -16,6 +16,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [showPasswordReq, setShowPasswordReq] = useState(true);
 
   const handleEmailBlur = () => {
     setSubmitted(true);
@@ -172,7 +173,15 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
                         capital: 'Мінімум одна велика літера.',
                         lowercase: 'Мінімум одна маленька літера.',
                       }}
+                      onValid={() => setShowPasswordReq(false)}
+                      onInvalid={() => setShowPasswordReq(true)}
                     />
+                  )}
+                  {showPasswordReq && !submitted && (
+                    <p className={styles.passwordReq}>
+                      Пароль має бути не менше 8 символів, складатись з цифр,
+                      маленьких та великих латинських літер.
+                    </p>
                   )}
                 </div>
               </div>
