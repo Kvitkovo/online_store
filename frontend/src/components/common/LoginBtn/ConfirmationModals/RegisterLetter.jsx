@@ -15,9 +15,8 @@ const RegisterLetter = ({ toggleModal, userEmail }) => {
           </div>
 
           <p className={styles.email}>
-            {`На Вашу електронну пошту`} {}
+            {`На Вашу електронну пошту`}
             <span className={styles.emailExample}> {userEmail} </span>
-            {}
             {`було відправлено лист
               з посиланням.`}
           </p>
