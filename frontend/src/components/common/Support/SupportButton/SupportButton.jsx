@@ -11,49 +11,57 @@ const SupportButton = ({
   toggleMessageButton,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [messageButtonVisible, setMessageButtonVisible] = useState(false);
+  const [phoneButtonVisible, setPhoneButtonVisible] = useState(false);
 
   const toggleButton = () => {
     if (isOpen) {
-      setIsOpen(false);
+      setPhoneButtonVisible(false);
+      setTimeout(() => setMessageButtonVisible(true), 2000);
     } else {
-      setIsOpen((prev) => !prev);
+      setMessageButtonVisible(true);
+      setTimeout(() => setPhoneButtonVisible(true), 100);
     }
+    setIsOpen((prev) => !prev);
   };
 
   useModalEffect(isPhoneModalOpen, isMessageModalOpen);
+
   return (
     <div className={styles.supportButtonContainer}>
       <div
         className={`${styles.additionalButtons} ${
-          isOpen ? styles.messageBtn + ' ' + styles.visible : ''
+          isOpen ? styles.visible : ''
         }`}
       >
-        <IconButton
-          icon={<ICONS.MessageIcon />}
-          isBackground={true}
-          isRound={true}
-          onClick={() => {
-            toggleMessageButton();
-            setIsOpen(false);
-          }}
-        />
-      </div>
-      <div
-        className={`${styles.additionalButtons} ${
-          isOpen ? styles.phoneBtn + ' ' + styles.visible : ''
-        }`}
-      >
-        <IconButton
-          icon={<ICONS.PhoneIcon />}
-          isBackground={true}
-          isRound={true}
-          onClick={() => {
-            togglePhoneButton();
-            setIsOpen(false);
-          }}
-        />
-      </div>
+        {messageButtonVisible && (
+          <div className={styles.messageButton}>
+            <IconButton
+              icon={<ICONS.MessageIcon />}
+              isBackground={true}
+              isRound={true}
+              onClick={() => {
+                toggleMessageButton();
+                setIsOpen(false);
+              }}
+            />
+          </div>
+        )}
 
+        {phoneButtonVisible && (
+          <div className={styles.phoneButton}>
+            <IconButton
+              icon={<ICONS.PhoneIcon />}
+              isBackground={true}
+              isRound={true}
+              onClick={() => {
+                togglePhoneButton();
+                setIsOpen(false);
+              }}
+            />
+          </div>
+        )}
+      </div>
       <div className={styles.mainButton}>
         {isOpen ? (
           <IconButton

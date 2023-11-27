@@ -10,28 +10,44 @@
   right: 43px;
   height: 164px;
 }
+
 .additionalButtons {
+  display: none;
+}
+.visible {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+}
+.messageButton {
+  animation: slideMessage 1s backwards;
 }
 
-.phoneBtn {
-  transform: 0.2s ease-in-out;
-  transition-delay: 0.1s;
-}
-.messageBtn {
-  transform: 0.5s ease-in-out;
-  transition-delay: 0.5s;
+.phoneButton {
+  animation: slidePhone 0.5s backwards;
 }
 
-.phoneBtn.visible,
-.messageBtn.visible {
-  opacity: 1;
+@keyframes slideMessage {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
+@keyframes slidePhone {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 @include md {
   .supportButtonContainer {
     right: 27px;
