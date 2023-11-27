@@ -4,7 +4,11 @@ import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 
 const Order = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     defaultValues: { recipient: 'I' },
   });
 
@@ -26,20 +30,47 @@ const Order = () => {
                 <label>
                   Ваше ім&apos;я<span> *</span>
                 </label>
-                <input type="text" placeholder="Як до вас звертатися?"></input>
+                <input
+                  type="text"
+                  placeholder="Як до вас звертатися?"
+                  {...register('clientFirstName', {
+                    required: "Вкажіть ваше ім'я",
+                  })}
+                ></input>
+                <div>
+                  {errors?.clientFirstName && (
+                    <p className={styles.error}>
+                      {errors?.clientFirstName?.message}
+                    </p>
+                  )}
+                </div>
               </div>
               <div>
                 <label>Ел. пошта </label>
                 <input
                   type="email"
                   placeholder="Введіть електронну пошту"
+                  {...register('clientEmail')}
                 ></input>
               </div>
               <div>
                 <label>
                   Номер телефону<span> *</span>
                 </label>
-                <input type="tel" placeholder="+38(0XX)XXX-XX-XX"></input>
+                <input
+                  type="tel"
+                  placeholder="+38(0XX)XXX-XX-XX"
+                  {...register('clientPhone', {
+                    required: 'Вкажіть ваш номер телефону',
+                  })}
+                ></input>
+                <div>
+                  {errors?.clientPhone && (
+                    <p className={styles.error}>
+                      {errors?.clientPhone?.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
             <div className={styles.radioBtn}>
