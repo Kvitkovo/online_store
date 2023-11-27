@@ -11,6 +11,8 @@ const PriceAndButtons = ({
   oldPrice,
   stockInfo,
   addToConstructor,
+  addToCart,
+  inCart,
 }) => {
   const isInStock = stockInfo === 'AVAILABLE';
 
@@ -23,12 +25,24 @@ const PriceAndButtons = ({
             <DiscountPrice oldPrice={oldPrice} actualPrice={actualPrice} />
           </div>
           <div className={styles.buttons}>
-            <Button
-              variant="primary"
-              label="Додати у кошик"
-              padding="padding-sm"
-              icon={<ICONS.toCart />}
-            />
+            {!inCart && (
+              <Button
+                variant="primary"
+                label="Додати у кошик"
+                padding="padding-sm"
+                icon={<ICONS.toCart />}
+                onClick={addToCart}
+              />
+            )}
+            {inCart && (
+              <Button
+                variant="primary"
+                label="У кошику"
+                padding="padding-sm"
+                icon={<ICONS.cartChecked />}
+                onClick={addToCart}
+              />
+            )}
             {addToBouquete ? (
               <>
                 <div className={styles.bouquetDesktop}>
