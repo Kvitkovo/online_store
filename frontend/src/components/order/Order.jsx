@@ -1,11 +1,17 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 
 const Order = () => {
-  const handleSubmit = () => {
-    // console.log('Submit');
+  const { register, handleSubmit } = useForm({
+    defaultValues: { recipient: 'I' },
+  });
+
+  const onSubmitButton = (data) => {
+    alert(JSON.stringify(data));
   };
+
   return (
     <div className={styles.order}>
       <h2 className={styles.title}>Оформлення замовлення</h2>
@@ -14,7 +20,7 @@ const Order = () => {
           <h3 className={styles.subtitle}>
             <span>1.</span>Контактні дані
           </h3>
-          <form className={styles.form} onSubmit={handleSubmit()}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmitButton)}>
             <div className={styles.clientData}>
               <div>
                 <label>
@@ -36,11 +42,30 @@ const Order = () => {
                 <input type="tel" placeholder="+38(0XX)XXX-XX-XX"></input>
               </div>
             </div>
+            <div className={styles.radioBtn}>
+              Одержувач:
+              <div>
+                <label>Я</label>
+                <input
+                  type="radio"
+                  value="I"
+                  {...register('recipient')}
+                ></input>
+              </div>
+              <div>
+                <label>Інша людина</label>
+                <input
+                  type="radio"
+                  value="anotherPerson"
+                  {...register('recipient')}
+                ></input>
+              </div>
+            </div>
             <Button
               label="Продовжити"
               variant="primary"
               padding="padding-even"
-              onClick={handleSubmit}
+              type="submit"
             />
           </form>
         </div>
