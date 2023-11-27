@@ -134,16 +134,21 @@ public class OrderService {
         Order order = orderDtoMapper.mapDtoRequestToEntity(dto);
         order.setId(null);
         order.setShop(shopRepository.findById(dto.getShopId())
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+                .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
         order.setAddress(getFullTextAddress(order));
         order.setStatus(OrderStatus.NEW);
 
         order.setOrderItems(getOrderItemsFromDtosRequest(order, dto.getOrderItems()));
         order.setTotalSum(calculateTotalSum(order));
 
-        UserResponseDto currentUser = userService.getCurrentUser();
-        User customer = userDtoMapper.mapDtoToEntity(currentUser);
-        order.setCustomer(customer);
+        try {
+            UserResponseDto currentUser = userService.getCurrentUser();
+            User customer = userDtoMapper.mapDtoToEntity(currentUser);
+            order.setCustomer(customer);
+        } catch (Exception e) {
+            //NOP
+        }
+
 
         orderRepository.save(order);
 
