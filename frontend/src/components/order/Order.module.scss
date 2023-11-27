@@ -15,6 +15,7 @@
 
   .contactDetails {
     background-color: $white-color;
+    padding: 32px;
   }
 
   .cart {
@@ -23,11 +24,40 @@
 
   .subtitle {
     @include subtitle;
+    margin-bottom: 22px;
     span {
       font-size: 26px;
       font-weight: 500;
       color: $page-accent-color;
       margin-right: 6px;
+    }
+  }
+
+  label {
+    line-height: 24px;
+    span {
+      color: $discount-color;
+    }
+  }
+
+  input {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid $gray-dark-color;
+    padding: 8px 12px;
+  }
+
+  .clientData {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 64px;
+    row-gap: 16px;
+
+    div {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
