@@ -88,6 +88,7 @@ public class Product {
     private ProductType productType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("mainImage DESC, id ASC")
     private Set<Image> images;
 
     @Override
