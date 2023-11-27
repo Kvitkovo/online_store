@@ -18,8 +18,12 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Andriy Gaponov
@@ -64,33 +68,8 @@ public class EmailService implements NotificationService {
     }
 
     @Override
-    public void get() {
-        receiveEmails();
-    }
-
-    private void sendEmailMessage(String subject, String template, Map<String, Object> fields, NotificationUser user) {
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = null;
-        try {
-            mimeMessageHelper = new MimeMessageHelper(message,
-                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
-            Context context = new Context();
-            context.setVariables(fields);
-            String emailContent = templateEngine.process(template, context);
-
-            mimeMessageHelper.setTo(user.getEmail());
-            mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setFrom(emailFrom);
-            mimeMessageHelper.setText(emailContent, true);
-            emailSender.send(message);
-        } catch (Exception e) {
-            log.info("Email not send");
-            log.info(e.getMessage());
-        }
-    }
-
-    public void receiveEmails() {
+    public List<UserMessage> get() {
+        List<UserMessage> messageList = new ArrayList<>();
         try {
             Properties properties = new Properties();
             properties.setProperty("mail.store.protocol", "imaps");
@@ -115,24 +94,43 @@ public class EmailService implements NotificationService {
             for (Message message : unreadMessages) {
 
                 String address = ((InternetAddress) message.getFrom()[0]).getAddress();
+                String messageContentText = "";
+                if (message.getContent() instanceof MimeMultipart) {
+                    MimeMultipart multipart = (MimeMultipart) message.getContent();
+                    if (multipart.getCount() > 0) {
+                        BodyPart bodyPart = multipart.getBodyPart(0);
+                        String contentType = bodyPart.getContentType();
+                        Object content = bodyPart.getContent();
 
-                System.out.println("Subject: " + message.getSubject());
-                System.out.println("From: " + address);
-                System.out.println("Date: " + message.getSentDate());
+                        if (contentType.contains("TEXT")) {
+                            messageContentText = content.toString();
+                            String messageText = getMessageText(messageContentText);
+                            Long messageId = getMessageId(messageContentText);
 
-                MimeMultipart multipart = (MimeMultipart) message.getContent();
-                if (multipart.getCount() > 0) {
-                    BodyPart bodyPart = multipart.getBodyPart(0);
-                    String contentType = bodyPart.getContentType();
-                    Object content = bodyPart.getContent();
-                    System.out.println("Content type: " + contentType);
-                    System.out.println("Content: " + content.toString());
+                            messageList.add(UserMessage.builder()
+                                    .address(address)
+                                    .mainMessageId(messageId)
+                                    .message(messageText)
+                                    .build()
+                            );
+                        }
+                    }
                 }
 
+                if (message.getContent() instanceof String) {
+                    messageContentText = (String) message.getContent();
+                    String messageText = getMessageText(messageContentText);
+                    Long messageId = getMessageId(messageContentText);
 
-                System.out.println("------------------------------------------------------------");
+                    messageList.add(UserMessage.builder()
+                            .address(address)
+                            .mainMessageId(messageId)
+                            .message(messageText)
+                            .build()
+                    );
+                }
 
-
+                message.setFlag(Flags.Flag.DELETED, true);
             }
 
             inbox.close(true);
@@ -141,5 +139,54 @@ public class EmailService implements NotificationService {
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
+
+        return messageList;
+    }
+
+    private void sendEmailMessage(String subject, String template, Map<String, Object> fields, NotificationUser user) {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = null;
+        try {
+            mimeMessageHelper = new MimeMessageHelper(message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+            Context context = new Context();
+            context.setVariables(fields);
+            String emailContent = templateEngine.process(template, context);
+
+            mimeMessageHelper.setTo(user.getEmail());
+            mimeMessageHelper.setSubject(subject);
+            mimeMessageHelper.setFrom(emailFrom);
+            mimeMessageHelper.setText(emailContent, true);
+            emailSender.send(message);
+        } catch (Exception e) {
+            log.info("Email not send");
+            log.info(e.getMessage());
+        }
+    }
+
+    private String getMessageText(String message) {
+        String result = "";
+//        String regEmail = emailFrom.replace(".", "\\.");
+//        Pattern pattern = Pattern.compile("^(.*?)(?=\\s*" + regEmail + ")", Pattern.MULTILINE);
+        Pattern pattern = Pattern.compile("^\\s*$", Pattern.MULTILINE);
+        Matcher matcher = pattern.matcher(message);
+
+        if (matcher.find()) {
+            result = message.substring(0, matcher.start());
+        }
+        return result;
+    }
+
+    private Long getMessageId(String message) {
+        Long result = null;
+        Pattern pattern = Pattern.compile("Запит #(\\d+)", Pattern.MULTILINE);
+        Matcher matcher = pattern.matcher(message);
+
+        if (matcher.find()) {
+            String numberString = matcher.group(1);
+            result = Long.parseLong(numberString);
+        }
+        return result;
     }
 }
