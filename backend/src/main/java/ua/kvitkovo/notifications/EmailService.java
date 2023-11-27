@@ -1,7 +1,11 @@
 package ua.kvitkovo.notifications;
 
 import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.search.FlagTerm;
+import jakarta.mail.search.SearchTerm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,9 @@ public class EmailService implements NotificationService {
 
     @Value("${spring.mail.properties.mail.imap.host}")
     private String imapHost;
+
+    @Value("${spring.mail.properties.mail.imap.port}")
+    private String imapPort;
 
     @Override
     public void send(NotificationType type, Map<String, Object> fields, NotificationUser user) {
@@ -88,23 +95,47 @@ public class EmailService implements NotificationService {
             Properties properties = new Properties();
             properties.setProperty("mail.store.protocol", "imaps");
 
+            properties.setProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            properties.setProperty("mail.imaps.socketFactory.fallback", "false");
+            properties.setProperty("mail.imaps.ssl.enable", "false");
+            properties.setProperty("mail.imaps.socketFactory.port", imapPort);
+            properties.setProperty("mail.imaps.starttls.enable", "true");
+            properties.setProperty("mail.imaps.ssl.trust", imapHost);
+
             Session session = Session.getDefaultInstance(properties, null);
             Store store = session.getStore("imaps");
             store.connect(imapHost, emailFrom, emailPassword);
 
             Folder inbox = store.getFolder("INBOX");
-            inbox.open(Folder.READ_ONLY);
+            inbox.open(Folder.READ_WRITE);
 
-            Message[] messages = inbox.getMessages();
-            for (Message message : messages) {
+            SearchTerm searchTerm = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
+            Message[] unreadMessages = inbox.search(searchTerm);
+
+            for (Message message : unreadMessages) {
+
+                String address = ((InternetAddress) message.getFrom()[0]).getAddress();
+
                 System.out.println("Subject: " + message.getSubject());
-                System.out.println("From: " + message.getFrom()[0]);
+                System.out.println("From: " + address);
                 System.out.println("Date: " + message.getSentDate());
-                System.out.println("Content: " + message.getContent());
+
+                MimeMultipart multipart = (MimeMultipart) message.getContent();
+                if (multipart.getCount() > 0) {
+                    BodyPart bodyPart = multipart.getBodyPart(0);
+                    String contentType = bodyPart.getContentType();
+                    Object content = bodyPart.getContent();
+                    System.out.println("Content type: " + contentType);
+                    System.out.println("Content: " + content.toString());
+                }
+
+
                 System.out.println("------------------------------------------------------------");
+
+
             }
 
-            inbox.close(false);
+            inbox.close(true);
             store.close();
 
         } catch (MessagingException | IOException e) {
