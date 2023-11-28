@@ -38,7 +38,7 @@ const PriceAndButtons = ({
               <Button
                 variant="primary"
                 label="У кошику"
-                padding="padding-sm"
+                padding="padding-bg"
                 icon={<ICONS.cartChecked />}
                 onClick={addToCart}
               />
