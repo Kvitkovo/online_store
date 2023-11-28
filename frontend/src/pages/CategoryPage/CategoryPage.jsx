@@ -6,9 +6,9 @@ import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
 import Path from '../CardPage/components/Path';
 import Card from '../../components/common/Card';
-import Pagination from '../../components/ui-kit/components/Pagination/Pagination';
+import Pagination from '../../components/ui-kit/components/Pagination';
 import { useParams } from 'react-router-dom';
-import DropDown from '../../components/ui-kit/components/DropDown';
+import Select from '../../components/ui-kit/components/Select';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -16,7 +16,17 @@ const CategoryPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
-  const sortOptions = ['від дешевих до дорогих', 'від дорогих до дешевих'];
+  const [sortValue, setSortValue] = useState(0);
+  const sortOptions = [
+    {
+      value: 0,
+      label: 'від дешевих до дорогих',
+    },
+    {
+      value: 1,
+      label: 'від дорогих до дешевих',
+    },
+  ];
 
   const getData = useCallback(async () => {
     try {
@@ -51,8 +61,13 @@ const CategoryPage = () => {
           <div className={styles.sortBlock}>
             <span className={styles.sortTitle}>Виводити:</span>
             <div className={styles.sortDropdown}>
-              <DropDown initualValue={0} options={sortOptions} />
+              <Select
+                value={sortValue}
+                setValue={setSortValue}
+                options={sortOptions}
+              />
             </div>
+            <div className={styles.sortBlock_mobile}></div>
           </div>
           {isLoading
             ? 'Loading ...'

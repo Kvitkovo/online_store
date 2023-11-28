@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import styles from './FilterSidebar.module.scss';
 import { ICONS } from '../../ui-kit/icons';
-import DropDownList from '../../ui-kit/components/DropDownList/DropDownList';
+import DropDownList from '../../ui-kit/components/DropDownList';
 import RangeSlider from '../../ui-kit/components/RangeSlider';
-import Devider from '../../ui-kit/components/Divider';
+import Divider from '../../ui-kit/components/Divider';
 import {
   GetColors,
   GetProductTypes,
   GetSizes,
 } from '../../../services/catalog/categoryAccess.service';
-import Checkbox from '../../ui-kit/components/Checkbox/Checkbox';
+import Checkbox from '../../ui-kit/components/Checkbox';
+import InputPrice from '../../ui-kit/components/Input/InputPrice';
 
 const FilterSidebar = () => {
   const [price, setPrice] = useState([99, 99999]);
@@ -48,22 +49,16 @@ const FilterSidebar = () => {
     <div className={styles.filterContainer}>
       <DropDownList title={'Ціна, діапазон'}>
         <div className={styles.displayPrice}>
-          <input
-            type="number"
-            className={styles.price}
+          <InputPrice
             value={price[0]}
-            min={99}
-            max={99999}
-            onChange={changeStartPrice}
+            handleInputChange={changeStartPrice}
+            index={0}
           />
           <ICONS.dash className={styles.priceDevider} />
-          <input
-            type="number"
-            className={styles.price}
+          <InputPrice
             value={price[1]}
-            min={99}
-            max={99999}
-            onChange={changeEndPrice}
+            handleInputChange={changeEndPrice}
+            index={1}
           />
         </div>
         <div className={styles.rangeContainer}>
@@ -79,7 +74,7 @@ const FilterSidebar = () => {
         />
       </DropDownList>
 
-      <Devider />
+      <Divider />
 
       <DropDownList
         title={'Тип квітів'}
@@ -87,7 +82,7 @@ const FilterSidebar = () => {
         setData={setProductTypes}
       />
 
-      <Devider />
+      <Divider />
 
       <DropDownList
         title={'Колір'}
@@ -95,7 +90,7 @@ const FilterSidebar = () => {
         setData={setColorsCollection}
       />
 
-      <Devider />
+      <Divider />
 
       <DropDownList
         title={'Висота букета'}
@@ -103,7 +98,7 @@ const FilterSidebar = () => {
         setData={setBouquetSizes}
       />
 
-      <Devider />
+      <Divider />
     </div>
   );
 };
