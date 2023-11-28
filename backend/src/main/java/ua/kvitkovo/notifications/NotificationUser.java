@@ -30,4 +30,12 @@ public class NotificationUser {
                 .name(feedbackMessage.getUserName())
                 .build();
     }
+
+    public static NotificationUser build(String email, String phone, String name) {
+        return NotificationUser.builder()
+                .email(email)
+                .name(name)
+                .phone(phone)
+                .build();
+    }
 }
