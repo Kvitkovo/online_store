@@ -43,7 +43,7 @@ const ResetPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    /*  console.log('Data to be sent:', { verificationCode, newPassword }); */
+    /*    console.log('Data to be sent:', { verificationCode, newPassword }); */
 
     if (newPassword !== confirmPassword) {
       setConfirmPasswordError('Паролі не співпадають');
@@ -58,12 +58,18 @@ const ResetPasswordPage = () => {
             verificationCode: verificationCode,
             newPassword: newPassword,
           },
+
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
         );
         if (response.status === 200) {
           alert('Password reset successful');
         }
       } catch (error) {
-        /*  console.log('Password reset failed', error); */
+        alert('Password reset failed', error);
       }
     }
   };

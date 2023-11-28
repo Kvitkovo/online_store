@@ -44,6 +44,14 @@ function App() {
               <Route path={ROUTES.partner} element={<Partner />} />
               <Route path={ROUTES.privacy} element={<Privacy />} />
               <Route path={ROUTES.card} element={<CardPage />} />
+              <Route
+                path={ROUTES.emailConfirmation}
+                element={<RegisterConfirm />}
+              />
+              <Route
+                path={ROUTES.passwordReset}
+                element={<ResetPasswordPage />}
+              />
               <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.account} element={<ContactDetails />} />
                 <Route
@@ -55,14 +63,6 @@ function App() {
                   element={<ChangePassword />}
                 />
                 <Route path={ROUTES.orders} element={<Orders />} />
-                <Route
-                  path={ROUTES.emailConfirmation}
-                  element={<RegisterConfirm />}
-                />
-                <Route
-                  path={ROUTES.passwordReset}
-                  element={<ResetPasswordPage />}
-                />
               </Route>
             </Routes>
           </div>
