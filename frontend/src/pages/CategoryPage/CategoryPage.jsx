@@ -9,6 +9,8 @@ import Card from '../../components/common/Card';
 import Pagination from '../../components/ui-kit/components/Pagination/Pagination';
 import { useParams } from 'react-router-dom';
 import DropDown from '../../components/ui-kit/components/DropDown';
+import Button from '../../components/ui-kit/components/Button';
+import { ICONS } from '../../components/ui-kit/icons';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -16,7 +18,8 @@ const CategoryPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
-  const sortOptions = ['від дешевих до дорогих', 'від дорогих до дешевих'];
+  const [sortValue, setSortValue] = useState(0);
+  const [isFilterOpen, setFilterOpen] = useState(false);
 
   const getData = useCallback(async () => {
     try {
@@ -35,6 +38,10 @@ const CategoryPage = () => {
     }
   }, [categoryId, currentPage]);
 
+  const handleClickFilter = () => {
+    setFilterOpen((prev) => !prev);
+  };
+
   useEffect(() => {
     getData();
   }, [getData]);
@@ -45,13 +52,20 @@ const CategoryPage = () => {
       <h2 className={styles.title}>{currentCategory?.name}</h2>
       <div className={styles.mainContainer}>
         <div className={styles.filterContainer}>
-          <FilterSidebar />
+          <FilterSidebar visibility={isFilterOpen} />
         </div>
         <div className={styles.mainContent}>
           <div className={styles.sortBlock}>
             <span className={styles.sortTitle}>Виводити:</span>
             <div className={styles.sortDropdown}>
-              <DropDown initualValue={0} options={sortOptions} />
+              <DropDown value={sortValue} setValue={setSortValue} />
+            </div>
+            <div className={styles.filterButton}>
+              <Button
+                label={'Фільтри'}
+                icon={<ICONS.filter />}
+                onClick={handleClickFilter}
+              />
             </div>
           </div>
           {isLoading

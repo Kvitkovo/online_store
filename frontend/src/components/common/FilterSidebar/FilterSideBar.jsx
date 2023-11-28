@@ -11,7 +11,7 @@ import {
 } from '../../../services/catalog/categoryAccess.service';
 import Checkbox from '../../ui-kit/components/Checkbox/Checkbox';
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ visibility }) => {
   const [price, setPrice] = useState([99, 99999]);
   const [productTypes, setProductTypes] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(false);
@@ -45,7 +45,12 @@ const FilterSidebar = () => {
   }, [getFilterData]);
 
   return (
-    <div className={styles.filterContainer}>
+    <div
+      className={`
+        ${styles.filterContainer} 
+        ${visibility ? styles.filterVisible : styles.filterHidden}`}
+    >
+      <h3 className={styles.filterTitle}>Фільтр</h3>
       <DropDownList title={'Ціна, діапазон'}>
         <div className={styles.displayPrice}>
           <input

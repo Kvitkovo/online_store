@@ -1,6 +1,8 @@
 @import './../../variables';
+@import './../../_mixins';
 
 .mainContainer {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -41,4 +43,24 @@
 
 .mainContent {
   width: 880px;
+}
+.filterButton {
+  margin-left: 130px;
+}
+
+@include lg {
+  .sortTitle {
+    display: none;
+  }
+  .sortBlock {
+    background: transparent;
+    display: flex;
+    flex-basis: content;
+  }
+  .mainContainer {
+    justify-content: center;
+  }
+  .mainContent {
+    max-width: 930px;
+  }
 }

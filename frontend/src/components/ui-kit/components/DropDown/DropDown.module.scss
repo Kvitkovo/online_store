@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .dropdown {
   padding: 8px 8px 8px 12px;
@@ -16,5 +17,24 @@
   &__choosen {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__mobile {
+    display: none;
+  }
+}
+
+.sortOptions {
+  background: $white-color;
+  border-radius: 8px;
+  box-shadow: $box-shadow-secondary;
+}
+
+@include lg {
+  .dropdown {
+    display: none;
+    &__mobile {
+      display: block;
+    }
   }
 }

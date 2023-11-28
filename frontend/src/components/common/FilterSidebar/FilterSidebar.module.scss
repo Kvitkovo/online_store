@@ -1,10 +1,20 @@
 @import './../../../variables';
+@import './../../../_mixins';
 
 .filterContainer {
   width: 280px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.filterTitle {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 24px;
+  padding: 16px 47px;
+  box-shadow: $box-shadow-secondary;
+  display: none;
 }
 
 .displayPrice {
@@ -35,4 +45,25 @@ input::-webkit-inner-spin-button {
 
 input[type='number'] {
   appearance: textfield;
+}
+
+@include lg {
+  .filterContainer {
+    background: $white-color;
+    height: 100%;
+    width: 347px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+  }
+  .filterVisible {
+    transform: translateX(0);
+  }
+  .filterHidden {
+    transform: translateX(-100%);
+  }
+  .filterTitle {
+    display: block;
+  }
 }
