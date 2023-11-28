@@ -23,6 +23,7 @@ import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
 import RegisterConfirm from './components/common/LoginBtn/RegisterConfirm';
+import ResetPasswordPage from './components/common/LoginBtn/ResetPassword';
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
                 />
                 <Route
                   path={ROUTES.passwordReset}
-                  element={<ChangePassword />}
+                  element={<ResetPasswordPage />}
                 />
               </Route>
             </Routes>
