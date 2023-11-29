@@ -22,7 +22,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
-import Order from './components/order/Order';
+import Order from './components/Order/Order';
 
 function App() {
   return (
