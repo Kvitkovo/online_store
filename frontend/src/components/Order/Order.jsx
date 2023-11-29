@@ -104,7 +104,7 @@ const Order = () => {
                   <input
                     type="text"
                     placeholder="Ім'я одержувача"
-                    {...register('clientFirstName', {
+                    {...register('recipientFirstName', {
                       required: "Вкажіть ваше ім'я",
                     })}
                   ></input>
@@ -121,7 +121,7 @@ const Order = () => {
                   <input
                     type="text"
                     placeholder="Прізвище одержувача"
-                    {...register('clientFirstName')}
+                    {...register('recipientLastName')}
                   ></input>
                 </div>
                 <div>
@@ -131,14 +131,14 @@ const Order = () => {
                   <input
                     type="tel"
                     placeholder="+38(0XX)XXX-XX-XX"
-                    {...register('clientPhone', {
+                    {...register('recipientPhone', {
                       required: 'Вкажіть ваш номер телефону',
                     })}
                   ></input>
                   <div>
-                    {errors?.clientPhone && (
+                    {errors?.recipientPhone && (
                       <p className={styles.error}>
-                        {errors?.clientPhone?.message}
+                        {errors?.recipientPhone?.message}
                       </p>
                     )}
                   </div>
@@ -148,7 +148,7 @@ const Order = () => {
                   <input
                     type="text"
                     placeholder="По батькові одержувача"
-                    {...register('clientFirstName')}
+                    {...register('recipientMiddleName')}
                   ></input>
                 </div>
               </div>
