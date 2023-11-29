@@ -1,7 +1,16 @@
 import React from 'react';
+import Path from './CardPage/components/Path';
 
 const Care = () => {
-  return <div>Догляд за квітами</div>;
+  return (
+    <>
+      <Path
+        currentPageData={{ name: 'Догляд за квітами' }}
+        currentPageType={'section'}
+      />
+      <div>Догляд за квітами</div>
+    </>
+  );
 };
 
 export default Care;

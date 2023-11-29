@@ -3,12 +3,10 @@ import React from 'react';
 import styles from './Path.module.scss';
 import ROUTES from '../../../../constants/routers';
 
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ICONS } from '../../../../components/ui-kit/icons';
 
 const Path = React.memo(({ currentPageData, currentPageType }) => {
-  const params = useParams();
-
   return (
     <div className={styles.pathContainer}>
       <nav className={styles.path}>
@@ -22,11 +20,7 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
               <span className={styles.navigation}>{currentPageData.name}</span>
             ) : (
               <Link
-                to={`/categories/${
-                  currentPageType === 'category'
-                    ? params.categoryId
-                    : currentPageData.categoryId
-                }`}
+                to={`/categories/${currentPageData.categoryId}`}
                 className={styles.navigationLink}
               >
                 {' '}
