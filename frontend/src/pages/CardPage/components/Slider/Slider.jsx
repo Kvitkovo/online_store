@@ -68,8 +68,10 @@ const Slider = React.memo(({ data }) => {
         :host {
           z-index: 0;
         }
-        .swiper {overflow-y: visible}
-        `,
+        .swiper {
+          padding: 0 10px 10px;
+          transform: translateX(-10px);
+        }`,
       ],
     };
 
@@ -88,6 +90,7 @@ const Slider = React.memo(({ data }) => {
             icon={<ICONS.ArrowLeftIcon />}
             isRound={true}
             isOpacity={true}
+            isShadow={true}
           />
         </div>
       )}
@@ -124,6 +127,7 @@ const Slider = React.memo(({ data }) => {
             icon={<ICONS.ArrowRightIcon />}
             isRound={true}
             isOpacity={true}
+            isShadow={true}
           />
         </div>
       )}

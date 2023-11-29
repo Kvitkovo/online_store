@@ -1,0 +1,69 @@
+@import './../../../variables';
+@import './../../../_mixins';
+
+.filterContainer {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filterTitle {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 24px;
+  padding: 16px 47px;
+  box-shadow: $box-shadow-secondary;
+  display: none;
+}
+
+.displayPrice {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+.price {
+  width: 75px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid $gray-dark-color;
+  background: $white-color;
+}
+.priceDevider {
+  align-self: center;
+}
+
+.rangeContainer {
+  width: 220px;
+  margin-bottom: 16px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  appearance: textfield;
+}
+
+@include lg {
+  .filterContainer {
+    background: $white-color;
+    height: 100%;
+    width: 347px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+  }
+  .filterVisible {
+    transform: translateX(0);
+  }
+  .filterHidden {
+    transform: translateX(-500%);
+  }
+  .filterTitle {
+    display: block;
+  }
+}

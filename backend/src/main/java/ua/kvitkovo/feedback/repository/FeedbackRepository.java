@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import ua.kvitkovo.feedback.entity.FeedbackMessage;
 import ua.kvitkovo.feedback.entity.MessageStatus;
+import ua.kvitkovo.feedback.entity.MessageType;
 
 import java.time.LocalDate;
 import java.util.List;

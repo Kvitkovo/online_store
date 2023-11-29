@@ -15,7 +15,7 @@ const ItemCard = ({ cardData }) => {
 
   return (
     <div className={styles.mainContainer}>
-      <Path />
+      <Path currentPageData={cardData} currentPageType={'product'} />
       <div className={styles.itemBlock}>
         <div className={styles.caption}>
           <h1 className={styles.itemName}>{cardData.title}</h1>

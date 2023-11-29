@@ -1,9 +1,10 @@
 @import '../../../../variables';
 
 .button {
+  width: inherit;
   height: 48px;
   font-family: $font-main;
-  font-weight: 400;
+  font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +26,6 @@
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
-  //width: 90vw;
   &:hover {
     opacity: 0.5;
   }
