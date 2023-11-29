@@ -92,6 +92,63 @@ const Order = () => {
                 ></input>
               </div>
             </div>
+            <div className={styles.anotherPerson}>
+              <div>
+                <label>
+                  Введіть ім&apos;я<span> *</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ім'я одержувача"
+                  {...register('clientFirstName', {
+                    required: "Вкажіть ваше ім'я",
+                  })}
+                ></input>
+                <div>
+                  {errors?.clientFirstName && (
+                    <p className={styles.error}>
+                      {errors?.clientFirstName?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div>
+                <label>Введіть прізвище</label>
+                <input
+                  type="text"
+                  placeholder="Прізвище одержувача"
+                  {...register('clientFirstName')}
+                ></input>
+              </div>
+              <div>
+                <label>
+                  Номер телефону<span> *</span>
+                </label>
+                <input
+                  type="tel"
+                  placeholder="+38(0XX)XXX-XX-XX"
+                  {...register('clientPhone', {
+                    required: 'Вкажіть ваш номер телефону',
+                  })}
+                ></input>
+                <div>
+                  {errors?.clientPhone && (
+                    <p className={styles.error}>
+                      {errors?.clientPhone?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div>
+                <label>Введіть по батькові</label>
+                <input
+                  type="text"
+                  placeholder="По батькові одержувача"
+                  {...register('clientFirstName')}
+                ></input>
+              </div>
+            </div>
+
             <Button
               label="Продовжити"
               variant="primary"

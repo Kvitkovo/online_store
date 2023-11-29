@@ -16,6 +16,7 @@
   .contactDetails {
     background-color: $white-color;
     padding: 32px;
+    border-radius: 8px;
   }
 
   .cart {
@@ -49,7 +50,8 @@
     padding: 8px 12px;
   }
 
-  .clientData {
+  .clientData,
+  .anotherPerson {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 64px;
@@ -64,12 +66,13 @@
     display: flex;
     align-items: baseline;
     gap: 16px;
+    margin: 22px 0;
 
     div {
       display: flex;
       flex-direction: row-reverse;
       align-items: baseline;
-      justify-content: start;
+      justify-content: flex-start;
       gap: 12px;
     }
   }
@@ -77,5 +80,8 @@
     color: $discount-color;
     font-size: 12px;
     padding-top: 5px;
+  }
+  .anotherPerson {
+    margin-bottom: 32px;
   }
 }
