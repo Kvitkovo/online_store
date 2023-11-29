@@ -217,6 +217,9 @@ public class UserAuthService {
             user.setCodeVerificationEnd(null);
             user.setEmailConfirmCode(null);
             codeActive = false;
+            //delete user after code expired
+            userRepository.delete(user);
+            throw new ItemNotFoundException("Verification code expired. User deleted.");
         }
         log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user,
             code);
