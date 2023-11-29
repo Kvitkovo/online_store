@@ -15,10 +15,11 @@ const Slider = React.memo(({ data }) => {
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
+    setReceivedData([]);
     data.forEach(async (id) => {
       const responce = await GetProducts(id);
 
-      setReceivedData((prev) => [responce, ...prev]);
+      setReceivedData((prev) => [...prev, responce]);
     });
   }, [data]);
 
@@ -96,24 +97,25 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {receivedData.map((card, idx, arr) => {
-            return idx !== arr.length - 1 ? (
-              <swiper-slide key={card.id}>
-                <Card
-                  image={
-                    card.images?.length > 0
-                      ? card.images[0]?.urlSmall
-                      : '../images/no_image.jpg'
-                  }
-                  title={card.title}
-                  discount={card.discount}
-                  oldPrice={card.price}
-                  price={card.priceWithDiscount}
-                  id={card.id}
-                />
-              </swiper-slide>
-            ) : null;
-          })}
+          {receivedData &&
+            receivedData.map((card, idx, arr) => {
+              return idx !== arr.length - 1 ? (
+                <swiper-slide key={card.id} class={styles.slide}>
+                  <Card
+                    image={
+                      card.images?.length > 0
+                        ? card.images[0]?.urlSmall
+                        : '../images/no_image.jpg'
+                    }
+                    title={card.title}
+                    discount={card.discount}
+                    oldPrice={card.price}
+                    price={card.priceWithDiscount}
+                    id={card.id}
+                  />
+                </swiper-slide>
+              ) : null;
+            })}
         </swiper-container>
         {showNavigation && (
           <div className={`swiper-pagination ${styles.pagination}`}> </div>

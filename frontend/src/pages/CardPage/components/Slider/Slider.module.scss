@@ -4,24 +4,33 @@
 .sliderContainer {
   position: relative;
 }
+
+.slide {
+  height: auto;
+}
+
 .arrowContainer {
   position: absolute;
   display: flex;
   align-items: center;
   top: 215px;
 }
+
 .arrowLeft {
   left: 4px;
   z-index: 1;
 }
+
 .arrowRight {
   right: 4px;
 }
+
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
+
 .paginationBullet {
   background-color: $gray-dark-color;
   height: 12px;
@@ -34,6 +43,9 @@
 
 @include lg {
   .arrowContainer {
+    display: none;
+  }
+  .pagination {
     display: none;
   }
 }
