@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 
 const Order = () => {
+  const [showForm, setShowForm] = useState(false);
   const {
     register,
     formState: { errors },
@@ -81,6 +82,7 @@ const Order = () => {
                   type="radio"
                   value="I"
                   {...register('recipient')}
+                  onChange={() => setShowForm(false)}
                 ></input>
               </div>
               <div>
@@ -89,66 +91,68 @@ const Order = () => {
                   type="radio"
                   value="anotherPerson"
                   {...register('recipient')}
+                  onChange={() => setShowForm(true)}
                 ></input>
               </div>
             </div>
-            <div className={styles.anotherPerson}>
-              <div>
-                <label>
-                  Введіть ім&apos;я<span> *</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ім'я одержувача"
-                  {...register('clientFirstName', {
-                    required: "Вкажіть ваше ім'я",
-                  })}
-                ></input>
+            {showForm && (
+              <div className={styles.anotherPerson}>
                 <div>
-                  {errors?.clientFirstName && (
-                    <p className={styles.error}>
-                      {errors?.clientFirstName?.message}
-                    </p>
-                  )}
+                  <label>
+                    Введіть ім&apos;я<span> *</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ім'я одержувача"
+                    {...register('clientFirstName', {
+                      required: "Вкажіть ваше ім'я",
+                    })}
+                  ></input>
+                  <div>
+                    {errors?.clientFirstName && (
+                      <p className={styles.error}>
+                        {errors?.clientFirstName?.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label>Введіть прізвище</label>
+                  <input
+                    type="text"
+                    placeholder="Прізвище одержувача"
+                    {...register('clientFirstName')}
+                  ></input>
+                </div>
+                <div>
+                  <label>
+                    Номер телефону<span> *</span>
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+38(0XX)XXX-XX-XX"
+                    {...register('clientPhone', {
+                      required: 'Вкажіть ваш номер телефону',
+                    })}
+                  ></input>
+                  <div>
+                    {errors?.clientPhone && (
+                      <p className={styles.error}>
+                        {errors?.clientPhone?.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label>Введіть по батькові</label>
+                  <input
+                    type="text"
+                    placeholder="По батькові одержувача"
+                    {...register('clientFirstName')}
+                  ></input>
                 </div>
               </div>
-              <div>
-                <label>Введіть прізвище</label>
-                <input
-                  type="text"
-                  placeholder="Прізвище одержувача"
-                  {...register('clientFirstName')}
-                ></input>
-              </div>
-              <div>
-                <label>
-                  Номер телефону<span> *</span>
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+38(0XX)XXX-XX-XX"
-                  {...register('clientPhone', {
-                    required: 'Вкажіть ваш номер телефону',
-                  })}
-                ></input>
-                <div>
-                  {errors?.clientPhone && (
-                    <p className={styles.error}>
-                      {errors?.clientPhone?.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div>
-                <label>Введіть по батькові</label>
-                <input
-                  type="text"
-                  placeholder="По батькові одержувача"
-                  {...register('clientFirstName')}
-                ></input>
-              </div>
-            </div>
-
+            )}
             <Button
               label="Продовжити"
               variant="primary"
