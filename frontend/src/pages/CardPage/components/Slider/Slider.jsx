@@ -1,16 +1,26 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styles from './Slider.module.scss';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import Card from '../../../../components/common/Card/Card';
 import { register } from 'swiper/element/bundle';
+import { GetProducts } from '../../../../services/products/productsAccess.service';
 import './swiper.scss';
 
 const Slider = React.memo(({ data }) => {
   const swiperElRef = useRef(null);
   const showNavigation = data.length > 5;
+  const [receivedData, setReceivedData] = useState([]);
+
+  useEffect(() => {
+    data.forEach(async (id) => {
+      const responce = await GetProducts(id);
+
+      setReceivedData((prev) => [responce, ...prev]);
+    });
+  }, [data]);
 
   useEffect(() => {
     register();
@@ -83,7 +93,7 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {data.map((card, idx, arr) => {
+          {receivedData.map((card, idx, arr) => {
             return idx !== arr.length - 1 ? (
               <swiper-slide key={card.id}>
                 <Card
