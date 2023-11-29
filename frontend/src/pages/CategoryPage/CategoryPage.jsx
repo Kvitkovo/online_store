@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import DropDown from '../../components/ui-kit/components/DropDown';
 import Button from '../../components/ui-kit/components/Button';
 import { ICONS } from '../../components/ui-kit/icons';
+import Select from '../../components/ui-kit/components/Select';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -20,6 +21,14 @@ const CategoryPage = () => {
   const [currentCategory, setCurrentCategory] = useState(null);
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
+  const sortOptionsMobile = [
+    { value: 0, label: 'Дешеві' },
+    { value: 1, label: 'Дорогі' },
+  ];
+  const sortOptions = [
+    { value: 0, label: 'від дешевих до дорогих' },
+    { value: 1, label: 'від дорогих до дешевих' },
+  ];
 
   const getData = useCallback(async () => {
     try {
@@ -58,7 +67,18 @@ const CategoryPage = () => {
           <div className={styles.sortBlock}>
             <span className={styles.sortTitle}>Виводити:</span>
             <div className={styles.sortDropdown}>
-              <DropDown value={sortValue} setValue={setSortValue} />
+              <Select
+                value={sortValue}
+                setValue={setSortValue}
+                options={sortOptions}
+              />
+            </div>
+            <div className={styles.sortSmallDevices}>
+              <DropDown
+                sortValue={sortValue}
+                setValue={setSortValue}
+                options={sortOptionsMobile}
+              />
             </div>
             <div className={styles.filterButton}>
               <Button
@@ -72,24 +92,25 @@ const CategoryPage = () => {
             ? 'Loading ...'
             : productsInCategory && (
                 <>
-                  <div className={styles.cards}>
+                  <ul className={styles.cards}>
                     {productsInCategory.map((product) => (
-                      <Card
-                        image={
-                          product.images[0]
-                            ? product.images[0].urlSmall
-                            : './images/no_image.jpg'
-                        }
-                        title={product.title}
-                        discount={product.discount}
-                        oldPrice={product.price}
-                        price={product.priceWithDiscount}
-                        available={product.available}
-                        key={product.id}
-                        id={product.id}
-                      />
+                      <li className={styles.card} key={product.id}>
+                        <Card
+                          image={
+                            product.images[0]
+                              ? product.images[0].urlSmall
+                              : './images/no_image.jpg'
+                          }
+                          title={product.title}
+                          discount={product.discount}
+                          oldPrice={product.price}
+                          price={product.priceWithDiscount}
+                          available={product.available}
+                          id={product.id}
+                        />
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                   <Pagination
                     onPageChange={setCurrentPage}
                     totalCount={productsInCategory.length}

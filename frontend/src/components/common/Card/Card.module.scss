@@ -1,100 +1,114 @@
 @import '../../../variables';
 @import '../../../mixins';
 .card {
-  width: 280px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: $white-color;
   border-radius: 8px;
   position: relative;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.08);
-
+  container-name: cardBlock;
+  container-type: inline-size;
   &:hover {
     box-shadow: 0px 2px 10px 0px rgba(151, 207, 142, 0.44);
   }
+}
 
-  .hide {
-    display: none;
-  }
+.hide {
+  display: none;
+}
 
-  .foto {
-    width: 100%;
-    border-radius: 8px 8px 0 0;
-  }
+.foto {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
 
-  .fotoInactive {
-    opacity: 0.4;
-  }
+.fotoInactive {
+  opacity: 0.4;
+}
 
-  h3 {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    height: 48px;
-    overflow: hidden;
-    margin-top: 16px;
-    padding: 0 12px;
-    text-transform: uppercase;
-  }
-  .discount {
-    position: absolute;
-    top: 20px;
-    right: 0px;
-    color: $white-color;
-  }
-  .cardInfo {
-    padding: 12px;
-  }
-  .textFlex {
-    display: flex;
-    justify-content: space-between;
-  }
+.discount {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+  color: $white-color;
+}
+.cardInfo {
+  padding: 12px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .outOfStock {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-  .price {
+.textFlex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.outOfStock {
+  line-height: 24px;
+}
+.price {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.cardFlexBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.inactive {
+  color: $gray-light-color;
+}
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.link {
+  color: $text-color;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  overflow: hidden;
+  margin-top: 16px;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
+
+@container cardBlock (width < 250px) {
+  .title {
     font-size: 14px;
-    line-height: 24px;
-    padding-bottom: 14px;
-  }
-
-  .cardFlexBottom {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-
-  .inactive {
-    color: $gray-light-color;
-  }
-  .icons {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .link {
-    color: $text-color;
   }
 }
-@include md {
-  .card {
-    width: 162px;
-  }
-  .foto {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
 
-  h3 {
-    font-size: 14px;
-  }
+@container cardBlock (width < 211px) {
   .price {
     font-size: 12px;
     line-height: 15px;
   }
+  .textFlex {
+    gap: 15px;
+  }
   .cardFlexBottom {
     display: flex;
+  }
+  .foto {
+    width: 100%;
+    object-fit: cover;
+  }
+  .cardInfo {
+    height: 95px;
+  }
+  .outOfStock {
+    margin-bottom: 2px;
   }
 }

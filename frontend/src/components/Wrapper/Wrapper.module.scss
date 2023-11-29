@@ -12,3 +12,19 @@
   max-width: 1180px;
   padding: 20px 0 46px;
 }
+
+@include lg {
+  .container {
+    margin: 0 46px;
+  }
+}
+@include md {
+  .container {
+    margin: 0 25px;
+  }
+}
+@include md {
+  .container {
+    min-width: 343px;
+  }
+}

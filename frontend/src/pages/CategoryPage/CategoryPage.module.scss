@@ -34,33 +34,77 @@
   z-index: 1;
   align-self: start;
 }
+
+.sortSmallDevices {
+  display: none;
+}
+
 .cards {
-  display: flex;
+  display: grid;
   gap: 20px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  max-width: inherit;
+  margin: 0px auto;
 }
 
 .mainContent {
   width: 880px;
 }
+
 .filterButton {
-  margin-left: 130px;
+  display: none;
 }
 
 @include lg {
+  .sortDropdown {
+    display: none;
+  }
   .sortTitle {
     display: none;
   }
+
   .sortBlock {
     background: transparent;
-    display: flex;
-    flex-basis: content;
+    display: grid;
+    padding: 0;
+    gap: 30px;
+    align-items: center;
   }
+
+  .filterButton {
+    grid-column: 2;
+    width: 100%;
+    display: inline-block;
+  }
+
+  .sortSmallDevices {
+    position: relative;
+    display: block;
+    grid-column: 1;
+    width: 100%;
+  }
+
   .mainContainer {
-    justify-content: center;
+    display: block;
   }
   .mainContent {
-    max-width: 930px;
+    width: auto;
+  }
+}
+
+@include lg {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
+  }
+}
+@include md {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+@include sm {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
   }
 }
