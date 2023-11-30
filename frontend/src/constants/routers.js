@@ -15,6 +15,7 @@ const ROUTES = {
   orders: '/account/orders',
   card: '/product/:myId',
   category: '/category',
+  specificCategory: '/categories/:categoryId',
 };
 
 export default ROUTES;
