@@ -6,12 +6,12 @@ import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
 import Path from '../CardPage/components/Path';
 import Card from '../../components/common/Card';
-import Pagination from '../../components/ui-kit/components/Pagination/Pagination';
+import Pagination from '../../components/ui-kit/components/Pagination';
 import { useParams } from 'react-router-dom';
-import DropDown from '../../components/ui-kit/components/DropDown';
+import Select from '../../components/ui-kit/components/Select';
 import Button from '../../components/ui-kit/components/Button';
 import { ICONS } from '../../components/ui-kit/icons';
-import Select from '../../components/ui-kit/components/Select';
+import DropDown from '../../components/ui-kit/components/DropDown';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -87,6 +87,7 @@ const CategoryPage = () => {
                 onClick={handleClickFilter}
               />
             </div>
+            <div className={styles.sortBlock_mobile}></div>
           </div>
           {isLoading
             ? 'Loading ...'
