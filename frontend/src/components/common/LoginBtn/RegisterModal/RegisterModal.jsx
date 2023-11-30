@@ -4,9 +4,10 @@ import styles from './RegisterModal.module.scss';
 import IconButton from '../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
-import axios from 'axios';
 import RegisterLetter from '../ConfirmationModals/RegisterLetter';
 import PasswordChecklist from 'react-password-checklist';
+/* eslint-disable max-len */
+import { registerUser } from '../../../../services/registration/registration.service';
 
 const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [name, setName] = useState('');
@@ -55,24 +56,16 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
     e.preventDefault();
     setSubmitted(true);
     if (validateEmail(email) && validatePassword(password) && name) {
-      try {
-        const response = await axios.post(
-          'https://api.imperiaholoda.com.ua:4446/v1/auth/register',
-          {
-            firstName: name,
-            email: email,
-            password: password,
-          },
-        );
-        if (response.status === 200) {
-          const token = response.data.token;
-          localStorage.setItem('authToken', token);
-          setRegistrationSuccess(true);
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          setEmailError('Електронна пошта вже зареєстрована!');
-        }
+      const response = await registerUser({
+        firstName: name,
+        email: email,
+        password: password,
+      });
+
+      if (response === true) {
+        setRegistrationSuccess(true);
+      } else if (response && response.error) {
+        setEmailError(response.error);
       }
     }
   };

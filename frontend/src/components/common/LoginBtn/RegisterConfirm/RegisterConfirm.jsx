@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import ContactDetails from '../../../account/ContactDetails';
 import HomePageComponent from '../../../Layouts/HomePageComponent';
-import ResentLink from '../ConfirmationModals/ResentLink';
+/* eslint-disable max-len */
+import { registrationConfirm } from '../../../../services/registration/registrationConfirm.service';
+import RegistrationFailed from '../ConfirmationModals/RegistrationFailed';
 
 const RegisterConfirm = () => {
   const { code } = useParams();
@@ -11,30 +12,13 @@ const RegisterConfirm = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const confirmRegistration = async () => {
-      try {
-        /* eslint-disable max-len */
-        const response = await axios.get(
-          `https://api.imperiaholoda.com.ua:4446/v1/users/email/${code}/confirm`,
-        );
-        if (response.status === 200) {
-          navigate('/account');
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setError(error);
-          console.error('Error confirming email:', error);
-        }
-      }
-    };
-
-    confirmRegistration();
-  }, [code, navigate]);
+    registrationConfirm(code, navigate, setError);
+  }, [code, navigate, setError]);
 
   return (
     <div>
       {error ? (
-        <ResentLink onClose={() => navigate('/')} />
+        <RegistrationFailed onClose={() => navigate('/')} />
       ) : (
         <>
           <ContactDetails />
