@@ -5,10 +5,6 @@
   position: relative;
 }
 
-.slide {
-  height: auto;
-}
-
 .arrowContainer {
   position: absolute;
   display: flex;
@@ -52,9 +48,9 @@
 
 @include sm {
   .sliderContainer {
-    box-sizing: content-box;
+    // box-sizing: content-box;
     margin: 0 auto;
     padding: 0 16px;
-    width: 334px;
+    min-width: 334px;
   }
 }

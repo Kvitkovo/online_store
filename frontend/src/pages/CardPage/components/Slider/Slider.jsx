@@ -4,10 +4,10 @@ import React, { useRef, useEffect, useState } from 'react';
 import styles from './Slider.module.scss';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../../components/ui-kit/icons';
-import Card from '../../../../components/common/Card/Card';
 import { register } from 'swiper/element/bundle';
 import { GetProducts } from '../../../../services/products/productsAccess.service';
 import './swiper.scss';
+import Slide from './Slide';
 
 const Slider = React.memo(({ data }) => {
   const swiperElRef = useRef(null);
@@ -15,12 +15,23 @@ const Slider = React.memo(({ data }) => {
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
+    let ignore = false;
     setReceivedData([]);
-    data.forEach(async (id) => {
-      const responce = await GetProducts(id);
 
-      setReceivedData((prev) => [...prev, responce]);
+    data.forEach(async (id) => {
+      try {
+        const responce = await GetProducts(id);
+
+        if (!ignore) {
+          setReceivedData((prev) => [...prev, responce]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
+    return () => {
+      ignore = true;
+    };
   }, [data]);
 
   useEffect(() => {
@@ -85,7 +96,10 @@ const Slider = React.memo(({ data }) => {
     <div className={styles.sliderContainer}>
       {showNavigation && (
         <div
-          className={`${styles.arrowContainer} ${styles.arrowLeft} swiper-button-prev`}
+          className={
+            `${styles.arrowContainer} ${styles.arrowLeft}` +
+            ' swiper-button-prev'
+          }
         >
           <IconButton
             icon={<ICONS.ArrowLeftIcon />}
@@ -97,25 +111,11 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {receivedData &&
-            receivedData.map((card, idx, arr) => {
-              return idx !== arr.length - 1 ? (
-                <swiper-slide key={card.id} class={styles.slide}>
-                  <Card
-                    image={
-                      card.images?.length > 0
-                        ? card.images[0]?.urlSmall
-                        : '../images/no_image.jpg'
-                    }
-                    title={card.title}
-                    discount={card.discount}
-                    oldPrice={card.price}
-                    price={card.priceWithDiscount}
-                    id={card.id}
-                  />
-                </swiper-slide>
-              ) : null;
-            })}
+          {receivedData.map((card, idx, arr) =>
+            idx !== arr.length - 1 ? (
+              <Slide card={card} key={card.alias} />
+            ) : null,
+          )}
         </swiper-container>
         {showNavigation && (
           <div className={`swiper-pagination ${styles.pagination}`}> </div>
@@ -123,7 +123,10 @@ const Slider = React.memo(({ data }) => {
       </div>
       {showNavigation && (
         <div
-          className={`${styles.arrowContainer} ${styles.arrowRight} swiper-button-next`}
+          className={
+            `${styles.arrowContainer} ${styles.arrowRight}` +
+            ' swiper-button-next'
+          }
         >
           <IconButton
             icon={<ICONS.ArrowRightIcon />}
