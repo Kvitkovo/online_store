@@ -23,9 +23,26 @@
     background-color: $white-color;
   }
 
+  .subtitleBlock {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .buttonChange {
+    height: 40px;
+    padding-right: 8px;
+  }
+
+  .clientDataOutput {
+    padding-left: 23px;
+    color: $gray-dark-color;
+    line-height: 24px;
+  }
+
   .subtitle {
     @include subtitle;
-    margin-bottom: 22px;
+
     span {
       font-size: 26px;
       font-weight: 500;

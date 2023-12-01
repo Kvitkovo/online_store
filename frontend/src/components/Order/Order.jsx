@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
+import { ICONS } from '../ui-kit/icons';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
@@ -22,17 +23,33 @@ const Order = () => {
     setHideForm(true);
   };
 
+  const handleChangeData = () => {
+    setHideForm(false);
+  };
+
   return (
     <div className={styles.order}>
       <h2 className={styles.title}>Оформлення замовлення</h2>
       <div className={styles.mainGrid}>
         <div className={styles.contactDetails}>
-          <h3 className={styles.subtitle}>
-            <span>1.</span>Контактні дані
-          </h3>
+          <div className={styles.subtitleBlock}>
+            <h3 className={styles.subtitle}>
+              <span>1.</span>Контактні дані
+            </h3>
+            {hideForm && (
+              <div className={styles.buttonChange}>
+                <Button
+                  variant="no-border"
+                  label="Змінити"
+                  icon={<ICONS.PencilIcon />}
+                  onClick={() => handleChangeData()}
+                ></Button>
+              </div>
+            )}
+          </div>
           {hideForm && (
-            <div>
-              {client} {phone}
+            <div className={styles.clientDataOutput}>
+              {client}, {phone}
             </div>
           )}
           {!hideForm && (
