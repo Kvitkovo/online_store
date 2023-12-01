@@ -18,7 +18,9 @@ const CardPage = React.memo(() => {
       return item !== myId;
     });
 
-    filteredRecentlyViewed.push(myId);
+    if (myId) {
+      filteredRecentlyViewed.push(myId);
+    }
 
     if (filteredRecentlyViewed.length > 9) {
       filteredRecentlyViewed.shift();

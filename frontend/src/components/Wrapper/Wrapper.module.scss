@@ -23,8 +23,9 @@
     margin: 0 25px;
   }
 }
-@include md {
+@include sm {
   .container {
     min-width: 343px;
+    margin: 0;
   }
 }

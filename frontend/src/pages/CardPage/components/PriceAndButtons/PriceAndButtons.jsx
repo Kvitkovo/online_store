@@ -49,14 +49,14 @@ const PriceAndButtons = ({
           </div>
         </>
       ) : (
-        <>
+        <div className={styles.price}>
           <DiscountPrice
             oldPrice={oldPrice}
             actualPrice={actualPrice}
             isActive="NO_ACTIVE"
           />
           <p className={styles.outOfStock}>Нема в наявності</p>
-        </>
+        </div>
       )}
     </div>
   );

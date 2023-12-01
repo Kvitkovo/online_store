@@ -13,22 +13,26 @@
 @include lg {
   .itemImage {
     img {
-      width: 352px;
-      height: 400px;
+      max-width: 352px;
+      max-height: 400px;
+      width: 100%;
+      height: auto;
     }
   }
 }
 @include sm {
-  // .itemImage {
-  //   display: flex;
-  //   justify-content: center;
-  //   text-align: right;
-  // img {
-  //   width: 331px;
-  //   height: 332px;
-  // }
-  // }
+  .itemImage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: right;
+    img {
+      max-width: 331px;
+      max-height: 332px;
+    }
+  }
   .discount {
+    position: absolute;
     right: 0;
   }
 }
