@@ -48,7 +48,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   };
 
   const validatePassword = (value) => {
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\s]).{8,}$/;
     return passwordPattern.test(value);
   };
 

@@ -7,7 +7,8 @@ import LoginModal from '../LoginModal';
 import RegisterModal from '../RegisterModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactPasswordChecklist from 'react-password-checklist';
-import axios from 'axios';
+/* eslint-disable max-len */
+import { passwordReset } from '../../../../services/passwordReset/passwordReset.service';
 
 const ResetPasswordPage = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
@@ -20,6 +21,7 @@ const ResetPasswordPage = () => {
   const [showPasswordReq, setShowPasswordReq] = useState(true);
   const [verificationCode, setVerificationCode] = useState('');
   const { code } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setVerificationCode(code);
@@ -36,14 +38,13 @@ const ResetPasswordPage = () => {
     }
   };
   const validatePassword = (value) => {
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\s]).{8,}$/;
     return passwordPattern.test(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    alert.log('Data to be sent:', { verificationCode, newPassword });
 
     if (newPassword !== confirmPassword) {
       setConfirmPasswordError('Паролі не співпадають');
@@ -51,25 +52,13 @@ const ResetPasswordPage = () => {
     } else {
       setConfirmPasswordError('');
 
-      try {
-        const response = await axios.post(
-          'https://api.imperiaholoda.com.ua:4446/v1/users/resetPassword',
-          {
-            verificationCode: verificationCode,
-            newPassword: newPassword,
-          },
-
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-        if (response.status === 200) {
-          alert('Password reset successful');
-        }
-      } catch (error) {
-        alert.log('Password reset failed', error);
+      const response = await passwordReset({
+        verificationCode: verificationCode,
+        newPassword: newPassword,
+      });
+      if (response) {
+        alert('Пароль зміннено!');
+        navigate('/account');
       }
     }
   };
@@ -82,8 +71,6 @@ const ResetPasswordPage = () => {
     setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
   };
-
-  const navigate = useNavigate();
 
   const onClose = () => {
     navigate('/');

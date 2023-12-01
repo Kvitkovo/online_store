@@ -1,40 +1,54 @@
 import axiosInstance from '../httpClient';
 
-const loginUser = async (email, password) => {
+const loginUser = async ({ email, password }) => {
   try {
-    const response = await axiosInstance.post('/v1/auth/login', {
-      email: email,
-      password: password,
-    });
-    return response;
-  } catch (error) {
-    if (error.response) {
-      if (error.response.status === 400) {
-        return { status: 400 };
-      }
+    const storedToken = localStorage.getItem('authToken');
+    const response = await axiosInstance.post(
+      '/auth/login',
+      {
+        email,
+        password,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      },
+    );
+
+    if (response.status === 200) {
+      return { success: true };
     }
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return { error: 'Невірна пошта та/або пароль!' };
+    }
+  }
+};
+
+const googleLoginRequest = async (token) => {
+  const response = await axiosInstance.post('/auth/google', {
+    token,
+  });
+  if (response && response.status === 200) {
+    const authToken = response.data.token;
+    localStorage.setItem('authToken', authToken);
+    return true;
   }
 };
 
 const resetPasswordRequest = async (email) => {
   try {
-    const response = await axiosInstance.post(
-      `/v1/users/resetPassword/${email}`,
-    );
-    return response;
+    const response = await axiosInstance.post(`/users/resetPassword/${email}`);
+    if (response.status === 200) {
+      return { success: true };
+    }
   } catch (error) {
-    return error.response;
-  }
-};
-
-const googleLoginRequest = async (token) => {
-  try {
-    const response = await axiosInstance.post('/v1/auth/google', {
-      token,
-    });
-    return response;
-  } catch (error) {
-    return error.response;
+    if (error.code === 'ECONNABORTED') {
+      return { success: true };
+    } else if (error.response && error.response.status) {
+      return { error: 'Електрона пошта не зареєстрована!' };
+    }
   }
 };
 

@@ -6,8 +6,12 @@ import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 import ResetPassword from '../ConfirmationModals/ResetPassword';
 import GoogleLogin from '../GoogleLogin';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  googleLoginRequest,
+  loginUser,
+  resetPasswordRequest,
+} from '../../../../services/login/login.service';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const navigate = useNavigate();
@@ -34,32 +38,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     navigate('/account');
     setLoginSuccess(true);
   };
-  const login = async () => {
-    if (validateEmail(email) && password) {
-      const storedToken = localStorage.getItem('authToken');
-      try {
-        const response = await axios.post(
-          'https://api.imperiaholoda.com.ua:4446/v1/auth/login',
-          {
-            email: email,
-            password: password,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          },
-        );
-        if (response.status === 200) {
-          handleSuccessfulLogin();
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          setPasswordError('Невірна пошта та/або пароль!');
-        }
-      }
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,33 +58,32 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
       setPasswordError('Введіть пароль');
       return;
     }
-    await login();
+    const loginResult = await loginUser({ email, password });
+    if (loginResult && loginResult.success) {
+      handleSuccessfulLogin();
+    } else if (loginResult && loginResult.error) {
+      setPasswordError(loginResult.error);
+    }
   };
 
   const handleGoogleLogin = async (token) => {
-    await axios.post('https://api.imperiaholoda.com.ua:4446/v1/auth/google', {
-      token,
-    });
-    localStorage.setItem('authToken', token);
-    handleSuccessfulLogin();
+    const loginSuccess = await googleLoginRequest(token);
+    if (loginSuccess) {
+      handleSuccessfulLogin();
+    }
   };
-
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setEmailError('');
     if (validateEmail(email)) {
-      try {
-        /* eslint-disable max-len */
-        const response = await axios.post(
-          `https://api.imperiaholoda.com.ua:4446/v1/users/resetPassword/${email}`,
-        );
-
-        if (response.status === 200) {
-          setResetPasswordClicked(true);
-          toggleReset();
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setEmailError('Електрона пошта не зареєстрована!');
-        }
+      const resetResult = await resetPasswordRequest(email);
+      if (resetResult && resetResult.success) {
+        setResetPasswordClicked(true);
+        toggleReset();
+      } else if (resetResult && resetResult.error) {
+        setEmailError(resetResult.error);
+      } else {
+        setEmailError('Other mistake!');
       }
     }
   };
@@ -196,20 +173,19 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
                   }}
                 />
               </div>
-
-              <div className={styles.resetPassword}>
-                <button
-                  className={styles.resetPassword}
-                  onClick={handleResetPassword}
-                  type="submit"
-                >
-                  Забули пароль?
-                </button>
-              </div>
-              {isResetPasswordValid && (
-                <ResetPassword toggleReset={toggleReset} userEmail={email} />
-              )}
             </form>
+            <div className={styles.resetPassword}>
+              <button
+                className={styles.resetPassword}
+                onClick={handleResetPassword}
+                type="button"
+              >
+                Забули пароль?
+              </button>
+            </div>
+            {isResetPasswordValid && (
+              <ResetPassword toggleReset={toggleReset} userEmail={email} />
+            )}
           </div>
         </Modals>
       )}

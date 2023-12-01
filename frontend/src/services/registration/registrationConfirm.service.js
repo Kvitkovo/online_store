@@ -9,7 +9,6 @@ export const registrationConfirm = async (code, navigate, setError) => {
   } catch (error) {
     if (error.response && error.response.status === 404) {
       setError(error);
-      console.error('Error confirming email:', error);
     }
   }
 };
