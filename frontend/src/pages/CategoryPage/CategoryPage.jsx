@@ -6,7 +6,7 @@ import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
 import Path from '../CardPage/components/Path';
 import Card from '../../components/common/Card';
-import Pagination from '../../components/ui-kit/components/Pagination/Pagination';
+import Pagination from '../../components/ui-kit/components/Pagination';
 import { useParams } from 'react-router-dom';
 import DropDown from '../../components/ui-kit/components/DropDown';
 import Button from '../../components/ui-kit/components/Button';
@@ -26,8 +26,14 @@ const CategoryPage = () => {
     { value: 1, label: 'Дорогі' },
   ];
   const sortOptions = [
-    { value: 0, label: 'від дешевих до дорогих' },
-    { value: 1, label: 'від дорогих до дешевих' },
+    {
+      value: 0,
+      label: 'від дешевих до дорогих',
+    },
+    {
+      value: 1,
+      label: 'від дорогих до дешевих',
+    },
   ];
 
   const getData = useCallback(async () => {
@@ -87,30 +93,30 @@ const CategoryPage = () => {
                 onClick={handleClickFilter}
               />
             </div>
+            <div className={styles.sortBlock_mobile}></div>
           </div>
           {isLoading
             ? 'Loading ...'
             : productsInCategory && (
                 <>
-                  <ul className={styles.cards}>
+                  <div className={styles.cards}>
                     {productsInCategory.map((product) => (
-                      <li className={styles.card} key={product.id}>
-                        <Card
-                          image={
-                            product.images[0]
-                              ? product.images[0].urlSmall
-                              : './images/no_image.jpg'
-                          }
-                          title={product.title}
-                          discount={product.discount}
-                          oldPrice={product.price}
-                          price={product.priceWithDiscount}
-                          available={product.available}
-                          id={product.id}
-                        />
-                      </li>
+                      <Card
+                        image={
+                          product.images[0]
+                            ? product.images[0].urlSmall
+                            : './images/no_image.jpg'
+                        }
+                        title={product.title}
+                        discount={product.discount}
+                        oldPrice={product.price}
+                        price={product.priceWithDiscount}
+                        available={product.available}
+                        key={product.id}
+                        id={product.id}
+                      />
                     ))}
-                  </ul>
+                  </div>
                   <Pagination
                     onPageChange={setCurrentPage}
                     totalCount={productsInCategory.length}

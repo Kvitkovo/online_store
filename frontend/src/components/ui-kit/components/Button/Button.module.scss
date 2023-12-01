@@ -4,28 +4,31 @@
   width: inherit;
   height: 48px;
   font-family: $font-main;
-  font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+  line-height: 130%;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  .btnContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .icon {
     display: flex;
     align-items: center;
   }
-}
-.btnContainer {
-  gap: 8px;
 }
 
 .primary {
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
+  font-weight: 500;
   &:hover {
     opacity: 0.5;
   }
