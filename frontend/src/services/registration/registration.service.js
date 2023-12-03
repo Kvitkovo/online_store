@@ -15,7 +15,7 @@ export const registerUser = async ({ firstName, email, password }) => {
     }
   } catch (error) {
     if (error.response && error.response.status === 400) {
-      return { error: 'Електронна пошта вже зареєстрована!!' };
+      return { error: 'Електронна пошта вже зареєстрована!' };
     } else if (error.code === 'ECONNABORTED') {
       return true;
     }

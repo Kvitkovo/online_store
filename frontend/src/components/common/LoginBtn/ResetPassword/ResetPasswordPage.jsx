@@ -20,6 +20,7 @@ const ResetPasswordPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showPasswordReq, setShowPasswordReq] = useState(true);
   const [verificationCode, setVerificationCode] = useState('');
+  const [successPopup, setSuccessPopup] = useState(false);
   const { code } = useParams();
   const navigate = useNavigate();
 
@@ -57,8 +58,11 @@ const ResetPasswordPage = () => {
         newPassword: newPassword,
       });
       if (response) {
-        alert('Пароль зміннено!');
-        navigate('/account');
+        setSuccessPopup(true);
+        setTimeout(() => {
+          setSuccessPopup(false);
+          navigate('/account');
+        }, 2000);
       }
     }
   };
@@ -199,6 +203,11 @@ const ResetPasswordPage = () => {
           </div>
         </div>
       </div>
+      {successPopup && (
+        <div className={styles.popup}>
+          <p>Пароль успішно замінено.</p>
+        </div>
+      )}
     </div>
   );
 };
