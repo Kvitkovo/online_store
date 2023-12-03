@@ -24,6 +24,7 @@ import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
 import RegisterConfirm from './components/common/LoginBtn/RegisterConfirm';
 import ResetPasswordPage from './components/common/LoginBtn/ResetPassword';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   return (
@@ -51,6 +52,10 @@ function App() {
               <Route
                 path={ROUTES.passwordReset}
                 element={<ResetPasswordPage />}
+              />
+              <Route
+                path={ROUTES.specificCategory}
+                element={<CategoryPage />}
               />
               <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.account} element={<ContactDetails />} />

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import ua.kvitkovo.feedback.repository.FeedbackRepository;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
+import ua.kvitkovo.notifications.UserMessage;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
@@ -125,7 +127,8 @@ public class FeedbackService {
         NotificationUser notificationUser = NotificationUser.build(feedbackMessage);
         Map<String, Object> fields = Map.of(
                 "files", files,
-                "message", message
+                "message", message,
+                "mainImageId", mainImageId
         );
         emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);
 
@@ -178,6 +181,20 @@ public class FeedbackService {
                 }
             }
             feedbackRepository.delete(message);
+        }
+    }
+
+    @Scheduled(cron = "0 */1 * * * *")
+    public void getAnswersFromEmail() {
+        List<UserMessage> messageList = emailService.get();
+        for (UserMessage userMessage : messageList) {
+            log.debug("Answer from " + userMessage.getAddress());
+            AnswerMessage answerMessage = AnswerMessage.builder()
+                    .fromUser(true)
+                    .messageText(userMessage.getMessage())
+                    .message(getFeedbackMessage(userMessage.getMainMessageId()))
+                    .build();
+            answerRepository.save(answerMessage);
         }
     }
 

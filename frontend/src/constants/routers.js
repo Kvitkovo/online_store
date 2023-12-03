@@ -17,6 +17,7 @@ const ROUTES = {
   emailConfirmation: '/user/email/:code/confirm/',
   category: '/category',
   passwordReset: '/user/resetPassword/:code',
+  specificCategory: '/categories/:categoryId',
 };
 
 export default ROUTES;
