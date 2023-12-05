@@ -2,8 +2,7 @@
 @import '../../../mixins';
 
 .container {
-  margin-bottom: 12px;
-  padding: 24px 32px;
+  padding: 24px 32px 12px;
   overflow: hidden;
 }
 
@@ -17,6 +16,7 @@
   font-size: 32px;
   font-weight: 500;
   line-height: 41.6px;
+  padding: 6px;
 }
 
 .icon {
@@ -25,12 +25,8 @@
   }
 }
 
-.bottomBlock {
-  margin-top: auto;
-}
-
 .bottom {
-  padding: 24px 26px;
+  padding: 24px 26px 24px 32px;
   display: flex;
   justify-content: space-between;
 }
@@ -57,13 +53,20 @@
 
 @include sm {
   .container {
-    padding: 16px;
+    padding: 0;
     overflow: unset;
+  }
+  .headerBlock {
+    display: grid;
+    grid-template-columns: 11.5fr 0.5fr;
+    padding: 13.5px 16px;
   }
   .title {
     font-size: 22px;
     font-weight: 600;
     line-height: 28.6px;
+    justify-self: center;
+    padding-left: 24px;
   }
   .bottom {
     padding: 16px 16px 46px;
@@ -72,8 +75,15 @@
   .total {
     justify-content: space-between;
     padding-bottom: 24px;
+    font-size: 22px;
+    line-height: 24px;
     b {
       margin: 0;
+      font-size: 22px;
+      line-height: 24px;
     }
+  }
+  .mobileBackground {
+    background: $background-gradient;
   }
 }

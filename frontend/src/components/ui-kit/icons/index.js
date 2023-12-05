@@ -39,6 +39,7 @@ import { ReactComponent as changePassword } from './change-password.svg';
 import { ReactComponent as arrowDown } from './arrow-down.svg';
 import { ReactComponent as deleteIcon } from './delete-icon.svg';
 import { ReactComponent as arrowUpWhite } from './arrow-up-white.svg';
+import { ReactComponent as pathArrow } from './path-arrow.svg';
 
 export const ICONS = {
   addComponent,
@@ -82,4 +83,5 @@ export const ICONS = {
   changePassword,
   deleteIcon,
   arrowUpWhite,
+  pathArrow,
 };

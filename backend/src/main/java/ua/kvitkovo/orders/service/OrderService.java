@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.repository.ProductRepository;
+import ua.kvitkovo.errorhandling.AccessDeniedException;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
@@ -133,16 +134,21 @@ public class OrderService {
         Order order = orderDtoMapper.mapDtoRequestToEntity(dto);
         order.setId(null);
         order.setShop(shopRepository.findById(dto.getShopId())
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
+                .orElseThrow(() -> new ItemNotFoundException("Shop not found")));
         order.setAddress(getFullTextAddress(order));
         order.setStatus(OrderStatus.NEW);
 
         order.setOrderItems(getOrderItemsFromDtosRequest(order, dto.getOrderItems()));
         order.setTotalSum(calculateTotalSum(order));
 
-        UserResponseDto currentUser = userService.getCurrentUser();
-        User customer = userDtoMapper.mapDtoToEntity(currentUser);
-        order.setCustomer(customer);
+        try {
+            UserResponseDto currentUser = userService.getCurrentUser();
+            User customer = userDtoMapper.mapDtoToEntity(currentUser);
+            order.setCustomer(customer);
+        } catch (Exception e) {
+            //NOP
+        }
+
 
         orderRepository.save(order);
 
@@ -263,6 +269,11 @@ public class OrderService {
     @Transactional
     public OrderResponseDto updateOrder(Long id, OrderAdminRequestDto dto,
         BindingResult bindingResult) {
+
+        if (!userService.isCurrentUserAdmin()) {
+            throw new AccessDeniedException();
+        }
+
         OrderResponseDto orderResponseDto = findById(id);
         orderAdminDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {

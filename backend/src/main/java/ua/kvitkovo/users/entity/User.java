@@ -1,6 +1,7 @@
 package ua.kvitkovo.users.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -74,14 +75,17 @@ public class User {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "code_verification_end ")
+    private LocalDateTime codeVerificationEnd;
+
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
     @Override

@@ -11,15 +11,21 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ua.kvitkovo.security.jwt.AccessDeniedHandlerJwt;
 import ua.kvitkovo.security.jwt.AuthenticationEntryPointJwt;
 import ua.kvitkovo.security.jwt.JwtConfigure;
 import ua.kvitkovo.security.jwt.JwtTokenProvider;
+
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -31,13 +37,11 @@ import ua.kvitkovo.security.jwt.JwtTokenProvider;
 public class SecurityConfig {
 
     private static final String ADMIN_ENDPOINT = "/v1/admin/**";
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     private static final String[] ALL_PERMITTED_ENDPOINTS = {
             "/v1/auth/login",
             "/v1/auth/google",
             "/v1/auth/register",
+            "/v1/auth/send-email-confirm-code",
             // -- Swagger UI v2
             "/v2/api-docs",
             "/swagger-resources",
@@ -60,28 +64,26 @@ public class SecurityConfig {
             "/v1/types/**",
             "/v1/users/email/**"
     };
-
     private static final String[] POST_PERMITTED_ENDPOINTS = {
             "/v1/users/resetPassword/**",
             "/v1/users/changePassword/**",
-            "/v1/orders/**",
-            "/v1/decor/**",
+            "/v1/orders",
+            "/v1/decor",
             "/v1/feedback/email",
             "/v1/feedback/phone",
     };
-
     private static final String[] PUT_PERMITTED_ENDPOINTS = {
-            "/v1/orders/{id:[-]?\\d+}/cancel",
+            "/v1/orders/*/cancel",
     };
-
     private static final String[] AUTH_PERMITTED_ENDPOINTS = {
             "/v1/users/{id:[-]?\\d+}",
             "/v1/orders/{id:[-]?\\d+}",
             "/v1/orders/user/current",
             "/v1/decor/{id:[-]?\\d+}",
     };
-
     private final JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Autowired
     private AuthenticationEntryPointJwt authenticationEntryPointJwt;
     @Autowired
@@ -90,11 +92,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.cors().disable().csrf()
-                .disable()
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic().disable()
                 .formLogin().disable()
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ALL_PERMITTED_ENDPOINTS).permitAll()
                         .requestMatchers(AUTH_PERMITTED_ENDPOINTS).authenticated()
                         .requestMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
@@ -123,10 +125,23 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userDetailsService);
         return authProvider;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .authenticationProvider(authProvider())
                 .build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration cors = new CorsConfiguration();
+        cors.setAllowedOrigins(List.of("https://delicate-sopapillas-73d2b2.netlify.app", "http://localhost:3000"));
+        cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"));
+        cors.setAllowedHeaders(List.of("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+        cors.setExposedHeaders(List.of("Content-Type", "Cache-Control", "Content-Language", "Content-Length", "Last-Modified"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cors);
+        return source;
     }
 }

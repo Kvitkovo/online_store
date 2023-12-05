@@ -53,6 +53,7 @@
   padding: 12px 25px;
   border-radius: 8px;
 }
+
 .icon-round-green {
   border: 1px solid $page-accent-color;
   &:hover {
@@ -68,4 +69,8 @@
     background-color: #97cf8e;
     border: 1px solid #97cf8e;
   }
+}
+
+.icon-shadow {
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.2);
 }

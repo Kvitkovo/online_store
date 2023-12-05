@@ -1,11 +1,11 @@
 package ua.kvitkovo.feedback.service;
 
 import jakarta.transaction.Transactional;
-import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,19 +14,24 @@ import ua.kvitkovo.feedback.converter.FeedbackDtoMapper;
 import ua.kvitkovo.feedback.dto.FeedbackMessageEmailRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessagePhoneRequestDto;
 import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
-import ua.kvitkovo.feedback.entity.FeedbackMessage;
-import ua.kvitkovo.feedback.entity.FeedbackMessageFile;
-import ua.kvitkovo.feedback.entity.MessageStatus;
-import ua.kvitkovo.feedback.entity.MessageType;
+import ua.kvitkovo.feedback.entity.*;
+import ua.kvitkovo.feedback.repository.AnswerRepository;
 import ua.kvitkovo.feedback.repository.FeedbackRepository;
+import ua.kvitkovo.notifications.NotificationService;
+import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
+import ua.kvitkovo.notifications.UserMessage;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.UserResponseDto;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
+import ua.kvitkovo.utils.Helper;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -35,8 +40,10 @@ import java.util.Set;
 public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final AnswerRepository answerRepository;
     private final UserService userService;
     private final FeedBackMessageFileService feedBackMessageFileService;
+    private final NotificationService emailService;
     private final FeedbackDtoMapper feedbackDtoMapper;
     private final UserDtoMapper userDtoMapper;
 
@@ -79,34 +86,52 @@ public class FeedbackService {
     }
 
     @Transactional
-    public FeedbackMessageResponseDto addFeedbackMessageWithFile(Long mainImageId, String message,
+    public FeedbackMessageResponseDto addFeedbackMessageWithFileFromAdminPanel(Long mainImageId,
+        String message,
         MultipartFile file) {
 
         FeedbackMessage feedbackMessage = feedbackRepository.findById(mainImageId)
             .orElseThrow(
                 () -> new ItemNotFoundException("Feedback message not found"));
+        feedbackMessage.setManager(userDtoMapper.mapDtoToEntity(userService.getCurrentUser()));
 
-        FeedbackMessage answerMessage = FeedbackMessage.builder()
+        AnswerMessage answerMessage = AnswerMessage.builder()
             .messageText(message)
-            .type(MessageType.ANSWER)
-            .mainMessage(feedbackMessage)
-            .build();
-        fillAuthorToMessage(answerMessage);
-
-        String fileUrl = feedBackMessageFileService.sendFile(file);
-
-        FeedbackMessageFile messageFile = FeedbackMessageFile.builder()
-            .message(answerMessage)
-            .fileUrl(fileUrl)
-            .name(file.getOriginalFilename())
+            .fromUser(false)
+            .message(feedbackMessage)
+            .manager(feedbackMessage.getManager())
             .build();
 
-        Set<FeedbackMessageFile> files = new HashSet<>();
-        files.add(messageFile);
+        String newFileName;
+        Set<AnswerFeedbackMessageFile> files = new HashSet<>();
+        if (file != null) {
+            newFileName = Helper.getRandomString(8) + "_" + feedbackMessage.getId() + "_"
+                + file.getOriginalFilename();
+            String fileUrl = feedBackMessageFileService.sendFile(file, newFileName);
+            if (!fileUrl.isEmpty()) {
+                AnswerFeedbackMessageFile messageFile = AnswerFeedbackMessageFile.builder()
+                    .message(answerMessage)
+                    .fileUrl(fileUrl)
+                    .name(newFileName)
+                    .build();
 
-        feedbackMessage.setFiles(files);
+                files.add(messageFile);
+            }
+        }
+        answerMessage.setFiles(files);
 
-        feedbackRepository.save(feedbackMessage);
+        answerRepository.save(answerMessage);
+
+        feedbackMessage.getAnswers().add(answerMessage);
+
+        NotificationUser notificationUser = NotificationUser.build(feedbackMessage);
+        Map<String, Object> fields = Map.of(
+                "files", files,
+                "message", message,
+                "mainImageId", mainImageId
+        );
+        emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);
+
         return feedbackDtoMapper.mapEntityToDto(feedbackMessage);
     }
 
@@ -120,7 +145,8 @@ public class FeedbackService {
         if (messages.isEmpty()) {
             return Page.empty();
         } else {
-            return messages.map(feedbackDtoMapper::mapEntityToDto);
+            Page<FeedbackMessageResponseDto> messagesDtos = messages.map(feedbackDtoMapper::mapEntityToDto);
+            return messagesDtos;
         }
     }
 
@@ -147,11 +173,28 @@ public class FeedbackService {
         );
 
         for (FeedbackMessage message : oldClosedMessages) {
-            Set<FeedbackMessageFile> files = message.getFiles();
-            for (FeedbackMessageFile file : files) {
-                feedBackMessageFileService.deleteFile(file.getFileUrl());
+            Set<AnswerMessage> answers = message.getAnswers();
+            for (AnswerMessage answer : answers) {
+                Set<AnswerFeedbackMessageFile> files = answer.getFiles();
+                for (AnswerFeedbackMessageFile file : files) {
+                    feedBackMessageFileService.deleteFile(file.getFileUrl());
+                }
             }
             feedbackRepository.delete(message);
+        }
+    }
+
+    @Scheduled(cron = "0 */1 * * * *")
+    public void getAnswersFromEmail() {
+        List<UserMessage> messageList = emailService.get();
+        for (UserMessage userMessage : messageList) {
+            log.debug("Answer from " + userMessage.getAddress());
+            AnswerMessage answerMessage = AnswerMessage.builder()
+                    .fromUser(true)
+                    .messageText(userMessage.getMessage())
+                    .message(getFeedbackMessage(userMessage.getMainMessageId()))
+                    .build();
+            answerRepository.save(answerMessage);
         }
     }
 

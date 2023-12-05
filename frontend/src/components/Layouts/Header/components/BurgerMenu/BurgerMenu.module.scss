@@ -97,6 +97,19 @@
 .open .menuItems {
   display: block;
 }
+.cartQuantity {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background-color: $discount-color;
+  color: $white-color;
+  font-size: 10px;
+  text-align: center;
+  position: relative;
+  left: -8px;
+  top: -6px;
+  padding-top: 2px;
+}
 
 @include md {
   .burgerMenu {
