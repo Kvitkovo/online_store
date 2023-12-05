@@ -26,6 +26,7 @@ const CartPopup = ({ toggleCart }) => {
 
   const handleOrder = () => {
     navigate('/order');
+    toggleCart();
   };
 
   return (
