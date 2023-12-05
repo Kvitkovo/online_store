@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 import { ICONS } from '../ui-kit/icons';
+import InputMask from 'react-input-mask';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
@@ -15,6 +16,7 @@ const Order = () => {
     handleSubmit,
   } = useForm({
     defaultValues: { recipient: 'I' },
+    mode: 'onBlur',
   });
 
   const onSubmitButton = (data) => {
@@ -82,20 +84,39 @@ const Order = () => {
                   <input
                     type="email"
                     placeholder="Введіть електронну пошту"
-                    {...register('clientEmail')}
+                    {...register('clientEmail', {
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message: 'Невірна адреса електронної пошти',
+                      },
+                    })}
                   ></input>
+                  <div>
+                    {errors?.clientEmail && (
+                      <p className={styles.error}>
+                        {errors?.clientEmail?.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label>
                     Номер телефону<span> *</span>
                   </label>
-                  <input
+                  <InputMask
                     type="tel"
+                    inputMode="tel"
                     placeholder="+38(0XX)XXX-XX-XX"
+                    mask="+38(099)999 99 99"
                     {...register('clientPhone', {
                       required: 'Вкажіть ваш номер телефону',
+                      pattern: {
+                        value: /^\+38\(0\d{2}\)\d{3} \d{2} \d{2}$/,
+                        message: 'Невірний номер телефону',
+                      },
                     })}
-                  ></input>
+                  ></InputMask>
                   <div>
                     {errors?.clientPhone && (
                       <p className={styles.error}>
@@ -140,9 +161,9 @@ const Order = () => {
                       })}
                     ></input>
                     <div>
-                      {errors?.clientFirstName && (
+                      {errors?.recipientFirstName && (
                         <p className={styles.error}>
-                          {errors?.clientFirstName?.message}
+                          {errors?.recipientFirstName?.message}
                         </p>
                       )}
                     </div>
@@ -159,13 +180,19 @@ const Order = () => {
                     <label>
                       Номер телефону<span> *</span>
                     </label>
-                    <input
+                    <InputMask
                       type="tel"
+                      inputMode="tel"
                       placeholder="+38(0XX)XXX-XX-XX"
+                      mask="+38(099)999 99 99"
                       {...register('recipientPhone', {
-                        required: 'Вкажіть ваш номер телефону',
+                        required: 'Вкажіть номер телефону одержувача',
+                        pattern: {
+                          value: /^\+38\(0\d{2}\)\d{3} \d{2} \d{2}$/,
+                          message: 'Невірний номер телефону',
+                        },
                       })}
-                    ></input>
+                    ></InputMask>
                     <div>
                       {errors?.recipientPhone && (
                         <p className={styles.error}>
