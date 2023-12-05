@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ContactDetails from '../../../account/ContactDetails';
+import ContactDetails from '../../account/ContactDetails';
 /* eslint-disable max-len */
-import { registrationConfirm } from '../../../../services/registration/registrationConfirm.service';
+import { registrationConfirm } from '../../../services/registration/registrationConfirm.service';
 import RegistrationFailed from '../ConfirmationModals/RegistrationFailed';
 
 const RegisterConfirm = () => {

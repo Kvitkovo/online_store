@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Modals from '../../Modals/Modals';
+import Modals from '../../common/Modals';
 import styles from './RegisterModal.module.scss';
-import IconButton from '../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../ui-kit/icons';
-import Button from '../../../ui-kit/components/Button';
+import IconButton from '../../ui-kit/components/IconButton';
+import { ICONS } from '../../ui-kit/icons';
+import Button from '../../ui-kit/components/Button';
 import RegisterLetter from '../ConfirmationModals/RegisterLetter';
 import PasswordChecklist from 'react-password-checklist';
 /* eslint-disable max-len */
-import { registerUser } from '../../../../services/registration/registration.service';
+import { registerUser } from '../../../services/registration/registration.service';
 
 const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   const [name, setName] = useState('');

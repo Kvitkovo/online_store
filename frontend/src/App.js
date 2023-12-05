@@ -22,8 +22,9 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
-import RegisterConfirm from './components/common/LoginBtn/RegisterConfirm';
-import ResetPasswordPage from './components/common/LoginBtn/ResetPassword';
+import RegisterConfirm from './components/login/RegisterConfirm';
+/* eslint-disable max-len */
+import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
 import CategoryPage from './pages/CategoryPage';
 
 function App() {

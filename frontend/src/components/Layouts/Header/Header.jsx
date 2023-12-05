@@ -15,8 +15,8 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
-import LoginModal from '../../common/LoginBtn/LoginModal';
-import RegisterModal from '../../common/LoginBtn/RegisterModal';
+import LoginModal from '../../login/LoginModal';
+import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
 
 const Header = () => {

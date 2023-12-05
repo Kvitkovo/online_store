@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Modals from '../../Modals/Modals';
+import Modals from '../../common/Modals/Modals';
 import styles from './LoginModal.module.scss';
-import IconButton from '../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../ui-kit/icons';
-import Button from '../../../ui-kit/components/Button';
-import ResetPassword from '../ConfirmationModals/ResetPassword';
+import IconButton from '../../ui-kit/components/IconButton';
+import { ICONS } from '../../ui-kit/icons';
+import Button from '../../ui-kit/components/Button';
+import ResetPassword from '../ResetPassword';
 import GoogleLogin from '../GoogleLogin';
 import { useNavigate } from 'react-router-dom';
 import {
   googleLoginRequest,
   loginUser,
   resetPasswordRequest,
-} from '../../../../services/login/login.service';
+} from '../../../services/login/login.service';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const navigate = useNavigate();

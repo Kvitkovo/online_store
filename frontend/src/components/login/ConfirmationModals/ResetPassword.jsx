@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './ConfirmationModals.module.scss';
-import Modals from '../../Modals';
-import IconButton from '../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../ui-kit/icons';
+import Modals from '../../common/Modals';
+import IconButton from '../../ui-kit/components/IconButton';
+import { ICONS } from '../../ui-kit/icons';
 
 const ResetPassword = ({ toggleReset, userEmail }) => {
   return (

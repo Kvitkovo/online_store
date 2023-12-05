@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ResetPasswordPage.module.scss';
-import { ICONS } from '../../../ui-kit/icons';
-import Button from '../../../ui-kit/components/Button';
-import { useModalEffect } from '../../../../hooks/useModalEffect';
+import { ICONS } from '../../ui-kit/icons';
+import Button from '../../ui-kit/components/Button';
+import { useModalEffect } from '../../../hooks/useModalEffect';
 import LoginModal from '../LoginModal';
 import RegisterModal from '../RegisterModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactPasswordChecklist from 'react-password-checklist';
 /* eslint-disable max-len */
-import { passwordReset } from '../../../../services/passwordReset/passwordReset.service';
+import { passwordReset } from '../../../services/passwordReset/passwordReset.service';
 
 const ResetPasswordPage = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
