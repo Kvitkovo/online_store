@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 import { ICONS } from '../ui-kit/icons';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
   const [hideForm, setHideForm] = useState(false);
   const [client, setClient] = useState('');
   const [phone, setPhone] = useState('');
+  const ref = useRef(null);
+  const inputRef = useRef(null);
   const {
     register,
     formState: { errors },
@@ -23,6 +25,7 @@ const Order = () => {
     setClient(data.clientFirstName);
     setPhone(data.clientPhone);
     setHideForm(true);
+    // console.log('phone: ', data.clientPhone);
   };
 
   const handleChangeData = () => {
@@ -104,19 +107,22 @@ const Order = () => {
                   <label>
                     Номер телефону<span> *</span>
                   </label>
-                  <InputMask
+                  <IMaskInput
                     type="tel"
                     inputMode="tel"
                     placeholder="+38(0XX)XXX-XX-XX"
-                    mask="+38(099)999 99 99"
+                    mask="{+38(0}00{)}000 00 00"
+                    ref={ref}
+                    inputRef={inputRef}
+                    // onAccept={(value, mask) => console.log(value, mask)}
                     {...register('clientPhone', {
-                      required: 'Вкажіть ваш номер телефону',
+                      // required: 'Вкажіть ваш номер телефону',
                       pattern: {
                         value: /^\+38\(0\d{2}\)\d{3} \d{2} \d{2}$/,
                         message: 'Невірний номер телефону',
                       },
                     })}
-                  ></InputMask>
+                  ></IMaskInput>
                   <div>
                     {errors?.clientPhone && (
                       <p className={styles.error}>
@@ -180,11 +186,11 @@ const Order = () => {
                     <label>
                       Номер телефону<span> *</span>
                     </label>
-                    <InputMask
+                    <IMaskInput
                       type="tel"
                       inputMode="tel"
                       placeholder="+38(0XX)XXX-XX-XX"
-                      mask="+38(099)999 99 99"
+                      mask="+38(000)000 00 00"
                       {...register('recipientPhone', {
                         required: 'Вкажіть номер телефону одержувача',
                         pattern: {
@@ -192,7 +198,7 @@ const Order = () => {
                           message: 'Невірний номер телефону',
                         },
                       })}
-                    ></InputMask>
+                    ></IMaskInput>
                     <div>
                       {errors?.recipientPhone && (
                         <p className={styles.error}>
