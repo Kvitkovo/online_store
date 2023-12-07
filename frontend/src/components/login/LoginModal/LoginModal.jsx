@@ -4,7 +4,6 @@ import styles from './LoginModal.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button';
-import ResetPassword from '../ResetPassword';
 import GoogleLogin from '../GoogleLogin';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -12,6 +11,7 @@ import {
   loginUser,
   resetPasswordRequest,
 } from '../../../services/login/login.service';
+import ResetPasswordModal from '../ConfirmationModals/ResetPasswordModal';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const navigate = useNavigate();
@@ -82,8 +82,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
         toggleReset();
       } else if (resetResult && resetResult.error) {
         setEmailError(resetResult.error);
-      } else {
-        setEmailError('Other mistake!');
       }
     }
   };
@@ -184,7 +182,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               </button>
             </div>
             {isResetPasswordValid && (
-              <ResetPassword toggleReset={toggleReset} userEmail={email} />
+              <ResetPasswordModal toggleReset={toggleReset} userEmail={email} />
             )}
           </div>
         </Modals>
