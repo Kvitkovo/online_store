@@ -36,9 +36,11 @@ import { ReactComponent as cartEmpty } from './cartEmpty-icon.svg';
 import { ReactComponent as myBouquetEmpty } from './myBouquetEmpty-icon.svg';
 import { ReactComponent as account } from './account.svg';
 import { ReactComponent as changePassword } from './change-password.svg';
+import { ReactComponent as googleIcon } from './google.svg';
 import { ReactComponent as arrowDown } from './arrow-down.svg';
 import { ReactComponent as deleteIcon } from './delete-icon.svg';
 import { ReactComponent as arrowUpWhite } from './arrow-up-white.svg';
+import { ReactComponent as pathArrow } from './path-arrow.svg';
 
 export const ICONS = {
   addComponent,
@@ -80,6 +82,8 @@ export const ICONS = {
   myBouquetEmpty,
   account,
   changePassword,
+  googleIcon,
   deleteIcon,
   arrowUpWhite,
+  pathArrow,
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ItemCard.module.scss';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
@@ -7,15 +7,32 @@ import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
 import Slider from '../Slider';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../../../redux/slices/cartSlice';
+import { isItemInCart } from '../../../../utils/isItemInCart';
 
 const ItemCard = ({ cardData }) => {
   const recentlyViewed = Array.from(
     JSON.parse(localStorage.getItem('recentlyViewed') || ''),
   );
+  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const dispatch = useDispatch();
+  const [inCart, setInCart] = useState(false);
+
+  useEffect(() => {
+    setInCart(false);
+    if (isItemInCart(cartItems, cardData.id)) {
+      setInCart(true);
+    }
+  }, [cartItems, cardData]);
+
+  const handleAddToCart = (image, title, discount, oldPrice, price, id) => {
+    dispatch(addToCart({ image, title, discount, oldPrice, price, id }));
+  };
 
   return (
     <div className={styles.mainContainer}>
-      <Path />
+      <Path currentPageData={cardData} currentPageType={'product'} />
       <div className={styles.itemBlock}>
         <div className={styles.caption}>
           <h1 className={styles.itemName}>{cardData.title}</h1>
@@ -43,6 +60,19 @@ const ItemCard = ({ cardData }) => {
             actualPrice={cardData.priceWithDiscount}
             stockInfo={cardData?.available}
             addToConstructor={cardData.allowAddToConstructor}
+            addToCart={() =>
+              handleAddToCart(
+                cardData.images[0]
+                  ? cardData.images[0].url
+                  : '/images/no_image.jpg',
+                cardData.title,
+                cardData.discount,
+                cardData.price,
+                cardData.priceWithDiscount,
+                cardData.id,
+              )
+            }
+            inCart={inCart}
           />
         </div>
         <div className={styles.features}>

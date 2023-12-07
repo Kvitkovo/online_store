@@ -8,7 +8,7 @@ import './App.scss';
 import Footer from './components/Footer';
 import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
-import CardPage from './pages/CardPage/CardPage';
+import CardPage from './pages/CardPage';
 import Care from './pages/Care';
 import Contacts from './pages/Contacts';
 import Faq from './pages/Faq';
@@ -16,13 +16,17 @@ import OrderStatus from './pages/OrderStatus';
 import Partner from './pages/Partner';
 import Privacy from './pages/Privacy';
 import ContactDetails from './components/account/ContactDetails';
-import ChangeDetails from './components/account/ChangeDetails/ChangeDetails';
+import ChangeDetails from './components/account/ChangeDetails';
 import Wrapper from './components/Wrapper';
-import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRouters';
+import ProtectedRoutes from './components/ProtectedRoutes';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
 import Order from './components/Order/Order';
+import RegisterConfirm from './components/login/RegisterConfirm';
+/* eslint-disable max-len */
+import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   return (
@@ -44,6 +48,18 @@ function App() {
               <Route path={ROUTES.privacy} element={<Privacy />} />
               <Route path={ROUTES.card} element={<CardPage />} />
               <Route path={ROUTES.order} element={<Order />} />
+              <Route
+                path={ROUTES.emailConfirmation}
+                element={<RegisterConfirm />}
+              />
+              <Route
+                path={ROUTES.passwordReset}
+                element={<ResetPasswordPage />}
+              />
+              <Route
+                path={ROUTES.specificCategory}
+                element={<CategoryPage />}
+              />
               <Route element={<ProtectedRoutes />}>
                 <Route path={ROUTES.account} element={<ContactDetails />} />
                 <Route

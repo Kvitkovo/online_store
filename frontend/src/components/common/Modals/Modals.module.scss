@@ -26,13 +26,14 @@
 
 .cart {
   max-width: 789px;
-  max-height: 688px;
+  max-height: 689px;
 }
 
 .myBouquet {
   max-width: 611px;
   max-height: 676px;
 }
+
 .support {
   max-width: 460px;
   max-height: fit-content;
@@ -41,6 +42,17 @@
   width: 460px;
   height: 275px;
 }
+
+.login {
+  width: 400px;
+  height: fit-content;
+}
+
+.confirmation {
+  width: 634px;
+  height: fit-content;
+}
+
 @include sm {
   .drawer {
     overflow-y: auto;

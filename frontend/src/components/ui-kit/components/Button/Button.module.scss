@@ -1,31 +1,33 @@
 @import '../../../../variables';
 
 .button {
-  height: 48px;
   font-family: $font-main;
-  font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+  line-height: 130%;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  .btnContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .icon {
     display: flex;
     align-items: center;
   }
 }
-.btnContainer {
-  gap: 8px;
-}
 
 .primary {
+  height: 48px;
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
-  //width: 90vw;
+  font-weight: 500;
   &:hover {
     opacity: 0.5;
   }
@@ -56,6 +58,7 @@
   width: 100%;
 }
 .secondary {
+  height: 48px;
   color: $text-color;
   font-weight: 500;
   background-color: $white-color;
@@ -76,6 +79,7 @@
 }
 
 .no-border {
+  height: 48px;
   color: $text-color;
   background-color: $white-color;
   font-size: 16px;
@@ -83,6 +87,22 @@
     align-self: center;
   }
 }
+
+.no-border-hovered {
+  color: $text-color;
+  background-color: $white-color;
+  font-size: 16px;
+  .label {
+    align-self: center;
+  }
+  &:hover {
+    color: $page-accent-color;
+  }
+  &:active {
+    color: $active-color;
+  }
+}
+
 .bg-inherit {
   background-color: inherit;
   color: $text-color;

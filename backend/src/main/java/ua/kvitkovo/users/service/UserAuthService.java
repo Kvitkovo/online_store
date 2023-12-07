@@ -6,7 +6,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +37,7 @@ import ua.kvitkovo.users.validator.*;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -217,6 +217,9 @@ public class UserAuthService {
             user.setCodeVerificationEnd(null);
             user.setEmailConfirmCode(null);
             codeActive = false;
+            //delete user after code expired
+            userRepository.delete(user);
+            throw new ItemNotFoundException("Verification code expired. User deleted.");
         }
         log.debug("IN findByVerificationCode - user: {} found by Verification Code: {}", user,
             code);

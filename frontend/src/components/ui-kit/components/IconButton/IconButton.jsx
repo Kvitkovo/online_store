@@ -12,6 +12,7 @@ const IconButton = memo((props) => {
     if (props.isRectangularWithPadding)
       newClassNames.push(styles['icon-rectangular-padding']);
     if (props.isRoundGreen) newClassNames.push(styles['icon-round-green']);
+    if (props.isShadow) newClassNames.push(styles['icon-shadow']);
     return newClassNames.join(' ');
   }, [
     props.isBorderYellow,
@@ -21,6 +22,7 @@ const IconButton = memo((props) => {
     props.isBackground,
     props.isRectangularWithPadding,
     props.isRoundGreen,
+    props.isShadow,
   ]);
 
   return (

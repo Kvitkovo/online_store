@@ -9,6 +9,7 @@ const ClosedMenu = ({
   toggleCart,
   toggleMyBouquet,
   cartQuantity,
+  toggleLogin,
 }) => {
   return (
     <div className={styles.burgerMenu}>
@@ -30,7 +31,7 @@ const ClosedMenu = ({
             />
           </div>
           <div className={styles.account}>
-            <IconButton icon={<ICONS.halfPerson />} />
+            <IconButton icon={<ICONS.halfPerson />} onClick={toggleLogin} />
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />

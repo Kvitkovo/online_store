@@ -1,0 +1,23 @@
+@import './../../../variables';
+
+.filterContainer {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.displayPrice {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.priceDevider {
+  align-self: center;
+}
+
+.rangeContainer {
+  width: 220px;
+  margin-bottom: 16px;
+}
