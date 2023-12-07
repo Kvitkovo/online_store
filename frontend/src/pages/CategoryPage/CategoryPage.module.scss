@@ -2,7 +2,6 @@
 @import './../../_mixins';
 
 .mainContainer {
-  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -15,8 +14,7 @@
 
 .sortBlock {
   display: flex;
-  align-items: center;
-  height: 60px;
+  flex-direction: column;
   margin-bottom: 20px;
   padding: 10px 12px;
   background-color: $white-color;
@@ -30,9 +28,10 @@
 }
 
 .sortDropdown {
+  display: flex;
+  align-items: center;
   position: relative;
   z-index: 1;
-  align-self: start;
 }
 
 .sortSmallDevices {
@@ -54,6 +53,11 @@
 
 .filterButton {
   display: none;
+}
+
+.filterShowbar {
+  display: flex;
+  margin-top: 16px;
 }
 
 @include lg {
@@ -90,6 +94,10 @@
   }
   .mainContent {
     width: auto;
+  }
+
+  .filterShowbar {
+    display: none;
   }
 }
 

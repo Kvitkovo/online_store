@@ -86,6 +86,16 @@
     align-self: center;
   }
 }
+.no-border-yellow {
+  padding: 11px 0;
+  font-size: 14px;
+  color: $on-press-color;
+  text-decoration: underline;
+  background-color: $white-color;
+  .label {
+    align-self: center;
+  }
+}
 .bg-inherit {
   background-color: inherit;
   color: $text-color;

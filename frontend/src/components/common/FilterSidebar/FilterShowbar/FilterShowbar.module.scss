@@ -1,0 +1,22 @@
+@import './../../../../mixins';
+
+.filterShowbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.title {
+  display: none;
+  font-weight: 600;
+  line-height: 130%;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+
+@include lg {
+  .title {
+    display: block;
+    width: 100%;
+  }
+}
