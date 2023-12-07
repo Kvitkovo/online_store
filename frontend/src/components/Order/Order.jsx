@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
@@ -10,11 +10,11 @@ const Order = () => {
   const [hideForm, setHideForm] = useState(false);
   const [client, setClient] = useState('');
   const [phone, setPhone] = useState('');
-  const ref = useRef(null);
-  const inputRef = useRef(null);
   const {
     register,
     formState: { errors },
+    setValue,
+    getValues,
     handleSubmit,
   } = useForm({
     defaultValues: { recipient: 'I' },
@@ -25,7 +25,6 @@ const Order = () => {
     setClient(data.clientFirstName);
     setPhone(data.clientPhone);
     setHideForm(true);
-    // console.log('phone: ', data.clientPhone);
   };
 
   const handleChangeData = () => {
@@ -110,15 +109,14 @@ const Order = () => {
                   <IMaskInput
                     type="tel"
                     inputMode="tel"
-                    placeholder="+38(0XX)XXX-XX-XX"
-                    mask="{+38(0}00{)}000 00 00"
-                    ref={ref}
-                    inputRef={inputRef}
-                    // onAccept={(value, mask) => console.log(value, mask)}
+                    placeholder="+380 (XX) XXX-XX-XX"
+                    mask="+{38\0} {(}00{)} 000 00 00"
+                    onAccept={(value) => setValue('clientPhone', value)}
+                    value={getValues('clientPhone')}
                     {...register('clientPhone', {
-                      // required: 'Вкажіть ваш номер телефону',
+                      required: 'Вкажіть ваш номер телефону',
                       pattern: {
-                        value: /^\+38\(0\d{2}\)\d{3} \d{2} \d{2}$/,
+                        value: /^\+380 \(\d{2}\) \d{3} \d{2} \d{2}$/,
                         message: 'Невірний номер телефону',
                       },
                     })}
@@ -189,12 +187,14 @@ const Order = () => {
                     <IMaskInput
                       type="tel"
                       inputMode="tel"
-                      placeholder="+38(0XX)XXX-XX-XX"
-                      mask="+38(000)000 00 00"
+                      placeholder="+380 (XX) XXX-XX-XX"
+                      mask="+{38\0}{(}00{)}000 00 00"
+                      onAccept={(value) => setValue('recipientPhone', value)}
+                      value={getValues('recipientPhone')}
                       {...register('recipientPhone', {
-                        required: 'Вкажіть номер телефону одержувача',
+                        required: 'Вкажіть ваш номер телефону',
                         pattern: {
-                          value: /^\+38\(0\d{2}\)\d{3} \d{2} \d{2}$/,
+                          value: /^\+380\(\d{2}\)\d{3} \d{2} \d{2}$/,
                           message: 'Невірний номер телефону',
                         },
                       })}
