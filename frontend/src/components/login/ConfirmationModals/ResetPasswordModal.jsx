@@ -4,7 +4,7 @@ import Modals from '../../common/Modals';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
 
-const ResetPassword = ({ toggleReset, userEmail }) => {
+const ResetPasswordModal = ({ toggleReset, userEmail }) => {
   return (
     <div>
       <>
@@ -26,4 +26,4 @@ const ResetPassword = ({ toggleReset, userEmail }) => {
     </div>
   );
 };
-export default ResetPassword;
+export default ResetPasswordModal;
