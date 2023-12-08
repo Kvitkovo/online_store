@@ -67,7 +67,7 @@ public class AuthenticationRestController {
 
             String token = jwtTokenProvider.createToken(username, user.getRoles());
 
-            JwtResponseDto response = new JwtResponseDto(username, token);
+            JwtResponseDto response = new JwtResponseDto(username, token, user.getId());
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
@@ -126,7 +126,7 @@ public class AuthenticationRestController {
         try {
             User user = userAuthService.loginGoogle(requestDto);
             String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
-            JwtResponseDto response = new JwtResponseDto(user.getEmail(), token);
+            JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid token");
