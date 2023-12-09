@@ -2,21 +2,15 @@ import axiosInstance from '../httpClient';
 
 const loginUser = async ({ email, password }) => {
   try {
-    const storedToken = localStorage.getItem('authToken');
-    const response = await axiosInstance.post(
-      '/auth/login',
-      {
-        email,
-        password,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      },
-    );
+    const response = await axiosInstance.post('/auth/login', {
+      email,
+      password,
+    });
 
     if (response.status === 200) {
+      const { token, id } = response.data;
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('authId', id);
       return { success: true };
     }
   } catch (error) {

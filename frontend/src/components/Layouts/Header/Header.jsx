@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import logo from '../../ui-kit/icons/logo/logo.svg';
@@ -19,9 +19,29 @@ import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoginSuccess(isLoggedIn);
+  }, [isLoggedIn]);
+
+  const handleSuccessfulLogin = () => {
+    navigate('/account');
+    setLoginSuccess(true);
+    setIsOpenLogin(false);
+  };
+  const toggleLogin = () => {
+    setIsOpenLogin((prev) => !prev);
+    setIsOpenRegister(false);
+  };
+
+  const handleLoginButtonClick = loginSuccess
+    ? handleSuccessfulLogin
+    : toggleLogin;
 
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
@@ -50,10 +70,6 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   };
 
-  const toggleLogin = () => {
-    setIsOpenLogin((prev) => !prev);
-    setIsOpenRegister(false);
-  };
   const toggleRegister = () => {
     setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
@@ -152,9 +168,9 @@ const Header = () => {
             <div className={styles.login}>
               <Button
                 variant="no-border"
-                label="Увійти"
+                label={loginSuccess ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
-                onClick={toggleLogin}
+                onClick={handleLoginButtonClick}
               />
             </div>
 
@@ -170,7 +186,12 @@ const Header = () => {
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       {isOpenLogin && (
-        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
+        <LoginModal
+          toggleLogin={toggleLogin}
+          toggleRegister={toggleRegister}
+          handleSuccessfulLogin={handleSuccessfulLogin}
+          setLoginSuccess={setLoginSuccess}
+        />
       )}
       {isOpenRegister && (
         <RegisterModal

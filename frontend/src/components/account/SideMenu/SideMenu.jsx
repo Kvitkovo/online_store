@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './SideMenu.module.scss';
 import { NavLink } from 'react-router-dom';
 
-const SideMenu = () => {
+const SideMenu = ({ handleLogout }) => {
   return (
     <div className={styles.menuAccount}>
       <NavLink
@@ -22,7 +22,7 @@ const SideMenu = () => {
       >
         Мої замовлення
       </NavLink>
-      <NavLink to="/account/orders" className={styles.menuItem}>
+      <NavLink to="/" className={styles.menuItem} onClick={handleLogout}>
         Вихід
       </NavLink>
     </div>
