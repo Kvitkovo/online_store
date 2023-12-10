@@ -11,6 +11,9 @@ const SupportMessage = ({ toggleSupportMessage }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [messageError, setMessageError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showFormSubmitted, setShowFormSubmitted] = useState(false);
 
@@ -27,6 +30,9 @@ const SupportMessage = ({ toggleSupportMessage }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+    setEmailError(!email || !validateEmail(email));
+    setNameError(!name);
+    setMessageError(!message);
     if (validateEmail(email) && name && message) {
       setShowFormSubmitted(true);
     }
@@ -58,7 +64,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
               <div className={styles.dataContainer}>
                 <label className={styles.labelData} htmlFor="name">
-                  Ваше ім’я <span>*</span>
+                  Ваше ім’я {nameError && <span>*</span>}
                 </label>
 
                 <input
@@ -74,9 +80,11 @@ const SupportMessage = ({ toggleSupportMessage }) => {
                 )}
               </div>
 
-              <div className={styles.dataContainer}>
+              <div
+                className={`${styles.dataContainer} ${styles.emailContainer}`}
+              >
                 <label className={styles.labelData} htmlFor="email">
-                  Ел. пошта <span>*</span>
+                  Ел. пошта пошта {emailError && <span>*</span>}
                 </label>
 
                 <input
@@ -102,7 +110,7 @@ const SupportMessage = ({ toggleSupportMessage }) => {
 
               <div className={styles.commentContainer}>
                 <label className={styles.labelData} htmlFor="message">
-                  Повідомлення <span>*</span>
+                  Повідомлення {messageError && <span>*</span>}
                 </label>
                 <textarea
                   className={`${styles.dataInput} ${styles.dataTextarea}`}
