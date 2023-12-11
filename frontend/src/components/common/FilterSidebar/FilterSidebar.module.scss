@@ -3,18 +3,20 @@
 
 .filterContainer {
   width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
-
+.titleContainer {
+  position: fixed;
+  display: none;
+  width: 100%;
+  padding: 8px 47px;
+  top: 0;
+  left: 0;
+  box-shadow: $box-shadow-secondary;
+}
 .filterTitle {
   font-size: 22px;
   font-weight: 500;
   line-height: 24px;
-  padding: 16px 47px;
-  box-shadow: $box-shadow-secondary;
-  display: none;
 }
 
 .displayPrice {
@@ -31,14 +33,22 @@
   width: 220px;
   margin-bottom: 16px;
 }
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+.buttonContainer {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 47px;
+  background: $page-background-color;
 }
-
-input[type='number'] {
-  appearance: textfield;
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.showbarContainer {
+  display: none;
 }
 
 @include lg {
@@ -46,10 +56,15 @@ input[type='number'] {
     background: $white-color;
     height: 100%;
     width: 347px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+    padding: 62px 8px 0 47px;
     z-index: 4;
+  }
+  .contentContainer {
+    overflow: scroll;
+    height: inherit;
   }
   .filterVisible {
     transform: translateX(0);
@@ -57,7 +72,43 @@ input[type='number'] {
   .filterHidden {
     transform: translateX(-500%);
   }
-  .filterTitle {
+  .titleContainer {
+    height: 56px;
+    display: flex;
+    align-items: center;
+  }
+  .buttonContainer {
     display: block;
+  }
+  .showbarContainer {
+    display: block;
+  }
+}
+
+@include md {
+  .filterContainer {
+    width: 274px;
+    padding-left: 27px;
+  }
+  .buttonContainer {
+    padding: 15px 27px;
+  }
+  .titleContainer {
+    padding: 8px 27px;
+  }
+}
+@include sm {
+  .filterContainer {
+    width: 252px;
+    padding-left: 16px;
+  }
+  .buttonContainer {
+    padding: 15px 16px;
+  }
+  .titleContainer {
+    padding: 8px 16px;
+  }
+  .filterTitle {
+    font-size: 22px;
   }
 }

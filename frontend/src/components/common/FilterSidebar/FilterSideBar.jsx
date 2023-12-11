@@ -1,110 +1,166 @@
-import React, { useEffect, useState, useCallback } from 'react';
+/* eslint-disable max-len */
+import React, { useEffect, useState, useCallback, Fragment } from 'react';
 import styles from './FilterSidebar.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import DropDownList from '../../ui-kit/components/DropDownList';
 import RangeSlider from '../../ui-kit/components/RangeSlider';
 import Divider from '../../ui-kit/components/Divider';
-import {
-  GetColors,
-  GetProductTypes,
-  GetSizes,
-} from '../../../services/catalog/categoryAccess.service';
+import { GetFiltersInCategory } from '../../../services/catalog/categoryAccess.service';
 import Checkbox from '../../ui-kit/components/Checkbox';
 import InputPrice from '../../ui-kit/components/Input/InputPrice';
+import FilterShowbar from './FilterShowbar';
+import Button from '../../ui-kit/components/Button';
 
-const FilterSidebar = ({ visibility }) => {
-  const [price, setPrice] = useState([99, 99999]);
-  const [productTypes, setProductTypes] = useState(null);
-  const [discountPrice, setDiscountPrice] = useState(false);
-  const [colorsCollection, setColorsCollection] = useState(null);
-  const [bouquetSizes, setBouquetSizes] = useState(null);
+const FilterSidebar = ({ visibility, onClose, categoryId, data, setData }) => {
+  const { price, discounted } = data;
 
-  const changeStartPrice = (e) => {
-    setPrice((prev) => [e.target.value, prev[1]]);
-  };
-  const changeEndPrice = (e) => {
-    setPrice((prev) => [prev[0], e.target.value]);
-  };
-  const handleSliderChange = (e) => {
-    setPrice(e);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [filterOn, setFilterOn] = useState(false);
+
+  const onDiscountChange = (event) => {
+    setData((prev) => ({ ...prev, discounted: event.target.checked }));
   };
 
-  const getFilterData = useCallback(async (fetchFunc, settingFunc) => {
-    const result = await fetchFunc();
-    const addCheckedField = result.map((item) => {
-      item.checked = false;
-      return item;
+  const handleCheckboxChange = (e, option, filterName) => {
+    const { checked } = e.target;
+
+    setData((prev) => {
+      const settedData = prev[filterName].map((item) => {
+        if (item.id === option.id) {
+          item.checked = checked;
+        }
+        return item;
+      });
+
+      return { ...prev, [filterName]: settedData };
     });
 
-    settingFunc(addCheckedField);
-  }, []);
+    if (checked) {
+      setFilterOn(true);
+    }
+  };
+
+  const changeStartPrice = (e) => {
+    setData((prev) => {
+      const { price } = prev;
+
+      return { ...prev, price: [e.target.value, price[1]] };
+    });
+  };
+  const changeEndPrice = (e) => {
+    setData((prev) => {
+      const { price } = prev;
+
+      return { ...prev, price: [e.target.value, price[1]] };
+    });
+  };
+  const handleSliderChange = (e) => {
+    setData((prev) => ({ ...prev, price: e }));
+  };
+
+  const getFilterData = useCallback(async () => {
+    const result = await GetFiltersInCategory(categoryId);
+    for (const [key, value] of Object.entries(result)) {
+      const filterOptions = Object.entries(value).map(([key, value]) => ({
+        id: key,
+        name: value,
+        checked: false,
+      }));
+      setData((prev) => ({
+        ...prev,
+        [key.toLowerCase()]: filterOptions,
+      }));
+    }
+    setDataLoaded(true);
+  }, [categoryId, setData]);
 
   useEffect(() => {
-    getFilterData(GetColors, setColorsCollection);
-    getFilterData(GetProductTypes, setProductTypes);
-    getFilterData(GetSizes, setBouquetSizes);
+    getFilterData();
   }, [getFilterData]);
 
   return (
-    <div
-      className={`
+    <>
+      {dataLoaded && (
+        <div
+          className={`
         ${styles.filterContainer} 
         ${visibility ? styles.filterVisible : styles.filterHidden}`}
-    >
-      <h3 className={styles.filterTitle}>Фільтр</h3>
-      <DropDownList title={'Ціна, діапазон'}>
-        <div className={styles.displayPrice}>
-          <InputPrice
-            value={price[0]}
-            handleInputChange={changeStartPrice}
-            index={0}
-          />
-          <ICONS.dash className={styles.priceDevider} />
-          <InputPrice
-            value={price[1]}
-            handleInputChange={changeEndPrice}
-            index={1}
-          />
+        >
+          <div className={styles.titleContainer}>
+            <h3 className={styles.filterTitle}>Фільтр</h3>
+            {filterOn && (
+              <Button
+                label={'Скинути фільтри'}
+                variant={'no-border-yellow'}
+                className={styles.cancelFilter}
+              />
+            )}
+          </div>
+
+          <div className={styles.contentContainer}>
+            <div className={styles.showbarContainer}>
+              {filterOn && <FilterShowbar data={data} setData={setData} />}
+            </div>
+            <DropDownList title={'Ціна, діапазон'}>
+              <div className={styles.displayPrice}>
+                <InputPrice
+                  value={price[0]}
+                  handleInputChange={changeStartPrice}
+                  index={0}
+                />
+                <ICONS.dash className={styles.priceDevider} />
+                <InputPrice
+                  value={price[1]}
+                  handleInputChange={changeEndPrice}
+                  index={1}
+                />
+              </div>
+              <div className={styles.rangeContainer}>
+                <RangeSlider
+                  inputValues={data.price}
+                  handleSliderChange={handleSliderChange}
+                />
+              </div>
+              <Checkbox
+                label={'Акційна ціна'}
+                checked={discounted}
+                onChange={onDiscountChange}
+              />
+            </DropDownList>
+
+            <Divider />
+            {Object.entries(data)?.map(([key, value]) => {
+              let title = '';
+              if (key === 'type') {
+                title = 'Тип квітів';
+              } else if (key === 'color') {
+                title = 'Колір';
+              } else if (key === 'size') {
+                title = 'Висота букета';
+              }
+              return (
+                <Fragment key={key}>
+                  {value.length > 0 && title !== '' ? (
+                    <>
+                      <DropDownList
+                        title={title}
+                        data={value}
+                        onChange={handleCheckboxChange}
+                        filterName={key}
+                      />
+                      <Divider />
+                    </>
+                  ) : null}
+                </Fragment>
+              );
+            })}
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button label={'Закрити'} padding={true} onClick={onClose} />
+          </div>
         </div>
-        <div className={styles.rangeContainer}>
-          <RangeSlider
-            inputValues={price}
-            handleSliderChange={handleSliderChange}
-          />
-        </div>
-        <Checkbox
-          label={'Акційна ціна'}
-          checked={discountPrice}
-          onChange={(event) => setDiscountPrice(event.target.checked)}
-        />
-      </DropDownList>
-
-      <Divider />
-
-      <DropDownList
-        title={'Тип квітів'}
-        data={productTypes}
-        setData={setProductTypes}
-      />
-
-      <Divider />
-
-      <DropDownList
-        title={'Колір'}
-        data={colorsCollection}
-        setData={setColorsCollection}
-      />
-
-      <Divider />
-
-      <DropDownList
-        title={'Висота букета'}
-        data={bouquetSizes}
-        setData={setBouquetSizes}
-      />
-
-      <Divider />
-    </div>
+      )}
+    </>
   );
 };
 

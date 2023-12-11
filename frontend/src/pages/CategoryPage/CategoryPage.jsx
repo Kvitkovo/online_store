@@ -8,10 +8,11 @@ import Path from '../CardPage/components/Path';
 import Card from '../../components/common/Card';
 import Pagination from '../../components/ui-kit/components/Pagination';
 import { useParams } from 'react-router-dom';
-import DropDown from '../../components/ui-kit/components/DropDown';
+import Select from '../../components/ui-kit/components/Select';
 import Button from '../../components/ui-kit/components/Button';
 import { ICONS } from '../../components/ui-kit/icons';
-import Select from '../../components/ui-kit/components/Select';
+import DropDown from '../../components/ui-kit/components/DropDown';
+import FilterShowbar from '../../components/common/FilterSidebar/FilterShowbar';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -26,15 +27,16 @@ const CategoryPage = () => {
     { value: 1, label: 'Дорогі' },
   ];
   const sortOptions = [
-    {
-      value: 0,
-      label: 'від дешевих до дорогих',
-    },
-    {
-      value: 1,
-      label: 'від дорогих до дешевих',
-    },
+    { value: 0, label: 'від дешевих до дорогих' },
+    { value: 1, label: 'від дорогих до дешевих' },
   ];
+  const [filterData, setFilterData] = useState({
+    price: [99, 99999],
+    discounted: false,
+    type: [],
+    color: [],
+    size: [],
+  });
 
   const getData = useCallback(async () => {
     try {
@@ -67,16 +69,30 @@ const CategoryPage = () => {
       <h2 className={styles.title}>{currentCategory?.name}</h2>
       <div className={styles.mainContainer}>
         <div className={styles.filterContainer}>
-          <FilterSidebar visibility={isFilterOpen} />
+          <FilterSidebar
+            visibility={isFilterOpen}
+            onClose={handleClickFilter}
+            categoryId={categoryId}
+            data={filterData}
+            setData={setFilterData}
+          />
         </div>
         <div className={styles.mainContent}>
           <div className={styles.sortBlock}>
-            <span className={styles.sortTitle}>Виводити:</span>
             <div className={styles.sortDropdown}>
+              <span className={styles.sortTitle}>Виводити:</span>
               <Select
                 value={sortValue}
                 setValue={setSortValue}
                 options={sortOptions}
+              />
+            </div>
+            <div className={styles.filterShowbar}>
+              <FilterShowbar data={filterData} setData={setFilterData} />
+              <Button
+                label={'Скинути фільтри'}
+                variant={'no-border-yellow'}
+                className={styles.cancelFilter}
               />
             </div>
             <div className={styles.sortSmallDevices}>
@@ -93,7 +109,6 @@ const CategoryPage = () => {
                 onClick={handleClickFilter}
               />
             </div>
-            <div className={styles.sortBlock_mobile}></div>
           </div>
           {isLoading
             ? 'Loading ...'
