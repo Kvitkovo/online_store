@@ -155,11 +155,11 @@ const Order = () => {
                 <div className={styles.anotherPerson}>
                   <div>
                     <label>
-                      Введіть ім&apos;я<span> *</span>
+                      Ім&apos;я одержувача<span> *</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Ім'я одержувача"
+                      placeholder="Введіть ім’я одержувача"
                       {...register('recipientFirstName', {
                         required: 'Введіть ім’я одержувача',
                       })}
