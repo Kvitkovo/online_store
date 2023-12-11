@@ -8,6 +8,7 @@
   position: fixed;
   display: none;
   width: 100%;
+  padding: 8px 47px;
   top: 0;
   left: 0;
   box-shadow: $box-shadow-secondary;
@@ -16,7 +17,6 @@
   font-size: 22px;
   font-weight: 500;
   line-height: 24px;
-  padding: 16px 47px;
 }
 
 .displayPrice {
@@ -73,7 +73,9 @@
     transform: translateX(-500%);
   }
   .titleContainer {
+    height: 56px;
     display: flex;
+    align-items: center;
   }
   .buttonContainer {
     display: block;
@@ -91,6 +93,9 @@
   .buttonContainer {
     padding: 15px 27px;
   }
+  .titleContainer {
+    padding: 8px 27px;
+  }
 }
 @include sm {
   .filterContainer {
@@ -99,5 +104,11 @@
   }
   .buttonContainer {
     padding: 15px 16px;
+  }
+  .titleContainer {
+    padding: 8px 16px;
+  }
+  .filterTitle {
+    font-size: 22px;
   }
 }

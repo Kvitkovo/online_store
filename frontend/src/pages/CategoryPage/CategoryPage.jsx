@@ -109,7 +109,6 @@ const CategoryPage = () => {
                 onClick={handleClickFilter}
               />
             </div>
-            <div className={styles.sortBlock_mobile}></div>
           </div>
           {isLoading
             ? 'Loading ...'

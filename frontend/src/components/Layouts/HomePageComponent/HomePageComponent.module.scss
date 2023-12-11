@@ -11,9 +11,3 @@
     color: $discount-color;
   }
 }
-
-@include sm {
-  .title {
-    padding-left: 16px;
-  }
-}

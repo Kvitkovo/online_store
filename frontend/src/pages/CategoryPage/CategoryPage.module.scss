@@ -29,7 +29,7 @@
 
 .sortDropdown {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   position: relative;
   z-index: 1;
 }
@@ -45,6 +45,9 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   max-width: inherit;
   margin: 0px auto;
+  & li {
+    height: 100%;
+  }
 }
 
 .mainContent {
@@ -61,16 +64,21 @@
 }
 
 @include lg {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
+  }
+
   .sortDropdown {
     display: none;
   }
+
   .sortTitle {
     display: none;
   }
 
   .sortBlock {
     background: transparent;
-    display: grid;
+    flex-direction: row;
     padding: 0;
     gap: 30px;
     align-items: center;
@@ -101,11 +109,6 @@
   }
 }
 
-@include lg {
-  .cards {
-    grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
-  }
-}
 @include md {
   .cards {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -114,5 +117,8 @@
 @include sm {
   .cards {
     grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
+  }
+  .sortSmallDevices {
+    gap: 20px;
   }
 }
