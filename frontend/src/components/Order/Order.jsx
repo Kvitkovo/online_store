@@ -4,6 +4,7 @@ import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
 import { ICONS } from '../ui-kit/icons';
 import { IMaskInput } from 'react-imask';
+import OrderInfo from './components/OrderInfo';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
@@ -226,9 +227,7 @@ const Order = () => {
             </form>
           )}
         </div>
-        <div className={styles.cart}>
-          <h3 className={styles.subtitle}>Інформація про замовлення</h3>
-        </div>
+        <OrderInfo />
       </div>
     </div>
   );

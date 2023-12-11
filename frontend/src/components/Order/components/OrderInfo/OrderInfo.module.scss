@@ -1,0 +1,15 @@
+@import '../../../../mixins';
+@import '../../../../variables';
+
+.cart {
+  background-color: $white-color;
+}
+
+.subtitle {
+  @include subtitle;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
