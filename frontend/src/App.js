@@ -22,6 +22,7 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import ChangePassword from './components/account/ChangePassword';
 import Orders from './components/account/Orders';
 import SupportModal from './components/common/Support/SupportModal';
+import Order from './components/Order/Order';
 import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
@@ -46,6 +47,7 @@ function App() {
               <Route path={ROUTES.partner} element={<Partner />} />
               <Route path={ROUTES.privacy} element={<Privacy />} />
               <Route path={ROUTES.card} element={<CardPage />} />
+              <Route path={ROUTES.order} element={<Order />} />
               <Route
                 path={ROUTES.emailConfirmation}
                 element={<RegisterConfirm />}
