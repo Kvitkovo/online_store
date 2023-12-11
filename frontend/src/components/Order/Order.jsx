@@ -161,7 +161,7 @@ const Order = () => {
                       type="text"
                       placeholder="Ім'я одержувача"
                       {...register('recipientFirstName', {
-                        required: "Вкажіть ваше ім'я",
+                        required: 'Введіть ім’я одержувача',
                       })}
                     ></input>
                     <div>
@@ -173,10 +173,10 @@ const Order = () => {
                     </div>
                   </div>
                   <div>
-                    <label>Введіть прізвище</label>
+                    <label>Прізвище одержувача</label>
                     <input
                       type="text"
-                      placeholder="Прізвище одержувача"
+                      placeholder="Введіть прізвище одержувача"
                       {...register('recipientLastName')}
                     ></input>
                   </div>
@@ -192,7 +192,7 @@ const Order = () => {
                       onAccept={(value) => setValue('recipientPhone', value)}
                       value={getValues('recipientPhone')}
                       {...register('recipientPhone', {
-                        required: 'Вкажіть ваш номер телефону',
+                        required: 'Вкажіть номер телефону одержувача',
                         pattern: {
                           value: /^\+380\(\d{2}\)\d{3} \d{2} \d{2}$/,
                           message: 'Невірний номер телефону',
@@ -208,10 +208,10 @@ const Order = () => {
                     </div>
                   </div>
                   <div>
-                    <label>Введіть по батькові</label>
+                    <label>По батькові одержувача</label>
                     <input
                       type="text"
-                      placeholder="По батькові одержувача"
+                      placeholder="Введіть по батькові одержувача"
                       {...register('recipientMiddleName')}
                     ></input>
                   </div>
