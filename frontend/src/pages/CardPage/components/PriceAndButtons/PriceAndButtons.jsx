@@ -67,7 +67,7 @@ const PriceAndButtons = ({
           <DiscountPrice
             oldPrice={oldPrice}
             actualPrice={actualPrice}
-            isActive="NO_ACTIVE"
+            isActive="UNAVAILABLE"
           />
           <p className={styles.outOfStock}>Нема в наявності</p>
         </div>

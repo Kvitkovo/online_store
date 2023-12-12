@@ -9,6 +9,9 @@
 .hide {
   display: none;
 }
+.fotoInactive {
+  opacity: 0.4;
+}
 
 @include lg {
   .itemImage {

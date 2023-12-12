@@ -6,33 +6,48 @@ import IconButton from '../../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import { register } from 'swiper/element/bundle';
 import { GetProducts } from '../../../../services/products/productsAccess.service';
+import { useParams } from 'react-router-dom';
 import './swiper.scss';
 import Slide from './Slide';
 
 const Slider = React.memo(({ data }) => {
+  const { myId } = useParams();
   const swiperElRef = useRef(null);
   const showNavigation = data.length > 5;
   const [receivedData, setReceivedData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    let ignore = false;
+    let isMounted = true;
     setReceivedData([]);
 
-    data.forEach(async (id) => {
+    const fetchDataForAll = async () => {
       try {
-        const responce = await GetProducts(id);
+        const requests = data.map(async (id) => {
+          if (myId !== id) {
+            const response = await GetProducts(id);
+            if (isMounted) {
+              setReceivedData((prev) => [...prev, response]);
+            }
+          }
+        });
 
-        if (!ignore) {
-          setReceivedData((prev) => [...prev, responce]);
-        }
+        await Promise.all(requests);
       } catch (error) {
         console.error(error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    });
-    return () => {
-      ignore = true;
     };
-  }, [data]);
+
+    fetchDataForAll();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [data, myId]);
 
   useEffect(() => {
     register();
@@ -111,11 +126,8 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {receivedData.map((card, idx, arr) =>
-            idx !== arr.length - 1 ? (
-              <Slide card={card} key={card.alias} />
-            ) : null,
-          )}
+          {!isLoading &&
+            receivedData.map((card) => <Slide card={card} key={card.alias} />)}
         </swiper-container>
         {showNavigation && (
           <div className={`swiper-pagination ${styles.pagination}`}> </div>

@@ -40,7 +40,7 @@ const ItemCard = ({ cardData }) => {
         <div className={styles.cardImage}>
           <ItemImage
             image={
-              cardData.images[0]
+              cardData.images?.length > 0
                 ? cardData.images[0].url
                 : '/images/no_image.jpg'
             }
