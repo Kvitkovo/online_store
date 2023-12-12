@@ -17,6 +17,7 @@ public class JwtResponseDto {
 
     private String email;
     private String token;
+    private Long id;
 
     @Schema(example = "andriy@mail.com", description = "Authenticated user email")
     public String getEmail() {
@@ -28,5 +29,10 @@ public class JwtResponseDto {
             description = "Authenticated user token")
     public String getToken() {
         return token;
+    }
+
+    @Schema(example = "1", description = "User ID")
+    public Long getId() {
+        return id;
     }
 }

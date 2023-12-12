@@ -12,9 +12,11 @@ import { navigationItems } from './navigationItems';
 import NavigationMenu from './components/NavigationMenu';
 import CartPopup from '../../common/Cart';
 import { useModalEffect } from '../../../hooks/useModalEffect';
-import MyBouquet from '../../common/MyBouquet/MyBouquet';
+import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
+import LoginModal from '../../login/LoginModal';
+import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
@@ -37,6 +39,8 @@ const Header = () => {
 
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenRegister, setIsOpenRegister] = useState(false);
 
   const toggleCart = () => {
     setIsOpenCart((prev) => !prev);
@@ -46,7 +50,16 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   };
 
-  useModalEffect(isOpenCart, isOpenMyBouquet);
+  const toggleLogin = () => {
+    setIsOpenLogin((prev) => !prev);
+    setIsOpenRegister(false);
+  };
+  const toggleRegister = () => {
+    setIsOpenLogin(false);
+    setIsOpenRegister((prev) => !prev);
+  };
+
+  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -65,6 +78,7 @@ const Header = () => {
       <BurgerMenu
         toggleCart={toggleCart}
         toggleMyBouquet={toggleMyBouquet}
+        toggleLogin={toggleLogin}
         cartQuantity={productQuantity}
       />
       <header>
@@ -140,7 +154,7 @@ const Header = () => {
                 variant="no-border"
                 label="Увійти"
                 icon={<ICONS.halfPerson />}
-                onClick={() => alert('clicked bouquete')}
+                onClick={toggleLogin}
               />
             </div>
 
@@ -155,6 +169,15 @@ const Header = () => {
       </header>
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
+      {isOpenLogin && (
+        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
+      )}
+      {isOpenRegister && (
+        <RegisterModal
+          toggleLogin={toggleLogin}
+          toggleRegister={toggleRegister}
+        />
+      )}
       <Modal
         isOpen={isCatalogOpened}
         setIsOpen={setIsCatalogOpened}

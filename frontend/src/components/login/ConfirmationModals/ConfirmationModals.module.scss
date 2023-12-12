@@ -1,0 +1,32 @@
+@import 'src/_variables.scss';
+
+.mainContainer {
+  padding: 20px 26px 26px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  p {
+    font-size: 20px;
+    line-height: 120%;
+  }
+}
+.email {
+  line-height: 140%;
+  margin-bottom: 16px;
+}
+.emailExample {
+  color: $page-accent-color;
+}
+.textConfirmation {
+  margin-top: 16px;
+  line-height: 140%;
+}
+.btnContainer {
+  display: flex;
+  gap: 32px;
+  margin-top: 26px;
+}

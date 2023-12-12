@@ -45,14 +45,6 @@
     width: 100%;
   }
 }
-@include md {
-  .root {
-    width: 354px;
-    .input {
-      width: 266px;
-    }
-  }
-}
 
 @include sm {
   .root {
