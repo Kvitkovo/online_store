@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './OrderInfo.module.scss';
 import { useSelector } from 'react-redux';
 import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
+import Button from '../../../ui-kit/components/Button';
 
 const OrderInfo = () => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
@@ -34,6 +36,8 @@ const OrderInfo = () => {
           <p>{productTotal}</p>
         </div>
       </div>
+      <Link to="/">Продовжити покупки</Link>
+      <Button label="Оформити замовлення"></Button>
     </div>
   );
 };
