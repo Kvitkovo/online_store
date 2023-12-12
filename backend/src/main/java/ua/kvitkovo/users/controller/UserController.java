@@ -17,25 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.security.jwt.JwtResponseDto;
 import ua.kvitkovo.security.jwt.JwtTokenProvider;
-import ua.kvitkovo.users.dto.ChangePasswordRequestDto;
-import ua.kvitkovo.users.dto.CreateUserRequestDto;
-import ua.kvitkovo.users.dto.EmployeeUpdateRequestDto;
-import ua.kvitkovo.users.dto.ResetPasswordRequestDto;
-import ua.kvitkovo.users.dto.UserRequestDto;
-import ua.kvitkovo.users.dto.UserResponseDto;
+import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserAuthService;
 import ua.kvitkovo.users.service.UserService;
@@ -133,7 +119,7 @@ public class UserController {
         User user = userAuthService.confirmEmail(code);
         log.debug("Email confirmed");
         String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
-        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token);
+        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId());
         return ResponseEntity.ok(response);
     }
 

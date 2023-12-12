@@ -12,6 +12,9 @@ import { useModalEffect } from '../../../../hooks/useModalEffect';
 const SupportPhone = ({ toggleSupportPhone }) => {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+
   const [submitted, setSubmitted] = useState(false);
   const [showFormSubmitted, setShowFormSubmitted] = useState(false);
 
@@ -20,6 +23,9 @@ const SupportPhone = ({ toggleSupportPhone }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+    setNameError(!name);
+    setPhoneError(!phone);
+
     if (validatePhone(phone) && name) {
       setShowFormSubmitted(true);
     }
@@ -49,7 +55,7 @@ const SupportPhone = ({ toggleSupportPhone }) => {
 
               <div className={styles.dataContainer}>
                 <label className={styles.labelData} htmlFor="name">
-                  Ваше ім’я <span>*</span>
+                  Ваше ім’я {nameError && <span>*</span>}
                 </label>
 
                 <input
@@ -65,9 +71,11 @@ const SupportPhone = ({ toggleSupportPhone }) => {
                 )}
               </div>
 
-              <div className={styles.dataContainer}>
+              <div
+                className={`${styles.dataContainer} ${styles.phoneContainer}`}
+              >
                 <label className={styles.labelData} htmlFor="phone">
-                  Номер телефону <span>*</span>
+                  Номер телефону {phoneError && <span>*</span>}
                 </label>
 
                 <InputMask

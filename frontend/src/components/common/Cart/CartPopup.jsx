@@ -9,9 +9,11 @@ import IconButton from '../../ui-kit/components/IconButton';
 
 import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
+import { useNavigate } from 'react-router-dom';
 
 const CartPopup = ({ toggleCart }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const navigate = useNavigate();
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -21,6 +23,11 @@ const CartPopup = ({ toggleCart }) => {
     );
     return total;
   }, [cartItems]);
+
+  const handleOrder = () => {
+    navigate('/order');
+    toggleCart();
+  };
 
   return (
     <Modals type="cart" onClick={toggleCart}>
@@ -54,7 +61,7 @@ const CartPopup = ({ toggleCart }) => {
             label="Оформити замовлення"
             variant={cartItems.length > 0 ? 'primary' : 'disabled'}
             padding="padding-even"
-            onClick={toggleCart}
+            onClick={() => handleOrder()}
             disabled={cartItems.length === 0}
           />
         </div>

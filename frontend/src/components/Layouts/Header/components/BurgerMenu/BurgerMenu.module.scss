@@ -8,20 +8,21 @@
 }
 .burgerHeader {
   display: flex;
-  padding: 8px 16px 16px;
+  justify-content: space-between;
+  padding: 6px 27px;
   background-color: $white-color;
   width: 100%;
 }
 .burgerIcon {
-  margin: 8px auto 0 0;
+  margin: 10px 50px 10px 0;
 }
 .actionIcons {
   display: flex;
 }
 .searchField {
   display: flex;
-  margin-left: 96px;
-  margin-right: 104px;
+  max-width: 354px;
+  width: 100%;
 }
 .searchMobile,
 .bouquet,
@@ -108,6 +109,7 @@
   position: relative;
   left: -8px;
   top: -6px;
+  padding-top: 2px;
 }
 
 @include md {
@@ -121,5 +123,8 @@
   }
   .searchMobile {
     display: flex;
+  }
+  .burgerHeader {
+    padding: 8px 16px 0;
   }
 }

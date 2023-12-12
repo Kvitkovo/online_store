@@ -2,7 +2,6 @@
 import React from 'react';
 import styles from './Path.module.scss';
 import ROUTES from '../../../../constants/routers';
-
 import { Link } from 'react-router-dom';
 import { ICONS } from '../../../../components/ui-kit/icons';
 

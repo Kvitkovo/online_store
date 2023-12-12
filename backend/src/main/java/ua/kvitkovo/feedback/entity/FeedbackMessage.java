@@ -57,5 +57,6 @@ public class FeedbackMessage {
     private String messageText;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "message", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("created ASC")
     private Set<AnswerMessage> answers;
 }

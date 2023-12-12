@@ -1,13 +1,16 @@
 @import '../../../variables';
 @import '../../../mixins';
 .card {
-  height: 100%;
+  position: relative;
+  height: inherit;
   display: flex;
+  max-width: 280px;
+  min-width: 162px;
+  flex: 1 1 auto;
   flex-direction: column;
   justify-content: space-between;
   background-color: $white-color;
   border-radius: 8px;
-  position: relative;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.08);
   container-name: cardBlock;
   container-type: inline-size;
@@ -110,5 +113,11 @@
   }
   .outOfStock {
     margin-bottom: 2px;
+  }
+}
+
+@include sm {
+  .card {
+    margin: 0 auto;
   }
 }
