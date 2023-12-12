@@ -119,7 +119,7 @@ public class UserController {
         User user = userAuthService.confirmEmail(code);
         log.debug("Email confirmed");
         String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
-        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token);
+        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId());
         return ResponseEntity.ok(response);
     }
 
