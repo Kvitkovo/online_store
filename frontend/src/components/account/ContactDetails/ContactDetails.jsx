@@ -2,20 +2,13 @@ import React from 'react';
 import styles from './ContactDetails.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Account from '../Account';
+import { useSelector } from 'react-redux';
 
 const ContactDetails = () => {
   const navigate = useNavigate();
-  /*  const data = {
-    id: '1',
-    firstName: 'Олена',
-    lastName: 'Шевченко',
-    surname: 'Олегівна',
-    phone: '+380670000000',
-    email: 'example@gmail.com',
-    birthday: '26.03.1992 ',
-  }; */
+  const userData = useSelector((state) => state.user.user);
 
   const navigateToEdit = () => {
     navigate('/account/change-details');
@@ -24,9 +17,6 @@ const ContactDetails = () => {
   const navigateToChangePassword = () => {
     navigate('/account/change-password');
   };
-
-  const location = useLocation();
-  const userData = location.state && location.state.userData;
 
   return (
     <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>

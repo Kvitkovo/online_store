@@ -12,13 +12,12 @@ const axiosInstance = axios.create({
   },
 });
 
-//TODO: When token is ready, uncomment this
-// axiosInstance.interceptors.request.use((request) => {
-//   request.headers = {
-//     authorization: `Bearer ` + localStorage.getItem('token'),
-//   };
-//   return request;
-// });
+axiosInstance.interceptors.request.use((request) => {
+  request.headers = {
+    authorization: `Bearer ` + localStorage.getItem('token'),
+  };
+  return request;
+});
 
 axiosInstance.interceptors.response.use(
   (response) => {

@@ -1,8 +1,16 @@
 import React from 'react';
 import styles from './SideMenu.module.scss';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout, clearUser } from '../../../redux/slices/userSlice';
 
-const SideMenu = ({ handleLogout }) => {
+const SideMenu = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearUser());
+  };
   return (
     <div className={styles.menuAccount}>
       <NavLink

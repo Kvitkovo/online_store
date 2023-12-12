@@ -18,30 +18,22 @@ import Catalog from '../../common/Catalog';
 import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
+import { getUser } from '../../../redux/slices/userSlice';
 
-const Header = ({ isLoggedIn }) => {
+const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector(getUser);
 
-  useEffect(() => {
-    setLoginSuccess(isLoggedIn);
-  }, [isLoggedIn]);
-
-  const handleSuccessfulLogin = () => {
-    navigate('/account');
-    setLoginSuccess(true);
-    setIsOpenLogin(false);
-  };
   const toggleLogin = () => {
-    setIsOpenLogin((prev) => !prev);
-    setIsOpenRegister(false);
+    if (user && user.loggedIn) {
+      navigate('/account');
+    } else {
+      setIsOpenLogin((prev) => !prev);
+      setIsOpenRegister(false);
+    }
   };
-
-  const handleLoginButtonClick = loginSuccess
-    ? handleSuccessfulLogin
-    : toggleLogin;
 
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
@@ -168,9 +160,9 @@ const Header = ({ isLoggedIn }) => {
             <div className={styles.login}>
               <Button
                 variant="no-border"
-                label={loginSuccess ? 'Профіль' : 'Увійти'}
+                label={user && user.loggedIn ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
-                onClick={handleLoginButtonClick}
+                onClick={toggleLogin}
               />
             </div>
 
@@ -186,12 +178,7 @@ const Header = ({ isLoggedIn }) => {
       {isOpenCart && <CartPopup toggleCart={toggleCart} />}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       {isOpenLogin && (
-        <LoginModal
-          toggleLogin={toggleLogin}
-          toggleRegister={toggleRegister}
-          handleSuccessfulLogin={handleSuccessfulLogin}
-          setLoginSuccess={setLoginSuccess}
-        />
+        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
       )}
       {isOpenRegister && (
         <RegisterModal

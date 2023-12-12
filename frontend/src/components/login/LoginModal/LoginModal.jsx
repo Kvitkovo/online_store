@@ -11,10 +11,13 @@ import {
   resetPasswordRequest,
 } from '../../../services/login/login.service';
 import ResetPasswordModal from '../ConfirmationModals/ResetPasswordModal';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+/* eslint-disable max-len */
+import { fetchUserData } from '../../../services/userData/fetchUserData.service';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux/slices/userSlice';
 
-const LoginModal = ({ toggleLogin, toggleRegister, handleSuccessfulLogin }) => {
+const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -23,6 +26,7 @@ const LoginModal = ({ toggleLogin, toggleRegister, handleSuccessfulLogin }) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -33,6 +37,24 @@ const LoginModal = ({ toggleLogin, toggleRegister, handleSuccessfulLogin }) => {
   const isResetPasswordValid =
     resetPasswordClicked && resetPassword && email && validateEmail(email);
 
+  const handleFetchData = async () => {
+    try {
+      const fetchedData = await fetchUserData();
+      localStorage.setItem('userfetchedData', JSON.stringify(fetchedData));
+      navigate('/account', { state: { userData: fetchedData } });
+      const userData = {
+        firstName: fetchedData.firstName,
+        lastName: fetchedData.lastName,
+        surname: fetchedData.surname,
+        phone: fetchedData.phone,
+        email: fetchedData.email,
+        birthday: fetchedData.birthday,
+      };
+      dispatch(login(userData));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -55,39 +77,15 @@ const LoginModal = ({ toggleLogin, toggleRegister, handleSuccessfulLogin }) => {
 
     const loginResult = await loginUser({ email, password });
     if (loginResult && loginResult.success) {
-      handleSuccessfulLogin();
-      fetchUserData();
+      handleFetchData();
     } else if (loginResult && loginResult.error) {
       setPasswordError(loginResult.error);
     }
   };
-
-  const fetchUserData = async () => {
-    const id = localStorage.getItem('authId');
-    const token = localStorage.getItem('authToken');
-    try {
-      const response = await axios.get(
-        `https://api.imperiaholoda.com.ua:4446/v1/users/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      if (response.status === 200) {
-        const fetchedData = response.data;
-        localStorage.setItem('userData', JSON.stringify(fetchedData));
-        navigate('/account', { state: { userData: fetchedData } });
-      }
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-    }
-  };
-
   const handleGoogleLogin = async (token) => {
     const loginSuccess = await googleLoginRequest(token);
     if (loginSuccess) {
-      handleSuccessfulLogin();
+      handleFetchData();
     }
   };
   const handleResetPassword = async (e) => {
