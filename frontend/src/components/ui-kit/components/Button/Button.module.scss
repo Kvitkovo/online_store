@@ -1,6 +1,8 @@
 @import '../../../../variables';
 
 .button {
+  width: inherit;
+  height: 48px;
   font-family: $font-main;
   display: flex;
   justify-content: center;
@@ -27,7 +29,7 @@
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
-  font-weight: 500;
+  //width: 90vw;
   &:hover {
     opacity: 0.5;
   }
@@ -103,6 +105,22 @@
   }
 }
 
+.no-border-yellow {
+  padding: 11px 0;
+  font-size: 14px;
+  color: $on-press-color;
+  text-decoration: underline;
+  background-color: $white-color;
+  .label {
+    align-self: center;
+  }
+  &:hover {
+    color: $page-accent-color;
+  }
+  &:active {
+    color: $active-color;
+  }
+}
 .bg-inherit {
   background-color: inherit;
   color: $text-color;

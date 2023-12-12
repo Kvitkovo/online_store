@@ -1,0 +1,23 @@
+@import '../../../../variables';
+
+.radio {
+  padding: 12px 24px;
+  background-color: $white-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+
+  input {
+    display: none;
+  }
+
+  .icon {
+    display: flex;
+  }
+
+  .label {
+    color: $text-color;
+  }
+}

@@ -1,20 +1,21 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
-.dropdown {
-  padding: 8px 8px 8px 12px;
-  background-color: #fff;
-  border: 1px solid $gray-dark-color;
+.sortOptions {
+  position: absolute;
+  z-index: 2;
+  margin-top: 15px;
+  width: inherit;
+  background: $white-color;
+  box-shadow: $box-shadow-secondary;
   border-radius: 8px;
-  min-width: 248px;
-  max-width: max-content;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  &__option {
-    line-height: 24px;
-  }
-  &__choosen {
-    display: flex;
-    justify-content: space-between;
+}
+
+@include lg {
+  .dropdown {
+    display: none;
+    &__mobile {
+      display: block;
+    }
   }
 }

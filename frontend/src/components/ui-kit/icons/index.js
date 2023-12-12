@@ -41,6 +41,10 @@ import { ReactComponent as arrowDown } from './arrow-down.svg';
 import { ReactComponent as deleteIcon } from './delete-icon.svg';
 import { ReactComponent as arrowUpWhite } from './arrow-up-white.svg';
 import { ReactComponent as pathArrow } from './path-arrow.svg';
+import { ReactComponent as sortIcon } from './sort-icon.svg';
+import { ReactComponent as radiobtnChecked } from './icon-radiobtn-checked.svg';
+import { ReactComponent as radiobtn } from './icon-radiobtn.svg';
+import { ReactComponent as filter } from './filter.svg';
 
 export const ICONS = {
   addComponent,
@@ -86,4 +90,8 @@ export const ICONS = {
   deleteIcon,
   arrowUpWhite,
   pathArrow,
+  sortIcon,
+  radiobtnChecked,
+  radiobtn,
+  filter,
 };

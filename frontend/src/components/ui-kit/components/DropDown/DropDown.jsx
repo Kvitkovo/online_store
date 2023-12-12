@@ -1,44 +1,45 @@
 import React, { useState } from 'react';
 import { ICONS } from '../../icons';
 import styles from './DropDown.module.scss';
+import Button from '../Button';
+import RadioButton from '../RadioButton';
 
-const DropDown = ({ initualValue, options }) => {
+const DropDown = ({ sortValue, setValue, options }) => {
   const [open, setOpen] = useState(false);
-  const [choosenOptionIdx, setChoosenOptionIdx] = useState(initualValue);
 
   const handleClick = () => {
     setOpen(!open);
   };
-  const handleChange = (idx) => {
-    setChoosenOptionIdx(idx);
+  const handleChange = (value) => {
+    setValue(value);
+    setOpen(!open);
   };
-
   return (
-    <div>
-      <div onClick={handleClick} className={styles.dropdown}>
-        <div className={styles.dropdown__choosen}>
-          <span>{options[choosenOptionIdx]}</span>
-          {open ? (
-            <ICONS.arrowUp className={styles.dropdown__icon} />
-          ) : (
-            <ICONS.showList className={styles.dropdown__icon} />
-          )}
-        </div>
+    <>
+      <Button
+        label={options[sortValue].label}
+        variant={'secondary'}
+        icon={<ICONS.sortIcon />}
+        onClick={handleClick}
+      />
 
-        {open &&
-          options.map((option, idx) =>
-            idx === choosenOptionIdx ? null : (
-              <div
-                key={option}
-                className={styles.dropdown__option}
-                onClick={() => handleChange(idx)}
-              >
-                {option}
-              </div>
-            ),
-          )}
-      </div>
-    </div>
+      {open && (
+        <div className={styles.sortOptions}>
+          {options.map((option) => {
+            const { value, label } = option;
+            return (
+              <RadioButton
+                key={value}
+                label={label}
+                onChange={() => handleChange(value)}
+                value={value}
+                checked={value === sortValue}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 

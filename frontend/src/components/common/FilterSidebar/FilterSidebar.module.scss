@@ -1,10 +1,22 @@
 @import './../../../variables';
+@import './../../../_mixins';
 
 .filterContainer {
   width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+}
+.titleContainer {
+  position: fixed;
+  display: none;
+  width: 100%;
+  padding: 8px 47px;
+  top: 0;
+  left: 0;
+  box-shadow: $box-shadow-secondary;
+}
+.filterTitle {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 .displayPrice {
@@ -20,4 +32,83 @@
 .rangeContainer {
   width: 220px;
   margin-bottom: 16px;
+}
+.buttonContainer {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 47px;
+  background: $page-background-color;
+}
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.showbarContainer {
+  display: none;
+}
+
+@include lg {
+  .filterContainer {
+    background: $white-color;
+    height: 100%;
+    width: 347px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 62px 8px 0 47px;
+    z-index: 4;
+  }
+  .contentContainer {
+    overflow: scroll;
+    height: inherit;
+  }
+  .filterVisible {
+    transform: translateX(0);
+  }
+  .filterHidden {
+    transform: translateX(-500%);
+  }
+  .titleContainer {
+    height: 56px;
+    display: flex;
+    align-items: center;
+  }
+  .buttonContainer {
+    display: block;
+  }
+  .showbarContainer {
+    display: block;
+  }
+}
+
+@include md {
+  .filterContainer {
+    width: 274px;
+    padding-left: 27px;
+  }
+  .buttonContainer {
+    padding: 15px 27px;
+  }
+  .titleContainer {
+    padding: 8px 27px;
+  }
+}
+@include sm {
+  .filterContainer {
+    width: 252px;
+    padding-left: 16px;
+  }
+  .buttonContainer {
+    padding: 15px 16px;
+  }
+  .titleContainer {
+    padding: 8px 16px;
+  }
+  .filterTitle {
+    font-size: 22px;
+  }
 }

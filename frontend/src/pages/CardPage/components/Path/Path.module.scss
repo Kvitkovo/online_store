@@ -19,7 +19,7 @@
 @include md {
   .path {
     font-size: 14px;
-    margin: 16px 47px;
+    margin: 16px 0;
     margin-bottom: 16px;
   }
 }
@@ -28,16 +28,19 @@
     width: 100vw;
     overflow: auto;
     white-space: nowrap;
-    &::-webkit-scrollbar {
+  }
+  .path {
+    position: relative;
+    margin: 19px 0px 15px;
+    &::after {
+      position: absolute;
+      top: 35px;
+      display: block;
+      content: '';
       width: 128px;
       height: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
       background-color: $page-accent-color;
       border-radius: 2px;
     }
-  }
-  .path {
-    margin: 19px 16px 15px;
   }
 }
