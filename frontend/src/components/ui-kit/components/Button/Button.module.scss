@@ -25,6 +25,7 @@
 }
 
 .primary {
+  height: 48px;
   background-color: $page-accent-color;
   color: $white-color;
   font-size: 18px;
@@ -58,6 +59,7 @@
   width: 100%;
 }
 .secondary {
+  height: 48px;
   color: $text-color;
   font-weight: 500;
   background-color: $white-color;
@@ -78,6 +80,7 @@
 }
 
 .no-border {
+  height: 48px;
   color: $text-color;
   background-color: $white-color;
   font-size: 16px;
@@ -85,6 +88,22 @@
     align-self: center;
   }
 }
+
+.no-border-hovered {
+  color: $text-color;
+  background-color: $white-color;
+  font-size: 16px;
+  .label {
+    align-self: center;
+  }
+  &:hover {
+    color: $page-accent-color;
+  }
+  &:active {
+    color: $active-color;
+  }
+}
+
 .no-border-yellow {
   padding: 11px 0;
   font-size: 14px;
@@ -93,6 +112,12 @@
   background-color: $white-color;
   .label {
     align-self: center;
+  }
+  &:hover {
+    color: $page-accent-color;
+  }
+  &:active {
+    color: $active-color;
   }
 }
 .bg-inherit {

@@ -4,6 +4,7 @@ import styles from './BurgerMenu.module.scss';
 import { NavLink } from 'react-router-dom';
 import Button from '../../../../ui-kit/components/Button';
 import { ICONS } from '../../../../ui-kit/icons';
+import logo from '../../../../ui-kit/icons/logo/logo.svg';
 import Divider from '../../../../ui-kit/components/Divider';
 import ROUTES from '../../../../../constants/routers';
 import IconButton from '../../../../ui-kit/components/IconButton';
@@ -23,7 +24,7 @@ const OpenMenu = ({ toggleMenu }) => {
     <div className={styles.openMenu}>
       <div className={styles.containerTop}>
         <NavLink to={ROUTES.home}>
-          <img className={styles.logo} src="images/logo.svg" />
+          <img className={styles.logo} src={logo} />
         </NavLink>
         <div>
           <IconButton icon={<ICONS.closeMobile />} onClick={toggleMenu} />
@@ -72,8 +73,7 @@ const OpenMenu = ({ toggleMenu }) => {
           <Divider />
         </div>
         <p className={styles.addition}>
-          {' '}
-          <span className={styles.language}>Укр</span>{' '}
+          <span className={styles.language}>Укр</span>
         </p>
       </div>
     </div>

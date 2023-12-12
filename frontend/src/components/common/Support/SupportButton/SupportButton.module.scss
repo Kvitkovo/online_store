@@ -11,14 +11,39 @@
   height: 164px;
 }
 
-.additionalButtons {
-  display: none;
-}
 .visible {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
+.messageButton,
+.phoneButton {
+  opacity: 0;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    pointer-events 0.5s;
+}
+.visible .messageButton,
+.visible .phoneButton {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.messageButton.hidden {
+  opacity: 0;
+  transform: translateY(100px);
+  pointer-events: none;
+}
+
+.phoneButton.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
 @include md {
   .supportButtonContainer {
     right: 27px;

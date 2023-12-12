@@ -52,10 +52,13 @@
   margin-bottom: 16px;
 }
 .dataContainer {
-  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.phoneContainer {
+  margin-top: 16px;
 }
 
 .dataInput {

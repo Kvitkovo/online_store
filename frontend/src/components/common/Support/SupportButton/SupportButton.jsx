@@ -11,15 +11,9 @@ const SupportButton = ({
   toggleMessageButton,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleButton = () => {
-    if (isOpen) {
-      setIsOpen(false);
-    } else {
-      setIsOpen((prev) => !prev);
-    }
+    setIsOpen((prev) => !prev);
   };
-
   useModalEffect(isPhoneModalOpen, isMessageModalOpen);
 
   return (
@@ -29,7 +23,9 @@ const SupportButton = ({
           isOpen ? styles.visible : ''
         }`}
       >
-        <div>
+        <div
+          className={`${styles.messageButton} ${isOpen ? '' : styles.hidden}`}
+        >
           <IconButton
             icon={<ICONS.MessageIcon />}
             isBackground={true}
@@ -40,7 +36,8 @@ const SupportButton = ({
             }}
           />
         </div>
-        <div>
+
+        <div className={`${styles.phoneButton} ${isOpen ? '' : styles.hidden}`}>
           <IconButton
             icon={<ICONS.PhoneIcon />}
             isBackground={true}
