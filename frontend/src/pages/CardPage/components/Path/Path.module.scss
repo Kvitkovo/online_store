@@ -16,6 +16,11 @@
   font-size: 14px;
   line-height: 130%;
 }
+
+.arrow {
+  display: flex;
+}
+
 @include md {
   .path {
     font-size: 14px;
@@ -25,22 +30,26 @@
 }
 @include sm {
   .pathContainer {
-    width: 100vw;
     overflow: auto;
     white-space: nowrap;
+    scrollbar-width: 128px;
+    scrollbar-color: $page-accent-color transparent;
+    &::-webkit-scrollbar {
+      width: 128px;
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $page-accent-color;
+      border-radius: 2px;
+    }
   }
   .path {
     position: relative;
     margin: 19px 0px 15px;
-    &::after {
-      position: absolute;
-      top: 35px;
-      display: block;
-      content: '';
-      width: 128px;
-      height: 4px;
-      background-color: $page-accent-color;
-      border-radius: 2px;
-    }
   }
 }
