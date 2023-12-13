@@ -33,12 +33,12 @@ const ContactDetails = () => {
           </div>
           {userData && (
             <div className={styles.data} key={userData.id}>
-              <p>{userData.firstName}</p>
-              <p>{userData.lastName}</p>
-              <p>{userData.surname}n/a</p>
-              <p>{userData.phone}n/a</p>
-              <p>{userData.email}</p>
-              <p>{userData.birthday}</p>
+              <p>{userData.firstName || 'не вказано'}</p>
+              <p>{userData.lastName || 'не вказано'}</p>
+              <p>{userData.surname || 'не вказано'}</p>
+              <p>{userData.phone || 'не вказано'}</p>
+              <p>{userData.email || 'не вказано'}</p>
+              <p>{userData.birthday || 'не вказано'}</p>
             </div>
           )}
         </div>

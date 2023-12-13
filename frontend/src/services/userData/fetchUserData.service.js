@@ -20,6 +20,10 @@ export const fetchUserData = async () => {
       return fetchedData;
     }
   } catch (error) {
-    console.error('Error fetching user details:', error);
+    console.error(
+      'Error fetching user details:',
+      error.response?.data || error.message,
+    );
+    throw error;
   }
 };

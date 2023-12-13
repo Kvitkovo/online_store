@@ -20,13 +20,16 @@ const loginUser = async ({ email, password }) => {
   }
 };
 
-const googleLoginRequest = async (token) => {
+const googleLoginRequest = async (token, id) => {
   const response = await axiosInstance.post('/auth/google', {
     token,
+    id,
   });
   if (response && response.status === 200) {
     const authToken = response.data.token;
+    const authId = response.data.id;
     localStorage.setItem('authToken', authToken);
+    localStorage.setItem('authId', authId);
     return true;
   }
 };

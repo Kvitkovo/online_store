@@ -17,13 +17,9 @@ const userSlice = createSlice({
       state.loggedIn = false;
       state.user = null;
     },
-    clearUser(state) {
-      state.loggedIn = false;
-      state.user = null;
-    },
   },
 });
 
-export const { login, logout, clearUser } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export const userSliceReducer = userSlice.reducer;
 export const getUser = (state) => state.user;

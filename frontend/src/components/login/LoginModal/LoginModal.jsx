@@ -38,10 +38,11 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     resetPasswordClicked && resetPassword && email && validateEmail(email);
 
   const handleFetchData = async () => {
-    try {
-      const fetchedData = await fetchUserData();
-      localStorage.setItem('userfetchedData', JSON.stringify(fetchedData));
-      navigate('/account', { state: { userData: fetchedData } });
+    const fetchedData = await fetchUserData();
+    localStorage.setItem('userfetchedData', JSON.stringify(fetchedData));
+    navigate('/account', { state: { userData: fetchedData } });
+
+    if (fetchedData) {
       const userData = {
         firstName: fetchedData.firstName,
         lastName: fetchedData.lastName,
@@ -51,8 +52,10 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
         birthday: fetchedData.birthday,
       };
       dispatch(login(userData));
-    } catch (error) {
-      console.error('Error:', error);
+      navigate('/account', { state: { userData: fetchedData } });
+    } else {
+      console.error('Error: User data is undefined');
+      navigate('/');
     }
   };
   const handleSubmit = async (e) => {
@@ -78,12 +81,13 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     const loginResult = await loginUser({ email, password });
     if (loginResult && loginResult.success) {
       handleFetchData();
+      toggleLogin();
     } else if (loginResult && loginResult.error) {
       setPasswordError(loginResult.error);
     }
   };
-  const handleGoogleLogin = async (token) => {
-    const loginSuccess = await googleLoginRequest(token);
+  const handleGoogleLogin = async (token, id) => {
+    const loginSuccess = await googleLoginRequest(token, id);
     if (loginSuccess) {
       handleFetchData();
     }
