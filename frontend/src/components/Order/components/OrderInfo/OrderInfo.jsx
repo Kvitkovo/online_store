@@ -19,25 +19,36 @@ const OrderInfo = () => {
   }, [cartItems]);
   return (
     <div className={styles.cart}>
-      <h3 className={styles.subtitle}>Інформація про замовлення</h3>
-      <p>У вашому кошику: товари(ів):</p>
+      <div className={styles.topPart}>
+        <h3 className={styles.subtitle}>Інформація про замовлення</h3>
+        <p className={styles.itemsQuantity}>У вашому кошику товарів:</p>
+      </div>
+
       <Divider />
       <CartItem items={cartItems} />
       <Divider />
-      <div className={styles.flex}>
-        <div>
-          <p>Сума замовлення:</p>
-          <p>Доставка:</p>
-          <p>Сума до сплати:</p>
+      <div className={styles.bottomPart}>
+        <div className={styles.flex}>
+          <div>
+            <p>Сума замовлення:</p>
+            <p>Доставка:</p>
+            <p>Сума до сплати:</p>
+          </div>
+          <div>
+            <p>{productTotal} грн</p>
+            <p>Безкоштовно</p>
+            <p>{productTotal} грн</p>
+          </div>
         </div>
-        <div>
-          <p>{productTotal}</p>
-          <p>Безкоштовно</p>
-          <p>{productTotal}</p>
-        </div>
+        <Link className={styles.link} to="/">
+          Продовжити покупки
+        </Link>
+        <Button
+          label="Оформити замовлення"
+          padding="padding-even"
+          variant="disabled"
+        ></Button>
       </div>
-      <Link to="/">Продовжити покупки</Link>
-      <Button label="Оформити замовлення"></Button>
     </div>
   );
 };
