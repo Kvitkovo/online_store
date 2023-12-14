@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.service.FilterService;
+import ua.kvitkovo.utils.ApiResponseSuccessful;
 
 import java.util.Map;
 
@@ -27,18 +28,14 @@ public class FilterController {
     private final FilterService filterService;
 
     @Operation(summary = "Get list for filter settings")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping
     public Map<String, Map<Long, ?>> getFilter() {
         return filterService.getFilter();
     }
 
     @Operation(summary = "Get a list of filter elements by active products in a category")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping(path = "/category/{id}")
     public Map<String, Map<Long, ?>> getFilterByCategoryId(
         @Parameter(description = "The ID of the category to retrieve", required = true,
@@ -49,9 +46,7 @@ public class FilterController {
     }
 
     @Operation(summary = "Get the minimum and maximum price of goods in the category")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping(path = "/minMaxPrices")
     public FilterPricesIntervalResponseDto getMinMaxPricesInterval(
         @Parameter(description = "ID of the category of which the products will be returned",

@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -16,13 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.kvitkovo.catalog.converter.SizeDtoMapper;
 import ua.kvitkovo.catalog.dto.request.SizeRequestDto;
 import ua.kvitkovo.catalog.dto.response.SizeResponseDto;
+import ua.kvitkovo.catalog.entity.Size;
 import ua.kvitkovo.catalog.service.SizeService;
-import ua.kvitkovo.errorhandling.ErrorResponse;
+import ua.kvitkovo.utils.*;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Andriy Gaponov
@@ -35,106 +36,73 @@ import java.util.Collections;
 public class SizeController {
 
     private final SizeService sizeService;
+    private final SizeDtoMapper sizeDtoMapper;
 
     @Operation(summary = "Get all Sizes.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(
-                            mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = SizeResponseDto.class))
-                    )
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(
+                    mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = SizeResponseDto.class))
+            )
     })
     @GetMapping
-    @ResponseBody
-    public ResponseEntity<Collection<SizeResponseDto>> getAll() {
+    public ResponseEntity<List<SizeResponseDto>> getAll() {
         log.debug("Received request to get all Sizes.");
-        Collection<SizeResponseDto> sizeResponseDtos = sizeService.getAll();
-        if (sizeResponseDtos.isEmpty()) {
+        List<Size> sizes = sizeService.getAll();
+        if (sizes.isEmpty()) {
             log.debug("Sizes are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.debug("All Sizes were retrieved - {}.", sizeResponseDtos);
-        return ResponseEntity.ok().body(sizeResponseDtos);
+        log.debug("All Sizes were retrieved - {}.", sizes);
+        return ResponseEntity.ok().body(sizeDtoMapper.mapEntityToDto(sizes));
     }
 
     @Operation(summary = "Get Size by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = SizeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Size not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = SizeResponseDto.class))
     })
+    @ApiResponseNotFound
     @GetMapping("/{id}")
-    @ResponseBody
     public SizeResponseDto getSizeById(
             @Parameter(description = "The ID of the size to retrieve", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
         log.debug("Received request to get the Size with id - {}.", id);
-        SizeResponseDto sizeResponseDto = sizeService.findById(id);
-        log.debug("the Size with id - {} was retrieved - {}.", id, sizeResponseDto);
-        return sizeResponseDto;
+        Size size = sizeService.findById(id);
+        log.debug("the Size with id - {} was retrieved - {}.", id, size);
+        return sizeDtoMapper.mapEntityToDto(size);
     }
 
     @Operation(summary = "Create a new Size")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = SizeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "The Size has already been added " +
-                    "or some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = SizeResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
     @PostMapping
-    @ResponseBody
     public SizeResponseDto addSize(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request, BindingResult bindingResult) {
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request,
+            BindingResult bindingResult) {
         log.debug("Received request to create Size - {}.", request);
-        return sizeService.addSize(request, bindingResult);
+        Size size = sizeService.addSize(request, bindingResult);
+        return sizeDtoMapper.mapEntityToDto(size);
     }
 
     @Operation(summary = "Update Size by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = SizeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Size not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = SizeResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PutMapping("/{id}")
-    @ResponseBody
     public SizeResponseDto updateSize(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final SizeRequestDto request,
             @Parameter(description = "The ID of the size to update", required = true,
@@ -142,27 +110,16 @@ public class SizeController {
             )
             @PathVariable Long id, BindingResult bindingResult) {
         log.debug("Received request to update Size - {} with id {}.", request, id);
-        return sizeService.updateSize(id, request, bindingResult);
+        Size size = sizeService.updateSize(id, request, bindingResult);
+        return sizeDtoMapper.mapEntityToDto(size);
     }
 
     @Operation(summary = "Delete Size by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Size not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
-    })
+    @ApiResponseSuccessful
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Void> deleteSize(
             @Parameter(description = "The ID of the size to delete", required = true,
                     schema = @Schema(type = "integer", format = "int64")

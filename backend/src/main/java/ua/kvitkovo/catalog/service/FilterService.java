@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.*;
-import ua.kvitkovo.catalog.repository.ColorRepository;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.catalog.repository.ProductTypeRepository;
-import ua.kvitkovo.catalog.repository.SizeRepository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -21,16 +19,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FilterService {
 
-    private final ColorRepository colorRepository;
-    private final SizeRepository sizeRepository;
+    private final ColorService colorService;
+    private final SizeService sizeService;
     private final ProductTypeRepository productTypeRepository;
     private final ProductRepository productRepository;
     private final ProductService productService;
 
     public Map<String, Map<Long, ?>> getFilter() {
 
-        List<Color> colors = colorRepository.findAll();
-        List<Size> sizes = sizeRepository.findAll();
+        List<Color> colors = colorService.getAll();
+        List<Size> sizes = sizeService.getAll();
         List<ProductType> types = productTypeRepository.findAll();
 
         Map<Long, String> colorResult = new HashMap<>();
