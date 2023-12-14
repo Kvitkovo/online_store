@@ -45,8 +45,7 @@ public class CategoryService {
 
         Category category = new Category();
         BeanUtils.copyProperties(dto, category);
-        category.setAlias(
-                transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+        category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         if (dto.getParentId() > 0) {
             category.setParent(findById(dto.getParentId()));
         }
@@ -76,8 +75,7 @@ public class CategoryService {
         ErrorUtils.checkItemNotUpdatedException(bindingResult);
         Category category = findById(id);
         if (!Objects.equals(dto.getName(), category.getName())) {
-            category.setAlias(
-                    transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
+            category.setAlias(transliterateUtils.getAlias(Category.class.getSimpleName(), dto.getName()));
         }
         BeanUtils.copyProperties(dto, category, Helper.getNullPropertyNames(dto));
 
