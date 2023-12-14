@@ -54,7 +54,6 @@
 .itemsOrder {
   max-height: 300px;
   overflow-y: scroll;
-  // height: 100%;
   padding: 0 16px;
   margin-top: 0;
 
@@ -95,7 +94,6 @@
     grid-row: 2/3;
     grid-column: 1/2;
     padding-left: 70px;
-    font-size: 14px;
   }
 
   .priceWithoutDiscount {
