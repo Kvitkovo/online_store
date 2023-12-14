@@ -101,6 +101,10 @@
   }
 }
 
+.discountPriceOrder p,
+.discountPriceOrder span {
+  font-size: 16px;
+}
 @include sm {
   .itemsBlock {
     overflow-y: hidden;

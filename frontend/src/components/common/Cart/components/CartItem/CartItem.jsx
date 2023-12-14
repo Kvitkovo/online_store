@@ -62,10 +62,18 @@ const CartItem = ({ items, cartClassName }) => {
                 }`
               }
             >
-              <DiscountPrice
-                oldPrice={item.oldPrice}
-                actualPrice={item.price}
-              />
+              <div
+                className={
+                  cartClassName === 'itemsOrder'
+                    ? styles.discountPriceOrder
+                    : ''
+                }
+              >
+                <DiscountPrice
+                  oldPrice={item.oldPrice}
+                  actualPrice={item.price}
+                />
+              </div>
             </div>
           </div>
           {index < items.length - 1 && <Divider />}
