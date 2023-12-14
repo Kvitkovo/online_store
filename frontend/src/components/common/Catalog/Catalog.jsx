@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Catalog.module.scss';
 import CategoryList from './components/CatalogList/CatalogList';
 import SubCategoryList from './components/SubCategoryList/SubCategoryList';
 import { mockCategories as mockData } from '../../../data/catalog/contact';
-import ROUTES from '../../../constants/routers';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const Catalog = ({ setIsOpen, categories }) => {
@@ -12,28 +11,30 @@ const Catalog = ({ setIsOpen, categories }) => {
   const navigate = useNavigate();
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
-  const formatCategory = (category, index) => {
-    const mainPath = `${ROUTES.category}/${category.alias.toLowerCase()}`;
-    const icon = category.icon;
-    const bg = mockData[index]?.bg;
-    const children = categories
-      .filter((child) => child.parent?.sortValue === category.sortValue)
-      .map((child) => ({
-        ...child,
-        link: `${mainPath}/${child.alias.toLowerCase()}`,
-      }));
+  const formattedCategories = useMemo(() => {
+    const formatCategory = (category, index) => {
+      const mainPath = `/categories/${category.id}`;
+      const icon = category.icon;
+      const bg = mockData[index]?.bg;
+      const children = categories
+        .filter((child) => child.parent?.sortValue === category.sortValue)
+        .map((child) => ({
+          ...child,
+          link: `${mainPath}/${child.id}`,
+        }));
 
-    return { ...category, children, bg, icon, link: mainPath };
-  };
+      return { ...category, children, bg, icon, link: mainPath };
+    };
+    return categories.map(formatCategory);
+  }, [categories]);
 
-  const formattedCategories = categories
-    .filter((category) => !category.parent)
-    .map(formatCategory);
-
-  const handleCategoryClick = (link) => {
-    navigate(link);
-    setIsOpen(false);
-  };
+  const handleCategoryClick = useCallback(
+    (link) => {
+      navigate(link);
+      setIsOpen(false);
+    },
+    [navigate, setIsOpen],
+  );
 
   return (
     <div className={styles.categoryWrapper}>
@@ -50,6 +51,7 @@ const Catalog = ({ setIsOpen, categories }) => {
           />
         )}
       </div>
+      {/* use srcset or source */}
       {width > 510 ? (
         <img
           src={hoveredCategory?.bg || mockData[0].bg}

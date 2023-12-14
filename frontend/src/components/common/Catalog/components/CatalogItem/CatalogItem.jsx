@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { ICONS } from '../../../../ui-kit/icons';
-import styles from '../../Catalog.module.scss';
+import styles from './CatalogItem.module.scss';
 import SubCategories from '../SubCategoryList/SubCategoryList';
 import ModalCatalog from '../ModalCatalog/ModalCatalog';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
@@ -57,22 +57,29 @@ const CatalogItem = ({
               : null
           }
         >
-          {icon && (
-            <img
-              src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
-              alt={icon}
-            />
-          )}
-
-          <div className={styles.categoryItemContent}>
-            {firstPart === 'Акційна' ? (
-              <span className={styles.redText}>{firstPart}</span>
-            ) : (
-              <span className={styles.categoryItemText}>{firstPart}</span>
+          <div className={styles.categoryTitle}>
+            {icon && (
+              <img
+                className={styles.icon}
+                src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
+                alt={icon}
+              />
             )}
-            <span>{restParts}</span>
+
+            <div className={styles.categoryItemContent}>
+              {firstPart === 'Акційна' ? (
+                <span className={styles.redText}>{firstPart}</span>
+              ) : (
+                <span className={styles.categoryItemText}>{firstPart}</span>
+              )}
+              <span>{restParts}</span>
+            </div>
           </div>
-          {hasSubCategory && <ICONS.hideList className={styles.icon} />}
+          {hasSubCategory && (
+            <div className={styles.iconContainer}>
+              <ICONS.hideList className={styles.icon} />
+            </div>
+          )}
         </a>
       </li>
       {isSubCategoryOpen && (

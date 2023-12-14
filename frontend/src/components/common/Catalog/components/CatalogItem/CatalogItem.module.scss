@@ -1,0 +1,65 @@
+@import '../../../../../variables';
+@import '../../../../../mixins';
+
+.categoryTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.categoryItemContent {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+}
+
+.redText {
+  color: $discount-color;
+  font-weight: 700;
+  line-height: 130%;
+}
+
+.categoryItemText,
+.redText {
+  margin-right: 5px;
+}
+
+.iconContainer {
+  display: flex;
+}
+
+.icon {
+  margin: 4px;
+  height: 24px;
+  width: 24px;
+}
+.categoryLink {
+  min-width: 280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $text-color;
+  min-height: 24px;
+}
+
+.categoryItemWrapper {
+  transition: all 0.3s ease-in-out;
+  padding: 0 6px;
+  cursor: pointer;
+  &:hover {
+    border-radius: 26px;
+    transform: scale(1.02);
+    background: $page-background-color;
+  }
+  &:active {
+    background-color: $light-yellow;
+
+    svg path {
+      stroke: $on-press-color;
+    }
+  }
+
+  .categoryIcon {
+    min-width: 24px;
+  }
+}
