@@ -1,7 +1,7 @@
 @import '../../../../../variables';
 @import '../../../../../mixins';
 
-.itemsBlock {
+.itemsCart {
   padding-right: 12px;
   margin-top: 24px;
   overflow-y: auto;
@@ -51,6 +51,58 @@
   }
 }
 
+.itemsOrder {
+  max-height: 300px;
+  overflow-y: scroll;
+  // height: 100%;
+  padding: 0 16px;
+  margin-top: 0;
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: $page-accent-color;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .item {
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    padding: 12px 0px;
+  }
+  .leftBlock {
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  .blockImg {
+    grid-row: 1/2;
+    grid-column: 1/2;
+
+    img {
+      width: 56px;
+      height: 56px;
+      margin-right: 14px;
+    }
+  }
+
+  .trashIcon {
+    justify-self: end;
+  }
+  .countBlock {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    padding-left: 70px;
+    font-size: 14px;
+  }
+
+  .priceWithoutDiscount {
+    margin-top: -28px;
+  }
+}
+
 @include sm {
   .itemsBlock {
     overflow-y: hidden;
@@ -97,11 +149,6 @@
     position: absolute;
     top: 18px;
     right: 45px;
-  }
-  .rightBlock {
-    max-height: 70px;
-    margin-left: 75px;
-    justify-content: space-between;
   }
   .priceWithoutDiscount {
     margin-top: -28px;

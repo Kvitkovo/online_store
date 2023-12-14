@@ -25,7 +25,7 @@ const OrderInfo = () => {
       </div>
 
       <Divider />
-      <CartItem items={cartItems} />
+      <CartItem items={cartItems} cartClassName="itemsOrder" />
       <Divider />
       <div className={styles.bottomPart}>
         <div className={styles.flex}>
