@@ -13,6 +13,7 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Category")
 public class CategoryResponseDto {
 
     @Schema(example = "1", description = "ID category")
