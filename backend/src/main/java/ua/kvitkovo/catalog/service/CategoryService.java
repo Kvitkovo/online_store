@@ -18,9 +18,6 @@ import ua.kvitkovo.utils.TransliterateUtils;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Andriy Gaponov
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service

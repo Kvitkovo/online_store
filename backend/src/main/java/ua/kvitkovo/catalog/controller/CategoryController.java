@@ -42,7 +42,6 @@ public class CategoryController {
                     array = @ArraySchema(schema = @Schema(implementation = CategoryResponseDto.class))
             )
     })
-    @ResponseBody
     @GetMapping
     public ResponseEntity<List<CategoryResponseDto>> getAll() {
         log.debug("Received request to get all Categories.");
@@ -61,7 +60,6 @@ public class CategoryController {
             @Schema(implementation = CategoryResponseDto.class))
     })
     @ApiResponseNotFound
-    @ResponseBody
     @GetMapping("/{id}")
     public CategoryResponseDto getCategoryById(
             @Parameter(description = "The ID of the category to retrieve", required = true,
@@ -83,7 +81,6 @@ public class CategoryController {
     @ApiResponseUnauthorized
     @ApiResponseForbidden
     @ApiResponseNotFound
-    @ResponseBody
     @PostMapping
     public CategoryResponseDto addCategory(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
@@ -102,7 +99,6 @@ public class CategoryController {
     @ApiResponseBadRequest
     @ApiResponseForbidden
     @ApiResponseNotFound
-    @ResponseBody
     @PutMapping("/{id}")
     public CategoryResponseDto updateCategory(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final CategoryRequestDto request,
@@ -120,7 +116,6 @@ public class CategoryController {
     @ApiResponseUnauthorized
     @ApiResponseForbidden
     @ApiResponseNotFound
-    @ResponseBody
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(
             @Parameter(description = "The ID of the category to delete", required = true,

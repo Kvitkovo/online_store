@@ -16,6 +16,7 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "CategoryRequest")
 public class CategoryRequestDto {
 
     @NotBlank(message = "The 'name' cannot be empty")
