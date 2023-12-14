@@ -17,11 +17,22 @@ const OrderInfo = () => {
     );
     return total;
   }, [cartItems]);
+
+  const productQuantity = useMemo(() => {
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.cardQuantity,
+      0,
+    );
+    return quantity;
+  }, [cartItems]);
+
   return (
     <div className={styles.cart}>
       <div className={styles.topPart}>
         <h3 className={styles.subtitle}>Інформація про замовлення</h3>
-        <p className={styles.itemsQuantity}>У вашому кошику товарів:</p>
+        <p className={styles.itemsQuantity}>
+          У вашому кошику товарів: {productQuantity}
+        </p>
       </div>
 
       <Divider />
