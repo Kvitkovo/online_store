@@ -17,10 +17,10 @@ import ua.kvitkovo.shop.dto.ShopRequestDto;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
 import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.shop.service.ShopService;
-import ua.kvitkovo.utils.ApiResponseBadRequest;
-import ua.kvitkovo.utils.ApiResponseForbidden;
-import ua.kvitkovo.utils.ApiResponseNotFound;
-import ua.kvitkovo.utils.ApiResponseUnauthorized;
+import ua.kvitkovo.annotations.ApiResponseBadRequest;
+import ua.kvitkovo.annotations.ApiResponseForbidden;
+import ua.kvitkovo.annotations.ApiResponseNotFound;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
 
 @Tag(name = "Shops", description = "the shop API")
 @Slf4j

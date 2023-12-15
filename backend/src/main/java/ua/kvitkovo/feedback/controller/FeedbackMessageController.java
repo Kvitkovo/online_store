@@ -34,11 +34,11 @@ import ua.kvitkovo.feedback.dto.FeedbackMessageResponseDto;
 import ua.kvitkovo.feedback.entity.FeedbackMessage;
 import ua.kvitkovo.feedback.entity.MessageStatus;
 import ua.kvitkovo.feedback.service.FeedbackService;
-import ua.kvitkovo.utils.ApiResponseBadRequest;
-import ua.kvitkovo.utils.ApiResponseForbidden;
-import ua.kvitkovo.utils.ApiResponseNotFound;
-import ua.kvitkovo.utils.ApiResponseSuccessful;
-import ua.kvitkovo.utils.ApiResponseUnauthorized;
+import ua.kvitkovo.annotations.ApiResponseBadRequest;
+import ua.kvitkovo.annotations.ApiResponseForbidden;
+import ua.kvitkovo.annotations.ApiResponseNotFound;
+import ua.kvitkovo.annotations.ApiResponseSuccessful;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
 
 @Tag(name = "Feedback", description = "the feedback messages API")
 @Slf4j

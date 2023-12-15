@@ -6,9 +6,6 @@ import ua.kvitkovo.feedback.entity.AnswerFeedbackMessageFile;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface FeedbackFileDtoMapper {
 

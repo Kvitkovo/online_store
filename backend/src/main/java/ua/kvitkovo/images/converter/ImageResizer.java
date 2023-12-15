@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-/**
- * @author Andriy Gaponov
- */
 @Service
 public class ImageResizer {
 

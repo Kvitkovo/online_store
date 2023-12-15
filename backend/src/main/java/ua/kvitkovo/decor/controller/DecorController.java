@@ -17,6 +17,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.kvitkovo.annotations.ApiResponseBadRequest;
+import ua.kvitkovo.annotations.ApiResponseForbidden;
+import ua.kvitkovo.annotations.ApiResponseNotFound;
+import ua.kvitkovo.annotations.ApiResponseSuccessful;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
 import ua.kvitkovo.decor.converter.DecorDtoMapper;
 import ua.kvitkovo.decor.dto.DecorRequestDto;
 import ua.kvitkovo.decor.dto.DecorResponseDto;
@@ -24,7 +29,6 @@ import ua.kvitkovo.decor.dto.DecorUpdateRequestDto;
 import ua.kvitkovo.decor.entity.Decor;
 import ua.kvitkovo.decor.entity.DecorStatus;
 import ua.kvitkovo.decor.service.DecorService;
-import ua.kvitkovo.utils.*;
 
 import java.util.List;
 

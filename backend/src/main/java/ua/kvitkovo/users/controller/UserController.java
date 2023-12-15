@@ -17,6 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.kvitkovo.annotations.ApiResponseBadRequest;
+import ua.kvitkovo.annotations.ApiResponseForbidden;
+import ua.kvitkovo.annotations.ApiResponseNotFound;
+import ua.kvitkovo.annotations.ApiResponseSuccessful;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
 import ua.kvitkovo.security.jwt.JwtResponseDto;
 import ua.kvitkovo.security.jwt.JwtTokenProvider;
 import ua.kvitkovo.users.converter.UserDtoMapper;
@@ -24,7 +29,6 @@ import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserAuthService;
 import ua.kvitkovo.users.service.UserService;
-import ua.kvitkovo.utils.*;
 
 @Tag(name = "Users", description = "the users API")
 @Slf4j
