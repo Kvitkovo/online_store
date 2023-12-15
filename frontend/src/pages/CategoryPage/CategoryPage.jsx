@@ -114,25 +114,24 @@ const CategoryPage = () => {
             ? 'Loading ...'
             : productsInCategory && (
                 <>
-                  <ul className={styles.cards}>
+                  <div className={styles.cards}>
                     {productsInCategory.map((product) => (
-                      <li className={styles.card} key={product.id}>
-                        <Card
-                          image={
-                            product.images[0]
-                              ? product.images[0].urlSmall
-                              : './images/no_image.jpg'
-                          }
-                          title={product.title}
-                          discount={product.discount}
-                          oldPrice={product.price}
-                          price={product.priceWithDiscount}
-                          available={product.available}
-                          id={product.id}
-                        />
-                      </li>
+                      <Card
+                        image={
+                          product.images[0]
+                            ? product.images[0].urlSmall
+                            : './images/no_image.jpg'
+                        }
+                        title={product.title}
+                        discount={product.discount}
+                        oldPrice={product.price}
+                        price={product.priceWithDiscount}
+                        available={product.available}
+                        key={product.id}
+                        id={product.id}
+                      />
                     ))}
-                  </ul>
+                  </div>
                   <Pagination
                     onPageChange={setCurrentPage}
                     totalCount={productsInCategory.length}

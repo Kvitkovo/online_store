@@ -1,16 +1,53 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styles from './Slider.module.scss';
 import IconButton from '../../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../../components/ui-kit/icons';
-import Card from '../../../../components/common/Card/Card';
 import { register } from 'swiper/element/bundle';
+import { GetProducts } from '../../../../services/products/productsAccess.service';
+import { useParams } from 'react-router-dom';
 import './swiper.scss';
+import Slide from './Slide';
 
 const Slider = React.memo(({ data }) => {
+  const { myId } = useParams();
   const swiperElRef = useRef(null);
   const showNavigation = data.length > 5;
+  const [receivedData, setReceivedData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    setReceivedData([]);
+
+    const fetchDataForAll = async () => {
+      try {
+        const requests = data.map(async (id) => {
+          if (myId !== id) {
+            const response = await GetProducts(id);
+            if (isMounted) {
+              setReceivedData((prev) => [...prev, response]);
+            }
+          }
+        });
+
+        await Promise.all(requests);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchDataForAll();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [data, myId]);
 
   useEffect(() => {
     register();
@@ -74,7 +111,10 @@ const Slider = React.memo(({ data }) => {
     <div className={styles.sliderContainer}>
       {showNavigation && (
         <div
-          className={`${styles.arrowContainer} ${styles.arrowLeft} swiper-button-prev`}
+          className={
+            `${styles.arrowContainer} ${styles.arrowLeft}` +
+            ' swiper-button-prev'
+          }
         >
           <IconButton
             icon={<ICONS.ArrowLeftIcon />}
@@ -86,24 +126,8 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {data.map((card, idx, arr) => {
-            return idx !== arr.length - 1 ? (
-              <swiper-slide key={card.id}>
-                <Card
-                  image={
-                    card.images?.length > 0
-                      ? card.images[0]?.urlSmall
-                      : '../images/no_image.jpg'
-                  }
-                  title={card.title}
-                  discount={card.discount}
-                  oldPrice={card.price}
-                  price={card.priceWithDiscount}
-                  id={card.id}
-                />
-              </swiper-slide>
-            ) : null;
-          })}
+          {!isLoading &&
+            receivedData.map((card) => <Slide card={card} key={card.alias} />)}
         </swiper-container>
         {showNavigation && (
           <div className={`swiper-pagination ${styles.pagination}`}> </div>
@@ -111,7 +135,10 @@ const Slider = React.memo(({ data }) => {
       </div>
       {showNavigation && (
         <div
-          className={`${styles.arrowContainer} ${styles.arrowRight} swiper-button-next`}
+          className={
+            `${styles.arrowContainer} ${styles.arrowRight}` +
+            ' swiper-button-next'
+          }
         >
           <IconButton
             icon={<ICONS.ArrowRightIcon />}

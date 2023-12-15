@@ -15,15 +15,17 @@ const CardPage = React.memo(() => {
     );
 
     const filteredRecentlyViewed = storedRecentlyViewed.filter((item) => {
-      return item.id !== +myId;
+      return item !== myId;
     });
-    if (response) {
-      filteredRecentlyViewed.push(response);
+
+    if (myId) {
+      filteredRecentlyViewed.push(myId);
     }
 
     if (filteredRecentlyViewed.length > 9) {
       filteredRecentlyViewed.shift();
     }
+
     localStorage.setItem(
       'recentlyViewed',
       JSON.stringify(filteredRecentlyViewed),

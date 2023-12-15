@@ -16,6 +16,11 @@
   background: #efefef;
 }
 
+@include md {
+  .Stock {
+    margin-bottom: 26px;
+  }
+}
 @include sm {
   .Stock {
     margin-bottom: 0;
