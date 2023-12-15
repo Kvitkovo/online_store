@@ -10,14 +10,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Product")
 public class ProductResponseDto {
 
     @Schema(example = "1", description = "Product id")
