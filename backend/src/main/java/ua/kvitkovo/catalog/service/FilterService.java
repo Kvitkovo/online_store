@@ -4,16 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.*;
-import ua.kvitkovo.catalog.repository.ProductRepository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Andriy Gaponov
- */
 @Service
 @RequiredArgsConstructor
 public class FilterService {
@@ -21,7 +17,6 @@ public class FilterService {
     private final ColorService colorService;
     private final SizeService sizeService;
     private final ProductTypeService productTypeService;
-    private final ProductRepository productRepository;
     private final ProductService productService;
 
     public Map<String, Map<Long, ?>> getFilter() {
@@ -75,10 +70,10 @@ public class FilterService {
     }
 
     public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
-        Product minPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(
-            categoryId, ProductStatus.ACTIVE);
-        Product maxPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(
-            categoryId, ProductStatus.ACTIVE);
+        Product minPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceAsc(
+                categoryId, ProductStatus.ACTIVE);
+        Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
+                categoryId, ProductStatus.ACTIVE);
         FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
         if (minPriceProduct == null) {
             result.setMinPrice(BigDecimal.ZERO);

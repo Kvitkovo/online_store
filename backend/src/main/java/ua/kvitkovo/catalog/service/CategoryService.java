@@ -31,6 +31,10 @@ public class CategoryService {
         return categoryRepository.findAllByOrderByParentAscSortValueAsc();
     }
 
+    public List<Category> findAllByParent(Category category) {
+        return categoryRepository.findAllByParent(category);
+    }
+
     public Category findById(long id) throws ItemNotFoundException {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Category not found"));

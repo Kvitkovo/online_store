@@ -25,9 +25,6 @@ import ua.kvitkovo.utils.*;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Tag(name = "Sizes", description = "the sizes API")
 @Slf4j
 @RequiredArgsConstructor

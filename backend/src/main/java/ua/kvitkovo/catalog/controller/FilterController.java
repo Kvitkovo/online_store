@@ -15,9 +15,6 @@ import ua.kvitkovo.utils.ApiResponseSuccessful;
 
 import java.util.Map;
 
-/**
- * @author Andriy Gaponov
- */
 @Tag(name = "Filter", description = "the filter API")
 @Slf4j
 @RequiredArgsConstructor
