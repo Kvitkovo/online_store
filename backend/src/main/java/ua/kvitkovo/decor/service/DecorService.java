@@ -32,8 +32,7 @@ public class DecorService {
     private final UserService userService;
 
     public Decor findById(long id) throws ItemNotFoundException {
-        return decorRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Decor order not found"));
+        return decorRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Decor order not found"));
     }
 
     @Transactional
