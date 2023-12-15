@@ -11,11 +11,10 @@ import {
   resetPasswordRequest,
 } from '../../../services/login/login.service';
 import ResetPasswordModal from '../ConfirmationModals/ResetPasswordModal';
-import { useNavigate } from 'react-router-dom';
-/* eslint-disable max-len */
-import { fetchUserData } from '../../../services/userData/fetchUserData.service';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../redux/slices/userSlice';
+/* eslint-disable max-len */
+import { handleUserData } from '../../../services/userData/handleUserData.service';
+import { useNavigate } from 'react-router-dom';
 
 const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [email, setEmail] = useState('');
@@ -25,8 +24,8 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const [resetPasswordClicked, setResetPasswordClicked] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validateEmail = (value) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -36,28 +35,6 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
 
   const isResetPasswordValid =
     resetPasswordClicked && resetPassword && email && validateEmail(email);
-
-  const handleFetchData = async () => {
-    const fetchedData = await fetchUserData();
-    localStorage.setItem('userfetchedData', JSON.stringify(fetchedData));
-    navigate('/account', { state: { userData: fetchedData } });
-
-    if (fetchedData) {
-      const userData = {
-        firstName: fetchedData.firstName,
-        lastName: fetchedData.lastName,
-        surname: fetchedData.surname,
-        phone: fetchedData.phone,
-        email: fetchedData.email,
-        birthday: fetchedData.birthday,
-      };
-      dispatch(login(userData));
-      navigate('/account', { state: { userData: fetchedData } });
-    } else {
-      console.error('Error: User data is undefined');
-      navigate('/');
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -80,7 +57,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
 
     const loginResult = await loginUser({ email, password });
     if (loginResult && loginResult.success) {
-      handleFetchData();
+      handleUserData(loginResult.token, loginResult.id, navigate, dispatch);
       toggleLogin();
     } else if (loginResult && loginResult.error) {
       setPasswordError(loginResult.error);
@@ -89,7 +66,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
   const handleGoogleLogin = async (token, id) => {
     const loginSuccess = await googleLoginRequest(token, id);
     if (loginSuccess) {
-      handleFetchData();
+      handleUserData(loginSuccess.token, loginSuccess.id, navigate, dispatch);
     }
   };
   const handleResetPassword = async (e) => {

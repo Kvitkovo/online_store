@@ -3,7 +3,7 @@ import { getLogoutUrl } from '../utils/utils';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVICE_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     common: {
       'Content-Type': 'application/json',
