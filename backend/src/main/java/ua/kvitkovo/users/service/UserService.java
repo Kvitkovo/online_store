@@ -17,9 +17,6 @@ import ua.kvitkovo.users.repository.UserRepository;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -27,11 +24,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
-    public List<UserResponseDto> getAllUsers() {
+    public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
         log.info("IN getAll - {} users found", users.size());
-        return userMapper.mapEntityToDto(users);
+        return users;
     }
 
     public User findByUsername(String username) throws ItemNotFoundException {
@@ -48,17 +44,17 @@ public class UserService {
                 .orElseThrow(() -> {throw new ItemNotFoundException("User not found");});
     }
 
-    public Page<UserResponseDto> getClientsByPage(Pageable pageable) {
+    public Page<User> getClientsByPage(Pageable pageable) {
         Page<User> users = userRepository.findAllClient(pageable);
         if (users.isEmpty()) {
             throw new ItemNotFoundException("Clients don't exist in the Data Base");
         }
-        return users.map(userMapper::mapEntityToDto);
+        return users;
     }
 
     public void delete(Long id) {
-        UserResponseDto userResponseDto = findById(id);
-        userRepository.deleteById(userResponseDto.getId());
+        User user = findById(id);
+        userRepository.delete(user);
         log.info("IN delete - user with id: {} successfully deleted");
     }
 
@@ -74,22 +70,18 @@ public class UserService {
         return principal.getId();
     }
 
-    public UserResponseDto enableUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("User not found");
-        });
+    public User enableUser(Long id) {
+        User user = findById(id);
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
-        return userMapper.mapEntityToDto(user);
+        return user;
     }
 
-    public UserResponseDto disableUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("User not found");
-        });
+    public User disableUser(Long id) {
+        User user = findById(id);
         user.setStatus(UserStatus.NOT_ACTIVE);
         userRepository.save(user);
-        return userMapper.mapEntityToDto(user);
+        return user;
     }
 
     public boolean isCurrentUserAdmin() {
@@ -100,11 +92,11 @@ public class UserService {
         return false;
     }
 
-    public Page<UserResponseDto> getEmployeesByPage(Pageable pageable) {
+    public Page<User> getEmployeesByPage(Pageable pageable) {
         Page<User> users = userRepository.findAllEmployees(pageable);
         if (users.isEmpty()) {
             throw new ItemNotFoundException("Employees don't exist in the Data Base");
         }
-        return users.map(userMapper::mapEntityToDto);
+        return users;
     }
 }

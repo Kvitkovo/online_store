@@ -93,7 +93,7 @@ public class FeedbackService {
         FeedbackMessage feedbackMessage = feedbackRepository.findById(mainImageId)
             .orElseThrow(
                 () -> new ItemNotFoundException("Feedback message not found"));
-        feedbackMessage.setManager(userDtoMapper.mapDtoToEntity(userService.getCurrentUser()));
+        feedbackMessage.setManager(userService.getCurrentUser());
 
         AnswerMessage answerMessage = AnswerMessage.builder()
             .messageText(message)
@@ -200,8 +200,7 @@ public class FeedbackService {
 
     private void fillAuthorToMessage(FeedbackMessage feedbackMessage) {
         try {
-            UserResponseDto currentUser = userService.getCurrentUser();
-            User author = userDtoMapper.mapDtoToEntity(currentUser);
+            User author = userService.getCurrentUser();
             feedbackMessage.setAuthor(author);
         } catch (Exception e) {
             log.info("A feedback message was created by an unauthorized user");

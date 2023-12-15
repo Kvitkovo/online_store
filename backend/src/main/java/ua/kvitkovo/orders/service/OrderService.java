@@ -142,8 +142,7 @@ public class OrderService {
         order.setTotalSum(calculateTotalSum(order));
 
         try {
-            UserResponseDto currentUser = userService.getCurrentUser();
-            User customer = userDtoMapper.mapDtoToEntity(currentUser);
+            User customer = userService.getCurrentUser();
             order.setCustomer(customer);
         } catch (Exception e) {
             //NOP
