@@ -48,13 +48,11 @@ public class ShopService {
     public ShopResponseDto updateShop(Long id, ShopRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
-        ShopResponseDto shopResponseDto = findById(id);
-        if (!Objects.equals(dto.getTitle(), shopResponseDto.getTitle())) {
-            shopResponseDto.setAlias(
-                transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
+        Shop shop = findById(id);
+        if (!Objects.equals(dto.getTitle(), shop.getTitle())) {
+            shop.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
         }
-        BeanUtils.copyProperties(dto, shopResponseDto, Helper.getNullPropertyNames(dto));
-        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
+        BeanUtils.copyProperties(dto, shop, Helper.getNullPropertyNames(dto));
 
         shopRepository.save(shop);
         return shopMapper.mapEntityToDto(shop);

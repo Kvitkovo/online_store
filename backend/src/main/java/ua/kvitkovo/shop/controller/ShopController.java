@@ -14,8 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
+import ua.kvitkovo.shop.converter.ShopDtoMapper;
 import ua.kvitkovo.shop.dto.ShopRequestDto;
 import ua.kvitkovo.shop.dto.ShopResponseDto;
+import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.shop.service.ShopService;
 
 /**
@@ -29,6 +31,7 @@ import ua.kvitkovo.shop.service.ShopService;
 public class ShopController {
 
     private final ShopService shopService;
+    private final ShopDtoMapper shopMapper;
 
     @Operation(summary = "Get Shop by ID")
     @ApiResponses(value = {
@@ -49,9 +52,9 @@ public class ShopController {
             )
             @PathVariable Long id) {
         log.debug("Received request to get the Shop with id - {}.", id);
-        ShopResponseDto shopResponseDto = shopService.findById(id);
-        log.debug("the Shop with id - {} was retrieved - {}.", id, shopResponseDto);
-        return shopResponseDto;
+        Shop shop = shopService.findById(id);
+        log.debug("the Shop with id - {} was retrieved - {}.", id, shop);
+        return shopMapper.mapEntityToDto(shop);
     }
 
     @Operation(summary = "Create a new Shop")
