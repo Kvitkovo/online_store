@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -16,17 +15,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.kvitkovo.catalog.converter.ProductTypeDtoMapper;
 import ua.kvitkovo.catalog.dto.request.ProductTypeRequestDto;
 import ua.kvitkovo.catalog.dto.response.ProductTypeResponseDto;
+import ua.kvitkovo.catalog.entity.ProductType;
 import ua.kvitkovo.catalog.service.ProductTypeService;
-import ua.kvitkovo.errorhandling.ErrorResponse;
+import ua.kvitkovo.utils.*;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Tag(name = "Products types", description = "the product types API")
 @Slf4j
 @RequiredArgsConstructor
@@ -35,106 +33,73 @@ import java.util.Collections;
 public class ProductTypeController {
 
     private final ProductTypeService productTypeService;
+    private final ProductTypeDtoMapper productTypeDtoMapper;
 
     @Operation(summary = "Get all Product types.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(
-                            mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = ProductTypeResponseDto.class))
-                    )
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(
+                    mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = ProductTypeResponseDto.class))
+            )
     })
     @GetMapping
-    @ResponseBody
-    public ResponseEntity<Collection<ProductTypeResponseDto>> getAll() {
+    public ResponseEntity<List<ProductTypeResponseDto>> getAll() {
         log.debug("Received request to get all Product types.");
-        Collection<ProductTypeResponseDto> productTypeResponseDtos = productTypeService.getAll();
-        if (productTypeResponseDtos.isEmpty()) {
+        List<ProductType> typeResponseDtos = productTypeService.getAll();
+        if (typeResponseDtos.isEmpty()) {
             log.debug("Product types are absent.");
             return ResponseEntity.ok().body(Collections.emptyList());
         }
-        log.debug("All Product types were retrieved - {}.", productTypeResponseDtos);
-        return ResponseEntity.ok().body(productTypeResponseDtos);
+        log.debug("All Product types were retrieved - {}.", typeResponseDtos);
+        return ResponseEntity.ok().body(productTypeDtoMapper.mapEntityToDto(typeResponseDtos));
     }
 
     @Operation(summary = "Get Product type by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ProductTypeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Product type not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ProductTypeResponseDto.class))
     })
+    @ApiResponseNotFound
     @GetMapping("/{id}")
-    @ResponseBody
     public ProductTypeResponseDto getProductTypeById(
             @Parameter(description = "The ID of the product type to retrieve", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
             @PathVariable Long id) {
         log.debug("Received request to get the Product type with id - {}.", id);
-        ProductTypeResponseDto productTypeResponseDto = productTypeService.findById(id);
-        log.debug("the Product type with id - {} was retrieved - {}.", id, productTypeResponseDto);
-        return productTypeResponseDto;
+        ProductType productType = productTypeService.findById(id);
+        log.debug("the Product type with id - {} was retrieved - {}.", id, productType);
+        return productTypeDtoMapper.mapEntityToDto(productType);
     }
 
     @Operation(summary = "Create a new Product type")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ProductTypeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "The Product type has already been added " +
-                    "or some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ProductTypeResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
     @PostMapping
-    @ResponseBody
     public ProductTypeResponseDto addProductType(
-            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductTypeRequestDto request, BindingResult bindingResult) {
+            @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductTypeRequestDto request,
+            BindingResult bindingResult) {
         log.debug("Received request to create Product type - {}.", request);
-        return productTypeService.addProductType(request, bindingResult);
+        ProductType type = productTypeService.addProductType(request, bindingResult);
+        return productTypeDtoMapper.mapEntityToDto(type);
     }
 
     @Operation(summary = "Update Product type by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ProductTypeResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Product type not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+            @Content(mediaType = "application/json", schema =
+            @Schema(implementation = ProductTypeResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PutMapping("/{id}")
-    @ResponseBody
     public ProductTypeResponseDto updateProductType(
             @RequestBody @Valid @NotNull(message = "Request body is mandatory") final ProductTypeRequestDto request,
             @Parameter(description = "The ID of the product type to update", required = true,
@@ -142,27 +107,16 @@ public class ProductTypeController {
             )
             @PathVariable Long id, BindingResult bindingResult) {
         log.debug("Received request to update Product type - {} with id {}.", request, id);
-        return productTypeService.updateProductType(id, request, bindingResult);
+        ProductType type = productTypeService.updateProductType(id, request, bindingResult);
+        return productTypeDtoMapper.mapEntityToDto(type);
     }
 
     @Operation(summary = "Delete Product type by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Product type not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
-    })
+    @ApiResponseSuccessful
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Void> deleteProductType(
             @Parameter(description = "The ID of the product type to delete", required = true,
                     schema = @Schema(type = "integer", format = "int64")

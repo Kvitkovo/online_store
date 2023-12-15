@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.repository.ProductRepository;
-import ua.kvitkovo.catalog.repository.ProductTypeRepository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class FilterService {
 
     private final ColorService colorService;
     private final SizeService sizeService;
-    private final ProductTypeRepository productTypeRepository;
+    private final ProductTypeService productTypeService;
     private final ProductRepository productRepository;
     private final ProductService productService;
 
@@ -29,7 +28,7 @@ public class FilterService {
 
         List<Color> colors = colorService.getAll();
         List<Size> sizes = sizeService.getAll();
-        List<ProductType> types = productTypeRepository.findAll();
+        List<ProductType> types = productTypeService.getAll();
 
         Map<Long, String> colorResult = new HashMap<>();
         Map<Long, String> sizeResult = new HashMap<>();
