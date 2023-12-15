@@ -10,9 +10,6 @@ import ua.kvitkovo.users.entity.User;
 
 import java.util.Date;
 
-/**
- * @author Andriy Gaponov
- */
 @Entity
 @Getter
 @Setter

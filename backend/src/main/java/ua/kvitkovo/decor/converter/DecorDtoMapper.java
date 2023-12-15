@@ -9,9 +9,6 @@ import ua.kvitkovo.decor.entity.Decor;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface DecorDtoMapper {
 

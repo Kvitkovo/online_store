@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.errorhandling.ErrorResponse;
 import ua.kvitkovo.security.jwt.JwtResponseDto;
 import ua.kvitkovo.security.jwt.JwtTokenProvider;
+import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserAuthService;
@@ -39,6 +40,7 @@ public class UserController {
     private final UserService userService;
     private final UserAuthService userAuthService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserDtoMapper userMapper;
 
     @Operation(summary = "Get User by ID")
     @ApiResponses(value = {
@@ -68,9 +70,9 @@ public class UserController {
         )
         @PathVariable Long id) {
         log.debug("Received request to get the User with id - {}.", id);
-        UserResponseDto user = userService.findById(id);
+        User user = userService.findById(id);
         log.debug("the Size with id - {} was retrieved - {}.", id, user);
-        return user;
+        return userMapper.mapEntityToDto(user);
     }
 
     @Operation(summary = "Get all Client by Page")

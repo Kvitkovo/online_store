@@ -26,7 +26,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserDtoMapper userMapper;
+
 
     public List<UserResponseDto> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -43,12 +43,9 @@ public class UserService {
         return user;
     }
 
-    public UserResponseDto findById(Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id)
-                .map(userMapper::mapEntityToDto)
-                .orElseThrow(() -> {
-                    throw new ItemNotFoundException("User not found");
-                });
+                .orElseThrow(() -> {throw new ItemNotFoundException("User not found");});
     }
 
     public Page<UserResponseDto> getClientsByPage(Pageable pageable) {
@@ -65,7 +62,7 @@ public class UserService {
         log.info("IN delete - user with id: {} successfully deleted");
     }
 
-    public UserResponseDto getCurrentUser() {
+    public User getCurrentUser() {
         JwtUser principal = (JwtUser) SecurityContextHolder.getContext().getAuthentication()
             .getPrincipal();
         return findById(principal.getId());

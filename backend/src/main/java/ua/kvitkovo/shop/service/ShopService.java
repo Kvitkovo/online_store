@@ -29,9 +29,8 @@ public class ShopService {
     private final ShopDtoMapper shopMapper;
     private final TransliterateUtils transliterateUtils;
 
-    public ShopResponseDto findById(long id) throws ItemNotFoundException {
-        return shopRepository.findById(id).map(shopMapper::mapEntityToDto)
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found"));
+    public Shop findById(long id) throws ItemNotFoundException {
+        return shopRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Shop not found"));
     }
 
     @Transactional

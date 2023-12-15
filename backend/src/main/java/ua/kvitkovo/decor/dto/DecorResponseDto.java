@@ -1,18 +1,17 @@
 package ua.kvitkovo.decor.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import ua.kvitkovo.decor.entity.DecorStatus;
 
 import java.time.LocalDateTime;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "Decor")
 public class DecorResponseDto {
 
     private Long id;
