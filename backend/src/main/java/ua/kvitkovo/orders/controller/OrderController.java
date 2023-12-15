@@ -1,15 +1,14 @@
 package ua.kvitkovo.orders.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,8 +16,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import ua.kvitkovo.errorhandling.ErrorResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import ua.kvitkovo.annotations.ApiResponseBadRequest;
+import ua.kvitkovo.annotations.ApiResponseForbidden;
+import ua.kvitkovo.annotations.ApiResponseNotFound;
+import ua.kvitkovo.annotations.ApiResponseSuccessful;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
+import ua.kvitkovo.annotations.ParameterPageNumber;
+import ua.kvitkovo.annotations.ParameterPageSize;
+import ua.kvitkovo.annotations.ParameterPageSort;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.dto.admin.OrderAdminRequestDto;
@@ -26,11 +39,6 @@ import ua.kvitkovo.orders.dto.admin.OrderAdminResponseDto;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.orders.service.OrderService;
 
-import java.util.List;
-
-/**
- * @author Andriy Gaponov
- */
 @Tag(name = "Orders", description = "the orders API")
 @Slf4j
 @RequiredArgsConstructor
@@ -41,23 +49,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @Operation(summary = "Get Order by ID")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = OrderResponseDto.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Order not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(mediaType = "application/json", schema =
+        @Schema(implementation = OrderResponseDto.class))
     })
+    @ApiResponseNotFound
     @GetMapping("/{id}")
-    @ResponseBody
     public OrderResponseDto getOrderById(
-            @Parameter(description = "The ID of the order to retrieve", required = true,
-                    schema = @Schema(type = "integer", format = "int64")
-            )
-            @PathVariable Long id) {
+        @PathVariable Long id) {
         log.debug("Received request to get the Color with id - {}.", id);
         OrderResponseDto orderResponseDto = orderService.findById(id);
         log.debug("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
@@ -65,23 +64,14 @@ public class OrderController {
     }
 
     @Operation(summary = "Get Order by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = OrderAdminResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Order not found", content = {
-                    @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ErrorResponse.class))
-            })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(mediaType = "application/json", schema =
+        @Schema(implementation = OrderAdminResponseDto.class))
     })
+    @ApiResponseNotFound
     @GetMapping("/{id}/admin")
-    @ResponseBody
     public OrderAdminResponseDto getOrderByIdForAdmin(
-            @Parameter(description = "The ID of the order to retrieve", required = true,
-                    schema = @Schema(type = "integer", format = "int64")
-            )
-            @PathVariable Long id) {
+        @PathVariable Long id) {
         log.debug("Received request to get the Color with id - {}.", id);
         OrderAdminResponseDto orderResponseDto = orderService.findByIdForAdmin(id);
         log.debug("the Order with id - {} was retrieved - {}.", id, orderResponseDto);
@@ -89,22 +79,12 @@ public class OrderController {
     }
 
     @Operation(summary = "Get Orders for current user.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping(path = "/user/current")
-    @ResponseBody
     public Page<OrderResponseDto> getAllOrdersForCurrentUser(
-
-            @Parameter(description = "Number of page (1..N)", required = true,
-            schema = @Schema(type = "integer", defaultValue = "1")
-        ) @RequestParam(defaultValue = "1") int page,
-        @Parameter(description = "The size of the page to be returned", required = true,
-            schema = @Schema(type = "integer", defaultValue = "12")
-        ) @RequestParam(defaultValue = "12") int size,
-        @Parameter(description = "Sort direction (ASC, DESC)",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection
+        @ParameterPageNumber @RequestParam(defaultValue = "1") int page,
+        @ParameterPageSize @RequestParam(defaultValue = "12") int size,
+        @ParameterPageSort @RequestParam(required = false, defaultValue = "ASC") String sortDirection
     ) {
         log.debug("Received request to get current user Orders.");
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
@@ -113,22 +93,12 @@ public class OrderController {
     }
 
     @Operation(summary = "Get all orders")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping
-    @ResponseBody
     public Page<OrderResponseDto> getAllOrders(
-
-        @Parameter(description = "Number of page (1..N)", required = true,
-            schema = @Schema(type = "integer", defaultValue = "1")
-        ) @RequestParam(defaultValue = "1") int page,
-        @Parameter(description = "The size of the page to be returned", required = true,
-            schema = @Schema(type = "integer", defaultValue = "12")
-        ) @RequestParam(defaultValue = "12") int size,
-        @Parameter(description = "Sort direction (ASC, DESC)",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection
+        @ParameterPageNumber @RequestParam(defaultValue = "1") int page,
+        @ParameterPageSize @RequestParam(defaultValue = "12") int size,
+        @ParameterPageSort @RequestParam(required = false, defaultValue = "ASC") String sortDirection
     ) {
         log.debug("Received request to get all Orders.");
         Pageable pageable = PageRequest.of(page - 1, size, Direction.valueOf(sortDirection),
@@ -137,22 +107,12 @@ public class OrderController {
     }
 
     @Operation(summary = "Get Orders for user.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation")
-    })
+    @ApiResponseSuccessful
     @GetMapping(path = "/user/{id}")
-    @ResponseBody
     public Page<OrderResponseDto> getAllOrdersForUser(
-
-        @Parameter(description = "Number of page (1..N)", required = true,
-            schema = @Schema(type = "integer", defaultValue = "1")
-        ) @RequestParam(defaultValue = "1") int page,
-        @Parameter(description = "The size of the page to be returned", required = true,
-            schema = @Schema(type = "integer", defaultValue = "12")
-        ) @RequestParam(defaultValue = "12") int size,
-        @Parameter(description = "Sort direction (ASC, DESC)",
-            schema = @Schema(type = "string")
-        ) @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
+        @ParameterPageNumber @RequestParam(defaultValue = "1") int page,
+        @ParameterPageSize @RequestParam(defaultValue = "12") int size,
+        @ParameterPageSort @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
         @PathVariable Long id
     ) {
         log.debug("Received request to get user with ID {} Orders.", id);
@@ -162,31 +122,15 @@ public class OrderController {
     }
 
     @Operation(summary = "Add a new Order")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = OrderResponseDto.class))
-        }),
-        @ApiResponse(responseCode = "400", description = "The Order has already been added " +
-            "or some data is missing", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Some dependencies were not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(mediaType = "application/json", schema =
+        @Schema(implementation = OrderResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PostMapping
-    @ResponseBody
     public OrderResponseDto addOrder(
         @RequestBody @Valid @NotNull(message = "Request body is mandatory") final OrderRequestDto request,
         BindingResult bindingResult) {
@@ -195,30 +139,16 @@ public class OrderController {
     }
 
     @Operation(summary = "Set orders status")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(
-                mediaType = "application/json",
-                array = @ArraySchema(schema = @Schema(implementation = OrderResponseDto.class))
-            )
-        }),
-        @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Some orders not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(
+            mediaType = "application/json",
+            array = @ArraySchema(schema = @Schema(implementation = OrderResponseDto.class))
+        )
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PutMapping("/{ordersID}/setStatus")
     public List<OrderResponseDto> setOrdersStatus(@PathVariable List<Long> ordersID,
         @RequestParam OrderStatus status) {
@@ -227,24 +157,13 @@ public class OrderController {
     }
 
     @Operation(summary = "Cancel order")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = OrderResponseDto.class))
-        }),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Order not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(mediaType = "application/json", schema =
+        @Schema(implementation = OrderResponseDto.class))
     })
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PutMapping("/{id}/cancel")
     public OrderResponseDto cancelOrder(@PathVariable Long id) {
         log.debug("Received request to cancel order with id {} status {}.", id);
@@ -252,35 +171,17 @@ public class OrderController {
     }
 
     @Operation(summary = "Update Order by ID")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = OrderResponseDto.class))
-        }),
-        @ApiResponse(responseCode = "400", description = "Some data is missing", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        }),
-        @ApiResponse(responseCode = "404", description = "Some dependencies not found", content = {
-            @Content(mediaType = "application/json", schema =
-            @Schema(implementation = ErrorResponse.class))
-        })
+    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+        @Content(mediaType = "application/json", schema =
+        @Schema(implementation = OrderResponseDto.class))
     })
+    @ApiResponseBadRequest
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
     @PutMapping("/{id}")
-    @ResponseBody
     public OrderResponseDto updateOrder(
         @RequestBody @Valid @NotNull(message = "Request body is mandatory") final OrderAdminRequestDto request,
-        @Parameter(description = "The ID of the order to update", required = true,
-            schema = @Schema(type = "integer", format = "int64")
-        )
         @PathVariable Long id, BindingResult bindingResult) {
         log.debug("Received request to update Order - {} with id {}.", request, id);
         return orderService.updateOrder(id, request, bindingResult);

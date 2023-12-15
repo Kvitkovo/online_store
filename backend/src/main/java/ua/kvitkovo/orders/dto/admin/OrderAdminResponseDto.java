@@ -1,25 +1,20 @@
 package ua.kvitkovo.orders.dto.admin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.kvitkovo.orders.dto.UserResponseDto;
 import ua.kvitkovo.orders.entity.OrderStatus;
-import ua.kvitkovo.shop.dto.ShopResponseDto;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Set;
-
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderAdmin")
 public class OrderAdminResponseDto {
 
     private Long id;

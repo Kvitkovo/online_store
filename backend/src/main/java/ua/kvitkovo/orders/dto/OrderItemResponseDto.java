@@ -6,14 +6,12 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderItem")
 public class OrderItemResponseDto {
 
     @Schema(example = "12", description = "Item ID")
