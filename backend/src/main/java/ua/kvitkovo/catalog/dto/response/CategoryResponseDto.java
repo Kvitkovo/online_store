@@ -10,6 +10,7 @@ import ua.kvitkovo.catalog.entity.CategoryStatus;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id, name")
 @Schema(name = "Category")
 public class CategoryResponseDto {
 

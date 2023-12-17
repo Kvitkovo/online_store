@@ -1,5 +1,7 @@
 package ua.kvitkovo.catalog.controller;
 
+import static ua.kvitkovo.catalog.controller.CategoryController.REST_URL;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -12,6 +14,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +36,10 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/categories")
+@RequestMapping(value = REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
+    public static final String REST_URL = "/v1/categories";
     private final CategoryService categoryService;
     private final CategoryDtoMapper categoryMapper;
 
@@ -55,7 +59,9 @@ public class CategoryController {
             return ResponseEntity.ok().body(Collections.emptyList());
         }
         log.debug("All Categories were retrieved - {}.", categories);
-        return ResponseEntity.ok().body(categoryMapper.mapEntityToDto(categories));
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(categoryMapper.mapEntityToDto(categories));
     }
 
     @Operation(summary = "Get Category by ID")
