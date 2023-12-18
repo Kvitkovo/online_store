@@ -19,7 +19,7 @@ public interface OrderRepository extends OrderRepositoryBasic {
     List<Order> findAllByStatusIn(List<OrderStatus> orderStatusList);
 
     @Query(value = """
-                    SELECT SUM((IFNULL(od.product_qty, 0) + IFNULL(pc.product_qty, 0))) qty FROM orders o
+                    SELECT IFNULL(SUM((IFNULL(od.product_qty, 0) + IFNULL(pc.product_qty, 0))), 0) qty FROM orders o
                     LEFT JOIN order_details od ON o.id = od.order_id
                     LEFT JOIN product_composition pc ON od.id = pc.order_details_id
                     WHERE o.order_status IN ("ACCEPT", "IS_DELIVERED") AND (od.product_id = ?1 or pc.product_id = ?1)
