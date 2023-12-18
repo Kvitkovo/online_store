@@ -14,9 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-/**
- * @author Andriy Gaponov
- */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Helper {
 

@@ -13,9 +13,6 @@ import ua.kvitkovo.users.validator.EmailValidator;
 import java.math.BigDecimal;
 
 
-/**
- * @author Andriy Gaponov
- */
 @RequiredArgsConstructor
 @Component
 public class OrderDtoValidator implements Validator {

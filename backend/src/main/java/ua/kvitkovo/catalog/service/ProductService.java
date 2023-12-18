@@ -2,6 +2,7 @@ package ua.kvitkovo.catalog.service;
 
 import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -46,11 +47,11 @@ public class ProductService {
     }
 
     public Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status){
-        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(id, ProductStatus.ACTIVE);
+        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(id, status);
     }
 
     public Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status){
-        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, ProductStatus.ACTIVE);
+        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, status);
     }
 
     @Transactional
@@ -136,12 +137,12 @@ public class ProductService {
             addPriceFromFilter(filter, root, predicates, criteriaBuilder);
             addPriceToFilter(filter, root, predicates, criteriaBuilder);
             addTitleFilter(filter, root, predicates, criteriaBuilder);
-            addCategoryFilter(filter, root, predicates, criteriaBuilder);
+            addCategoryFilter(filter, root, predicates);
             addDiscountFilter(filter, root, predicates, criteriaBuilder);
             addColorFilter(filter, root, predicates);
             addSizesFilter(filter, root, predicates);
             addProductTypesFilter(filter, root, predicates);
-            addStatusFilter(filter, root, predicates, criteriaBuilder);
+            addStatusFilter(root, predicates, criteriaBuilder);
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
         });
@@ -159,7 +160,7 @@ public class ProductService {
         if (filter.getProductTypes() != null) {
             Expression<String> inExpression = root.get("productType");
             List<ProductType> typeList = filter.getProductTypes().stream()
-                    .map(i -> productTypeService.findById(i))
+                    .map(productTypeService::findById)
                     .toList();
             Predicate inPredicate = inExpression.in(typeList);
             predicates.add(inPredicate);
@@ -172,7 +173,7 @@ public class ProductService {
             Expression<String> inExpression = root.get("size");
             List<Size> sizeList =
                     filter.getSizes().stream()
-                            .map(i -> sizeService.findById(i))
+                            .map(sizeService::findById)
                             .toList();
             Predicate inPredicate = inExpression.in(sizeList);
             predicates.add(inPredicate);
@@ -210,8 +211,7 @@ public class ProductService {
         }
     }
 
-    private void addCategoryFilter(FilterRequestDto filter, Root<Object> root,
-                                   List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+    private void addCategoryFilter(FilterRequestDto filter, Root<Object> root, List<Predicate> predicates) {
         if (filter.getCategoryId() != null) {
             Category category = categoryService.findById(filter.getCategoryId());
             List<Category> allByParent = categoryService.findAllByParent(category);
@@ -222,8 +222,7 @@ public class ProductService {
         }
     }
 
-    private void addStatusFilter(FilterRequestDto filter, Root<Object> root,
-                                 List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
+    private void addStatusFilter(Root<Object> root, List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         predicates.add(criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE));
     }
 
@@ -240,7 +239,7 @@ public class ProductService {
         if (filter.getColors() != null) {
             Expression<String> inExpression = root.get("color");
             List<Color> colorsList = filter.getColors().stream()
-                    .map(i -> colorService.findById(i))
+                    .map(colorService::findById)
                     .toList();
             Predicate inPredicate = inExpression.in(colorsList);
             predicates.add(inPredicate);
@@ -277,7 +276,7 @@ public class ProductService {
         List<Color> colors = productRepository.findColorByCategoryIdAndStatus(
                 category.getId(), ProductStatus.ACTIVE);
         if (colors.isEmpty()) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         } else {
             return colors;
         }
@@ -290,7 +289,7 @@ public class ProductService {
                 category.getId(), ProductStatus.ACTIVE
         );
         if (sizes.isEmpty()) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         } else {
             return sizes;
         }
@@ -303,9 +302,18 @@ public class ProductService {
                 category.getId(), ProductStatus.ACTIVE
         );
         if (types.isEmpty()) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         } else {
             return types;
         }
+    }
+
+    private void changeStock(Product product, int stock) {
+        product.setStock(stock);
+        productRepository.save(product);
+    }
+
+    public void minusStock(@NonNull Product product, int stock) {
+        changeStock(product, product.getStock() - stock);
     }
 }

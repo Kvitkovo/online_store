@@ -7,9 +7,6 @@ import ua.kvitkovo.catalog.entity.Product;
 import java.math.BigDecimal;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Entity
 @Getter
 @Setter
