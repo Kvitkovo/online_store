@@ -69,27 +69,36 @@ const menuSlice = createSlice({
           sortValue: 0,
         };
         const formatCategory = (category, index, categories) => {
-          const mainPath = `/categories/${category.id}`;
+          const mainPath = `/categories`;
           const icon = category.icon;
           const bg = mockData[index]?.bg;
+          const path =
+            category.name === 'Акційна ціна'
+              ? `${mainPath}/discounted`
+              : `${mainPath}/${category.id}`;
           const children = categories
             .filter((child) => {
               return child.parent?.id === category.id;
             })
             .map((child) => ({
               ...child,
+
               link: `${mainPath}/${child.id}`,
             }));
-          return { ...category, children, bg, icon, link: mainPath };
+          return { ...category, children, bg, icon, link: path };
         };
-        const formattedCategories = action.payload
-          .filter((category) => !category.parent)
-          .map((item, idx) => formatCategory(item, idx, action.payload));
+        const mainCategories = [
+          promotionalPrice,
+          ...action.payload.filter((category) => !category.parent),
+        ];
+        const formattedCategories = mainCategories.map((item, idx) =>
+          formatCategory(item, idx, action.payload),
+        );
 
         state.loaded = true;
         state.hasError = false;
-        state.menuItems = [promotionalPrice, ...formattedCategories];
-        state.initialMenu = [promotionalPrice, ...formattedCategories];
+        state.menuItems = [...formattedCategories];
+        state.initialMenu = [...formattedCategories];
       })
       .addCase(fetchCategories.rejected, (state) => {
         state.loaded = true;
