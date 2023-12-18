@@ -1,14 +1,20 @@
 import React from 'react';
 import styles from './ModalCatalog.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
+import { useDispatch } from 'react-redux';
+import { goBack } from '../../../../../redux/slices/MenuSlice';
 
-const ParentComponent = ({ category, toggleMenu }) => {
+const ParentComponent = ({ category, toggleMenu, closeMenu }) => {
+  const dispatch = useDispatch();
+  const handleGoBack = () => {
+    dispatch(goBack({ backFunc: closeMenu }));
+  };
   return (
     <div>
       <div className={styles.iconWraper}>
         <button
           style={{ border: 'none', background: 'transparent' }}
-          onClick={toggleMenu}
+          onClick={handleGoBack}
         >
           <ICONS.back />
         </button>

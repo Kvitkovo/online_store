@@ -1,1 +1,1 @@
-export { default } from './components/CatalogFetch/CatalogFetch';
+export { default } from './Catalog';
