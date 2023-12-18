@@ -63,3 +63,9 @@
     min-width: 24px;
   }
 }
+
+@include md {
+  .categoryItemWrapper {
+    padding: 6px;
+  }
+}

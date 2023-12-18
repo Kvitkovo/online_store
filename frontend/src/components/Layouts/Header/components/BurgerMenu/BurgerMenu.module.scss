@@ -40,6 +40,7 @@
   width: 100vw;
   height: 100vh;
   background: $background-gradient;
+  display: none;
 }
 .containerTop {
   display: flex;
@@ -115,6 +116,9 @@
 @include md {
   .burgerMenu {
     display: flex;
+  }
+  .openMenu {
+    display: block;
   }
 }
 @include sm {
