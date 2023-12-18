@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import React, { useEffect, useCallback, useState } from 'react';
-import { GetProductsCategory } from '../../services/products/productsAccess.service';
+import {
+  GetDiscountedProducts,
+  GetProductsCategory,
+} from '../../services/products/productsAccess.service';
 import { GetCategory } from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
@@ -40,12 +43,22 @@ const CategoryPage = () => {
 
   const getData = useCallback(async () => {
     try {
-      const products = await GetProductsCategory({
-        page: currentPage,
-        size: 12,
-        categoryId: +categoryId,
-      });
-      const category = await GetCategory(categoryId);
+      let products;
+      let category;
+      if (categoryId === 'discounted') {
+        products = await GetDiscountedProducts({
+          page: currentPage,
+          size: 12,
+        });
+        category = { name: 'Акційна ціна' };
+      } else {
+        products = await GetProductsCategory({
+          page: currentPage,
+          size: 12,
+          categoryId: +categoryId,
+        });
+        category = await GetCategory(categoryId);
+      }
       setCurrentCategory(category);
       setProductsInCategory(products.content);
     } catch (err) {

@@ -9,9 +9,12 @@ import {
   GetProductsCategory,
 } from '../../../../../services/products/productsAccess.service';
 
-const CategoryOutput = ({ title, link, categoryId }) => {
+const CategoryOutput = ({ title, categoryId }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const link = categoryId
+    ? `/categories/${categoryId}`
+    : '/categories/discounted';
 
   const getData = useCallback(
     async (title) => {

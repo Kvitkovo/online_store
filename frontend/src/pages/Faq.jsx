@@ -1,7 +1,16 @@
 import React from 'react';
+import Path from './CardPage/components/Path';
 
 const Faq = () => {
-  return <div>Поширені запитання</div>;
+  return (
+    <>
+      <Path
+        currentPageData={{ name: 'Поширені запитання' }}
+        currentPageType={'section'}
+      />
+      <div>Поширені запитання</div>;
+    </>
+  );
 };
 
 export default Faq;
