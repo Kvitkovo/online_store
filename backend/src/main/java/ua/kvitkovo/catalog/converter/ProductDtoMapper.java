@@ -13,9 +13,6 @@ import ua.kvitkovo.orders.service.OrderService;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring", uses = {ImageDtoMapper.class})
 public interface ProductDtoMapper {
 
@@ -45,8 +42,6 @@ public interface ProductDtoMapper {
     ProductResponseForCardDto mapEntityToCardDto(Product entity, @Context OrderService orderService);
 
     Product mapDtoToEntity(ProductResponseDto dto);
-
-    Product mapDtoRequestToEntity(ProductRequestDto dto);
 
     List<ProductResponseDto> mapEntityToDto(List<Product> entities,
                                             @Context OrderService orderService);

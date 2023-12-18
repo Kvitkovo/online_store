@@ -9,14 +9,12 @@ import lombok.*;
 
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderRequest")
 public class OrderRequestDto {
 
     @Size(max = 100, message = "postcardText must be less than 100 characters.")

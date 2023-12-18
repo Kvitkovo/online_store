@@ -8,9 +8,6 @@ import ua.kvitkovo.users.entity.User;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface UserDtoMapper {
 

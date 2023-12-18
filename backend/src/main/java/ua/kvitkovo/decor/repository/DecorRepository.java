@@ -8,9 +8,6 @@ import ua.kvitkovo.decor.entity.DecorStatus;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Repository
 public interface DecorRepository extends DecorRepositoryBasic {
 

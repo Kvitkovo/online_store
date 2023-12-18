@@ -9,14 +9,12 @@ import ua.kvitkovo.orders.entity.OrderStatus;
 import java.util.Date;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderAdminRequest")
 public class OrderAdminRequestDto {
 
     @Size(max = 100, message = "postcardText must be less than 100 characters.")

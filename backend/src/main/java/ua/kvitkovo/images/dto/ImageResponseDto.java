@@ -7,13 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author Andriy Gaponov
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Image")
 public class ImageResponseDto {
 
     @NotBlank
