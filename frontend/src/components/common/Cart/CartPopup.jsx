@@ -41,7 +41,7 @@ const CartPopup = ({ toggleCart }) => {
         </div>
         <div className={styles.mobileBackground}>
           {cartItems.length > 0 ? (
-            <CartItem items={cartItems} />
+            <CartItem items={cartItems} cartClassName="itemsCart" />
           ) : (
             <CartEmpty />
           )}
