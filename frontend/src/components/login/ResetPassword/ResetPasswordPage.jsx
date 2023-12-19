@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ReactPasswordChecklist from 'react-password-checklist';
 /* eslint-disable max-len */
 import { passwordReset } from '../../../services/passwordReset/passwordReset.service';
+import { DecorIcons } from '../../ui-kit/icons/decor-icons';
 
 const ResetPasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -69,7 +70,11 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
+      <div className={styles.flowerRight}>
+        <DecorIcons.flowerRight />
+      </div>
+
       <p className={styles.heading}>Забули пароль? Можна відновити :)</p>
       <div className={styles.formContainer}>
         <p className={styles.header}>Відновлення паролю</p>
@@ -164,6 +169,17 @@ const ResetPasswordPage = () => {
             <p>Пароль успішно замінено.</p>
           </div>
         )}
+      </div>
+      <div className={styles.iconsContainer}>
+        <div className={styles.flowerLeft}>
+          <DecorIcons.flowerLeft />
+        </div>
+        <div className={styles.lock}>
+          <DecorIcons.lock />
+        </div>
+        <div className={styles.flowerBottom}>
+          <DecorIcons.flowerBottom />
+        </div>
       </div>
     </div>
   );
