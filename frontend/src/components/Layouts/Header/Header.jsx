@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import logo from '../../ui-kit/icons/logo/logo.svg';
@@ -66,6 +66,15 @@ const Header = () => {
     setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
   };
+
+  const location = useLocation();
+  const openLoginModal = location.state && location.state.openLoginModal;
+
+  useEffect(() => {
+    if (openLoginModal) {
+      setIsOpenLogin(true);
+    }
+  }, [openLoginModal]);
 
   useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
 
