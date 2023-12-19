@@ -28,6 +28,7 @@ const IconButton = memo((props) => {
   return (
     <button className={calculateClassNames} onClick={props.onClick}>
       {props.icon}
+      <div>{props.children}</div>
     </button>
   );
 });
