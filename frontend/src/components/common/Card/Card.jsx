@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './Card.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
-import Discount from '../../ui-kit/components/Discount/Discount';
-import DiscountPrice from '../../ui-kit/components/DiscountPrice/DiscountPrice';
+import Discount from '../../ui-kit/components/Discount';
+import DiscountPrice from '../../ui-kit/components/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
 import { Link } from 'react-router-dom';
 import { addToCart } from '../../../redux/slices/cartSlice';
@@ -71,11 +71,14 @@ const Card = (props) => {
           )}
         </div>
         <div className={styles.cardFlexBottom}>
-          <DiscountPrice
-            oldPrice={props.oldPrice}
-            actualPrice={props.price}
-            isActive={props.available}
-          />
+          <div className={styles.priceWrapper}>
+            <DiscountPrice
+              oldPrice={props.oldPrice}
+              actualPrice={props.price}
+              isActive={props.available}
+              isSmallCard={true}
+            />
+          </div>
           <div className={styles.cardFlexBottom}>
             <div
               className={
