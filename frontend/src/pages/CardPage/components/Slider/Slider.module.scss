@@ -4,24 +4,29 @@
 .sliderContainer {
   position: relative;
 }
+
 .arrowContainer {
   position: absolute;
   display: flex;
   align-items: center;
   top: 215px;
 }
+
 .arrowLeft {
   left: 4px;
   z-index: 1;
 }
+
 .arrowRight {
   right: 4px;
 }
+
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
+
 .paginationBullet {
   background-color: $gray-dark-color;
   height: 12px;
@@ -36,13 +41,16 @@
   .arrowContainer {
     display: none;
   }
+  .pagination {
+    display: none;
+  }
 }
 
 @include sm {
   .sliderContainer {
-    box-sizing: content-box;
+    // box-sizing: content-box;
     margin: 0 auto;
     padding: 0 16px;
-    width: 334px;
+    min-width: 334px;
   }
 }

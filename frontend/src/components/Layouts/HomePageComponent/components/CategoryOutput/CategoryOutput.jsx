@@ -9,9 +9,12 @@ import {
   GetProductsCategory,
 } from '../../../../../services/products/productsAccess.service';
 
-const CategoryOutput = ({ title, link, categoryId }) => {
+const CategoryOutput = ({ title, categoryId }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const link = categoryId
+    ? `/categories/${categoryId}`
+    : '/categories/discounted';
 
   const getData = useCallback(
     async (title) => {
@@ -53,25 +56,26 @@ const CategoryOutput = ({ title, link, categoryId }) => {
         <p>Loading...</p>
       ) : (
         <div className={styles.categoryOutput}>
-          <div className={styles.cardOutput}>
+          <ul className={styles.cardOutput}>
             {data &&
               data.map((card) => (
-                <Card
-                  image={
-                    card.images[0]
-                      ? card.images[0].urlSmall
-                      : '/images/no_image.jpg'
-                  }
-                  title={card.title}
-                  discount={card.discount}
-                  oldPrice={card.price}
-                  price={card.priceWithDiscount}
-                  available={card.available}
-                  key={card.id}
-                  id={card.id}
-                />
+                <li key={card.id} className={styles.card}>
+                  <Card
+                    image={
+                      card.images[0]
+                        ? card.images[0].urlSmall
+                        : '/images/no_image.jpg'
+                    }
+                    title={card.title}
+                    discount={card.discount}
+                    oldPrice={card.price}
+                    price={card.priceWithDiscount}
+                    available={card.available}
+                    id={card.id}
+                  />
+                </li>
               ))}
-          </div>
+          </ul>
           <div className={styles.flexLink}>
             <Link to={link} className={styles.link}>
               Показати усі

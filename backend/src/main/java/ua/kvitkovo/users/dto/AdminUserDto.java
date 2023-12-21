@@ -1,13 +1,12 @@
 package ua.kvitkovo.users.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
-/**
- * @author Andriy Gaponov
- */
 @Data
 @Builder
+@Schema(name = "Admin")
 public class AdminUserDto {
 
     private Long id;

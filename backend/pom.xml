@@ -75,8 +75,8 @@
 
     <dependency>
       <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk</artifactId>
-      <version>1.12.429</version>
+      <artifactId>aws-java-sdk-s3</artifactId>
+      <version>1.12.528</version>
     </dependency>
 
     <dependency>
@@ -131,15 +131,34 @@
       <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-thymeleaf</artifactId>
-          <version>3.1.2</version>
+        <version>3.1.2</version>
       </dependency>
 
 
-      <dependency>
-          <groupId>com.google.api-client</groupId>
-          <artifactId>google-api-client</artifactId>
-          <version>1.32.1</version>
-      </dependency>
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.32.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <version>6.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.214</version>
+    </dependency>
 
 
   </dependencies>

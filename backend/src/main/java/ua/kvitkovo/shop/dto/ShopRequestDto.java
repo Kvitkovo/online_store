@@ -5,14 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "ShopRequest")
 public class ShopRequestDto {
 
     @NotBlank

@@ -16,28 +16,40 @@
   font-size: 14px;
   line-height: 130%;
 }
+
+.arrow {
+  display: flex;
+}
+
 @include md {
   .path {
     font-size: 14px;
-    margin: 16px 47px;
+    margin: 16px 0;
     margin-bottom: 16px;
   }
 }
 @include sm {
   .pathContainer {
-    width: 100vw;
     overflow: auto;
     white-space: nowrap;
+    scrollbar-width: 128px;
+    scrollbar-color: $page-accent-color transparent;
     &::-webkit-scrollbar {
       width: 128px;
       height: 4px;
     }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
     &::-webkit-scrollbar-thumb {
       background-color: $page-accent-color;
       border-radius: 2px;
     }
   }
   .path {
-    margin: 19px 16px 15px;
+    position: relative;
+    margin: 19px 0px 15px;
   }
 }

@@ -5,14 +5,12 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "FilterPricesInterval")
 public class FilterPricesIntervalResponseDto {
 
     @Schema(example = "1000", description = "Minimum price product")

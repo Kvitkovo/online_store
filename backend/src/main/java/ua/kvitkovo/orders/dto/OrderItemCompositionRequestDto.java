@@ -4,14 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderItemCompositionRequest")
 public class OrderItemCompositionRequestDto {
 
     @NotNull

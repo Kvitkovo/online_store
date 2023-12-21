@@ -6,14 +6,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "SizeRequest")
 public class SizeRequestDto {
 
     @NotBlank(message = "The 'name' cannot be empty")

@@ -5,9 +5,6 @@ import org.mapstruct.Mapper;
 import ua.kvitkovo.feedback.dto.ManagerResponseDto;
 import ua.kvitkovo.users.entity.User;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface ManagerDtoMapper {
 

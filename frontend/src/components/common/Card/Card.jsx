@@ -47,7 +47,7 @@ const Card = (props) => {
               styles.fotoInactive,
             )}
           />
-          <h3>{props.title}</h3>
+          <h3 className={styles.title}>{props.title}</h3>
         </div>
       </Link>
       <div

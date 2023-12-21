@@ -10,7 +10,7 @@ import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';
 
-const CartItem = ({ items }) => {
+const CartItem = ({ items, cartClassName }) => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
@@ -19,7 +19,11 @@ const CartItem = ({ items }) => {
   };
 
   return (
-    <div className={styles.itemsBlock}>
+    <div
+      className={
+        cartClassName === 'itemsCart' ? styles.itemsCart : styles.itemsOrder
+      }
+    >
       {items.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className={styles.item}>
@@ -58,10 +62,18 @@ const CartItem = ({ items }) => {
                 }`
               }
             >
-              <DiscountPrice
-                oldPrice={item.oldPrice}
-                actualPrice={item.price}
-              />
+              <div
+                className={
+                  cartClassName === 'itemsOrder'
+                    ? styles.discountPriceOrder
+                    : ''
+                }
+              >
+                <DiscountPrice
+                  oldPrice={item.oldPrice}
+                  actualPrice={item.price}
+                />
+              </div>
             </div>
           </div>
           {index < items.length - 1 && <Divider />}

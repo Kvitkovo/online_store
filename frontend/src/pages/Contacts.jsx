@@ -1,7 +1,16 @@
 import React from 'react';
+import Path from './CardPage/components/Path';
 
 const Contacts = () => {
-  return <div>Контакти</div>;
+  return (
+    <>
+      <Path
+        currentPageData={{ name: 'Контакти' }}
+        currentPageType={'section'}
+      />
+      <div>Контакти</div>
+    </>
+  );
 };
 
 export default Contacts;

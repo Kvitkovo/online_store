@@ -9,9 +9,6 @@ import ua.kvitkovo.catalog.entity.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Repository
 public interface ProductRepository extends ProductRepositoryBasic {
 
@@ -33,6 +30,4 @@ public interface ProductRepository extends ProductRepositoryBasic {
     Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status);
 
     Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status);
-
-    List<Product> findAllByIdIn(List<Long> id);
 }

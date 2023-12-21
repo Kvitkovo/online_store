@@ -8,14 +8,12 @@ import lombok.*;
 import ua.kvitkovo.catalog.entity.CategoryIcon;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "CategoryRequest")
 public class CategoryRequestDto {
 
     @NotBlank(message = "The 'name' cannot be empty")

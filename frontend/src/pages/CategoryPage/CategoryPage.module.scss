@@ -1,4 +1,5 @@
 @import './../../variables';
+@import './../../_mixins';
 
 .mainContainer {
   display: flex;
@@ -13,8 +14,7 @@
 
 .sortBlock {
   display: flex;
-  align-items: center;
-  height: 60px;
+  flex-direction: column;
   margin-bottom: 20px;
   padding: 10px 12px;
   background-color: $white-color;
@@ -28,17 +28,97 @@
 }
 
 .sortDropdown {
+  display: flex;
+  align-items: baseline;
   position: relative;
   z-index: 1;
-  align-self: start;
 }
+
+.sortSmallDevices {
+  display: none;
+}
+
 .cards {
-  display: flex;
+  display: grid;
   gap: 20px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  max-width: inherit;
+  margin: 0px auto;
+  & li {
+    height: 100%;
+  }
 }
 
 .mainContent {
   width: 880px;
+}
+
+.filterButton {
+  display: none;
+}
+
+.filterShowbar {
+  display: flex;
+  margin-top: 16px;
+}
+
+@include lg {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
+  }
+
+  .sortDropdown {
+    display: none;
+  }
+
+  .sortTitle {
+    display: none;
+  }
+
+  .sortBlock {
+    background: transparent;
+    flex-direction: row;
+    padding: 0;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .filterButton {
+    grid-column: 2;
+    width: 100%;
+    display: inline-block;
+  }
+
+  .sortSmallDevices {
+    position: relative;
+    display: block;
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .mainContainer {
+    display: block;
+  }
+  .mainContent {
+    width: auto;
+  }
+
+  .filterShowbar {
+    display: none;
+  }
+}
+
+@include md {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+@include sm {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
+  }
+  .sortSmallDevices {
+    gap: 20px;
+  }
 }
