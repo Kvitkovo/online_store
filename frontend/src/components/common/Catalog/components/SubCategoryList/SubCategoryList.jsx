@@ -12,8 +12,8 @@ const SubCategories = ({ subCategories, handleCategoryClick }) => {
         <ul className={styles.categoryList}>
           {subCategories.map((child) => (
             <CatalogItem
-              key={child.sortValue}
-              category={child}
+              key={child.id}
+              {...child}
               handleCategoryClick={handleCategoryClick}
             />
           ))}

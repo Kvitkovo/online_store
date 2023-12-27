@@ -24,11 +24,6 @@
   overflow-y: auto;
 }
 
-// .categoryBg {
-//   //TODO: Temporary solution until we get the correct image
-//   transform: translateX(-2px) scale(1.004);
-// }
-
 .categoryList {
   display: flex;
   flex-direction: column;
@@ -42,6 +37,14 @@
     padding-top: 12px;
     margin-top: 12px;
   }
+}
+
+.categoryName {
+  padding: 12px;
+}
+.categoryBg {
+  //TODO: Temporary solution until we get the correct image
+  transform: translateX(-2px) scale(1.004);
 }
 
 @include md {
@@ -59,8 +62,11 @@
   }
   .categoryList {
     width: inherit;
+    max-height: 100%;
+    padding-top: 24px;
   }
 }
+
 @include sm {
   .categoryWrapper {
     top: 75px;

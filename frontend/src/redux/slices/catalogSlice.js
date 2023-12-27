@@ -18,8 +18,8 @@ export const fetchCategories = createAsyncThunk(
     return response;
   },
 );
-const menuSlice = createSlice({
-  name: 'menu',
+const catalogSlice = createSlice({
+  name: 'catalog',
   initialState,
   reducers: {
     goToSubMenu(state, action) {
@@ -32,7 +32,7 @@ const menuSlice = createSlice({
       if (prevParents.length === 0) {
         action.payload.backFunc();
       } else {
-        const parentsId = prevParents[prevParents.length - 1];
+        const parentsId = prevParents.pop();
         const prevMenu =
           state.initialMenu.find((category) => category.id === parentsId) || {};
         if (prevMenu.parent) {
@@ -40,12 +40,15 @@ const menuSlice = createSlice({
             (category) => category.id === prevMenu.parent.id,
           );
           state.menuItems = newMenu.children;
-          prevParents.pop();
         } else {
           state.menuItems = state.initialMenu;
           state.prevParents = [];
         }
       }
+    },
+    closeMenu(state) {
+      state.menuItems = state.initialMenu;
+      state.prevParents = [];
     },
   },
   extraReducers: (builder) => {
@@ -107,6 +110,6 @@ const menuSlice = createSlice({
   },
 });
 
-export const { goToSubMenu, goBack } = menuSlice.actions;
+export const { goToSubMenu, goBack, closeMenu } = catalogSlice.actions;
 
-export const menuSliceReducer = menuSlice.reducer;
+export const catalogSliceReducer = catalogSlice.reducer;

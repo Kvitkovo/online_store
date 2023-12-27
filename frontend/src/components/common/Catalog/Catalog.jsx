@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Catalog.module.scss';
 import CategoryList from './components/CatalogList/CatalogList';
 import SubCategoryList from './components/SubCategoryList/SubCategoryList';
-import { mockCategories as mockData } from '../../../data/catalog/contact';
+import { mockCategories as categoriesData } from '../../../data/catalog';
 import { useDispatch } from 'react-redux';
-import { fetchCategories } from '../../../redux/slices/MenuSlice';
+import { fetchCategories } from '../../../redux/slices/catalogSlice';
 
 const Catalog = React.memo(({ setIsOpen }) => {
   const dispatch = useDispatch();
@@ -39,8 +39,8 @@ const Catalog = React.memo(({ setIsOpen }) => {
         )}
       </div>
       <img
-        src={hoveredCategory?.bg || mockData[0].bg}
-        alt={hoveredCategory?.name || mockData[0].name}
+        src={hoveredCategory?.bg || categoriesData[0].bg}
+        alt={hoveredCategory?.name || categoriesData[0].name}
         className={styles.categoryBg}
       />
     </div>

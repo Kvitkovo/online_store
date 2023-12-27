@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { exampleSliceReducer } from '../slices/exampleSlice/exampleSlice';
 import { cartSliceReducer } from '../slices/cartSlice';
-import { menuSliceReducer } from '../slices/MenuSlice';
+import { catalogSliceReducer } from '../slices/catalogSlice';
 
 const reducer = combineReducers({
   exampleSliceReducer,
   cartSliceReducer,
-  menu: menuSliceReducer,
+  menu: catalogSliceReducer,
 });
 
 const rootReducer = (state, action) => {

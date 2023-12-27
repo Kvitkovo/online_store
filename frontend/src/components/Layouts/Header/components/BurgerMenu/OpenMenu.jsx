@@ -13,10 +13,14 @@ import NavigationMenu from '../NavigationMenu';
 import Catalog from '../../../../common/Catalog';
 import ModalCatalog from '../../../../common/Catalog/components/ModalCatalog/ModalCatalog';
 import ParentComponent from '../../../../common/Catalog/components/ModalCatalog/ParentComponent';
+import { useSelector } from 'react-redux';
 
 const OpenMenu = ({ toggleMenu }) => {
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
-
+  const { prevParents, initialMenu } = useSelector((state) => state.menu);
+  const currentCategory =
+    initialMenu.find((category) => category.id === prevParents.at(-1))?.name ||
+    'Каталог товарів';
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
   };
@@ -43,7 +47,7 @@ const OpenMenu = ({ toggleMenu }) => {
           {isCatalogOpened && (
             <ModalCatalog>
               <ParentComponent
-                category="Каталог товарів"
+                category={currentCategory}
                 toggleMenu={toggleMenu}
                 closeMenu={setIsCatalogOpened}
               />
