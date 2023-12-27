@@ -107,6 +107,10 @@
   .priceWrapper {
     font-size: 16px;
   }
+  .outOfStock {
+    font-size: 14px;
+    line-height: 130%;
+  }
 }
 
 @container cardBlock (width < 211px) {
@@ -133,6 +137,9 @@
   .priceWrapper {
     gap: 4px;
     font-size: 14px;
+  }
+  .outOfStock {
+    font-size: 12px;
   }
 }
 
