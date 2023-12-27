@@ -1,63 +1,56 @@
 package ua.kvitkovo.shop.service;
 
 import jakarta.transaction.Transactional;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
-import ua.kvitkovo.shop.converter.ShopDtoMapper;
 import ua.kvitkovo.shop.dto.ShopRequestDto;
-import ua.kvitkovo.shop.dto.ShopResponseDto;
 import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.shop.repository.ShopRepository;
 import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
-/**
- * @author Andriy Gaponov
- */
+import java.util.Objects;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class ShopService {
 
     private final ShopRepository shopRepository;
-    private final ShopDtoMapper shopMapper;
     private final TransliterateUtils transliterateUtils;
 
-    public ShopResponseDto findById(long id) throws ItemNotFoundException {
-        return shopRepository.findById(id).map(shopMapper::mapEntityToDto)
-            .orElseThrow(() -> new ItemNotFoundException("Shop not found"));
+    public Shop findById(long id) throws ItemNotFoundException {
+        return shopRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Shop not found"));
     }
 
     @Transactional
-    public ShopResponseDto addShop(ShopRequestDto dto, BindingResult bindingResult) {
+    public Shop addShop(ShopRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotCreatedException(bindingResult);
 
-        Shop shop = shopMapper.mapDtoRequestToDto(dto);
+        Shop shop = new Shop();
+        BeanUtils.copyProperties(dto, shop);
         shop.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
         shop.setId(null);
         shopRepository.save(shop);
-        log.info("The Shop was created");
-        return shopMapper.mapEntityToDto(shop);
+        log.debug("The Shop was created");
+        return shop;
     }
 
-    public ShopResponseDto updateShop(Long id, ShopRequestDto dto, BindingResult bindingResult) {
+    public Shop updateShop(Long id, ShopRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
-        ShopResponseDto shopResponseDto = findById(id);
-        if (!Objects.equals(dto.getTitle(), shopResponseDto.getTitle())) {
-            shopResponseDto.setAlias(
-                transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
+        Shop shop = findById(id);
+        if (!Objects.equals(dto.getTitle(), shop.getTitle())) {
+            shop.setAlias(transliterateUtils.getAlias(Shop.class.getSimpleName(), dto.getTitle()));
         }
-        BeanUtils.copyProperties(dto, shopResponseDto, Helper.getNullPropertyNames(dto));
-        Shop shop = shopMapper.mapDtoToEntity(shopResponseDto);
+        BeanUtils.copyProperties(dto, shop, Helper.getNullPropertyNames(dto));
 
         shopRepository.save(shop);
-        return shopMapper.mapEntityToDto(shop);
+        return shop;
     }
 }

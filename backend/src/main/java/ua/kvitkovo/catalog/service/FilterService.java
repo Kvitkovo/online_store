@@ -4,34 +4,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.*;
-import ua.kvitkovo.catalog.repository.ColorRepository;
-import ua.kvitkovo.catalog.repository.ProductRepository;
-import ua.kvitkovo.catalog.repository.ProductTypeRepository;
-import ua.kvitkovo.catalog.repository.SizeRepository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Andriy Gaponov
- */
 @Service
 @RequiredArgsConstructor
 public class FilterService {
 
-    private final ColorRepository colorRepository;
-    private final SizeRepository sizeRepository;
-    private final ProductTypeRepository productTypeRepository;
-    private final ProductRepository productRepository;
+    private final ColorService colorService;
+    private final SizeService sizeService;
+    private final ProductTypeService productTypeService;
     private final ProductService productService;
 
     public Map<String, Map<Long, ?>> getFilter() {
 
-        List<Color> colors = colorRepository.findAll();
-        List<Size> sizes = sizeRepository.findAll();
-        List<ProductType> types = productTypeRepository.findAll();
+        List<Color> colors = colorService.getAll();
+        List<Size> sizes = sizeService.getAll();
+        List<ProductType> types = productTypeService.getAll();
 
         Map<Long, String> colorResult = new HashMap<>();
         Map<Long, String> sizeResult = new HashMap<>();
@@ -78,10 +70,10 @@ public class FilterService {
     }
 
     public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
-        Product minPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(
-            categoryId, ProductStatus.ACTIVE);
-        Product maxPriceProduct = productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(
-            categoryId, ProductStatus.ACTIVE);
+        Product minPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceAsc(
+                categoryId, ProductStatus.ACTIVE);
+        Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
+                categoryId, ProductStatus.ACTIVE);
         FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
         if (minPriceProduct == null) {
             result.setMinPrice(BigDecimal.ZERO);

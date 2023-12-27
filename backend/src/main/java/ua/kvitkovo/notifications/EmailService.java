@@ -25,9 +25,6 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Andriy Gaponov
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -167,8 +164,6 @@ public class EmailService implements NotificationService {
 
     private String getMessageText(String message) {
         String result = "";
-//        String regEmail = emailFrom.replace(".", "\\.");
-//        Pattern pattern = Pattern.compile("^(.*?)(?=\\s*" + regEmail + ")", Pattern.MULTILINE);
         Pattern pattern = Pattern.compile("^\\s*$", Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(message);
 

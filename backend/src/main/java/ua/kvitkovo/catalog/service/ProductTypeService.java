@@ -1,17 +1,12 @@
 package ua.kvitkovo.catalog.service;
 
 import jakarta.transaction.Transactional;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.converter.ProductTypeDtoMapper;
 import ua.kvitkovo.catalog.dto.request.ProductTypeRequestDto;
-import ua.kvitkovo.catalog.dto.response.ProductTypeResponseDto;
 import ua.kvitkovo.catalog.entity.ProductType;
 import ua.kvitkovo.catalog.repository.ProductTypeRepository;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -19,64 +14,59 @@ import ua.kvitkovo.utils.ErrorUtils;
 import ua.kvitkovo.utils.Helper;
 import ua.kvitkovo.utils.TransliterateUtils;
 
-/**
- * @author Andriy Gaponov
- */
+import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
-    private final ProductTypeDtoMapper productTypeMapper;
     private final TransliterateUtils transliterateUtils;
 
-    public Collection<ProductTypeResponseDto> getAll() {
-        List<ProductType> types = productTypeRepository.findAll();
-        return productTypeMapper.mapEntityToDto(types);
+    public List<ProductType> getAll() {
+        return productTypeRepository.findAll();
     }
 
-    public ProductTypeResponseDto findById(long id) throws ItemNotFoundException {
-        return productTypeRepository.findById(id)
-            .map(productTypeMapper::mapEntityToDto).orElseThrow(() -> {
-                throw new ItemNotFoundException("Product type not found");
-            });
+    public ProductType findById(long id) {
+        return productTypeRepository.findById(id).orElseThrow(() -> {
+            throw new ItemNotFoundException("Product type not found");
+        });
     }
 
     @Transactional
-    public ProductTypeResponseDto addProductType(ProductTypeRequestDto dto,
-        BindingResult bindingResult) {
+    public ProductType addProductType(ProductTypeRequestDto dto,
+                                      BindingResult bindingResult) {
         ErrorUtils.checkItemNotCreatedException(bindingResult);
 
-        ProductType type = productTypeMapper.mapDtoRequestToEntity(dto);
-        type.setAlias(
-            transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
+        ProductType type = new ProductType();
+        BeanUtils.copyProperties(dto, type);
+        type.setAlias(transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
         type.setId(null);
         productTypeRepository.save(type);
         log.info("The Product type was created");
-        return productTypeMapper.mapEntityToDto(type);
+        return type;
     }
 
     @Transactional
-    public ProductTypeResponseDto updateProductType(Long id, ProductTypeRequestDto dto,
-        BindingResult bindingResult) {
+    public ProductType updateProductType(Long id, ProductTypeRequestDto dto,
+                                         BindingResult bindingResult) {
         ErrorUtils.checkItemNotUpdatedException(bindingResult);
 
-        ProductTypeResponseDto productTypeResponseDto = findById(id);
-        if (!Objects.equals(dto.getName(), productTypeResponseDto.getName())) {
-            productTypeResponseDto.setAlias(
-                transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
+        ProductType type = findById(id);
+        if (!Objects.equals(dto.getName(), type.getName())) {
+            type.setAlias(transliterateUtils.getAlias(ProductType.class.getSimpleName(), dto.getName()));
         }
-        BeanUtils.copyProperties(dto, productTypeResponseDto, Helper.getNullPropertyNames(dto));
-        ProductType type = productTypeMapper.mapDtoToEntity(productTypeResponseDto);
+        BeanUtils.copyProperties(dto, type, Helper.getNullPropertyNames(dto));
 
         productTypeRepository.save(type);
-        return productTypeMapper.mapEntityToDto(type);
+        return type;
     }
 
     @Transactional
     public void deleteProductType(long id) {
-        ProductTypeResponseDto productTypeResponseDto = findById(id);
-        productTypeRepository.deleteById(productTypeResponseDto.getId());
+        ProductType type = findById(id);
+        productTypeRepository.delete(type);
     }
 }

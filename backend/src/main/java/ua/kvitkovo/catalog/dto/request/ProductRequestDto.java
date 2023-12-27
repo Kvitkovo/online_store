@@ -10,14 +10,12 @@ import ua.kvitkovo.catalog.entity.ProductStatus;
 
 import java.math.BigDecimal;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "ProductRequest")
 public class ProductRequestDto {
 
     @NotBlank(message = "The 'title' cannot be empty")

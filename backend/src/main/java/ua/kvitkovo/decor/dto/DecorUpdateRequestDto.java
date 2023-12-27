@@ -5,14 +5,12 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import ua.kvitkovo.decor.entity.DecorStatus;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "DecorUpdateRequest")
 public class DecorUpdateRequestDto {
 
     @NotBlank

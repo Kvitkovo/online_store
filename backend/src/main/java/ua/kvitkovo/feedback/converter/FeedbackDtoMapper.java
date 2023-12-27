@@ -9,13 +9,8 @@ import ua.kvitkovo.feedback.entity.FeedbackMessage;
 
 import java.util.List;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface FeedbackDtoMapper {
-
-    FeedbackMessage mapDtoRequestToEntity(FeedbackMessageEmailRequestDto dto);
 
     FeedbackMessage mapDtoToEntity(FeedbackMessageResponseDto dto);
 
