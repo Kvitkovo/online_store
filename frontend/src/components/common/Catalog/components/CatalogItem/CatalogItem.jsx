@@ -1,41 +1,26 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React from 'react';
 import { ICONS } from '../../../../ui-kit/icons';
-import styles from '../../Catalog.module.scss';
-import SubCategories from '../SubCategoryList/SubCategoryList';
-import ModalCatalog from '../ModalCatalog/ModalCatalog';
+import styles from './CatalogItem.module.scss';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
-import ParentComponent from '../ModalCatalog/ParentComponent';
+import { useDispatch } from 'react-redux';
+import { goToSubMenu } from '../../../../../redux/slices/MenuSlice';
 
-const CatalogItem = ({
-  depthLevel,
-  category,
-  handleCategoryClick,
-  setHoveredCategory,
-}) => {
+const CatalogItem = ({ category, handleCategoryClick, setHoveredCategory }) => {
   const { width } = useWindowSize();
   const { sortValue, children, bg, name, link, hasSubCategory, icon } =
     category;
-
-  const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
+  const dispatch = useDispatch();
   const nameParts = name.split(' ');
   const firstPart = nameParts[0];
   const restParts = nameParts.slice(1).join(' ');
 
   const handleClick = () => {
-    if (width <= 510) {
-      isSubCategoryOpen
-        ? setIsSubCategoryOpen(false)
-        : children && children.length > 0
-        ? setIsSubCategoryOpen(true)
-        : handleCategoryClick(link);
+    if (width <= 868 && children?.length > 0) {
+      dispatch(goToSubMenu({ data: children, id: category.id }));
     } else {
       handleCategoryClick(link);
     }
-  };
-
-  const handleSubCategoryToggle = () => {
-    setIsSubCategoryOpen(!isSubCategoryOpen);
   };
 
   return (
@@ -57,37 +42,31 @@ const CatalogItem = ({
               : null
           }
         >
-          {icon && (
-            <img
-              src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
-              alt={icon}
-            />
-          )}
-
-          <div className={styles.categoryItemContent}>
-            {firstPart === 'Акційна' ? (
-              <span className={styles.redText}>{firstPart}</span>
-            ) : (
-              <span className={styles.categoryItemText}>{firstPart}</span>
+          <div className={styles.categoryTitle}>
+            {icon && (
+              <img
+                className={styles.icon}
+                src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
+                alt={icon}
+              />
             )}
-            <span>{restParts}</span>
+
+            <div className={styles.categoryItemContent}>
+              {firstPart === 'Акційна' ? (
+                <span className={styles.redText}>{firstPart}</span>
+              ) : (
+                <span className={styles.categoryItemText}>{firstPart}</span>
+              )}
+              <span>{restParts}</span>
+            </div>
           </div>
-          {hasSubCategory && <ICONS.hideList className={styles.icon} />}
+          {hasSubCategory && (
+            <div className={styles.iconContainer}>
+              <ICONS.hideList className={styles.icon} />
+            </div>
+          )}
         </a>
       </li>
-      {isSubCategoryOpen && (
-        <ModalCatalog>
-          <ParentComponent
-            category={name}
-            toggleMenu={handleSubCategoryToggle}
-          />
-          <SubCategories
-            categories={children}
-            depthLevel={depthLevel}
-            handleCategoryClick={handleCategoryClick}
-          />
-        </ModalCatalog>
-      )}
     </>
   );
 };

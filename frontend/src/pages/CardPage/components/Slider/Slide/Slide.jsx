@@ -11,6 +11,7 @@ const Slide = ({ card }) => {
             ? card.images[0]?.urlSmall
             : '../images/no_image.jpg'
         }
+        available={card.available}
         title={card.title}
         discount={card.discount}
         oldPrice={card.price}

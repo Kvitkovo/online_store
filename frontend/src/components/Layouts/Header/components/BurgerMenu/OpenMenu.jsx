@@ -45,6 +45,7 @@ const OpenMenu = ({ toggleMenu }) => {
               <ParentComponent
                 category="Каталог товарів"
                 toggleMenu={toggleMenu}
+                closeMenu={setIsCatalogOpened}
               />
               <Catalog setIsOpen={setIsCatalogOpened} />
             </ModalCatalog>

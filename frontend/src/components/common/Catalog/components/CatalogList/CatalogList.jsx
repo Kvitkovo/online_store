@@ -1,25 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../../Catalog.module.scss';
 import CatalogItem from '../CatalogItem/CatalogItem';
 
-const CategoryList = ({
-  categories,
-  setHoveredCategory,
-  handleCategoryClick,
-}) => {
+const CategoryList = ({ handleCategoryClick, setHoveredCategory }) => {
+  const { menuItems } = useSelector((state) => state.menu);
   return (
     <ul className={styles.categoryList}>
-      {categories
-        .filter((category) => !category.parent)
-        .map((category) => (
+      {menuItems.map((category) => {
+        return (
           <CatalogItem
-            key={category.sortValue}
+            key={category.id}
             category={category}
-            depthLevel={0}
             handleCategoryClick={handleCategoryClick}
             setHoveredCategory={setHoveredCategory}
           />
-        ))}
+        );
+      })}
     </ul>
   );
 };

@@ -41,13 +41,14 @@
   width: 100vw;
   height: 100vh;
   background: $background-gradient;
+  display: none;
 }
 .containerTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  padding: 3px 16px;
+  padding: 3px 27px;
   background-color: $white-color;
 }
 .logo {
@@ -116,6 +117,9 @@
 @include md {
   .burgerMenu {
     display: flex;
+  }
+  .openMenu {
+    display: block;
   }
 }
 @include sm {
