@@ -48,12 +48,11 @@
   cursor: pointer;
   &:hover {
     border-radius: 26px;
-    transform: scale(1.02);
     background: $page-background-color;
   }
   &:active {
     background-color: $light-yellow;
-
+    transform: scale(0.98);
     svg path {
       stroke: $on-press-color;
     }

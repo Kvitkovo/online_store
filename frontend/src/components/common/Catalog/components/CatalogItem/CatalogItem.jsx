@@ -4,20 +4,30 @@ import { ICONS } from '../../../../ui-kit/icons';
 import styles from './CatalogItem.module.scss';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import { useDispatch } from 'react-redux';
-import { goToSubMenu } from '../../../../../redux/slices/MenuSlice';
+import { goToSubMenu } from '../../../../../redux/slices/catalogSlice';
 
-const CatalogItem = ({ category, handleCategoryClick, setHoveredCategory }) => {
+const CatalogItem = ({
+  sortValue,
+  id,
+  children,
+  bg,
+  name,
+  link,
+  hasSubCategory,
+  icon,
+  handleCategoryClick,
+  setHoveredCategory,
+}) => {
   const { width } = useWindowSize();
-  const { sortValue, children, bg, name, link, hasSubCategory, icon } =
-    category;
   const dispatch = useDispatch();
+
   const nameParts = name.split(' ');
   const firstPart = nameParts[0];
   const restParts = nameParts.slice(1).join(' ');
 
   const handleClick = () => {
     if (width <= 868 && children?.length > 0) {
-      dispatch(goToSubMenu({ data: children, id: category.id }));
+      dispatch(goToSubMenu({ data: children, id: id }));
     } else {
       handleCategoryClick(link);
     }
