@@ -3,7 +3,7 @@ import { getLogoutUrl } from '../utils/utils';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVICE_URL,
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     common: {
       'Content-Type': 'application/json',
@@ -12,13 +12,12 @@ const axiosInstance = axios.create({
   },
 });
 
-//TODO: When token is ready, uncomment this
-// axiosInstance.interceptors.request.use((request) => {
-//   request.headers = {
-//     authorization: `Bearer ` + localStorage.getItem('token'),
-//   };
-//   return request;
-// });
+axiosInstance.interceptors.request.use((request) => {
+  request.headers = {
+    authorization: `Bearer ` + localStorage.getItem('token'),
+  };
+  return request;
+});
 
 axiosInstance.interceptors.response.use(
   (response) => {
