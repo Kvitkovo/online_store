@@ -5,9 +5,6 @@ import org.mapstruct.Mapper;
 import ua.kvitkovo.feedback.dto.AnswerMessageResponseDto;
 import ua.kvitkovo.feedback.entity.AnswerMessage;
 
-/**
- * @author Andriy Gaponov
- */
 @Mapper(componentModel = "spring")
 public interface AnswerDtoMapper {
 

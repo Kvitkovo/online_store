@@ -8,14 +8,12 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderItemRequest")
 public class OrderItemRequestDto {
 
     @Schema(example = "1", description = "Product ID")

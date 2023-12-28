@@ -9,14 +9,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "Order")
 public class OrderResponseDto {
 
     @Schema(example = "24", description = "Order ID")

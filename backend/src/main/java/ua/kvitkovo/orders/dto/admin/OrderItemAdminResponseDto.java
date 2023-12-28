@@ -3,53 +3,32 @@ package ua.kvitkovo.orders.dto.admin;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderItemAdmin")
 public class OrderItemAdminResponseDto {
 
+    @Schema(example = "12", description = "Item ID")
     private Long id;
     private ProductAdminResponseDto product;
-    private String productTitle;
-    private BigDecimal price;
-    private int qty;
-    private Set<OrderItemCompositionAdminResponseDto> orderItemsCompositions;
-
-    @Schema(example = "12", description = "Item ID")
-    public Long getId() {
-        return id;
-    }
-
-    public ProductAdminResponseDto getProduct() {
-        return product;
-    }
-
-    @Schema(example = "500.00", description = "Product price")
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    @Schema(example = "2", description = "Product quantity")
-    public int getQty() {
-        return qty;
-    }
 
     @Schema(example = "Власний букет", description = "Product title")
-    public String getProductTitle() {
-        return productTitle;
-    }
+    private String productTitle;
 
-    public Set<OrderItemCompositionAdminResponseDto> getOrderItemsCompositions() {
-        return orderItemsCompositions;
-    }
+    @Schema(example = "500.00", description = "Product price")
+    private BigDecimal price;
+
+    @Schema(example = "2", description = "Product quantity")
+    private int qty;
+    private Set<OrderItemCompositionAdminResponseDto> orderItemsCompositions;
 }

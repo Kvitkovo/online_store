@@ -8,6 +8,8 @@ header {
   background-color: $white-color;
   font-weight: 400;
   box-shadow: $box-shadow;
+  position: relative;
+  z-index: 999;
 }
 
 .containerTop {

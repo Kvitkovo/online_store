@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from './SideMenu.module.scss';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/userSlice';
 
 const SideMenu = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <div className={styles.menuAccount}>
       <NavLink
@@ -22,7 +29,7 @@ const SideMenu = () => {
       >
         Мої замовлення
       </NavLink>
-      <NavLink to="/account/orders" className={styles.menuItem}>
+      <NavLink to="/" className={styles.menuItem} onClick={handleLogout}>
         Вихід
       </NavLink>
     </div>

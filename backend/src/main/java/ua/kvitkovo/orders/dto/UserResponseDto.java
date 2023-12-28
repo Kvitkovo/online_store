@@ -3,14 +3,12 @@ package ua.kvitkovo.orders.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderUser")
 public class UserResponseDto {
 
     @Schema(example = "1", description = "User ID")

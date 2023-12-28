@@ -53,7 +53,7 @@
 
 .previous {
   font-size: 32px;
-  padding: 6px;
+  padding: 0 6px;
   margin-top: 28px;
   margin-bottom: 32px;
   font-weight: 500;
@@ -61,16 +61,15 @@
 
 @include lg {
   .itemBlock {
-    display: grid;
     grid-template-areas:
-      'image image image image image . caption caption caption caption caption caption'
-      'image image image image image .  stock stock stock stock stock stock'
-      'image image image image image .  features features features features features features'
-      'image image image image image .  price price price price price price'
-      'description description description description description description description description description description description description';
+      'image caption'
+      'image stock'
+      'image features'
+      'image price'
+      'description description';
   }
   .mainContainer {
-    width: 906px;
+    width: inherit;
   }
   .cardImage {
     margin-right: 92px;
@@ -79,15 +78,16 @@
 
 @include md {
   .itemBlock {
-    overflow: hidden;
+    grid-template-columns: 1fr 1fr;
     margin-bottom: 46px;
+    padding: 32px 0;
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: none;
   }
   .path {
-    font-size: 14px;
     margin-top: 16px;
-  }
-  .mainContainer {
-    max-width: 690px;
+    font-size: 14px;
   }
   .cardImage {
     margin-right: 30px;
@@ -97,12 +97,14 @@
   }
 }
 @include sm {
+  .card {
+    background-color: $white-color;
+  }
   .itemBlock {
     display: flex;
-    flex-direction: column;
-    background-color: $white-color;
-    padding: 16px;
     margin-bottom: 38px;
+    flex-direction: column;
+    padding: 16px;
   }
   .mainContainer {
     width: 100%;
@@ -113,7 +115,7 @@
     margin-bottom: 8px;
   }
   .previous {
-    margin: 0 16px;
+    margin: 0 16px 26px;
   }
   .cardImage {
     margin-right: 0;

@@ -1,5 +1,7 @@
 package ua.kvitkovo.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -9,10 +11,8 @@ import java.util.List;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 
-/**
- * @author Andriy Gaponov
- */
 @Service
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorUtils {
 
     public static String getErrorsString(Errors bindingResult) {

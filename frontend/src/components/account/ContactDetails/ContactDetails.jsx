@@ -4,18 +4,11 @@ import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import Account from '../Account';
+import { useSelector } from 'react-redux';
 
 const ContactDetails = () => {
   const navigate = useNavigate();
-  const data = {
-    id: '1',
-    firstName: 'Олена',
-    lastName: 'Шевченко',
-    surname: 'Олегівна',
-    phone: '+380670000000',
-    email: 'example@gmail.com',
-    birthday: '26.03.1992 ',
-  };
+  const userData = useSelector((state) => state.user.user);
 
   const navigateToEdit = () => {
     navigate('/account/change-details');
@@ -26,7 +19,7 @@ const ContactDetails = () => {
   };
 
   return (
-    <Account title={'Вітаємо, ' + `${data.firstName}`}>
+    <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
       <div className={styles.block}>
         <h2 className={styles.accountTitle}> Контактні дані</h2>
         <div className={styles.flexFieldsAndData}>
@@ -38,14 +31,14 @@ const ContactDetails = () => {
             <p>Ел. пошта</p>
             <p>Дата народження</p>
           </div>
-          {data && (
-            <div className={styles.data} key={data.id}>
-              <p>{data.firstName}</p>
-              <p>{data.lastName}</p>
-              <p>{data.surname}</p>
-              <p>{data.phone}</p>
-              <p>{data.email}</p>
-              <p>{data.birthday}</p>
+          {userData && (
+            <div className={styles.data} key={userData.id}>
+              <p>{userData.firstName || 'не вказано'}</p>
+              <p>{userData.lastName || 'не вказано'}</p>
+              <p>{userData.surname || 'не вказано'}</p>
+              <p>{userData.phone || 'не вказано'}</p>
+              <p>{userData.email || 'не вказано'}</p>
+              <p>{userData.birthday || 'не вказано'}</p>
             </div>
           )}
         </div>

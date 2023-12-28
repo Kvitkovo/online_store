@@ -1,32 +1,21 @@
 package ua.kvitkovo.orders.dto.admin;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "OrderItemCompositionAdmin")
 public class OrderItemCompositionAdminResponseDto {
 
     private Long id;
     private ProductAdminResponseDto product;
     private int qty;
-
-    public Long getId() {
-        return id;
-    }
-
-    public ProductAdminResponseDto getProduct() {
-        return product;
-    }
-
-    public int getQty() {
-        return qty;
-    }
 }

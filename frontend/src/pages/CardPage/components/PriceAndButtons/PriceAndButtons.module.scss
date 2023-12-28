@@ -36,14 +36,15 @@
   }
 }
 @include sm {
-  // .desktopContainer {
-  //   display: none;
-  // }
   .price {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
     margin-top: 22px;
-    margin-bottom: 32px;
+    margin-bottom: 0;
+  }
+  .buttons {
+    width: 100%;
+    margin-top: 32px;
   }
 }

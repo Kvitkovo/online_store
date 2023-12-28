@@ -5,14 +5,13 @@ import lombok.*;
 import ua.kvitkovo.catalog.entity.CategoryIcon;
 import ua.kvitkovo.catalog.entity.CategoryStatus;
 
-/**
- * @author Andriy Gaponov
- */
 @Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id, name")
+@Schema(name = "Category")
 public class CategoryResponseDto {
 
     @Schema(example = "1", description = "ID category")
