@@ -129,7 +129,14 @@ header {
   position: relative;
   left: -8px;
   top: -6px;
-  padding-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cartQuantityHide {
+  height: 14px;
+  width: 14px;
+  visibility: hidden;
 }
 
 @include lg {
