@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Promotions from './pages/Promotions';
@@ -29,10 +29,14 @@ import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPag
 import CategoryPage from './pages/CategoryPage';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const updateLoginStatus = (status) => {
+    setIsLoggedIn(status);
+  };
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header isLoggedIn={isLoggedIn} />
         <Wrapper>
           <div>
             <Routes>
@@ -60,8 +64,20 @@ function App() {
                 path={ROUTES.specificCategory}
                 element={<CategoryPage />}
               />
-              <Route element={<ProtectedRoutes />}>
-                <Route path={ROUTES.account} element={<ContactDetails />} />
+              <Route
+                element={
+                  <ProtectedRoutes
+                    isLoggedIn={isLoggedIn}
+                    updateLoginStatus={updateLoginStatus}
+                  />
+                }
+              >
+                <Route
+                  path={ROUTES.account}
+                  element={
+                    <ContactDetails updateLoginStatus={updateLoginStatus} />
+                  }
+                />
                 <Route
                   path={ROUTES.changeDetails}
                   element={<ChangeDetails />}

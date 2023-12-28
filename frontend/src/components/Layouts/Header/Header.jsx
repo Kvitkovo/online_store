@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import logo from '../../ui-kit/icons/logo/logo.svg';
@@ -18,10 +18,22 @@ import Catalog from '../../common/Catalog';
 import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
+import { getUser } from '../../../redux/slices/userSlice';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+  const navigate = useNavigate();
+  const user = useSelector(getUser);
+
+  const toggleLogin = () => {
+    if (user && user.loggedIn) {
+      navigate('/account');
+    } else {
+      setIsOpenLogin((prev) => !prev);
+      setIsOpenRegister(false);
+    }
+  };
 
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
@@ -50,14 +62,19 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   };
 
-  const toggleLogin = () => {
-    setIsOpenLogin((prev) => !prev);
-    setIsOpenRegister(false);
-  };
   const toggleRegister = () => {
     setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
   };
+
+  const location = useLocation();
+  const openLoginModal = location.state && location.state.openLoginModal;
+
+  useEffect(() => {
+    if (openLoginModal) {
+      setIsOpenLogin(true);
+    }
+  }, [openLoginModal]);
 
   useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
 
@@ -152,7 +169,7 @@ const Header = () => {
             <div className={styles.login}>
               <Button
                 variant="no-border"
-                label="Увійти"
+                label={user && user.loggedIn ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
                 onClick={toggleLogin}
               />
