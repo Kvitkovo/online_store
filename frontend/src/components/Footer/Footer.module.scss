@@ -1,5 +1,5 @@
-@import 'src/_variables.scss';
-@import 'src/_mixins.scss';
+@import '../../_variables.scss';
+@import '../../mixins.scss';
 
 footer {
   height: 337px;
@@ -16,11 +16,13 @@ footer {
 }
 
 section {
+  flex: 2 2;
   padding: 10px;
   text-align: justify;
 }
 
 .blockRight {
+  flex: 4 4;
   width: 456px;
   display: flex;
   justify-content: space-around;
@@ -34,6 +36,7 @@ section {
 }
 
 .contacts {
+  flex: 1 1;
   width: 240px;
   p {
     color: $white-color;
@@ -47,31 +50,60 @@ section {
 }
 
 .socials {
-  width: 156px;
+  flex: 1 1;
+  // width: 156px;
 }
 
 .iconsBlock {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
+  gap: 16px;
   margin-top: 24px;
 }
 
 @include lg {
   footer {
     height: 100%;
-    padding: 32px 102px 0 47px;
+    padding: 32px 102px 32px 47px;
   }
   .container {
     display: flex;
     justify-content: space-between;
     max-width: 936px;
   }
+  section {
+    flex: 1 1;
+  }
   .blockRight {
+    flex: 1 1;
     width: 235px;
     flex-direction: column;
   }
   .socials {
     margin-top: 8px;
+  }
+}
+@include md {
+  footer {
+    padding: 32px 25px;
+  }
+  .container {
+    flex-wrap: wrap;
+  }
+  section {
+    flex: 1 1;
+  }
+  .blockRight {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .contacts {
+    margin-top: -27px;
+  }
+  .iconsBlock {
+    width: 187px;
+    padding-right: 27px;
   }
 }
 
@@ -82,15 +114,15 @@ section {
   }
   .container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
   }
-  section {
+  section,
+  .socials,
+  .contacts {
     margin-top: 32px;
   }
   .blockRight {
     flex-direction: column;
-  }
-  .socials {
-    margin-top: 32px;
   }
 }
