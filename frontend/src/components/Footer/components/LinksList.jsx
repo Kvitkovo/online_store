@@ -4,7 +4,7 @@ import styles from './LinksList.module.scss';
 
 const LinksList = ({ title, links }) => {
   return (
-    <section>
+    <section className={styles.section}>
       <h3 className={styles.title}>{title}</h3>
       <ul className={styles.list}>
         {links.map((link) => (

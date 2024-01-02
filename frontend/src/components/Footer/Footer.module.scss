@@ -15,12 +15,6 @@ footer {
   margin: 0 auto;
 }
 
-section {
-  flex: 2 2;
-  padding: 10px;
-  text-align: justify;
-}
-
 .blockRight {
   flex: 4 4;
   width: 456px;
@@ -51,14 +45,17 @@ section {
 
 .socials {
   flex: 1 1;
-  // width: 156px;
 }
 
 .iconsBlock {
   display: flex;
-  // justify-content: space-between;
   gap: 16px;
   margin-top: 24px;
+}
+
+.socials,
+.contacts {
+  padding: 10px;
 }
 
 @include lg {
@@ -71,9 +68,6 @@ section {
     justify-content: space-between;
     max-width: 936px;
   }
-  section {
-    flex: 1 1;
-  }
   .blockRight {
     flex: 1 1;
     width: 235px;
@@ -83,15 +77,13 @@ section {
     margin-top: 8px;
   }
 }
+
 @include md {
   footer {
     padding: 32px 25px;
   }
   .container {
     flex-wrap: wrap;
-  }
-  section {
-    flex: 1 1;
   }
   .blockRight {
     width: 100%;
@@ -117,7 +109,6 @@ section {
     flex-wrap: wrap;
     flex-direction: column;
   }
-  section,
   .socials,
   .contacts {
     margin-top: 32px;

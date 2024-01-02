@@ -1,4 +1,11 @@
 @import 'src/_variables.scss';
+@import '../../../mixins.scss';
+
+.section {
+  flex: 2 2;
+  padding: 8px;
+  text-align: justify;
+}
 
 .title {
   color: $white-color;
@@ -8,14 +15,26 @@
 }
 
 .list {
+  display: flex;
+  flex-direction: column;
   margin-top: 28px;
-  .item {
-    margin-top: 16px;
-  }
+  gap: 16px;
 }
 
 .links {
   line-height: 20.8px;
   color: $white-color;
   white-space: nowrap;
+}
+
+@include lg {
+  .section {
+    flex: 1 1;
+  }
+}
+
+@include sm {
+  .section {
+    margin-top: 32px;
+  }
 }
