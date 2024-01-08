@@ -13,10 +13,14 @@
     column-gap: 21px;
   }
 
-  .contactDetails {
+  .orderBlock {
     background-color: $white-color;
     padding: 32px;
     border-radius: 8px;
+  }
+
+  .orderBlock:not(:first-of-type) {
+    margin-top: 16px;
   }
 
   .subtitleBlock {
