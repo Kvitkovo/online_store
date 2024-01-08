@@ -238,9 +238,13 @@ const Order = () => {
             <h3 className={styles.subtitle}>
               <span>2.</span>Доставка
             </h3>
-            <p>
-              Місто: <ICONS.location /> Київ
-            </p>
+            <div className={styles.city}>
+              <span>Місто:</span>
+              <span>
+                <ICONS.location />
+              </span>{' '}
+              <span>Київ</span>
+            </div>
             <div>
               <div>
                 <label>Забрати з магазину</label>

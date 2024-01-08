@@ -104,4 +104,11 @@
   .clientData {
     margin-top: 22px;
   }
+  // Section delivery
+  .city {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 8px 0;
+  }
 }
