@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
+import ua.kvitkovo.orders.entity.Delivery;
 import ua.kvitkovo.orders.entity.OrderStatus;
 
 import java.util.Date;
 import java.util.Set;
+import ua.kvitkovo.orders.entity.Pay;
 
 @Setter
 @Getter
@@ -78,5 +80,9 @@ public class OrderAdminRequestDto {
     @Schema(example = "2023-09-06T15:00:00", description = "Order delivery date")
     private Date dateOfShipment;
     private OrderStatus status;
+    @NotNull
+    private Delivery delivery;
+    @NotNull
+    private Pay pay;
     private Set<OrderItemRequestDto> orderItems;
 }

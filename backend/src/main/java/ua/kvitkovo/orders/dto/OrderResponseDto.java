@@ -2,12 +2,17 @@ package ua.kvitkovo.orders.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
+import ua.kvitkovo.orders.entity.Delivery;
 import ua.kvitkovo.orders.entity.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import ua.kvitkovo.orders.entity.Pay;
 
 @Setter
 @Getter
@@ -81,6 +86,9 @@ public class OrderResponseDto {
 
     @Schema(example = "1", description = "Shop ID")
     private Long shopId;
+
+    private Delivery delivery;
+    private Pay pay;
 
     private Set<OrderItemResponseDto> orderItems;
 }
