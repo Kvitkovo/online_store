@@ -5,7 +5,7 @@ import Filter from '../../../ui-kit/components/Filter';
 export const FilterShowbar = ({ data, setData }) => {
   const selected =
     Object.entries(data).map(([key, value]) => {
-      if (key === 'price' || key === 'discounted') {
+      if (key === 'maxPrice' || key === 'minPrice' || key === 'discounted') {
         return value;
       }
       return {

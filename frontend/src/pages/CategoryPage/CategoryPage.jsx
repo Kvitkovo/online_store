@@ -25,13 +25,11 @@ const CategoryPage = () => {
   const [currentCategory, setCurrentCategory] = useState(null);
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const sortOptionsMobile = [
-    { value: 0, label: 'Дешеві' },
-    { value: 1, label: 'Дорогі' },
-  ];
+  const [choosenFilter, setChoosenFilter] = useState({});
+
   const sortOptions = [
-    { value: 0, label: 'від дешевих до дорогих' },
-    { value: 1, label: 'від дорогих до дешевих' },
+    { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
+    { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
   ];
   const sortedData = useMemo(() => {
     const sortedAcs = productsInCategory?.toSorted(
@@ -40,7 +38,8 @@ const CategoryPage = () => {
     return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
   }, [sortValue, productsInCategory]);
   const [filterData, setFilterData] = useState({
-    price: [99, 99999],
+    minPrice: 0,
+    maxPrice: 999,
     discounted: false,
     type: [],
     color: [],
@@ -77,6 +76,24 @@ const CategoryPage = () => {
   const handleClickFilter = () => {
     setFilterOpen((prev) => !prev);
   };
+  const resetFilter = () => {
+    setFilterData((prev) => {
+      const clearedFilter = {};
+      for (const [key, value] of Object.entries(prev)) {
+        if (key === 'discounted') {
+          clearedFilter[key] = false;
+        } else if (key === 'price') {
+          clearedFilter[key] = value;
+        } else {
+          clearedFilter[key] = value.map((filter) => ({
+            ...filter,
+            checked: false,
+          }));
+        }
+      }
+      return clearedFilter;
+    });
+  };
 
   useEffect(() => {
     getData();
@@ -93,8 +110,9 @@ const CategoryPage = () => {
             onClose={handleClickFilter}
             categoryId={categoryId}
             data={filterData}
-            setData={setFilterData}
+            setData={setChoosenFilter}
           />
+          {choosenFilter}
         </div>
         <div className={styles.mainContent}>
           <div className={styles.sortBlock}>
@@ -112,13 +130,14 @@ const CategoryPage = () => {
                 label={'Скинути фільтри'}
                 variant={'no-border-yellow'}
                 className={styles.cancelFilter}
+                onClick={resetFilter}
               />
             </div>
             <div className={styles.sortSmallDevices}>
               <DropDown
                 sortValue={sortValue}
                 setValue={setSortValue}
-                options={sortOptionsMobile}
+                options={sortOptions}
               />
             </div>
             <div className={styles.filterButton}>

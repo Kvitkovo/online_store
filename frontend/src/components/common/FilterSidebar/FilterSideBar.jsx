@@ -5,14 +5,17 @@ import { ICONS } from '../../ui-kit/icons';
 import DropDownList from '../../ui-kit/components/DropDownList';
 import RangeSlider from '../../ui-kit/components/RangeSlider';
 import Divider from '../../ui-kit/components/Divider';
-import { GetFiltersInCategory } from '../../../services/catalog/categoryAccess.service';
+import {
+  GetFiltersInCategory,
+  GetMinMaxPrice,
+} from '../../../services/catalog/categoryAccess.service';
 import Checkbox from '../../ui-kit/components/Checkbox';
 import InputPrice from '../../ui-kit/components/Input/InputPrice';
 import FilterShowbar from './FilterShowbar';
 import Button from '../../ui-kit/components/Button';
 
 const FilterSidebar = ({ visibility, onClose, categoryId, data, setData }) => {
-  const { price, discounted } = data;
+  const { minPrice, maxPrice, discounted } = data;
 
   const [dataLoaded, setDataLoaded] = useState(false);
   const [filterOn, setFilterOn] = useState(false);
@@ -42,24 +45,26 @@ const FilterSidebar = ({ visibility, onClose, categoryId, data, setData }) => {
 
   const changeStartPrice = (e) => {
     setData((prev) => {
-      const { price } = prev;
-
-      return { ...prev, price: [e.target.value, price[1]] };
+      return { ...prev, minPrice: e.target.value };
     });
   };
   const changeEndPrice = (e) => {
     setData((prev) => {
-      const { price } = prev;
-
-      return { ...prev, price: [e.target.value, price[1]] };
+      return { ...prev, maxPrice: e.target.value };
     });
   };
   const handleSliderChange = (e) => {
-    setData((prev) => ({ ...prev, price: e }));
+    setData((prev) => ({ ...prev, minPrice: e[0], maxPrice: e[1] }));
   };
 
   const getFilterData = useCallback(async () => {
     const result = await GetFiltersInCategory(categoryId);
+    const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
+    setData((prev) => ({
+      ...prev,
+      ...minMaxPrice,
+    }));
+
     for (const [key, value] of Object.entries(result)) {
       const filterOptions = Object.entries(value).map(([key, value]) => ({
         id: key,
@@ -104,20 +109,20 @@ const FilterSidebar = ({ visibility, onClose, categoryId, data, setData }) => {
             <DropDownList title={'Ціна, діапазон'}>
               <div className={styles.displayPrice}>
                 <InputPrice
-                  value={price[0]}
+                  value={minPrice}
                   handleInputChange={changeStartPrice}
                   index={0}
                 />
                 <ICONS.dash className={styles.priceDevider} />
                 <InputPrice
-                  value={price[1]}
+                  value={maxPrice}
                   handleInputChange={changeEndPrice}
                   index={1}
                 />
               </div>
               <div className={styles.rangeContainer}>
                 <RangeSlider
-                  inputValues={data.price}
+                  inputValues={[minPrice, maxPrice]}
                   handleSliderChange={handleSliderChange}
                 />
               </div>
