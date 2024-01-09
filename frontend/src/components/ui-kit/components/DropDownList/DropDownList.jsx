@@ -3,7 +3,14 @@ import { ICONS } from '../../icons';
 import styles from './DropDownList.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
 
-const DropDownList = ({ title, children, data, onChange, filterName }) => {
+const DropDownList = ({
+  title,
+  children,
+  data,
+  onChange,
+  filterName,
+  selectedFilter,
+}) => {
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -28,7 +35,9 @@ const DropDownList = ({ title, children, data, onChange, filterName }) => {
             <li key={option.id} className={styles.listItem}>
               <Checkbox
                 label={option.name}
-                checked={option.checked}
+                checked={selectedFilter[filterName]?.some(
+                  (filter) => filter === option.id,
+                )}
                 onChange={(event) => onChange(event, option, filterName)}
               />
             </li>

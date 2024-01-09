@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './FilterShowbar.module.scss';
 import Filter from '../../../ui-kit/components/Filter';
 
-export const FilterShowbar = ({ data, setData }) => {
-  const selected =
-    Object.entries(data).map(([key, value]) => {
-      if (key === 'maxPrice' || key === 'minPrice' || key === 'discounted') {
-        return value;
-      }
-      return {
-        [key]: value.filter((item) => item.checked),
-      };
-    }) || [];
+export const FilterShowbar = ({ data, setData, selected }) => {
+  const handleReset = useCallback(
+    (filterName, id) => {
+      setData((prev) => {
+        const clearedFilter = { ...prev };
 
+        const remainingOptions = Array.isArray(prev[filterName])
+          ? prev[filterName]?.filter((item) => item !== id)
+          : [];
+        if (
+          remainingOptions.length === 0 ||
+          filterName === 'minPrice' ||
+          filterName === 'maxPrice' ||
+          filterName === 'discounted'
+        ) {
+          delete clearedFilter[filterName];
+          return clearedFilter;
+        }
+
+        return { ...prev, [filterName]: remainingOptions };
+      });
+    },
+    [setData],
+  );
   return (
     <>
       <div className={styles.filterShowbar}>
         <span className={styles.title}>Ви вибрали:</span>
-        {selected.map((filter) => {
-          return Object.entries(filter).map(([key, value]) => {
+        {selected &&
+          Object.entries(selected).map(([key, value]) => {
             const filterType =
               key === 'type'
                 ? 'Вид'
@@ -28,15 +41,32 @@ export const FilterShowbar = ({ data, setData }) => {
                 ? 'Колір'
                 : '';
 
-            if (value.length === 0 || key === 'price') {
-              return null;
+            if (key === 'minPrice') {
+              return (
+                <Filter
+                  key={key}
+                  label={`Ціна від ${selected.minPrice}`}
+                  onClick={handleReset}
+                  filterName={key}
+                />
+              );
+            }
+            if (key === 'maxPrice') {
+              return (
+                <Filter
+                  key={key}
+                  label={`Ціна до ${selected.maxPrice}`}
+                  onClick={handleReset}
+                  filterName={key}
+                />
+              );
             }
             if (key === 'discounted' && value) {
               return (
                 <Filter
                   key={key}
                   label={'Акційна ціна'}
-                  onClick={setData}
+                  onClick={handleReset}
                   filterName={key}
                 />
               );
@@ -44,18 +74,23 @@ export const FilterShowbar = ({ data, setData }) => {
 
             return (
               filterType !== '' &&
-              value.map((selected) => (
-                <Filter
-                  key={selected.name}
-                  label={`${filterType}: ${selected.name}`}
-                  id={selected.id}
-                  onClick={setData}
-                  filterName={key}
-                />
-              ))
+              value.map((selected) => {
+                const name = data[key].find(
+                  (field) => field.id === selected,
+                ).name;
+
+                return (
+                  <Filter
+                    key={name}
+                    label={`${filterType}: ${name}`}
+                    id={selected}
+                    onClick={handleReset}
+                    filterName={key}
+                  />
+                );
+              })
             );
-          });
-        })}
+          })}
       </div>
     </>
   );

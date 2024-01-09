@@ -4,7 +4,11 @@ import {
   GetDiscountedProducts,
   GetProductsCategory,
 } from '../../services/products/productsAccess.service';
-import { GetCategory } from '../../services/catalog/categoryAccess.service';
+import {
+  GetMinMaxPrice,
+  GetFiltersInCategory,
+  GetCategory,
+} from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
 import Path from '../CardPage/components/Path';
@@ -25,7 +29,6 @@ const CategoryPage = () => {
   const [currentCategory, setCurrentCategory] = useState(null);
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const [choosenFilter, setChoosenFilter] = useState({});
 
   const sortOptions = [
     { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
@@ -37,7 +40,7 @@ const CategoryPage = () => {
     );
     return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
   }, [sortValue, productsInCategory]);
-  const [filterData, setFilterData] = useState({
+  const [initialFilterData, setInitialFilterData] = useState({
     minPrice: 0,
     maxPrice: 999,
     discounted: false,
@@ -45,6 +48,7 @@ const CategoryPage = () => {
     color: [],
     size: [],
   });
+  const [selectedFilter, setSelectedFilter] = useState({});
 
   const getData = useCallback(async () => {
     try {
@@ -73,27 +77,36 @@ const CategoryPage = () => {
     }
   }, [categoryId, currentPage]);
 
+  const getFilterData = useCallback(async () => {
+    const result = await GetFiltersInCategory(categoryId);
+    const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
+    setInitialFilterData((prev) => ({
+      ...prev,
+      ...minMaxPrice,
+    }));
+
+    for (const [key, value] of Object.entries(result)) {
+      const filterOptions = Object.entries(value).map(([key, value]) => ({
+        id: key,
+        name: value,
+      }));
+      setInitialFilterData((prev) => ({
+        ...prev,
+        [key.toLowerCase()]: filterOptions,
+      }));
+    }
+  }, [categoryId, setInitialFilterData]);
+
   const handleClickFilter = () => {
     setFilterOpen((prev) => !prev);
   };
   const resetFilter = () => {
-    setFilterData((prev) => {
-      const clearedFilter = {};
-      for (const [key, value] of Object.entries(prev)) {
-        if (key === 'discounted') {
-          clearedFilter[key] = false;
-        } else if (key === 'price') {
-          clearedFilter[key] = value;
-        } else {
-          clearedFilter[key] = value.map((filter) => ({
-            ...filter,
-            checked: false,
-          }));
-        }
-      }
-      return clearedFilter;
-    });
+    setSelectedFilter({});
   };
+
+  useEffect(() => {
+    getFilterData();
+  }, [getFilterData]);
 
   useEffect(() => {
     getData();
@@ -108,11 +121,10 @@ const CategoryPage = () => {
           <FilterSidebar
             visibility={isFilterOpen}
             onClose={handleClickFilter}
-            categoryId={categoryId}
-            data={filterData}
-            setData={setChoosenFilter}
+            data={initialFilterData}
+            selectedFilter={selectedFilter}
+            setData={setSelectedFilter}
           />
-          {choosenFilter}
         </div>
         <div className={styles.mainContent}>
           <div className={styles.sortBlock}>
@@ -124,15 +136,21 @@ const CategoryPage = () => {
                 options={sortOptions}
               />
             </div>
-            <div className={styles.filterShowbar}>
-              <FilterShowbar data={filterData} setData={setFilterData} />
-              <Button
-                label={'Скинути фільтри'}
-                variant={'no-border-yellow'}
-                className={styles.cancelFilter}
-                onClick={resetFilter}
-              />
-            </div>
+            {Object.keys(selectedFilter).length > 0 && (
+              <div className={styles.filterShowbar}>
+                <FilterShowbar
+                  selected={selectedFilter}
+                  data={initialFilterData}
+                  setData={setSelectedFilter}
+                />
+                <Button
+                  label={'Скинути фільтри'}
+                  variant={'no-border-yellow'}
+                  className={styles.cancelFilter}
+                  onClick={resetFilter}
+                />
+              </div>
+            )}
             <div className={styles.sortSmallDevices}>
               <DropDown
                 sortValue={sortValue}
