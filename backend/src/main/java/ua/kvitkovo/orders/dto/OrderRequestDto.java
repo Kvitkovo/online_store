@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Set;
+import ua.kvitkovo.orders.entity.Delivery;
+import ua.kvitkovo.orders.entity.Pay;
 
 @Setter
 @Getter
@@ -66,6 +68,11 @@ public class OrderRequestDto {
     @NotNull
     @Schema(example = "1", description = "Shop ID")
     private Long shopId;
+
+    @NotNull
+    private Delivery delivery;
+    @NotNull
+    private Pay pay;
 
     private Set<OrderItemRequestDto> orderItems;
 }

@@ -97,6 +97,14 @@ public class Order {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
+    @Column(name = "delivery_type")
+    @Enumerated(EnumType.STRING)
+    private Delivery delivery;
+
+    @Column(name = "pay_type")
+    @Enumerated(EnumType.STRING)
+    private Pay pay;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", orphanRemoval = true)
     private Set<OrderItem> orderItems;
 }
