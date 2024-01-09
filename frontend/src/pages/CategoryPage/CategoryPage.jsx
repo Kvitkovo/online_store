@@ -3,7 +3,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import {
   GetDiscountedProducts,
   GetProductsCategory,
-  // GetProductsFilter,
+  GetProductsFilter,
 } from '../../services/products/productsAccess.service';
 import {
   GetMinMaxPrice,
@@ -24,32 +24,32 @@ import FilterShowbar from '../../components/common/FilterSidebar/FilterShowbar';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
-  const [productsInCategory, setProductsInCategory] = useState(null);
+  const [categoryProducts, setCategoryProducts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-
+  const [selectedFilter, setSelectedFilter] = useState({});
+  const [filteredList, setFilteredList] = useState(null);
   const sortOptions = [
     { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
     { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
   ];
   const sortedData = useMemo(() => {
-    const sortedAcs = productsInCategory?.toSorted(
+    const sortedAcs = filteredList?.toSorted(
       (a, b) => a.priceWithDiscount - b.priceWithDiscount,
     );
     return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
-  }, [sortValue, productsInCategory]);
+  }, [sortValue, filteredList]);
   const [initialFilterData, setInitialFilterData] = useState({
     priceFrom: 0,
     priceTo: 999,
     discounted: false,
-    type: [],
-    color: [],
-    size: [],
+    types: [],
+    colors: [],
+    sizes: [],
   });
-  const [selectedFilter, setSelectedFilter] = useState({});
 
   const getData = useCallback(async () => {
     try {
@@ -70,7 +70,8 @@ const CategoryPage = () => {
         category = await GetCategory(categoryId);
       }
       setCurrentCategory(category);
-      setProductsInCategory(products.content);
+      setCategoryProducts(products.content);
+      setFilteredList(products.content);
     } catch (err) {
       console.error(err);
     } finally {
@@ -94,16 +95,36 @@ const CategoryPage = () => {
       }));
       setInitialFilterData((prev) => ({
         ...prev,
-        [key.toLowerCase()]: filterOptions,
+        [key.toLowerCase() + 's']: filterOptions,
       }));
     }
   }, [categoryId, setInitialFilterData]);
+  const getFilteredData = async () => {
+    try {
+      if (Object.keys(selectedFilter).length > 0) {
+        const data = await GetProductsFilter({
+          page: currentPage,
+          size: 30,
+          categoryId: categoryId,
+          ...selectedFilter,
+        });
+        return setFilteredList(data.content);
+      } else {
+        setFilteredList(categoryProducts);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toggleFilter();
+    }
+  };
 
-  const handleClickFilter = () => {
+  const toggleFilter = () => {
     setFilterOpen((prev) => !prev);
   };
   const resetFilter = () => {
     setSelectedFilter({});
+    setFilteredList(categoryProducts);
   };
 
   useEffect(() => {
@@ -122,10 +143,12 @@ const CategoryPage = () => {
         <div className={styles.filterContainer}>
           <FilterSidebar
             visibility={isFilterOpen}
-            onClose={handleClickFilter}
+            onClose={toggleFilter}
             data={initialFilterData}
             selectedFilter={selectedFilter}
             setData={setSelectedFilter}
+            handleFilter={getFilteredData}
+            resetFilter={resetFilter}
           />
         </div>
         <div className={styles.mainContent}>
@@ -164,7 +187,7 @@ const CategoryPage = () => {
               <Button
                 label={'Фільтри'}
                 icon={<ICONS.filter />}
-                onClick={handleClickFilter}
+                onClick={toggleFilter}
               />
             </div>
           </div>

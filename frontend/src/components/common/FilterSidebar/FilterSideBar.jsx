@@ -9,6 +9,7 @@ import Checkbox from '../../ui-kit/components/Checkbox';
 import InputPrice from '../../ui-kit/components/Input/InputPrice';
 import FilterShowbar from './FilterShowbar';
 import Button from '../../ui-kit/components/Button';
+import IconButton from '../../ui-kit/components/IconButton';
 
 const FilterSidebar = ({
   visibility,
@@ -16,6 +17,8 @@ const FilterSidebar = ({
   data,
   setData,
   selectedFilter,
+  handleFilter,
+  resetFilter,
 }) => {
   const { priceFrom, priceTo } = data;
 
@@ -37,7 +40,6 @@ const FilterSidebar = ({
 
   const handleCheckboxChange = (e, option, filterName) => {
     const { checked } = e.target;
-
     setData((prev) => {
       let settedData;
       if (checked) {
@@ -84,18 +86,30 @@ const FilterSidebar = ({
       >
         <div className={styles.titleContainer}>
           <h3 className={styles.filterTitle}>Фільтр</h3>
-          {filterOn && (
-            <Button
-              label={'Скинути фільтри'}
-              variant={'no-border-yellow'}
-              className={styles.cancelFilter}
-            />
-          )}
+          <IconButton
+            icon={<ICONS.CloseIcon />}
+            variant="secondary"
+            onClick={onClose}
+          />
         </div>
 
         <div className={styles.contentContainer}>
           <div className={styles.showbarContainer}>
-            {filterOn && <FilterShowbar data={data} setData={setData} />}
+            {filterOn && (
+              <>
+                <FilterShowbar
+                  selected={selectedFilter}
+                  data={data}
+                  setData={setData}
+                />
+                <Button
+                  label={'Скинути фільтри'}
+                  variant={'no-border-yellow'}
+                  className={styles.cancelFilter}
+                  onClick={resetFilter}
+                />
+              </>
+            )}
           </div>
           <DropDownList title={'Ціна, діапазон'}>
             <div className={styles.displayPrice}>
@@ -136,11 +150,11 @@ const FilterSidebar = ({
           <Divider />
           {Object.entries(data)?.map(([key, value]) => {
             let title = '';
-            if (key === 'type') {
+            if (key === 'types') {
               title = 'Тип квітів';
-            } else if (key === 'color') {
+            } else if (key === 'colors') {
               title = 'Колір';
-            } else if (key === 'size') {
+            } else if (key === 'sizes') {
               title = 'Висота букета';
             }
             return (
@@ -162,7 +176,11 @@ const FilterSidebar = ({
           })}
         </div>
         <div className={styles.buttonContainer}>
-          <Button label={'Закрити'} padding={true} onClick={onClose} />
+          <Button
+            label={'Показати товари'}
+            padding={true}
+            onClick={handleFilter}
+          />
         </div>
       </div>
     </>

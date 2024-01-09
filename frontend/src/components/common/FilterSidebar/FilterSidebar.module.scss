@@ -94,6 +94,8 @@
     padding: 15px 27px;
   }
   .titleContainer {
+    display: flex;
+    justify-content: space-between;
     padding: 8px 27px;
   }
 }

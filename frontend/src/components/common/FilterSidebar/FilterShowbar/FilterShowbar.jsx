@@ -33,11 +33,11 @@ export const FilterShowbar = ({ data, setData, selected }) => {
         {selected &&
           Object.entries(selected).map(([key, value]) => {
             const filterType =
-              key === 'type'
+              key === 'types'
                 ? 'Вид'
-                : key === 'size'
+                : key === 'sizes'
                 ? 'Розмір'
-                : key === 'color'
+                : key === 'colors'
                 ? 'Колір'
                 : '';
 
