@@ -3,6 +3,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import {
   GetDiscountedProducts,
   GetProductsCategory,
+  // GetProductsFilter,
 } from '../../services/products/productsAccess.service';
 import {
   GetMinMaxPrice,
@@ -41,8 +42,8 @@ const CategoryPage = () => {
     return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
   }, [sortValue, productsInCategory]);
   const [initialFilterData, setInitialFilterData] = useState({
-    minPrice: 0,
-    maxPrice: 999,
+    priceFrom: 0,
+    priceTo: 999,
     discounted: false,
     type: [],
     color: [],
@@ -82,7 +83,8 @@ const CategoryPage = () => {
     const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
     setInitialFilterData((prev) => ({
       ...prev,
-      ...minMaxPrice,
+      priceFrom: minMaxPrice.minPrice,
+      priceTo: minMaxPrice.maxPrice,
     }));
 
     for (const [key, value] of Object.entries(result)) {

@@ -17,7 +17,7 @@ const FilterSidebar = ({
   setData,
   selectedFilter,
 }) => {
-  const { minPrice, maxPrice } = data;
+  const { priceFrom, priceTo } = data;
 
   const filterOn = Object.keys(selectedFilter).length > 0;
 
@@ -64,12 +64,12 @@ const FilterSidebar = ({
   };
   const handleSliderChange = (e) => {
     const price = {};
-    if (minPrice !== e[0]) {
-      price.minPrice = e[0];
+    if (priceFrom !== e[0]) {
+      price.priceFrom = e[0];
     }
 
-    if (maxPrice !== e[1]) {
-      price.maxPrice = e[1];
+    if (priceTo !== e[1]) {
+      price.priceTo = e[1];
     }
 
     setData((prev) => ({ ...prev, ...price }));
@@ -101,26 +101,28 @@ const FilterSidebar = ({
             <div className={styles.displayPrice}>
               <InputPrice
                 value={
-                  selectedFilter.minPrice ? selectedFilter.minPrice : minPrice
+                  selectedFilter.priceFrom
+                    ? selectedFilter.priceFrom
+                    : priceFrom
                 }
-                handleInputChange={(e) => changePrice(e, 'minPrice')}
+                handleInputChange={(e) => changePrice(e, 'priceFrom')}
                 index={0}
               />
               <ICONS.dash className={styles.priceDevider} />
               <InputPrice
                 value={
-                  selectedFilter.maxPrice ? selectedFilter.maxPrice : maxPrice
+                  selectedFilter.priceTo ? selectedFilter.priceTo : priceTo
                 }
-                handleInputChange={(e) => changePrice(e, 'minPrice')}
+                handleInputChange={(e) => changePrice(e, 'priceFrom')}
                 index={1}
               />
             </div>
             <div className={styles.rangeContainer}>
               <RangeSlider
-                min={selectedFilter.minPrice}
-                max={selectedFilter.maxPrice}
-                initialMinPrice={minPrice}
-                initialMaxPrice={maxPrice}
+                min={selectedFilter.priceFrom}
+                max={selectedFilter.priceTo}
+                initialMinPrice={priceFrom}
+                initialMaxPrice={priceTo}
                 handleSliderChange={handleSliderChange}
               />
             </div>

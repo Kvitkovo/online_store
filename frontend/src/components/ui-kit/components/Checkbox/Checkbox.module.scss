@@ -1,9 +1,18 @@
 @import '../../../../variables';
 
 .checkbox {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
+  &:hover {
+    background: $gray-10-color;
+    & .icon {
+      path {
+        fill: $green-80-color;
+      }
+    }
+  }
 
   input {
     display: none;

@@ -13,8 +13,8 @@ export const FilterShowbar = ({ data, setData, selected }) => {
           : [];
         if (
           remainingOptions.length === 0 ||
-          filterName === 'minPrice' ||
-          filterName === 'maxPrice' ||
+          filterName === 'priceFrom' ||
+          filterName === 'priceTo' ||
           filterName === 'discounted'
         ) {
           delete clearedFilter[filterName];
@@ -41,21 +41,21 @@ export const FilterShowbar = ({ data, setData, selected }) => {
                 ? 'Колір'
                 : '';
 
-            if (key === 'minPrice') {
+            if (key === 'priceFrom') {
               return (
                 <Filter
                   key={key}
-                  label={`Ціна від ${selected.minPrice}`}
+                  label={`Ціна від ${selected.priceFrom}`}
                   onClick={handleReset}
                   filterName={key}
                 />
               );
             }
-            if (key === 'maxPrice') {
+            if (key === 'priceTo') {
               return (
                 <Filter
                   key={key}
-                  label={`Ціна до ${selected.maxPrice}`}
+                  label={`Ціна до ${selected.priceTo}`}
                   onClick={handleReset}
                   filterName={key}
                 />
