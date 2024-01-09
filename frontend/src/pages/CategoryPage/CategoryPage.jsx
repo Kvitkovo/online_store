@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import {
   GetDiscountedProducts,
   GetProductsCategory,
@@ -33,6 +33,12 @@ const CategoryPage = () => {
     { value: 0, label: 'від дешевих до дорогих' },
     { value: 1, label: 'від дорогих до дешевих' },
   ];
+  const sortedData = useMemo(() => {
+    const sortedAcs = productsInCategory?.toSorted(
+      (a, b) => a.priceWithDiscount - b.priceWithDiscount,
+    );
+    return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
+  }, [sortValue, productsInCategory]);
   const [filterData, setFilterData] = useState({
     price: [99, 99999],
     discounted: false,
@@ -125,10 +131,10 @@ const CategoryPage = () => {
           </div>
           {isLoading
             ? 'Loading ...'
-            : productsInCategory && (
+            : sortedData && (
                 <>
                   <div className={styles.cards}>
-                    {productsInCategory.map((product) => (
+                    {sortedData.map((product) => (
                       <Card
                         image={
                           product.images[0]
@@ -147,7 +153,7 @@ const CategoryPage = () => {
                   </div>
                   <Pagination
                     onPageChange={setCurrentPage}
-                    totalCount={productsInCategory.length}
+                    totalCount={sortedData.length}
                     currentPage={currentPage}
                     pageSize={12}
                   />
