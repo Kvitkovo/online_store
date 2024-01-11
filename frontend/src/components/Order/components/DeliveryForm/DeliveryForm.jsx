@@ -14,9 +14,15 @@ const DeliverForm = () => {
     { id: 2, address: 'вул. Братиславська 17' },
     { id: 3, address: 'вул. Бердичівська 15' },
   ];
-  const { register, handleSubmit } = useForm({
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     defaultValues: { delivery: 'Pick up from the shop' },
   });
+
   const onSubmit = (data) => {
     setAddress(data.address);
     setHideForm(true);
@@ -72,13 +78,60 @@ const DeliverForm = () => {
             }}
           ></input>
         </div>
-        {showDeliveryForm && <div>Форма</div>}
-        <Button
-          label="Продовжити"
-          variant="primary"
-          padding="padding-even"
-          type="submit"
-        />
+        {showDeliveryForm && (
+          <div className={styles.clientDeliveryData}>
+            <div className={styles.street}>
+              <label>Вулиця</label>
+              <input
+                type="text"
+                placeholder="Введіть назву вулиці"
+                {...register('clientStreet', {
+                  required: 'Вкажіть вулицю',
+                })}
+              ></input>
+              <div>
+                {errors?.clientStreet && (
+                  <p className={styles.error}>
+                    {errors?.clientStreet?.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className={styles.house}>
+              <label>Будинок</label>
+              <input
+                type="text"
+                placeholder="Будинок"
+                {...register('clientHouse', {
+                  required: 'Вкажіть будинок',
+                })}
+              ></input>
+              <div>
+                {errors?.clientHouse && (
+                  <p className={styles.error}>{errors?.clientHouse?.message}</p>
+                )}
+              </div>
+            </div>
+            <div className={styles.flet}>
+              <label>Квартира</label>
+              <input
+                type="text"
+                placeholder="Квартира"
+                {...register('clientFlat', {
+                  required: 'Вкажіть квартиру',
+                })}
+              ></input>
+            </div>
+          </div>
+        )}
+        <div className={styles.continueButton}>
+          <Button
+            label="Продовжити"
+            variant="primary"
+            padding="padding-even"
+            type="submit"
+          />
+        </div>
       </form>
     </div>
   );

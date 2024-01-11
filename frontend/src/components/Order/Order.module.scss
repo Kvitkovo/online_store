@@ -113,4 +113,13 @@
     align-items: baseline;
     padding: 8px 0;
   }
+
+  .clientDeliveryData {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .continueButton {
+    margin-top: 32px;
+  }
 }
