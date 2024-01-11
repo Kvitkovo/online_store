@@ -13,6 +13,12 @@ const Order = () => {
   const [phone, setPhone] = useState('');
   const [showShopList, setShowShopList] = useState(true);
   const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+  const addressList = [
+    { id: 1, address: 'вул. Хрещатик, 36' },
+    { id: 2, address: 'вул. Братиславська 17' },
+    { id: 3, address: 'вул. Бердичівська 15' },
+  ];
+
   const {
     register,
     formState: { errors },
@@ -245,7 +251,7 @@ const Order = () => {
               </span>{' '}
               <span>Київ</span>
             </div>
-            <div>
+            <form>
               <div>
                 <label>Забрати з магазину</label>
                 <input
@@ -258,7 +264,18 @@ const Order = () => {
                   }}
                 ></input>
               </div>
-              {showShopList && <div> Випадаючий список</div>}
+              {showShopList && (
+                <div className={styles.shopAddress}>
+                  <select>
+                    <option>Виберіть магазин</option>
+                    {addressList.map((element) => (
+                      <option key={element.id} value={element.id}>
+                        {element.address}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div>
                 <label>Доставка за адресою</label>
                 <input
@@ -272,7 +289,7 @@ const Order = () => {
                 ></input>
               </div>
               {showDeliveryForm && <div>Форма</div>}
-            </div>
+            </form>
           </div>
         </div>
         <OrderInfo />
