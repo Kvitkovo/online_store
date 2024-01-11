@@ -32,6 +32,7 @@ const CategoryPage = () => {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [filteredList, setFilteredList] = useState(null);
+  const [isBtnVisible, setBtnVisible] = useState(false);
   const sortOptions = [
     { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
     { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
@@ -116,6 +117,7 @@ const CategoryPage = () => {
       console.error(error);
     } finally {
       toggleFilter();
+      setBtnVisible(false);
     }
   };
 
@@ -149,6 +151,8 @@ const CategoryPage = () => {
             setData={setSelectedFilter}
             handleFilter={getFilteredData}
             resetFilter={resetFilter}
+            btnVisibility={isBtnVisible}
+            setBtnVisibility={setBtnVisible}
           />
         </div>
         <div className={styles.mainContent}>

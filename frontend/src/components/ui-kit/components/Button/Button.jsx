@@ -40,7 +40,7 @@ const Button = memo(
       >
         <div className={styles.btnContainer} style={containerStyle}>
           <span className={styles.label}>{label}</span>
-          <span className={styles.icon}> {icon} </span>{' '}
+          {icon && <span className={styles.icon}> {icon} </span>}
         </div>
       </button>
     );

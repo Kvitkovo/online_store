@@ -2,6 +2,7 @@
 @import './../../../_mixins';
 
 .filterContainer {
+  position: relative;
   width: 280px;
 }
 .titleContainer {
@@ -34,14 +35,30 @@
   margin-bottom: 16px;
 }
 .buttonContainer {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 15px 47px;
-  background: $page-background-color;
+  position: absolute;
+  display: block;
+  left: 250px;
+  z-index: 2;
+  & button:disabled {
+    background: $gray-light-color;
+  }
 }
+.desktopButton {
+  display: flex;
+  & button {
+    height: auto;
+    margin-left: -12px;
+  }
+  & span {
+    font-size: 16px;
+    padding: 8px 14px 8px 8px;
+  }
+}
+.mobileButton {
+  display: none;
+  padding: 15px 47px;
+}
+
 .contentContainer {
   display: flex;
   flex-direction: column;
@@ -60,7 +77,7 @@
     top: 0;
     left: 0;
     padding: 62px 8px 0 47px;
-    z-index: 4;
+    z-index: 999;
   }
   .contentContainer {
     overflow: scroll;
@@ -76,11 +93,17 @@
     height: 56px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .buttonContainer {
-    display: block;
+    position: fixed;
+    left: 0;
+    bottom: 0;
   }
   .showbarContainer {
+    display: block;
+  }
+  .mobileButton {
     display: block;
   }
 }
@@ -94,8 +117,6 @@
     padding: 15px 27px;
   }
   .titleContainer {
-    display: flex;
-    justify-content: space-between;
     padding: 8px 27px;
   }
 }

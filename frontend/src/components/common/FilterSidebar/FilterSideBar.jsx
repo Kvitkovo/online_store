@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import styles from './FilterSidebar.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import DropDownList from '../../ui-kit/components/DropDownList';
@@ -10,6 +10,7 @@ import InputPrice from '../../ui-kit/components/Input/InputPrice';
 import FilterShowbar from './FilterShowbar';
 import Button from '../../ui-kit/components/Button';
 import IconButton from '../../ui-kit/components/IconButton';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const FilterSidebar = ({
   visibility,
@@ -19,13 +20,19 @@ const FilterSidebar = ({
   selectedFilter,
   handleFilter,
   resetFilter,
+  btnVisibility,
+  setBtnVisibility,
 }) => {
   const { priceFrom, priceTo } = data;
-
+  const [displayButtonPossition, setDisplayPossition] = useState(0);
+  const { width } = useWindowSize();
   const filterOn = Object.keys(selectedFilter).length > 0;
 
   const onDiscountChange = (event) => {
     const { checked } = event.target;
+    const { layerY } = event.nativeEvent;
+    setBtnVisibility(true);
+    setDisplayPossition(layerY - 15);
 
     setData((prev) => {
       if (checked) {
@@ -40,6 +47,7 @@ const FilterSidebar = ({
 
   const handleCheckboxChange = (e, option, filterName) => {
     const { checked } = e.target;
+    setBtnVisibility(true);
     setData((prev) => {
       let settedData;
       if (checked) {
@@ -60,6 +68,9 @@ const FilterSidebar = ({
   };
 
   const changePrice = (e, price) => {
+    const { offsetTop } = e.target;
+    setDisplayPossition(offsetTop);
+    setBtnVisibility(true);
     setData((prev) => {
       return { ...prev, [price]: e.target.value };
     });
@@ -76,7 +87,11 @@ const FilterSidebar = ({
 
     setData((prev) => ({ ...prev, ...price }));
   };
-
+  const handleSliderBlur = (e) => {
+    const { offsetTop } = e.target;
+    setBtnVisibility(true);
+    setDisplayPossition(offsetTop + 35);
+  };
   return (
     <>
       <div
@@ -127,7 +142,7 @@ const FilterSidebar = ({
                 value={
                   selectedFilter.priceTo ? selectedFilter.priceTo : priceTo
                 }
-                handleInputChange={(e) => changePrice(e, 'priceFrom')}
+                handleInputChange={(e) => changePrice(e, 'priceTo')}
                 index={1}
               />
             </div>
@@ -138,6 +153,7 @@ const FilterSidebar = ({
                 initialMinPrice={priceFrom}
                 initialMaxPrice={priceTo}
                 handleSliderChange={handleSliderChange}
+                handleBlur={handleSliderBlur}
               />
             </div>
             <Checkbox
@@ -160,7 +176,13 @@ const FilterSidebar = ({
             return (
               <Fragment key={key}>
                 {value.length > 0 && title !== '' ? (
-                  <>
+                  <div
+                    onChange={(e) => {
+                      const { layerY } = e.nativeEvent;
+
+                      setDisplayPossition(layerY - 15);
+                    }}
+                  >
                     <DropDownList
                       selectedFilter={selectedFilter}
                       title={title}
@@ -169,17 +191,31 @@ const FilterSidebar = ({
                       filterName={key}
                     />
                     <Divider />
-                  </>
+                  </div>
                 ) : null}
               </Fragment>
             );
           })}
         </div>
-        <div className={styles.buttonContainer}>
+        {width > 1200 && btnVisibility && filterOn && (
+          <div
+            style={{ top: displayButtonPossition }}
+            className={`${styles.buttonContainer} ${styles.desktopButton}`}
+          >
+            <ICONS.btnPointer />
+            <Button
+              label={'Показати товари'}
+              padding={true}
+              onClick={handleFilter}
+            />
+          </div>
+        )}
+        <div className={`${styles.buttonContainer} ${styles.mobileButton}`}>
           <Button
             label={'Показати товари'}
             padding={true}
             onClick={handleFilter}
+            disabled={!filterOn}
           />
         </div>
       </div>

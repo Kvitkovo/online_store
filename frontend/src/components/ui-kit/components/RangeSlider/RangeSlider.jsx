@@ -5,7 +5,14 @@ import 'rc-slider/assets/index.css';
 import styles from './RangeSlider.module.scss';
 
 const RangeSlider = memo(
-  ({ min, max, handleSliderChange, initialMinPrice, initialMaxPrice }) => {
+  ({
+    min,
+    max,
+    handleSliderChange,
+    initialMinPrice,
+    initialMaxPrice,
+    handleBlur,
+  }) => {
     const inputValues = [min || initialMinPrice, max || initialMaxPrice];
     return (
       <Slider
@@ -15,6 +22,7 @@ const RangeSlider = memo(
         range
         value={inputValues}
         onChange={handleSliderChange}
+        onBlur={handleBlur}
         allowCross={false}
         trackStyle={[{ backgroundColor: '#00A000', borderRadius: 0 }]}
         railStyle={{ backgroundColor: '#DBDBDB', borderRadius: 0 }}

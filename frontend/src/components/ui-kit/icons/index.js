@@ -45,6 +45,7 @@ import { ReactComponent as sortIcon } from './sort-icon.svg';
 import { ReactComponent as radiobtnChecked } from './icon-radiobtn-checked.svg';
 import { ReactComponent as radiobtn } from './icon-radiobtn.svg';
 import { ReactComponent as filter } from './filter.svg';
+import { ReactComponent as btnPointer } from './btn-pointer.svg';
 
 export const ICONS = {
   addComponent,
@@ -94,4 +95,5 @@ export const ICONS = {
   radiobtnChecked,
   radiobtn,
   filter,
+  btnPointer,
 };
