@@ -5,19 +5,13 @@ import Button from '../ui-kit/components/Button';
 import { ICONS } from '../ui-kit/icons';
 import { IMaskInput } from 'react-imask';
 import OrderInfo from './components/OrderInfo';
+import DeliverForm from './components/DeliveryForm/DeliveryForm';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
   const [hideForm, setHideForm] = useState(false);
   const [client, setClient] = useState('');
   const [phone, setPhone] = useState('');
-  const [showShopList, setShowShopList] = useState(true);
-  const [showDeliveryForm, setShowDeliveryForm] = useState(false);
-  const addressList = [
-    { id: 1, address: 'вул. Хрещатик, 36' },
-    { id: 2, address: 'вул. Братиславська 17' },
-    { id: 3, address: 'вул. Бердичівська 15' },
-  ];
 
   const {
     register,
@@ -28,10 +22,6 @@ const Order = () => {
   } = useForm({
     defaultValues: { recipient: 'I' },
     mode: 'onBlur',
-  });
-
-  const { register: registerDelivery } = useForm({
-    defaultValues: { delivery: 'Pick up from the shop' },
   });
 
   const onSubmitButton = (data) => {
@@ -240,57 +230,7 @@ const Order = () => {
               </form>
             )}
           </div>
-          <div className={styles.orderBlock}>
-            <h3 className={styles.subtitle}>
-              <span>2.</span>Доставка
-            </h3>
-            <div className={styles.city}>
-              <span>Місто:</span>
-              <span>
-                <ICONS.location />
-              </span>{' '}
-              <span>Київ</span>
-            </div>
-            <form>
-              <div>
-                <label>Забрати з магазину</label>
-                <input
-                  type="radio"
-                  value="Pick up from the shop"
-                  {...registerDelivery('delivery')}
-                  onChange={() => {
-                    setShowDeliveryForm(false);
-                    setShowShopList(true);
-                  }}
-                ></input>
-              </div>
-              {showShopList && (
-                <div className={styles.shopAddress}>
-                  <select>
-                    <option>Виберіть магазин</option>
-                    {addressList.map((element) => (
-                      <option key={element.id} value={element.id}>
-                        {element.address}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              <div>
-                <label>Доставка за адресою</label>
-                <input
-                  type="radio"
-                  value="Delivery by address"
-                  {...registerDelivery('delivery')}
-                  onChange={() => {
-                    setShowShopList(false);
-                    setShowDeliveryForm(true);
-                  }}
-                ></input>
-              </div>
-              {showDeliveryForm && <div>Форма</div>}
-            </form>
-          </div>
+          <DeliverForm />
         </div>
         <OrderInfo />
       </div>
