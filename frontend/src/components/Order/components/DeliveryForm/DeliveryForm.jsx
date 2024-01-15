@@ -43,8 +43,8 @@ const DeliverForm = () => {
         </span>{' '}
         <span>Київ</span>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formDelivery}>
+        <div className={styles.radioBtn}>
           <label>Забрати з магазину</label>
           <input
             type="radio"
@@ -66,7 +66,7 @@ const DeliverForm = () => {
             </select>
           </div>
         )}
-        <div>
+        <div className={styles.radioBtn}>
           <label>Доставка за адресою</label>
           <input
             type="radio"

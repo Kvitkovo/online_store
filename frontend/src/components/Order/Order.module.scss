@@ -122,4 +122,10 @@
   .continueButton {
     margin-top: 32px;
   }
+
+  .formDelivery .radioBtn {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin: 0;
+  }
 }
