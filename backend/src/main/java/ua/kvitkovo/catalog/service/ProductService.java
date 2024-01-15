@@ -187,7 +187,8 @@ public class ProductService {
         if (filter.getTitle() != null) {
             titlePredicate = criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%");
 
-            Join<Object, Object> productTypeJoin = root.join("productType", JoinType.INNER);
+            Path<?> productTypePath = root.get("productType");
+            Join<Object, Object> productTypeJoin = root.join("productType", JoinType.LEFT);
             productTypePredicate = criteriaBuilder.like(productTypeJoin.get("name"),
                     "%" + filter.getTitle() + "%");
 
@@ -229,8 +230,11 @@ public class ProductService {
     private void addDiscountFilter(FilterRequestDto filter, Root<Object> root,
                                    List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getDiscount() != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
+            if (filter.getDiscount()){
+                predicates.add(criteriaBuilder.greaterThan(root.get("discount"), 0));
+            } else {
+                predicates.add(criteriaBuilder.equal(root.get("discount"), 0));
+            }
         }
     }
 
