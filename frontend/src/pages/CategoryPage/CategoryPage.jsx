@@ -100,26 +100,28 @@ const CategoryPage = () => {
       }));
     }
   }, [categoryId, setInitialFilterData]);
-  const getFilteredData = async () => {
-    try {
-      if (Object.keys(selectedFilter).length > 0) {
-        const data = await GetProductsFilter({
-          page: currentPage,
-          size: 30,
-          categoryId: categoryId,
-          ...selectedFilter,
-        });
-        return setFilteredList(data.content);
-      } else {
-        setFilteredList(categoryProducts);
+  const getFilteredData = useCallback(
+    async (selected) => {
+      try {
+        if (Object.keys(selected).length > 0) {
+          const data = await GetProductsFilter({
+            page: currentPage,
+            size: 30,
+            categoryId: categoryId,
+            ...selected,
+            sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          });
+          setFilteredList(data.content);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        toggleFilter();
+        setBtnVisible(false);
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      toggleFilter();
-      setBtnVisible(false);
-    }
-  };
+    },
+    [categoryId, currentPage, sortValue],
+  );
 
   const toggleFilter = () => {
     setFilterOpen((prev) => !prev);
@@ -128,6 +130,18 @@ const CategoryPage = () => {
     setSelectedFilter({});
     setFilteredList(categoryProducts);
   };
+
+  useEffect(() => {
+    if (Object.keys(selectedFilter).length > 0) {
+      const timeoutId = setTimeout(() => {
+        getFilteredData(selectedFilter);
+      }, 4500);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setFilteredList(categoryProducts);
+    }
+  }, [categoryProducts, getFilteredData, selectedFilter]);
 
   useEffect(() => {
     getFilterData();
@@ -171,6 +185,7 @@ const CategoryPage = () => {
                   selected={selectedFilter}
                   data={initialFilterData}
                   setData={setSelectedFilter}
+                  handleFilter={getFilteredData}
                 />
                 <Button
                   label={'Скинути фільтри'}

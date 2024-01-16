@@ -116,6 +116,7 @@ const FilterSidebar = ({
                   selected={selectedFilter}
                   data={data}
                   setData={setData}
+                  handleFilter={handleFilter}
                 />
                 <Button
                   label={'Скинути фільтри'}
@@ -206,7 +207,7 @@ const FilterSidebar = ({
             <Button
               label={'Показати товари'}
               padding={true}
-              onClick={handleFilter}
+              onClick={() => handleFilter(selectedFilter)}
             />
           </div>
         )}
@@ -214,7 +215,7 @@ const FilterSidebar = ({
           <Button
             label={'Показати товари'}
             padding={true}
-            onClick={handleFilter}
+            onClick={() => handleFilter(selectedFilter)}
             disabled={!filterOn}
           />
         </div>

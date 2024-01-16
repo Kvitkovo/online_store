@@ -76,7 +76,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 62px 8px 0 47px;
+    padding: 62px 20px 0 47px;
     z-index: 999;
   }
   .contentContainer {
@@ -98,7 +98,9 @@
   .buttonContainer {
     position: fixed;
     left: 0;
+    right: 0;
     bottom: 0;
+    width: 100%;
   }
   .showbarContainer {
     display: block;

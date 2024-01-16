@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styles from './FilterShowbar.module.scss';
 import Filter from '../../../ui-kit/components/Filter';
 
-export const FilterShowbar = ({ data, setData, selected }) => {
+export const FilterShowbar = ({ data, setData, selected, handleFilter }) => {
   const handleReset = useCallback(
     (filterName, id) => {
       setData((prev) => {
@@ -18,14 +18,17 @@ export const FilterShowbar = ({ data, setData, selected }) => {
           filterName === 'discounted'
         ) {
           delete clearedFilter[filterName];
+          handleFilter(clearedFilter);
           return clearedFilter;
         }
-
-        return { ...prev, [filterName]: remainingOptions };
+        const newData = { ...prev, [filterName]: remainingOptions };
+        handleFilter(newData);
+        return newData;
       });
     },
-    [setData],
+    [handleFilter, setData],
   );
+
   return (
     <>
       <div className={styles.filterShowbar}>
