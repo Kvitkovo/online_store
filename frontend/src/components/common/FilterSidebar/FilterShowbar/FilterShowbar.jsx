@@ -15,7 +15,7 @@ export const FilterShowbar = ({ data, setData, selected, handleFilter }) => {
           remainingOptions.length === 0 ||
           filterName === 'priceFrom' ||
           filterName === 'priceTo' ||
-          filterName === 'discounted'
+          filterName === 'discount'
         ) {
           delete clearedFilter[filterName];
           handleFilter(clearedFilter);
@@ -64,7 +64,7 @@ export const FilterShowbar = ({ data, setData, selected, handleFilter }) => {
                 />
               );
             }
-            if (key === 'discounted' && value) {
+            if (key === 'discount' && value) {
               return (
                 <Filter
                   key={key}

@@ -10,7 +10,8 @@ import InputPrice from '../../ui-kit/components/Input/InputPrice';
 import FilterShowbar from './FilterShowbar';
 import Button from '../../ui-kit/components/Button';
 import IconButton from '../../ui-kit/components/IconButton';
-import PointerButton from '../../ui-kit/components/PointerButton/PointerButton';
+import PointerButton from '../../ui-kit/components/PointerButton';
+import { useParams } from 'react-router-dom';
 
 const FilterSidebar = ({
   visibility,
@@ -23,19 +24,20 @@ const FilterSidebar = ({
   setActiveFilter,
   activeFilter,
 }) => {
+  const { categoryId } = useParams();
   const { priceFrom, priceTo } = data;
   const filterOn = Object.keys(selectedFilter).length > 0;
 
-  const onDiscountChange = (event) => {
+  const handleDiscountChange = (event) => {
     const { checked } = event.target;
     setActiveFilter('discount');
 
     setData((prev) => {
       if (checked) {
-        return { ...prev, discounted: checked };
+        return { ...prev, discount: checked };
       } else {
         // eslint-disable-next-line no-unused-vars
-        const { discounted, ...rest } = prev;
+        const { discount, ...rest } = prev;
         return rest;
       }
     });
@@ -152,30 +154,32 @@ const FilterSidebar = ({
                 handleSliderChange={handleSliderChange}
               />
             </div>
-            <div className={styles.discounted}>
-              <Checkbox
-                label={'Акційна ціна'}
-                checked={selectedFilter?.discounted || false}
-                onChange={onDiscountChange}
-              />
-              {activeFilter === 'discount' && (
-                <PointerButton
-                  handleFilter={() => handleFilter(selectedFilter)}
+            {categoryId !== 'discounted' && (
+              <div className={styles.discounted}>
+                <Checkbox
+                  label={'Акційна ціна'}
+                  checked={selectedFilter?.discount}
+                  onChange={handleDiscountChange}
                 />
-              )}
-            </div>
+                {activeFilter === 'discount' && (
+                  <PointerButton
+                    handleFilter={() => handleFilter(selectedFilter)}
+                  />
+                )}
+              </div>
+            )}
           </DropDownList>
 
           <Divider />
           {Object.entries(data)?.map(([key, value]) => {
-            let title = '';
-            if (key === 'types') {
-              title = 'Тип квітів';
-            } else if (key === 'colors') {
-              title = 'Колір';
-            } else if (key === 'sizes') {
-              title = 'Висота букета';
-            }
+            const titleMapping = {
+              types: 'Тип квітів',
+              colors: 'Колір',
+              sizes: 'Висота букета',
+              categoryId: 'Категорії',
+            };
+            const title = titleMapping[key] || '';
+
             return (
               <Fragment key={key}>
                 {value.length > 0 && title !== '' ? (

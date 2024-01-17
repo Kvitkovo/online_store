@@ -9,6 +9,7 @@ import {
   GetMinMaxPrice,
   GetFiltersInCategory,
   GetCategory,
+  GetFiltersForDiscounted,
 } from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
@@ -32,7 +33,6 @@ const CategoryPage = () => {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [filteredList, setFilteredList] = useState(null);
-  // const [isBtnVisible, setBtnVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
 
   const sortOptions = [
@@ -40,18 +40,19 @@ const CategoryPage = () => {
     { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
   ];
   const sortedData = useMemo(() => {
-    const sortedAcs = filteredList?.toSorted(
+    const sortedAsc = filteredList?.toSorted(
       (a, b) => a.priceWithDiscount - b.priceWithDiscount,
     );
-    return sortValue === 0 ? sortedAcs : sortedAcs.toReversed();
+    return sortValue === 0 ? sortedAsc : sortedAsc.toReversed();
   }, [sortValue, filteredList]);
   const [initialFilterData, setInitialFilterData] = useState({
     priceFrom: 0,
     priceTo: 999,
-    discounted: false,
+    discount: false,
     types: [],
     colors: [],
     sizes: [],
+    category: [],
   });
 
   const getData = useCallback(async () => {
@@ -83,23 +84,45 @@ const CategoryPage = () => {
   }, [categoryId, currentPage]);
 
   const getFilterData = useCallback(async () => {
-    const result = await GetFiltersInCategory(categoryId);
-    const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
-    setInitialFilterData((prev) => ({
-      ...prev,
-      priceFrom: minMaxPrice.minPrice,
-      priceTo: minMaxPrice.maxPrice,
-    }));
-
-    for (const [key, value] of Object.entries(result)) {
-      const filterOptions = Object.entries(value).map(([key, value]) => ({
-        id: key,
-        name: value,
-      }));
+    if (categoryId === 'discounted') {
+      const result = await GetFiltersForDiscounted(categoryId);
       setInitialFilterData((prev) => ({
         ...prev,
-        [key.toLowerCase() + 's']: filterOptions,
+        priceFrom: 0,
+        priceTo: 50000,
       }));
+
+      for (const [key, value] of Object.entries(result)) {
+        const filterOptions = Object.entries(value).map(([key, value]) => ({
+          id: key,
+          name: value,
+        }));
+        const filterName =
+          key === 'Category' ? 'categoryId' : key.toLowerCase() + 's';
+        setInitialFilterData((prev) => ({
+          ...prev,
+          [filterName]: filterOptions,
+        }));
+      }
+    } else {
+      const result = await GetFiltersInCategory(categoryId);
+      const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
+      setInitialFilterData((prev) => ({
+        ...prev,
+        priceFrom: minMaxPrice.minPrice,
+        priceTo: minMaxPrice.maxPrice,
+      }));
+
+      for (const [key, value] of Object.entries(result)) {
+        const filterOptions = Object.entries(value).map(([key, value]) => ({
+          id: key,
+          name: value,
+        }));
+        setInitialFilterData((prev) => ({
+          ...prev,
+          [key.toLowerCase() + 's']: filterOptions,
+        }));
+      }
     }
   }, [categoryId, setInitialFilterData]);
   const getFilteredData = useCallback(
@@ -109,7 +132,8 @@ const CategoryPage = () => {
           const data = await GetProductsFilter({
             page: currentPage,
             size: 30,
-            categoryId: categoryId,
+            categoryId: categoryId !== 'discounted' && categoryId,
+            discount: categoryId === 'discounted' || selected.discount,
             ...selected,
             sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
           });

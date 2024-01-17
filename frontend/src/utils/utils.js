@@ -15,6 +15,5 @@ export const preparedUrl = (paths, params = {}) => {
   );
 
   const urlParams = new URLSearchParams(filterParams).toString();
-
   return urlPath.concat(urlParams && '?', urlParams);
 };

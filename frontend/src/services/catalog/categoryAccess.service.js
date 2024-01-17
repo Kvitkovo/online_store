@@ -5,6 +5,7 @@ const GetCategoriesUrl = `/categories`;
 const GetFiltersInCategoryUrl = `/filter/category`;
 const GetFiltersUrl = `/filter`;
 const GetPricesUrl = `/filter/minMaxPrices`;
+const GetFiltersForDiscountedUrl = `/filter/discount`;
 
 export const GetCategories = (params) => {
   return Get(preparedUrl([GetCategoriesUrl], params));
@@ -14,6 +15,9 @@ export const GetCategory = (id) => {
 };
 export const GetFiltersInCategory = (id) => {
   return Get(preparedUrl(id ? [GetFiltersInCategoryUrl, id] : [GetFiltersUrl]));
+};
+export const GetFiltersForDiscounted = () => {
+  return Get(GetFiltersForDiscountedUrl);
 };
 export const GetMinMaxPrice = (params) => {
   return Get(preparedUrl([GetPricesUrl], params));
