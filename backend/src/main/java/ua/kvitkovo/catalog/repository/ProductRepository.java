@@ -16,7 +16,7 @@ public interface ProductRepository extends ProductRepositoryBasic {
                                                      ProductStatus status);
 
     Page<Product> findAllByDiscountGreaterThanAndStatusEquals(Pageable pageable,
-        BigDecimal discount, ProductStatus status);
+                                                              BigDecimal discount, ProductStatus status);
 
     @Query("SELECT p.color FROM Product p WHERE p.category.id = ?1 AND status = ?2")
     List<Color> findColorByCategoryIdAndStatus(Long id, ProductStatus status);
@@ -30,4 +30,13 @@ public interface ProductRepository extends ProductRepositoryBasic {
     Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status);
 
     Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status);
+
+    @Query("SELECT p.color FROM Product p WHERE p.discount > 0 AND status = ?1")
+    List<Color> findColorsByDiscountAndStatus(ProductStatus status);
+
+    @Query("SELECT p.size FROM Product p WHERE p.discount > 0 AND status = ?1")
+    List<Size> findSizesByDiscountAndStatus(ProductStatus status);
+
+    @Query("SELECT p.productType FROM Product p WHERE p.discount > 0 AND status = ?1")
+    List<ProductType> findProductTypesByDiscountAndStatus(ProductStatus status);
 }

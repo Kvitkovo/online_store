@@ -46,11 +46,11 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 
-    public Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status){
+    public Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status) {
         return productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(id, status);
     }
 
-    public Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status){
+    public Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status) {
         return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, status);
     }
 
@@ -230,7 +230,7 @@ public class ProductService {
     private void addDiscountFilter(FilterRequestDto filter, Root<Object> root,
                                    List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getDiscount() != null) {
-            if (filter.getDiscount()){
+            if (filter.getDiscount()) {
                 predicates.add(criteriaBuilder.greaterThan(root.get("discount"), 0));
             } else {
                 predicates.add(criteriaBuilder.equal(root.get("discount"), 0));
@@ -286,6 +286,15 @@ public class ProductService {
         }
     }
 
+    public List<Color> getAllColorsIdByDiscount() {
+        List<Color> colors = productRepository.findColorsByDiscountAndStatus(ProductStatus.ACTIVE);
+        if (colors.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return colors;
+        }
+    }
+
     public List<Size> getAllSizesIdByCategory(long categoryId) {
         Category category = categoryService.findById(categoryId);
 
@@ -299,12 +308,30 @@ public class ProductService {
         }
     }
 
+    public List<Size> getAllSizesIdByDiscount() {
+        List<Size> sizes = productRepository.findSizesByDiscountAndStatus(ProductStatus.ACTIVE);
+        if (sizes.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return sizes;
+        }
+    }
+
     public List<ProductType> getAllProductTypesIdByCategory(long categoryId) {
         Category category = categoryService.findById(categoryId);
 
         List<ProductType> types = productRepository.findProductTypesByCategoryIdAndStatus(
                 category.getId(), ProductStatus.ACTIVE
         );
+        if (types.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return types;
+        }
+    }
+
+    public List<ProductType> getAllProductTypesIdByDiscount() {
+        List<ProductType> types = productRepository.findProductTypesByDiscountAndStatus(ProductStatus.ACTIVE);
         if (types.isEmpty()) {
             return Collections.emptyList();
         } else {

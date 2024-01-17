@@ -25,20 +25,7 @@ public class FilterService {
         List<Size> sizes = sizeService.getAll();
         List<ProductType> types = productTypeService.getAll();
 
-        Map<Long, String> colorResult = new HashMap<>();
-        Map<Long, String> sizeResult = new HashMap<>();
-        Map<Long, String> typeResult = new HashMap<>();
-
-        colors.forEach(color -> colorResult.put(color.getId(), color.getName()));
-        sizes.forEach(size -> sizeResult.put(size.getId(), size.getName()));
-        types.forEach(type -> typeResult.put(type.getId(), type.getName()));
-
-        Map<String, Map<Long, ?>> map = new HashMap<>();
-        map.put("Size", sizeResult);
-        map.put("Color", colorResult);
-        map.put("Types", typeResult);
-
-        return map;
+        return createFilter(colors, sizes, types);
     }
 
     public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByCategoryId(long id) {
@@ -47,6 +34,37 @@ public class FilterService {
         List<Size> sizes = productService.getAllSizesIdByCategory(id);
         List<ProductType> types = productService.getAllProductTypesIdByCategory(id);
 
+        return createFilter(colors, sizes, types);
+    }
+
+    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
+        Product minPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceAsc(
+                categoryId, ProductStatus.ACTIVE);
+        Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
+                categoryId, ProductStatus.ACTIVE);
+        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
+        if (minPriceProduct == null) {
+            result.setMinPrice(BigDecimal.ZERO);
+        } else {
+            result.setMinPrice(minPriceProduct.getPrice());
+        }
+        if (maxPriceProduct == null) {
+            result.setMaxPrice(BigDecimal.ZERO);
+        } else {
+            result.setMaxPrice(maxPriceProduct.getPrice());
+        }
+        return result;
+    }
+
+    public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByDiscount() {
+        List<Color> colors = productService.getAllColorsIdByDiscount();
+        List<Size> sizes = productService.getAllSizesIdByDiscount();
+        List<ProductType> types = productService.getAllProductTypesIdByDiscount();
+
+        return createFilter(colors, sizes, types);
+    }
+
+    private Map<String, Map<Long, ?>> createFilter(List<Color> colors, List<Size> sizes, List<ProductType> types) {
         Map<String, Map<Long, ?>> map = new HashMap<>();
 
         if (!sizes.isEmpty()) {
@@ -67,24 +85,5 @@ public class FilterService {
             map.put("Types", typeResult);
         }
         return map;
-    }
-
-    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
-        Product minPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceAsc(
-                categoryId, ProductStatus.ACTIVE);
-        Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
-                categoryId, ProductStatus.ACTIVE);
-        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
-        if (minPriceProduct == null) {
-            result.setMinPrice(BigDecimal.ZERO);
-        } else {
-            result.setMinPrice(minPriceProduct.getPrice());
-        }
-        if (maxPriceProduct == null) {
-            result.setMaxPrice(BigDecimal.ZERO);
-        } else {
-            result.setMaxPrice(maxPriceProduct.getPrice());
-        }
-        return result;
     }
 }
