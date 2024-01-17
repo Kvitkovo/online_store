@@ -35,40 +35,22 @@ export const FilterShowbar = ({ data, setData, selected, handleFilter }) => {
         <span className={styles.title}>Ви вибрали:</span>
         {selected &&
           Object.entries(selected).map(([key, value]) => {
-            const filterType =
-              key === 'types'
-                ? 'Вид'
-                : key === 'sizes'
-                ? 'Розмір'
-                : key === 'colors'
-                ? 'Колір'
-                : '';
-
-            if (key === 'priceFrom') {
+            const filterTitleMapping = {
+              priceFrom: 'Ціна від ',
+              priceTo: 'Ціна до ',
+              discount: 'Акційна ціна',
+              types: 'Вид',
+              colors: 'Колір',
+              sizes: 'Розмір',
+              categories: 'Категорія',
+            };
+            const filterType = filterTitleMapping[key] || '';
+            if (['priceFrom', 'priceTo', 'discount'].includes(key)) {
               return (
                 <Filter
                   key={key}
-                  label={`Ціна від ${selected.priceFrom}`}
-                  onClick={handleReset}
-                  filterName={key}
-                />
-              );
-            }
-            if (key === 'priceTo') {
-              return (
-                <Filter
-                  key={key}
-                  label={`Ціна до ${selected.priceTo}`}
-                  onClick={handleReset}
-                  filterName={key}
-                />
-              );
-            }
-            if (key === 'discount' && value) {
-              return (
-                <Filter
-                  key={key}
-                  label={'Акційна ціна'}
+                  label={`${filterType} ${value === true ? '' : value}`}
+                  id={value}
                   onClick={handleReset}
                   filterName={key}
                 />

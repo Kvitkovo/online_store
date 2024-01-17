@@ -10,6 +10,7 @@ import {
   GetFiltersInCategory,
   GetCategory,
   GetFiltersForDiscounted,
+  GetPricesForDiscounted,
 } from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
@@ -86,10 +87,11 @@ const CategoryPage = () => {
   const getFilterData = useCallback(async () => {
     if (categoryId === 'discounted') {
       const result = await GetFiltersForDiscounted(categoryId);
+      const minMaxPrice = await GetPricesForDiscounted();
       setInitialFilterData((prev) => ({
         ...prev,
-        priceFrom: 0,
-        priceTo: 50000,
+        priceFrom: minMaxPrice.minPrice,
+        priceTo: minMaxPrice.maxPrice,
       }));
 
       for (const [key, value] of Object.entries(result)) {
@@ -98,7 +100,7 @@ const CategoryPage = () => {
           name: value,
         }));
         const filterName =
-          key === 'Category' ? 'categoryId' : key.toLowerCase() + 's';
+          key === 'Category' ? 'categories' : key.toLowerCase() + 's';
         setInitialFilterData((prev) => ({
           ...prev,
           [filterName]: filterOptions,
@@ -132,7 +134,8 @@ const CategoryPage = () => {
           const data = await GetProductsFilter({
             page: currentPage,
             size: 30,
-            categoryId: categoryId !== 'discounted' && categoryId,
+            categories:
+              categoryId !== 'discounted' ? categoryId : selected.categories,
             discount: categoryId === 'discounted' || selected.discount,
             ...selected,
             sortDirection: sortValue === 0 ? 'ASC' : 'DESC',

@@ -43,7 +43,7 @@ const DropDownList = ({
                 )}
                 onChange={(event) => onChange(event, option, filterName)}
               />
-              {activeFilter === option.id && (
+              {activeFilter === option.name && (
                 <PointerButton
                   handleFilter={() => handleFilter(selectedFilter)}
                 />

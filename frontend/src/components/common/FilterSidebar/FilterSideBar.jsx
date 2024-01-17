@@ -45,7 +45,7 @@ const FilterSidebar = ({
 
   const handleCheckboxChange = (e, option, filterName) => {
     const { checked } = e.target;
-    setActiveFilter(option.id);
+    setActiveFilter(option.name);
     setData((prev) => {
       let settedData;
       if (checked) {
@@ -176,7 +176,7 @@ const FilterSidebar = ({
               types: 'Тип квітів',
               colors: 'Колір',
               sizes: 'Висота букета',
-              categoryId: 'Категорії',
+              categories: 'Категорії',
             };
             const title = titleMapping[key] || '';
 
