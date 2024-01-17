@@ -138,7 +138,7 @@ const CategoryPage = () => {
     if (Object.keys(selectedFilter).length > 0) {
       const timeoutId = setTimeout(() => {
         getFilteredData(selectedFilter);
-      }, 13500);
+      }, 4500);
 
       return () => clearTimeout(timeoutId);
     } else {
