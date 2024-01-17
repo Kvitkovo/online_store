@@ -50,4 +50,11 @@ public class FilterController {
     ){
         return filterService.getMinMaxPricesProductsInCategory(categoryId);
     }
+
+    @Operation(summary = "Get a list of filter elements by active products with discount")
+    @ApiResponseSuccessful
+    @GetMapping(path = "/discount")
+    public Map<String, Map<Long, ?>> getFilterByDiscount() {
+        return filterService.getFilterOnlyActiveProductByDiscount();
+    }
 }
