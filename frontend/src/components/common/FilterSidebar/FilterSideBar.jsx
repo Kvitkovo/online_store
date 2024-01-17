@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import styles from './FilterSidebar.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import DropDownList from '../../ui-kit/components/DropDownList';
@@ -10,7 +10,7 @@ import InputPrice from '../../ui-kit/components/Input/InputPrice';
 import FilterShowbar from './FilterShowbar';
 import Button from '../../ui-kit/components/Button';
 import IconButton from '../../ui-kit/components/IconButton';
-import { useWindowSize } from '../../../hooks/useWindowSize';
+import PointerButton from '../../ui-kit/components/PointerButton/PointerButton';
 
 const FilterSidebar = ({
   visibility,
@@ -20,19 +20,15 @@ const FilterSidebar = ({
   selectedFilter,
   handleFilter,
   resetFilter,
-  btnVisibility,
-  setBtnVisibility,
+  setActiveFilter,
+  activeFilter,
 }) => {
   const { priceFrom, priceTo } = data;
-  const [displayButtonPossition, setDisplayPossition] = useState(0);
-  const { width } = useWindowSize();
   const filterOn = Object.keys(selectedFilter).length > 0;
 
   const onDiscountChange = (event) => {
     const { checked } = event.target;
-    const { layerY } = event.nativeEvent;
-    setBtnVisibility(true);
-    setDisplayPossition(layerY - 15);
+    setActiveFilter('discount');
 
     setData((prev) => {
       if (checked) {
@@ -47,7 +43,7 @@ const FilterSidebar = ({
 
   const handleCheckboxChange = (e, option, filterName) => {
     const { checked } = e.target;
-    setBtnVisibility(true);
+    setActiveFilter(option.id);
     setData((prev) => {
       let settedData;
       if (checked) {
@@ -68,12 +64,10 @@ const FilterSidebar = ({
   };
 
   const changePrice = (e, price) => {
-    const { offsetTop } = e.target;
-    setDisplayPossition(offsetTop);
-    setBtnVisibility(true);
     setData((prev) => {
       return { ...prev, [price]: e.target.value };
     });
+    setActiveFilter('price');
   };
   const handleSliderChange = (e) => {
     const price = {};
@@ -86,12 +80,9 @@ const FilterSidebar = ({
     }
 
     setData((prev) => ({ ...prev, ...price }));
+    setActiveFilter('price');
   };
-  const handleSliderBlur = (e) => {
-    const { offsetTop } = e.target;
-    setBtnVisibility(true);
-    setDisplayPossition(offsetTop + 35);
-  };
+
   return (
     <>
       <div
@@ -148,20 +139,31 @@ const FilterSidebar = ({
               />
             </div>
             <div className={styles.rangeContainer}>
+              {activeFilter === 'price' && (
+                <PointerButton
+                  handleFilter={() => handleFilter(selectedFilter)}
+                />
+              )}
               <RangeSlider
                 min={selectedFilter.priceFrom}
                 max={selectedFilter.priceTo}
                 initialMinPrice={priceFrom}
                 initialMaxPrice={priceTo}
                 handleSliderChange={handleSliderChange}
-                handleBlur={handleSliderBlur}
               />
             </div>
-            <Checkbox
-              label={'Акційна ціна'}
-              checked={selectedFilter?.discounted || false}
-              onChange={onDiscountChange}
-            />
+            <div className={styles.discounted}>
+              <Checkbox
+                label={'Акційна ціна'}
+                checked={selectedFilter?.discounted || false}
+                onChange={onDiscountChange}
+              />
+              {activeFilter === 'discount' && (
+                <PointerButton
+                  handleFilter={() => handleFilter(selectedFilter)}
+                />
+              )}
+            </div>
           </DropDownList>
 
           <Divider />
@@ -177,19 +179,15 @@ const FilterSidebar = ({
             return (
               <Fragment key={key}>
                 {value.length > 0 && title !== '' ? (
-                  <div
-                    onChange={(e) => {
-                      const { layerY } = e.nativeEvent;
-
-                      setDisplayPossition(layerY - 15);
-                    }}
-                  >
+                  <div>
                     <DropDownList
                       selectedFilter={selectedFilter}
                       title={title}
                       data={value}
                       onChange={handleCheckboxChange}
                       filterName={key}
+                      activeFilter={activeFilter}
+                      handleFilter={handleFilter}
                     />
                     <Divider />
                   </div>
@@ -198,20 +196,7 @@ const FilterSidebar = ({
             );
           })}
         </div>
-        {width > 1200 && btnVisibility && filterOn && (
-          <div
-            style={{ top: displayButtonPossition }}
-            className={`${styles.buttonContainer} ${styles.desktopButton}`}
-          >
-            <ICONS.btnPointer />
-            <Button
-              label={'Показати товари'}
-              padding={true}
-              onClick={() => handleFilter(selectedFilter)}
-            />
-          </div>
-        )}
-        <div className={`${styles.buttonContainer} ${styles.mobileButton}`}>
+        <div className={styles.mobileButton}>
           <Button
             label={'Показати товари'}
             padding={true}

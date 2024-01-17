@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ICONS } from '../../icons';
 import styles from './DropDownList.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
+import PointerButton from '../PointerButton/PointerButton';
 
 const DropDownList = ({
   title,
@@ -10,6 +11,8 @@ const DropDownList = ({
   onChange,
   filterName,
   selectedFilter,
+  activeFilter,
+  handleFilter,
 }) => {
   const [open, setOpen] = useState(true);
 
@@ -40,6 +43,11 @@ const DropDownList = ({
                 )}
                 onChange={(event) => onChange(event, option, filterName)}
               />
+              {activeFilter === option.id && (
+                <PointerButton
+                  handleFilter={() => handleFilter(selectedFilter)}
+                />
+              )}
             </li>
           ))}
         </ul>

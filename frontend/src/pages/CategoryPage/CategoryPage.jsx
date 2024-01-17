@@ -32,7 +32,9 @@ const CategoryPage = () => {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [filteredList, setFilteredList] = useState(null);
-  const [isBtnVisible, setBtnVisible] = useState(false);
+  // const [isBtnVisible, setBtnVisible] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(null);
+
   const sortOptions = [
     { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
     { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
@@ -117,7 +119,7 @@ const CategoryPage = () => {
         console.error(error);
       } finally {
         toggleFilter();
-        setBtnVisible(false);
+        setActiveFilter(null);
       }
     },
     [categoryId, currentPage, sortValue],
@@ -129,17 +131,19 @@ const CategoryPage = () => {
   const resetFilter = () => {
     setSelectedFilter({});
     setFilteredList(categoryProducts);
+    setActiveFilter(null);
   };
 
   useEffect(() => {
     if (Object.keys(selectedFilter).length > 0) {
       const timeoutId = setTimeout(() => {
         getFilteredData(selectedFilter);
-      }, 4500);
+      }, 13500);
 
       return () => clearTimeout(timeoutId);
     } else {
       setFilteredList(categoryProducts);
+      setActiveFilter(null);
     }
   }, [categoryProducts, getFilteredData, selectedFilter]);
 
@@ -165,8 +169,8 @@ const CategoryPage = () => {
             setData={setSelectedFilter}
             handleFilter={getFilteredData}
             resetFilter={resetFilter}
-            btnVisibility={isBtnVisible}
-            setBtnVisibility={setBtnVisible}
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
           />
         </div>
         <div className={styles.mainContent}>

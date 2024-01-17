@@ -31,32 +31,20 @@
 }
 
 .rangeContainer {
+  position: relative;
   width: 220px;
   margin-bottom: 16px;
 }
-.buttonContainer {
-  position: absolute;
-  display: block;
-  left: 250px;
-  z-index: 2;
-  & button:disabled {
-    background: $gray-light-color;
-  }
-}
-.desktopButton {
-  display: flex;
-  & button {
-    height: auto;
-    margin-left: -12px;
-  }
-  & span {
-    font-size: 16px;
-    padding: 8px 14px 8px 8px;
-  }
+
+.discounted {
+  position: relative;
 }
 .mobileButton {
   display: none;
   padding: 15px 47px;
+  & button:disabled {
+    background: $gray-light-color;
+  }
 }
 
 .contentContainer {
@@ -95,7 +83,8 @@
     align-items: center;
     justify-content: space-between;
   }
-  .buttonContainer {
+  .mobileButton {
+    display: block;
     position: fixed;
     left: 0;
     right: 0;
@@ -105,9 +94,6 @@
   .showbarContainer {
     display: block;
   }
-  .mobileButton {
-    display: block;
-  }
 }
 
 @include md {
@@ -115,7 +101,7 @@
     width: 274px;
     padding-left: 27px;
   }
-  .buttonContainer {
+  .mobileButton {
     padding: 15px 27px;
   }
   .titleContainer {
@@ -127,7 +113,7 @@
     width: 252px;
     padding-left: 16px;
   }
-  .buttonContainer {
+  .mobileButton {
     padding: 15px 16px;
   }
   .titleContainer {
