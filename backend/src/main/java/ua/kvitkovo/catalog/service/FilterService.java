@@ -42,6 +42,16 @@ public class FilterService {
                 categoryId, ProductStatus.ACTIVE);
         Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
                 categoryId, ProductStatus.ACTIVE);
+        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
+    }
+
+    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategoryForDiscount() {
+        Product minPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus.ACTIVE);
+        Product maxPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus.ACTIVE);
+        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
+    }
+
+    private static FilterPricesIntervalResponseDto getPricesIntervalResponseDto(Product minPriceProduct, Product maxPriceProduct) {
         FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
         if (minPriceProduct == null) {
             result.setMinPrice(BigDecimal.ZERO);

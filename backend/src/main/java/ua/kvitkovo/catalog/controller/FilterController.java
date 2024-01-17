@@ -57,4 +57,11 @@ public class FilterController {
     public Map<String, Map<Long, ?>> getFilterByDiscount() {
         return filterService.getFilterOnlyActiveProductByDiscount();
     }
+
+    @Operation(summary = "Get the minimum and maximum price of goods  with discount")
+    @ApiResponseSuccessful
+    @GetMapping(path = "/discount/minMaxPrices")
+    public FilterPricesIntervalResponseDto getMinMaxPricesIntervalForDiscount(){
+        return filterService.getMinMaxPricesProductsInCategoryForDiscount();
+    }
 }

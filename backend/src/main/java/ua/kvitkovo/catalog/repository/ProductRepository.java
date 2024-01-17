@@ -31,6 +31,12 @@ public interface ProductRepository extends ProductRepositoryBasic {
 
     Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status);
 
+    @Query("SELECT p FROM Product p WHERE p.discount > 0 AND status = ?1 order by priceWithDiscount ASC limit 1")
+    Product findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus status);
+
+    @Query("SELECT p FROM Product p WHERE p.discount > 0 AND status = ?1 order by priceWithDiscount DESC limit 1")
+    Product findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus status);
+
     @Query("SELECT p.color FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<Color> findColorsByDiscountAndStatus(ProductStatus status);
 

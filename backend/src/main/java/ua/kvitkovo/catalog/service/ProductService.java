@@ -54,6 +54,14 @@ public class ProductService {
         return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, status);
     }
 
+    public Product findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus status) {
+        return productRepository.findFirstByDiscountAndStatusOrderByPriceAsc(status);
+    }
+
+    public Product findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus status) {
+        return productRepository.findFirstByDiscountAndStatusOrderByPriceDesc(status);
+    }
+
     @Transactional
     public Product addProduct(ProductRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotCreatedException(bindingResult);
