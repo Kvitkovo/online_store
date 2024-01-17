@@ -19,6 +19,21 @@ public class FilterService {
     private final ProductTypeService productTypeService;
     private final ProductService productService;
 
+    private static FilterPricesIntervalResponseDto getPricesIntervalResponseDto(Product minPriceProduct, Product maxPriceProduct) {
+        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
+        if (minPriceProduct == null) {
+            result.setMinPrice(BigDecimal.ZERO);
+        } else {
+            result.setMinPrice(minPriceProduct.getPrice());
+        }
+        if (maxPriceProduct == null) {
+            result.setMaxPrice(BigDecimal.ZERO);
+        } else {
+            result.setMaxPrice(maxPriceProduct.getPrice());
+        }
+        return result;
+    }
+
     public Map<String, Map<Long, ?>> getFilter() {
 
         List<Color> colors = colorService.getAll();
@@ -42,18 +57,13 @@ public class FilterService {
                 categoryId, ProductStatus.ACTIVE);
         Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
                 categoryId, ProductStatus.ACTIVE);
-        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
-        if (minPriceProduct == null) {
-            result.setMinPrice(BigDecimal.ZERO);
-        } else {
-            result.setMinPrice(minPriceProduct.getPrice());
-        }
-        if (maxPriceProduct == null) {
-            result.setMaxPrice(BigDecimal.ZERO);
-        } else {
-            result.setMaxPrice(maxPriceProduct.getPrice());
-        }
-        return result;
+        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
+    }
+
+    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategoryForDiscount() {
+        Product minPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus.ACTIVE);
+        Product maxPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus.ACTIVE);
+        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
     }
 
     public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByDiscount() {

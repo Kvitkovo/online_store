@@ -54,6 +54,14 @@ public class ProductService {
         return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, status);
     }
 
+    public Product findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus status) {
+        return productRepository.findFirstByDiscountAndStatusOrderByPriceAsc(status);
+    }
+
+    public Product findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus status) {
+        return productRepository.findFirstByDiscountAndStatusOrderByPriceDesc(status);
+    }
+
     @Transactional
     public Product addProduct(ProductRequestDto dto, BindingResult bindingResult) {
         ErrorUtils.checkItemNotCreatedException(bindingResult);
@@ -213,12 +221,13 @@ public class ProductService {
     }
 
     private void addCategoryFilter(FilterRequestDto filter, Root<Object> root, List<Predicate> predicates) {
-        if (filter.getCategoryId() != null) {
-            Category category = categoryService.findById(filter.getCategoryId());
-            List<Category> allByParent = categoryService.findAllByParent(category);
-            allByParent.add(category);
+        if (filter.getCategories() != null) {
             Expression<String> inExpression = root.get("category");
-            Predicate inPredicate = inExpression.in(allByParent);
+            List<Category> categoryList =
+                    filter.getCategories().stream()
+                            .map(categoryService::findById)
+                            .toList();
+            Predicate inPredicate = inExpression.in(categoryList);
             predicates.add(inPredicate);
         }
     }

@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ua.kvitkovo.annotations.ApiResponseSuccessful;
 import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.service.FilterService;
-import ua.kvitkovo.annotations.ApiResponseSuccessful;
 
 import java.util.Map;
 
@@ -33,10 +33,10 @@ public class FilterController {
     @ApiResponseSuccessful
     @GetMapping(path = "/category/{id}")
     public Map<String, Map<Long, ?>> getFilterByCategoryId(
-        @Parameter(description = "The ID of the category to retrieve", required = true,
-            schema = @Schema(type = "integer", format = "int64")
-        )
-        @PathVariable Long id) {
+            @Parameter(description = "The ID of the category to retrieve", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
         return filterService.getFilterOnlyActiveProductByCategoryId(id);
     }
 
@@ -44,10 +44,10 @@ public class FilterController {
     @ApiResponseSuccessful
     @GetMapping(path = "/minMaxPrices")
     public FilterPricesIntervalResponseDto getMinMaxPricesInterval(
-        @Parameter(description = "ID of the category of which the products will be returned",
-            schema = @Schema(type = "integer")
-        ) @RequestParam(required = false) Long categoryId
-    ){
+            @Parameter(description = "ID of the category of which the products will be returned",
+                    schema = @Schema(type = "integer")
+            ) @RequestParam(required = false) Long categoryId
+    ) {
         return filterService.getMinMaxPricesProductsInCategory(categoryId);
     }
 
@@ -56,5 +56,12 @@ public class FilterController {
     @GetMapping(path = "/discount")
     public Map<String, Map<Long, ?>> getFilterByDiscount() {
         return filterService.getFilterOnlyActiveProductByDiscount();
+    }
+
+    @Operation(summary = "Get the minimum and maximum price of goods  with discount")
+    @ApiResponseSuccessful
+    @GetMapping(path = "/discount/minMaxPrices")
+    public FilterPricesIntervalResponseDto getMinMaxPricesIntervalForDiscount() {
+        return filterService.getMinMaxPricesProductsInCategoryForDiscount();
     }
 }
