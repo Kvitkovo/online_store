@@ -46,6 +46,7 @@ import { ReactComponent as radiobtnChecked } from './icon-radiobtn-checked.svg';
 import { ReactComponent as radiobtn } from './icon-radiobtn.svg';
 import { ReactComponent as filter } from './filter.svg';
 import { ReactComponent as btnPointer } from './btn-pointer.svg';
+import { ReactComponent as pointer } from './pointer.svg';
 
 export const ICONS = {
   addComponent,
@@ -96,4 +97,5 @@ export const ICONS = {
   radiobtn,
   filter,
   btnPointer,
+  pointer,
 };
