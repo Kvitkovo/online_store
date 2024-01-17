@@ -147,10 +147,9 @@ public class ProductController {
             @Parameter(description = "Get products whose name is similar to the specified term",
                     schema = @Schema(type = "string")
             ) @RequestParam(required = false) String title,
-            @Parameter(description = "ID of the category of which the products will be returned",
-                    schema = @Schema(type = "integer")
-            ) @RequestParam(required = false)
-            @Min(value = 1, message = "categoryId should not be less than 1") Long categoryId,
+            @Parameter(description = "List of categories identifiers",
+                    schema = @Schema(type = "array[integer]")
+            ) @RequestParam(required = false) List<Long> categories,
             @Parameter(description = "List of color identifiers",
                     schema = @Schema(type = "array[integer]")
             ) @RequestParam(required = false) List<Long> colors,
@@ -171,7 +170,7 @@ public class ProductController {
                 .priceFrom(priceFrom)
                 .priceTo(priceTo)
                 .title(title)
-                .categoryId(categoryId)
+                .categories(categories)
                 .colors(colors)
                 .sizes(sizes)
                 .productTypes(types)

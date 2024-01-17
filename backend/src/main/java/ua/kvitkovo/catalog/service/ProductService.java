@@ -221,12 +221,13 @@ public class ProductService {
     }
 
     private void addCategoryFilter(FilterRequestDto filter, Root<Object> root, List<Predicate> predicates) {
-        if (filter.getCategoryId() != null) {
-            Category category = categoryService.findById(filter.getCategoryId());
-            List<Category> allByParent = categoryService.findAllByParent(category);
-            allByParent.add(category);
+        if (filter.getCategories() != null) {
             Expression<String> inExpression = root.get("category");
-            Predicate inPredicate = inExpression.in(allByParent);
+            List<Category> categoryList =
+                    filter.getCategories().stream()
+                            .map(categoryService::findById)
+                            .toList();
+            Predicate inPredicate = inExpression.in(categoryList);
             predicates.add(inPredicate);
         }
     }
