@@ -38,7 +38,37 @@ header {
   gap: 26px;
 }
 .location {
+  position: relative;
   display: flex;
+  &:hover .locationTooltip {
+    transition-delay: 1.5s;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+.locationTooltip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  position: absolute;
+  bottom: -130%;
+  left: -100%;
+  width: max-content;
+  padding: 20px 26px;
+  box-shadow: $box-shadow;
+  border-radius: 8px;
+  background-color: $white-color;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.3s ease,
+    visibility 0.5s ease,
+    transform 0.5s ease;
+  transition-delay: 0.8s;
 }
 .phoneLink {
   display: flex;
