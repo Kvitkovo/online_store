@@ -347,4 +347,13 @@ public class ProductService {
     public void minusStock(@NonNull Product product, int stock) {
         changeStock(product, product.getStock() - stock);
     }
+
+    public List<Category> getAllCategoriesByDiscount() {
+        List<Category> types = productRepository.findCategoriesByDiscountAndStatus(ProductStatus.ACTIVE);
+        if (types.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return types;
+        }
+    }
 }

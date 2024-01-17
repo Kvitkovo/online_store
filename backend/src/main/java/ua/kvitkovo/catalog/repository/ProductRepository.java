@@ -39,4 +39,7 @@ public interface ProductRepository extends ProductRepositoryBasic {
 
     @Query("SELECT p.productType FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<ProductType> findProductTypesByDiscountAndStatus(ProductStatus status);
+
+    @Query("SELECT p.category FROM Product p WHERE p.discount > 0 AND status = ?1")
+    List<Category> findCategoriesByDiscountAndStatus(ProductStatus status);
 }

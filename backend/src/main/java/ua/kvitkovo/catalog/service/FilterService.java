@@ -60,8 +60,16 @@ public class FilterService {
         List<Color> colors = productService.getAllColorsIdByDiscount();
         List<Size> sizes = productService.getAllSizesIdByDiscount();
         List<ProductType> types = productService.getAllProductTypesIdByDiscount();
+        List<Category> categories = productService.getAllCategoriesByDiscount();
 
-        return createFilter(colors, sizes, types);
+        Map<String, Map<Long, ?>> filter = createFilter(colors, sizes, types);
+
+        if (!categories.isEmpty()) {
+            Map<Long, String> sizeResult = new HashMap<>();
+            categories.forEach(size -> sizeResult.put(size.getId(), size.getName()));
+            filter.put("Category", sizeResult);
+        }
+        return filter;
     }
 
     private Map<String, Map<Long, ?>> createFilter(List<Color> colors, List<Size> sizes, List<ProductType> types) {
