@@ -138,11 +138,11 @@ public class ProductController {
             ) @RequestParam(defaultValue = "30") int size,
             @Parameter(description = "Get products whose price is equal to or higher than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "0")
-            ) @RequestParam(required = false, defaultValue = "0")
+            ) @RequestParam(required = false)
             @Min(value = 0, message = "priceFrom should not be less than 0") Integer priceFrom,
             @Parameter(description = "Get products whose price is equal to or less than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "5000")
-            ) @RequestParam(required = false, defaultValue = "5000")
+            ) @RequestParam(required = false)
             @Min(value = 0, message = "priceTo should not be less than 0") Integer priceTo,
             @Parameter(description = "Get products whose name is similar to the specified term",
                     schema = @Schema(type = "string")
