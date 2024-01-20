@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
 import Button from '../ui-kit/components/Button';
-import { ICONS } from '../ui-kit/icons';
+// import { ICONS } from '../ui-kit/icons';
 import { IMaskInput } from 'react-imask';
 import OrderInfo from './components/OrderInfo';
 import DeliverForm from './components/DeliveryForm/DeliveryForm';
+import ChangeDataBtn from './components/ChangeDataBtn';
 
 const Order = () => {
   const [showForm, setShowForm] = useState(false);
   const [hideForm, setHideForm] = useState(false);
+  const [hideDelivery, setHideDelivery] = useState(false);
   const [client, setClient] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -27,11 +29,16 @@ const Order = () => {
   const onSubmitButton = (data) => {
     setClient(data.clientFirstName);
     setPhone(data.clientPhone);
+    // console.log('data: ', data);
     setHideForm(true);
+    // console.log('hideForm: ', hideForm);
+    setHideDelivery(true);
+    // console.log('hideDelivery: ', hideDelivery);
   };
 
   const handleChangeData = () => {
     setHideForm(false);
+    // console.log('from handleChangeData');
   };
 
   return (
@@ -45,14 +52,10 @@ const Order = () => {
                 <span>1.</span>Контактні дані
               </h3>
               {hideForm && (
-                <div className={styles.buttonChange}>
-                  <Button
-                    variant="no-border"
-                    label="Змінити"
-                    icon={<ICONS.PencilIcon />}
-                    onClick={() => handleChangeData()}
-                  ></Button>
-                </div>
+                <ChangeDataBtn
+                  sectionState={hideForm}
+                  handleChangeData={handleChangeData}
+                />
               )}
             </div>
             {hideForm && (
@@ -230,7 +233,13 @@ const Order = () => {
               </form>
             )}
           </div>
-          <DeliverForm />
+          <div className={styles.orderBlock}>
+            <h3 className={styles.subtitle}>
+              <span>2.</span>Доставка
+            </h3>
+
+            {hideDelivery && <DeliverForm state={hideDelivery} />}
+          </div>
         </div>
         <OrderInfo />
       </div>
