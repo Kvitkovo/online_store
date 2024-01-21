@@ -1,10 +1,17 @@
 /* eslint-disable max-len */
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import {
   GetDiscountedProducts,
   GetProductsCategory,
+  GetProductsFilter,
 } from '../../services/products/productsAccess.service';
-import { GetCategory } from '../../services/catalog/categoryAccess.service';
+import {
+  GetMinMaxPrice,
+  GetFiltersInCategory,
+  GetCategory,
+  GetFiltersForDiscounted,
+  GetPricesForDiscounted,
+} from '../../services/catalog/categoryAccess.service';
 import FilterSidebar from '../../components/common/FilterSidebar';
 import styles from './CategoryPage.module.scss';
 import Path from '../CardPage/components/Path';
@@ -19,26 +26,34 @@ import FilterShowbar from '../../components/common/FilterSidebar/FilterShowbar';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
-  const [productsInCategory, setProductsInCategory] = useState(null);
+  const [categoryProducts, setCategoryProducts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const sortOptionsMobile = [
-    { value: 0, label: 'Дешеві' },
-    { value: 1, label: 'Дорогі' },
-  ];
+  const [selectedFilter, setSelectedFilter] = useState({});
+  const [filteredList, setFilteredList] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(null);
+
   const sortOptions = [
-    { value: 0, label: 'від дешевих до дорогих' },
-    { value: 1, label: 'від дорогих до дешевих' },
+    { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
+    { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
   ];
-  const [filterData, setFilterData] = useState({
-    price: [99, 99999],
-    discounted: false,
-    type: [],
-    color: [],
-    size: [],
+  const sortedData = useMemo(() => {
+    const sortedAsc = filteredList?.toSorted(
+      (a, b) => a.priceWithDiscount - b.priceWithDiscount,
+    );
+    return sortValue === 0 ? sortedAsc : sortedAsc.toReversed();
+  }, [sortValue, filteredList]);
+  const [initialFilterData, setInitialFilterData] = useState({
+    priceFrom: 0,
+    priceTo: 999,
+    discount: false,
+    types: [],
+    colors: [],
+    sizes: [],
+    category: [],
   });
 
   const getData = useCallback(async () => {
@@ -60,7 +75,8 @@ const CategoryPage = () => {
         category = await GetCategory(categoryId);
       }
       setCurrentCategory(category);
-      setProductsInCategory(products.content);
+      setCategoryProducts(products.content);
+      setFilteredList(products.content);
     } catch (err) {
       console.error(err);
     } finally {
@@ -68,9 +84,99 @@ const CategoryPage = () => {
     }
   }, [categoryId, currentPage]);
 
-  const handleClickFilter = () => {
+  const getFilterData = useCallback(async () => {
+    if (categoryId === 'discounted') {
+      const result = await GetFiltersForDiscounted(categoryId);
+      const minMaxPrice = await GetPricesForDiscounted();
+      setInitialFilterData((prev) => ({
+        ...prev,
+        priceFrom: minMaxPrice.minPrice,
+        priceTo: minMaxPrice.maxPrice,
+      }));
+
+      for (const [key, value] of Object.entries(result)) {
+        const filterOptions = Object.entries(value).map(([key, value]) => ({
+          id: key,
+          name: value,
+        }));
+        const filterName =
+          key === 'Category' ? 'categories' : key.toLowerCase() + 's';
+        setInitialFilterData((prev) => ({
+          ...prev,
+          [filterName]: filterOptions,
+        }));
+      }
+    } else {
+      const result = await GetFiltersInCategory(categoryId);
+      const minMaxPrice = await GetMinMaxPrice({ categoryId: categoryId });
+      setInitialFilterData((prev) => ({
+        ...prev,
+        priceFrom: minMaxPrice.minPrice,
+        priceTo: minMaxPrice.maxPrice,
+      }));
+
+      for (const [key, value] of Object.entries(result)) {
+        const filterOptions = Object.entries(value).map(([key, value]) => ({
+          id: key,
+          name: value,
+        }));
+        setInitialFilterData((prev) => ({
+          ...prev,
+          [key.toLowerCase() + 's']: filterOptions,
+        }));
+      }
+    }
+  }, [categoryId, setInitialFilterData]);
+  const getFilteredData = useCallback(
+    async (selected) => {
+      try {
+        if (Object.keys(selected).length > 0) {
+          const data = await GetProductsFilter({
+            page: currentPage,
+            size: 30,
+            categories:
+              categoryId !== 'discounted' ? categoryId : selected.categories,
+            discount: categoryId === 'discounted' || selected.discount,
+            ...selected,
+            sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          });
+          setFilteredList(data.content);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        toggleFilter();
+        setActiveFilter(null);
+      }
+    },
+    [categoryId, currentPage, sortValue],
+  );
+
+  const toggleFilter = () => {
     setFilterOpen((prev) => !prev);
   };
+  const resetFilter = () => {
+    setSelectedFilter({});
+    setFilteredList(categoryProducts);
+    setActiveFilter(null);
+  };
+
+  useEffect(() => {
+    if (Object.keys(selectedFilter).length > 0) {
+      const timeoutId = setTimeout(() => {
+        getFilteredData(selectedFilter);
+      }, 4500);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setFilteredList(categoryProducts);
+      setActiveFilter(null);
+    }
+  }, [categoryProducts, getFilteredData, selectedFilter]);
+
+  useEffect(() => {
+    getFilterData();
+  }, [getFilterData]);
 
   useEffect(() => {
     getData();
@@ -84,10 +190,14 @@ const CategoryPage = () => {
         <div className={styles.filterContainer}>
           <FilterSidebar
             visibility={isFilterOpen}
-            onClose={handleClickFilter}
-            categoryId={categoryId}
-            data={filterData}
-            setData={setFilterData}
+            onClose={toggleFilter}
+            data={initialFilterData}
+            selectedFilter={selectedFilter}
+            setData={setSelectedFilter}
+            handleFilter={getFilteredData}
+            resetFilter={resetFilter}
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
           />
         </div>
         <div className={styles.mainContent}>
@@ -100,35 +210,43 @@ const CategoryPage = () => {
                 options={sortOptions}
               />
             </div>
-            <div className={styles.filterShowbar}>
-              <FilterShowbar data={filterData} setData={setFilterData} />
-              <Button
-                label={'Скинути фільтри'}
-                variant={'no-border-yellow'}
-                className={styles.cancelFilter}
-              />
-            </div>
+            {Object.keys(selectedFilter).length > 0 && (
+              <div className={styles.filterShowbar}>
+                <FilterShowbar
+                  selected={selectedFilter}
+                  data={initialFilterData}
+                  setData={setSelectedFilter}
+                  handleFilter={getFilteredData}
+                />
+                <Button
+                  label={'Скинути фільтри'}
+                  variant={'no-border-yellow'}
+                  className={styles.cancelFilter}
+                  onClick={resetFilter}
+                />
+              </div>
+            )}
             <div className={styles.sortSmallDevices}>
               <DropDown
                 sortValue={sortValue}
                 setValue={setSortValue}
-                options={sortOptionsMobile}
+                options={sortOptions}
               />
             </div>
             <div className={styles.filterButton}>
               <Button
                 label={'Фільтри'}
                 icon={<ICONS.filter />}
-                onClick={handleClickFilter}
+                onClick={toggleFilter}
               />
             </div>
           </div>
           {isLoading
             ? 'Loading ...'
-            : productsInCategory && (
+            : sortedData && (
                 <>
                   <div className={styles.cards}>
-                    {productsInCategory.map((product) => (
+                    {sortedData.map((product) => (
                       <Card
                         image={
                           product.images[0]
@@ -147,7 +265,7 @@ const CategoryPage = () => {
                   </div>
                   <Pagination
                     onPageChange={setCurrentPage}
-                    totalCount={productsInCategory.length}
+                    totalCount={sortedData.length}
                     currentPage={currentPage}
                     pageSize={12}
                   />

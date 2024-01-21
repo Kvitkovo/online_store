@@ -2,6 +2,7 @@
 @import './../../../_mixins';
 
 .filterContainer {
+  position: relative;
   width: 280px;
 }
 .titleContainer {
@@ -30,18 +31,22 @@
 }
 
 .rangeContainer {
+  position: relative;
   width: 220px;
   margin-bottom: 16px;
 }
-.buttonContainer {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 15px 47px;
-  background: $page-background-color;
+
+.discounted {
+  position: relative;
 }
+.mobileButton {
+  display: none;
+  padding: 15px 47px;
+  & button:disabled {
+    background: $gray-light-color;
+  }
+}
+
 .contentContainer {
   display: flex;
   flex-direction: column;
@@ -59,8 +64,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 62px 8px 0 47px;
-    z-index: 4;
+    padding: 62px 20px 0 47px;
+    z-index: 999;
   }
   .contentContainer {
     overflow: scroll;
@@ -76,9 +81,15 @@
     height: 56px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
-  .buttonContainer {
+  .mobileButton {
     display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
   }
   .showbarContainer {
     display: block;
@@ -90,7 +101,7 @@
     width: 274px;
     padding-left: 27px;
   }
-  .buttonContainer {
+  .mobileButton {
     padding: 15px 27px;
   }
   .titleContainer {
@@ -102,7 +113,7 @@
     width: 252px;
     padding-left: 16px;
   }
-  .buttonContainer {
+  .mobileButton {
     padding: 15px 16px;
   }
   .titleContainer {

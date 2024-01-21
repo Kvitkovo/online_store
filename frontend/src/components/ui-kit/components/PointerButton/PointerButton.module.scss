@@ -1,0 +1,21 @@
+@import './../../../../mixins';
+.buttonContainer {
+  position: absolute;
+  right: -170px;
+  bottom: -35%;
+  z-index: 2;
+  display: flex;
+  & button {
+    height: auto;
+    margin-left: -12px;
+  }
+  & span {
+    font-size: 16px;
+    padding: 8px 14px 8px 8px;
+  }
+}
+@include lg {
+  .buttonContainer {
+    display: none;
+  }
+}
