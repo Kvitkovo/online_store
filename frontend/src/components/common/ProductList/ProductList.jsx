@@ -5,8 +5,8 @@ import Select from '../../ui-kit/components/Select';
 import Button from '../../ui-kit/components/Button';
 import { ICONS } from '../../ui-kit/icons';
 import DropDown from '../../ui-kit/components/DropDown';
-import FilterShowbar from '../../common/FilterSidebar/FilterShowbar';
-import FilterSidebar from '../../common/FilterSidebar';
+import FilterShowbar from '../FilterSidebar/FilterShowbar';
+import FilterSidebar from '../FilterSidebar';
 import { GetProductsFilter } from '../../../services/products/productsAccess.service';
 import {
   GetMinMaxPrice,
@@ -15,7 +15,7 @@ import {
   GetPricesForDiscounted,
 } from '../../../services/catalog/categoryAccess.service';
 import { useParams } from 'react-router-dom';
-import Card from '../../common/Card';
+import Card from '../Card';
 import Pagination from '../../ui-kit/components/Pagination';
 
 const ProductList = ({ data, setCurrentPage, currentPage, isLoading }) => {
