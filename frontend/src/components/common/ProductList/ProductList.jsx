@@ -18,7 +18,12 @@ import { useParams } from 'react-router-dom';
 import Card from '../Card';
 import Pagination from '../../ui-kit/components/Pagination';
 
-const ProductList = ({ data, setCurrentPage, currentPage, isLoading }) => {
+const ProductList = ({
+  data,
+  setCurrentPage,
+  currentPage = 1,
+  isLoading = false,
+}) => {
   const { categoryId } = useParams();
   const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
