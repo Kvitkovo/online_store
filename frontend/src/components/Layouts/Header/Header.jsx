@@ -66,7 +66,15 @@ const Header = () => {
     setIsOpenLogin(false);
     setIsOpenRegister((prev) => !prev);
   };
+  const openGoogleMaps = () => {
+    const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
 
+    const googleMapsLink =
+      'https://www.google.com/maps/dir/?api=1' +
+      `&destination=${encodeURIComponent(destination)}`;
+
+    window.open(googleMapsLink, '_blank');
+  };
   const location = useLocation();
   const openLoginModal = location.state && location.state.openLoginModal;
 
@@ -116,7 +124,12 @@ const Header = () => {
                   padding="padding-header-even"
                   reverse="true"
                   icon={<ICONS.location />}
+                  onClick={openGoogleMaps}
                 />
+                <div className={styles.locationTooltip}>
+                  <div>вул. Квіткова 18</div>
+                  <ICONS.location />
+                </div>
               </div>
               <a className={styles.phoneLink} href="tel:+380937777777">
                 <ICONS.phone className={styles.phoneIcon} />
