@@ -78,6 +78,7 @@
 
 @include md {
   .itemBlock {
+    margin-top: 0;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 46px;
     padding: 32px 0;
