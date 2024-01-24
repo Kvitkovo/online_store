@@ -1,0 +1,58 @@
+@import '../../../../variables';
+
+.contactForm {
+  label {
+    line-height: 24px;
+    span {
+      color: $gray-dark-color;
+    }
+  }
+
+  input,
+  select {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid $gray-dark-color;
+    padding: 8px 12px;
+  }
+
+  .clientData,
+  .anotherPerson {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 64px;
+    row-gap: 16px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .radioBtn {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 22px 0;
+
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+  }
+  .error {
+    color: $discount-color;
+    font-size: 12px;
+    padding-top: 5px;
+  }
+  .anotherPerson {
+    margin-bottom: 32px;
+  }
+  .clientData {
+    margin-top: 22px;
+  }
+}
