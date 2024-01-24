@@ -9,7 +9,7 @@ const Order = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [orderData, setOrderData] = useState({});
 
-  const handleChangeData = (sourceStep) => {
+  const handleChangeStep = (sourceStep) => {
     setCurrentStep(sourceStep);
   };
 
@@ -28,12 +28,11 @@ const Order = () => {
               step={1}
               currentStep={currentStep}
               name={'Контактні дані'}
-              handleChangeData={handleChangeData}
+              handleBackEdit={handleChangeStep}
             >
               <ContactDetails
-                // state={currentStep === 1}
                 contactData={orderData.contactData}
-                setState={(newContactData) => {
+                setDataOnSubmit={(newContactData) => {
                   handleStepFinish(currentStep);
                   setOrderData({
                     ...orderData,
@@ -48,11 +47,10 @@ const Order = () => {
               step={2}
               currentStep={currentStep}
               name={'Доставка'}
-              handleChangeData={handleChangeData}
+              handleBackEdit={handleChangeStep}
             >
               <DeliverForm
-                state={currentStep === 2}
-                setState={() => handleStepFinish(currentStep)}
+                setDataOnSubmit={() => handleStepFinish(currentStep)}
               />
             </OrderSection>
           </div>

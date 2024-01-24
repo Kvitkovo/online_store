@@ -7,7 +7,7 @@ const OrderSection = ({
   step,
   currentStep,
   name,
-  handleChangeData,
+  handleBackEdit,
   children,
 }) => {
   return (
@@ -23,7 +23,7 @@ const OrderSection = ({
               variant="no-border"
               label="Змінити"
               icon={<ICONS.PencilIcon />}
-              onClick={() => handleChangeData(step)}
+              onClick={() => handleBackEdit(step)}
             ></Button>
           </div>
         )}
