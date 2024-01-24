@@ -12,6 +12,7 @@ const Button = memo(
     onClick,
     disabled = false,
     isFullWidth,
+    tabIndex = 0,
   }) => {
     const buttonClasses = useMemo(() => {
       const classes = [styles.button, styles[variant]];
@@ -37,6 +38,7 @@ const Button = memo(
         type={type}
         onClick={onClick}
         disabled={disabled}
+        tabIndex={tabIndex}
       >
         <div className={styles.btnContainer} style={containerStyle}>
           <span className={styles.label}>{label}</span>

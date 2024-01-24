@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState, useMemo } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, Link } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import logo from '../../ui-kit/icons/logo/logo.svg';
@@ -19,10 +20,13 @@ import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
 import { useSelector } from 'react-redux';
 import { getUser } from '../../../redux/slices/userSlice';
+import { GetProductsFilter } from '../../../services/products/productsAccess.service';
+import Divider from '../../ui-kit/components/Divider';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+
   const navigate = useNavigate();
   const user = useSelector(getUser);
 
@@ -33,6 +37,67 @@ const Header = () => {
       setIsOpenLogin((prev) => !prev);
       setIsOpenRegister(false);
     }
+  };
+
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState(null);
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const showResults = () => {
+    const link = `search/${query}`;
+    setQuery('');
+    navigate(link);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (query.length >= 4) {
+          const data = await GetProductsFilter({
+            size: 3,
+            sortDirection: 'ASC',
+            title: query,
+          });
+          setSuggestions(
+            data.content.map((suggestion) => {
+              const { id, title } = suggestion;
+
+              return { id, title };
+            }),
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [query]);
+
+  const highlightWord = (name) => {
+    const lowerCaseName = name.toLowerCase();
+    const indexOfTerm = lowerCaseName.indexOf(query.toLowerCase());
+
+    if (indexOfTerm !== -1) {
+      const beforeTerm = name.slice(0, indexOfTerm);
+      const term = name.slice(indexOfTerm, indexOfTerm + query.length);
+      const afterTerm = name.slice(indexOfTerm + query.length);
+
+      return (
+        <>
+          {beforeTerm}
+          <span className={styles.highlightWord}>{term}</span>
+          {afterTerm}
+        </>
+      );
+    }
+
+    return name;
+  };
+  const handleGoToProduct = () => {
+    setSuggestions(null);
+    setQuery('');
   };
 
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
@@ -154,7 +219,41 @@ const Header = () => {
           </div>
 
           <div className={styles.searchField}>
-            <InputSearch />
+            <InputSearch
+              search={query}
+              changeInput={handleSearch}
+              clearInput={handleGoToProduct}
+            />
+
+            <ul
+              className={`${styles.suggestions} ${
+                suggestions?.length > 0 && query.length >= 4
+                  ? styles.visible
+                  : ''
+              }`}
+            >
+              <li className={styles.searchResults}>
+                <Button
+                  label="Всі рeзультати пошуку"
+                  variant="no-border"
+                  icon={<ICONS.hideList />}
+                  onClick={showResults}
+                  tabIndex={-1}
+                />
+                <Divider />
+              </li>
+              {suggestions?.map((suggestion) => (
+                <li key={suggestion.id} className={styles.suggestion}>
+                  <Link
+                    to={`/product/${suggestion.id}`}
+                    className={styles.link}
+                    onClick={handleGoToProduct}
+                  >
+                    {highlightWord(suggestion.title)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className={styles.containerBottomRight}>
             <div className={styles.bouquete}>
