@@ -1,44 +1,21 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import styles from './Order.module.scss';
-import Button from '../ui-kit/components/Button';
-// import { ICONS } from '../ui-kit/icons';
-import { IMaskInput } from 'react-imask';
 import OrderInfo from './components/OrderInfo';
 import DeliverForm from './components/DeliveryForm/DeliveryForm';
-import ChangeDataBtn from './components/ChangeDataBtn';
+import OrderSection from './components/OrderSection';
+import ContactDetails from './components/ContactDetails/ContactDetails';
 
 const Order = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [hideForm, setHideForm] = useState(false);
-  const [hideDelivery, setHideDelivery] = useState(false);
-  const [client, setClient] = useState('');
-  const [phone, setPhone] = useState('');
+  const [currentStep, setCurrentStep] = useState(1);
+  const [orderData, setOrderData] = useState({});
 
-  const {
-    register,
-    formState: { errors },
-    setValue,
-    getValues,
-    handleSubmit,
-  } = useForm({
-    defaultValues: { recipient: 'I' },
-    mode: 'onBlur',
-  });
-
-  const onSubmitButton = (data) => {
-    setClient(data.clientFirstName);
-    setPhone(data.clientPhone);
-    // console.log('data: ', data);
-    setHideForm(true);
-    // console.log('hideForm: ', hideForm);
-    setHideDelivery(true);
-    // console.log('hideDelivery: ', hideDelivery);
+  const handleChangeData = (sourceStep) => {
+    setCurrentStep(sourceStep);
   };
 
-  const handleChangeData = () => {
-    setHideForm(false);
-    // console.log('from handleChangeData');
+  const handleStepFinish = (stepDone) => {
+    stepDone++;
+    setCurrentStep(stepDone);
   };
 
   return (
@@ -47,198 +24,37 @@ const Order = () => {
       <div className={styles.mainGrid}>
         <div>
           <div className={styles.orderBlock}>
-            <div className={styles.subtitleBlock}>
-              <h3 className={styles.subtitle}>
-                <span>1.</span>Контактні дані
-              </h3>
-              {hideForm && (
-                <ChangeDataBtn
-                  sectionState={hideForm}
-                  handleChangeData={handleChangeData}
-                />
-              )}
-            </div>
-            {hideForm && (
-              <div className={styles.clientDataOutput}>
-                {client}, {phone}
-              </div>
-            )}
-            {!hideForm && (
-              <form
-                className={styles.form}
-                onSubmit={handleSubmit(onSubmitButton)}
-              >
-                <div className={styles.clientData}>
-                  <div>
-                    <label>
-                      Ваше ім&apos;я<span> *</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Як до вас звертатися?"
-                      {...register('clientFirstName', {
-                        required: "Вкажіть ваше ім'я",
-                      })}
-                    ></input>
-                    <div>
-                      {errors?.clientFirstName && (
-                        <p className={styles.error}>
-                          {errors?.clientFirstName?.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label>Ел. пошта </label>
-                    <input
-                      type="email"
-                      placeholder="Введіть електронну пошту"
-                      {...register('clientEmail', {
-                        pattern: {
-                          value:
-                            /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                          message: 'Невірна адреса електронної пошти',
-                        },
-                      })}
-                    ></input>
-                    <div>
-                      {errors?.clientEmail && (
-                        <p className={styles.error}>
-                          {errors?.clientEmail?.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label>
-                      Номер телефону<span> *</span>
-                    </label>
-                    <IMaskInput
-                      type="tel"
-                      inputMode="tel"
-                      placeholder="+380 (XX) XXX-XX-XX"
-                      mask="+{38\0} {(}00{)} 000 00 00"
-                      onAccept={(value) => setValue('clientPhone', value)}
-                      value={getValues('clientPhone')}
-                      {...register('clientPhone', {
-                        required: 'Вкажіть ваш номер телефону',
-                        pattern: {
-                          value: /^\+380 \(\d{2}\) \d{3} \d{2} \d{2}$/,
-                          message: 'Невірний номер телефону',
-                        },
-                      })}
-                    ></IMaskInput>
-                    <div>
-                      {errors?.clientPhone && (
-                        <p className={styles.error}>
-                          {errors?.clientPhone?.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.radioBtn}>
-                  Одержувач:
-                  <div>
-                    <label>Я</label>
-                    <input
-                      type="radio"
-                      value="I"
-                      {...register('recipient')}
-                      onChange={() => setShowForm(false)}
-                    ></input>
-                  </div>
-                  <div>
-                    <label>Інша людина</label>
-                    <input
-                      type="radio"
-                      value="anotherPerson"
-                      {...register('recipient')}
-                      onChange={() => setShowForm(true)}
-                    ></input>
-                  </div>
-                </div>
-                {showForm && (
-                  <div className={styles.anotherPerson}>
-                    <div>
-                      <label>
-                        Ім&apos;я одержувача<span> *</span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Введіть ім’я одержувача"
-                        {...register('recipientFirstName', {
-                          required: 'Введіть ім’я одержувача',
-                        })}
-                      ></input>
-                      <div>
-                        {errors?.recipientFirstName && (
-                          <p className={styles.error}>
-                            {errors?.recipientFirstName?.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      <label>Прізвище одержувача</label>
-                      <input
-                        type="text"
-                        placeholder="Введіть прізвище одержувача"
-                        {...register('recipientLastName')}
-                      ></input>
-                    </div>
-                    <div>
-                      <label>
-                        Номер телефону<span> *</span>
-                      </label>
-                      <IMaskInput
-                        type="tel"
-                        inputMode="tel"
-                        placeholder="+380 (XX) XXX-XX-XX"
-                        mask="+{38\0}{(}00{)}000 00 00"
-                        onAccept={(value) => setValue('recipientPhone', value)}
-                        value={getValues('recipientPhone')}
-                        {...register('recipientPhone', {
-                          required: 'Вкажіть номер телефону одержувача',
-                          pattern: {
-                            value: /^\+380\(\d{2}\)\d{3} \d{2} \d{2}$/,
-                            message: 'Невірний номер телефону',
-                          },
-                        })}
-                      ></IMaskInput>
-                      <div>
-                        {errors?.recipientPhone && (
-                          <p className={styles.error}>
-                            {errors?.recipientPhone?.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      <label>По батькові одержувача</label>
-                      <input
-                        type="text"
-                        placeholder="Введіть по батькові одержувача"
-                        {...register('recipientMiddleName')}
-                      ></input>
-                    </div>
-                  </div>
-                )}
-                <Button
-                  label="Продовжити"
-                  variant="primary"
-                  padding="padding-even"
-                  type="submit"
-                />
-              </form>
-            )}
+            <OrderSection
+              step={1}
+              currentStep={currentStep}
+              name={'Контактні дані'}
+              handleChangeData={handleChangeData}
+            >
+              <ContactDetails
+                // state={currentStep === 1}
+                contactData={orderData.contactData}
+                setState={(newContactData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({
+                    ...orderData,
+                    contactData: newContactData,
+                  });
+                }}
+              />
+            </OrderSection>
           </div>
           <div className={styles.orderBlock}>
-            <h3 className={styles.subtitle}>
-              <span>2.</span>Доставка
-            </h3>
-
-            {hideDelivery && <DeliverForm state={hideDelivery} />}
+            <OrderSection
+              step={2}
+              currentStep={currentStep}
+              name={'Доставка'}
+              handleChangeData={handleChangeData}
+            >
+              <DeliverForm
+                state={currentStep === 2}
+                setState={() => handleStepFinish(currentStep)}
+              />
+            </OrderSection>
           </div>
         </div>
         <OrderInfo />
