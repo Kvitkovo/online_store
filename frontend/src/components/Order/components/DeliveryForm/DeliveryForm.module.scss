@@ -1,0 +1,43 @@
+@import '../../../../variables';
+
+.city {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 8px 0;
+}
+
+.clientDeliveryData {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.continueButton {
+  margin-top: 32px;
+}
+
+.radioBtn {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.formDelivery {
+  input,
+  select {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid $gray-dark-color;
+    padding: 8px 12px;
+  }
+  .error {
+    color: $discount-color;
+    font-size: 12px;
+    padding-top: 5px;
+  }
+}
