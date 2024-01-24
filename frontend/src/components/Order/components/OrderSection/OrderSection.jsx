@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './OrderSection.scss';
+import styles from './OrderSection.module.scss';
 import Button from '../../../ui-kit/components/Button';
 import { ICONS } from '../../../ui-kit/icons';
 

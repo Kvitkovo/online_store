@@ -1,0 +1,22 @@
+@import '../../../../mixins';
+
+.subtitleBlock {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.subtitle {
+  @include subtitle;
+  span {
+    font-size: 26px;
+    font-weight: 500;
+    color: $page-accent-color;
+    margin-right: 6px;
+  }
+}
+
+.buttonChange {
+  height: 40px;
+  padding-right: 8px;
+}
