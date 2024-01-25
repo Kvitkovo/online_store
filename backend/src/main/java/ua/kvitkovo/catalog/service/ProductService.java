@@ -39,15 +39,6 @@ public class ProductService {
     private final ProductTypeService productTypeService;
     private final TransliterateUtils transliterateUtils;
 
-    private static void completeFilterRange(FilterPricesIntervalResponseDto priceRange) {
-        if (priceRange.getMaxPrice() == null) {
-            priceRange.setMaxPrice(BigDecimal.ZERO);
-        }
-        if (priceRange.getMinPrice() == null) {
-            priceRange.setMinPrice(BigDecimal.ZERO);
-        }
-    }
-
     public List<Product> getAll() {
         return productRepository.findAll();
     }
@@ -186,6 +177,15 @@ public class ProductService {
             return Page.empty();
         } else {
             return products;
+        }
+    }
+
+    private static void completeFilterRange(FilterPricesIntervalResponseDto priceRange) {
+        if (priceRange.getMaxPrice() == null) {
+            priceRange.setMaxPrice(BigDecimal.ZERO);
+        }
+        if (priceRange.getMinPrice() == null) {
+            priceRange.setMinPrice(BigDecimal.ZERO);
         }
     }
 
