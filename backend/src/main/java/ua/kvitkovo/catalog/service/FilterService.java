@@ -31,75 +31,66 @@ public class FilterService {
         return result;
     }
 
-    public Map<String, Map<Long, ?>> getFilter() {
-
+    public Map<String, Object> getFilter() {
         List<Color> colors = productService.getAllColorsByProducts();
         List<Size> sizes = productService.getAllSizesByProducts();
         List<ProductType> types = productService.getAllProductTypesByProducts();
         List<Category> categories = productService.getAllCategoriesByProducts();
-
-        Map<String, Map<Long, ?>> filter = createFilter(colors, sizes, types);
+        Map<String, Object> filter = createFilter(colors, sizes, types);
 
         if (!categories.isEmpty()) {
             Map<Long, String> sizeResult = new HashMap<>();
             categories.forEach(size -> sizeResult.put(size.getId(), size.getName()));
-            filter.put("Category", sizeResult);
+            filter.put("Categories", sizeResult);
         }
+
+        filter.put("Prices", productService.getProductPriceRange());
+
         return filter;
     }
 
-    public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByCategoryId(long id) {
-
+    public Map<String, Object> getFilterOnlyActiveProductByCategoryId(long id) {
         List<Color> colors = productService.getAllColorsIdByCategory(id);
         List<Size> sizes = productService.getAllSizesIdByCategory(id);
         List<ProductType> types = productService.getAllProductTypesIdByCategory(id);
+        Map<String, Object> filter = createFilter(colors, sizes, types);
 
-        return createFilter(colors, sizes, types);
+        List<Category> categories = productService.getCategoriesWithChildren(id);
+        filter.put("Prices", productService.getProductByCategoryPriceRange(categories));
+        return filter;
     }
 
-    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategory(Long categoryId) {
-        Product minPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceAsc(
-                categoryId, ProductStatus.ACTIVE);
-        Product maxPriceProduct = productService.findFirstByCategoryIdAndStatusOrderByPriceDesc(
-                categoryId, ProductStatus.ACTIVE);
-        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
-    }
-
-    public FilterPricesIntervalResponseDto getMinMaxPricesProductsInCategoryForDiscount() {
-        Product minPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceAsc(ProductStatus.ACTIVE);
-        Product maxPriceProduct = productService.findFirstByDiscountAndStatusOrderByPriceDesc(ProductStatus.ACTIVE);
-        return getPricesIntervalResponseDto(minPriceProduct, maxPriceProduct);
-    }
-
-    public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByDiscount() {
+    public Map<String, Object> getFilterOnlyActiveProductByDiscount() {
         List<Color> colors = productService.getAllColorsIdByDiscount();
         List<Size> sizes = productService.getAllSizesIdByDiscount();
         List<ProductType> types = productService.getAllProductTypesIdByDiscount();
         List<Category> categories = productService.getAllCategoriesByDiscount();
 
-        Map<String, Map<Long, ?>> filter = createFilter(colors, sizes, types);
+        Map<String, Object> filter = createFilter(colors, sizes, types);
 
         if (!categories.isEmpty()) {
             Map<Long, String> sizeResult = new HashMap<>();
             categories.forEach(size -> sizeResult.put(size.getId(), size.getName()));
-            filter.put("Category", sizeResult);
+            filter.put("Categories", sizeResult);
         }
+
+        filter.put("Prices", productService.getDiscountProductPriceRange());
         return filter;
     }
 
-    private Map<String, Map<Long, ?>> createFilter(List<Color> colors, List<Size> sizes, List<ProductType> types) {
-        Map<String, Map<Long, ?>> map = new HashMap<>();
+    private Map<String, Object> createFilter(List<Color> colors, List<Size> sizes, List<ProductType> types) {
+        Map<String, Object> map = new HashMap<>();
 
         if (!sizes.isEmpty()) {
             Map<Long, String> sizeResult = new HashMap<>();
             sizes.forEach(size -> sizeResult.put(size.getId(), size.getName()));
-            map.put("Size", sizeResult);
+            map.put("Sizes", sizeResult);
         }
 
         if (!colors.isEmpty()) {
             Map<Long, String> colorResult = new HashMap<>();
             colors.forEach(color -> colorResult.put(color.getId(), color.getName()));
-            map.put("Color", colorResult);
+            map.put("Colors", colorResult);
         }
 
         if (!types.isEmpty()) {
