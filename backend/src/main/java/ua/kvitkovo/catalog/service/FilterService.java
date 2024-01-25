@@ -2,10 +2,11 @@ package ua.kvitkovo.catalog.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
-import ua.kvitkovo.catalog.entity.*;
+import ua.kvitkovo.catalog.entity.Category;
+import ua.kvitkovo.catalog.entity.Color;
+import ua.kvitkovo.catalog.entity.ProductType;
+import ua.kvitkovo.catalog.entity.Size;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,21 +16,6 @@ import java.util.Map;
 public class FilterService {
 
     private final ProductService productService;
-
-    private static FilterPricesIntervalResponseDto getPricesIntervalResponseDto(Product minPriceProduct, Product maxPriceProduct) {
-        FilterPricesIntervalResponseDto result = new FilterPricesIntervalResponseDto();
-        if (minPriceProduct == null) {
-            result.setMinPrice(BigDecimal.ZERO);
-        } else {
-            result.setMinPrice(minPriceProduct.getPrice());
-        }
-        if (maxPriceProduct == null) {
-            result.setMaxPrice(BigDecimal.ZERO);
-        } else {
-            result.setMaxPrice(maxPriceProduct.getPrice());
-        }
-        return result;
-    }
 
     public Map<String, Object> getFilter() {
         List<Color> colors = productService.getAllColorsByProducts();
