@@ -24,6 +24,15 @@ const OpenMenu = ({ toggleMenu }) => {
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
   };
+  const openGoogleMaps = () => {
+    const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
+
+    const googleMapsLink =
+      'https://www.google.com/maps/dir/?api=1' +
+      `&destination=${encodeURIComponent(destination)}`;
+
+    window.open(googleMapsLink, '_blank');
+  };
   return (
     <div className={styles.openMenu}>
       <div className={styles.containerTop}>
@@ -71,6 +80,7 @@ const OpenMenu = ({ toggleMenu }) => {
               padding="padding-header-even"
               reverse="true"
               icon={<ICONS.location />}
+              onClick={openGoogleMaps}
             />
           </div>
         </div>

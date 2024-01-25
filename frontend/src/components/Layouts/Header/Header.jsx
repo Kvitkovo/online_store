@@ -141,7 +141,7 @@ const Header = () => {
             <NavigationMenu items={navigationItems} menuType="Header" />
             <span className={styles.verticalLine}></span>
             <div className={styles.tabletContacts}>
-              <div className={styles.tabletIcon}>
+              <div className={styles.tabletIcon} onClick={openGoogleMaps}>
                 <IconButton icon={<ICONS.location />} />
               </div>
               <div className={styles.tabletIcon}>
