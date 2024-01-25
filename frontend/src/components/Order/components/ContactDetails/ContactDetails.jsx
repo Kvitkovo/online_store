@@ -5,7 +5,9 @@ import { IMaskInput } from 'react-imask';
 import Button from '../../../ui-kit/components/Button';
 
 const ContactDetails = ({ contactData, setDataOnSubmit }) => {
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(
+    contactData?.recipient ? contactData?.recipient == 'anotherPerson' : false,
+  );
 
   const {
     register,
@@ -15,7 +17,7 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      recipient: 'I',
+      recipient: contactData?.recipient ? contactData.recipient : 'I',
       clientFirstName: contactData?.clientFirstName,
       clientPhone: contactData?.clientPhone,
       recipientFirstName: contactData?.recipientFirstName,
@@ -25,7 +27,10 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
   });
 
   const onSubmitButton = (data) => {
-    setDataOnSubmit(data);
+    setDataOnSubmit({
+      ...data,
+      outputString: data.clientFirstName + ', ' + data.clientPhone,
+    });
   };
 
   return (

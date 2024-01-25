@@ -28,6 +28,7 @@ const Order = () => {
               step={1}
               currentStep={currentStep}
               name={'Контактні дані'}
+              outputString={orderData.contactData?.outputString}
               handleBackEdit={handleChangeStep}
             >
               <ContactDetails

@@ -8,6 +8,7 @@ const OrderSection = ({
   currentStep,
   name,
   handleBackEdit,
+  outputString,
   children,
 }) => {
   return (
@@ -29,6 +30,9 @@ const OrderSection = ({
         )}
       </div>
       {currentStep == step && <div>{children}</div>}
+      {currentStep > step && (
+        <div className={styles.clientDataOutput}>{outputString}</div>
+      )}
     </div>
   );
 };
