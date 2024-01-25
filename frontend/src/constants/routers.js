@@ -19,6 +19,7 @@ const ROUTES = {
   order: '/order',
   passwordReset: '/user/resetPassword/:code',
   specificCategory: '/categories/:categoryId',
+  search: '/search/:query',
 };
 
 export default ROUTES;
