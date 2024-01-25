@@ -14,9 +14,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FilterService {
 
-    private final ColorService colorService;
-    private final SizeService sizeService;
-    private final ProductTypeService productTypeService;
     private final ProductService productService;
 
     private static FilterPricesIntervalResponseDto getPricesIntervalResponseDto(Product minPriceProduct, Product maxPriceProduct) {
@@ -36,11 +33,19 @@ public class FilterService {
 
     public Map<String, Map<Long, ?>> getFilter() {
 
-        List<Color> colors = colorService.getAll();
-        List<Size> sizes = sizeService.getAll();
-        List<ProductType> types = productTypeService.getAll();
+        List<Color> colors = productService.getAllColorsByProducts();
+        List<Size> sizes = productService.getAllSizesByProducts();
+        List<ProductType> types = productService.getAllProductTypesByProducts();
+        List<Category> categories = productService.getAllCategoriesByProducts();
 
-        return createFilter(colors, sizes, types);
+        Map<String, Map<Long, ?>> filter = createFilter(colors, sizes, types);
+
+        if (!categories.isEmpty()) {
+            Map<Long, String> sizeResult = new HashMap<>();
+            categories.forEach(size -> sizeResult.put(size.getId(), size.getName()));
+            filter.put("Category", sizeResult);
+        }
+        return filter;
     }
 
     public Map<String, Map<Long, ?>> getFilterOnlyActiveProductByCategoryId(long id) {

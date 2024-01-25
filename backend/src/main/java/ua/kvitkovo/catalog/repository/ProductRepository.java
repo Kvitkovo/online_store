@@ -40,12 +40,24 @@ public interface ProductRepository extends ProductRepositoryBasic {
     @Query("SELECT p.color FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<Color> findColorsByDiscountAndStatus(ProductStatus status);
 
+    @Query("SELECT DISTINCT p.color FROM Product p WHERE status = ?1")
+    List<Color> findColorsByStatus(ProductStatus status);
+
     @Query("SELECT p.size FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<Size> findSizesByDiscountAndStatus(ProductStatus status);
+
+    @Query("SELECT p.size FROM Product p WHERE status = ?1")
+    List<Size> findSizesByStatus(ProductStatus status);
 
     @Query("SELECT p.productType FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<ProductType> findProductTypesByDiscountAndStatus(ProductStatus status);
 
+    @Query("SELECT p.productType FROM Product p WHERE status = ?1")
+    List<ProductType> findProductTypesByStatus(ProductStatus status);
+
     @Query("SELECT p.category FROM Product p WHERE p.discount > 0 AND status = ?1")
     List<Category> findCategoriesByDiscountAndStatus(ProductStatus status);
+
+    @Query("SELECT p.category FROM Product p WHERE status = ?1")
+    List<Category> findCategoriesByStatus(ProductStatus status);
 }
