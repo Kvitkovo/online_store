@@ -42,6 +42,22 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Category> getAllCategoriesByProducts() {
+        return productRepository.findCategoriesByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<Size> getAllSizesByProducts() {
+        return productRepository.findSizesByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<Color> getAllColorsByProducts() {
+        return productRepository.findColorsByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<ProductType> getAllProductTypesByProducts() {
+        return productRepository.findProductTypesByStatus(ProductStatus.ACTIVE);
+    }
+
     public Product findById(long id) throws ItemNotFoundException {
         return productRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
