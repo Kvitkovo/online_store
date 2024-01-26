@@ -112,6 +112,10 @@ const ProductList = ({
 
   useEffect(() => {
     getFilterData();
+    return () => {
+      setInitialFilterData({});
+      setActiveFilter(null);
+    };
   }, [getFilterData]);
   useEffect(() => {
     setFilteredList(data);

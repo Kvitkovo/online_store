@@ -25,13 +25,13 @@ const CategoryPage = () => {
       if (categoryId === 'discounted') {
         products = await GetDiscountedProducts({
           page: currentPage,
-          size: 12,
+          size: 30,
         });
         category = { name: 'Акційна ціна' };
       } else {
         products = await GetProductsCategory({
           page: currentPage,
-          size: 12,
+          size: 30,
           categoryId: +categoryId,
         });
         category = await GetCategory(categoryId);
