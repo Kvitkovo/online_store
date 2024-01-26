@@ -25,11 +25,11 @@ const Pagination = (props) => {
   }
 
   const onNext = () => {
-    onPageChange(currentPage + 1);
+    onPageChange((prev) => prev + 1);
   };
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1);
+    onPageChange((prev) => prev - 1);
   };
 
   const lastPage = paginationRange[paginationRange.length - 1];
@@ -43,8 +43,8 @@ const Pagination = (props) => {
       {paginationRange.map((pageNumber, index) => (
         <li
           className={`${styles.item}
-                     ${pageNumber === DOTS && styles.dots}
-                     ${pageNumber === currentPage && styles.selected}`}
+                      ${pageNumber === DOTS && styles.dots}
+                      ${pageNumber === currentPage && styles.selected}`}
           onClick={() => onPageChange(pageNumber)}
           key={index}
         >

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './ProductList.module.scss';
 import Select from '../../ui-kit/components/Select';
 import Button from '../../ui-kit/components/Button';
@@ -23,9 +23,12 @@ const ProductList = ({
   setCurrentPage,
   currentPage = 1,
   isLoading = false,
+  totalAmount,
+  sortValue,
+  setSortValue,
 }) => {
   const { categoryId } = useParams();
-  const [sortValue, setSortValue] = useState(0);
+  // const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [filteredList, setFilteredList] = useState(null);
@@ -43,12 +46,6 @@ const ProductList = ({
     { value: 0, label: 'від дешевих до дорогих', labelMobile: 'Дешеві' },
     { value: 1, label: 'від дорогих до дешевих', labelMobile: 'Дорогі' },
   ];
-  const sortedData = useMemo(() => {
-    const sortedAsc = filteredList?.toSorted(
-      (a, b) => a.priceWithDiscount - b.priceWithDiscount,
-    );
-    return sortValue === 0 ? sortedAsc : sortedAsc.toReversed();
-  }, [sortValue, filteredList]);
   const [initialFilterData, setInitialFilterData] = useState({
     priceFrom: 0,
     priceTo: 999,
@@ -91,7 +88,7 @@ const ProductList = ({
         if (Object.keys(selected).length > 0) {
           const data = await GetProductsFilter({
             page: currentPage,
-            size: 30,
+            size: 12,
             categories:
               categoryId !== 'discounted' ? categoryId : selected.categories,
             discount: categoryId === 'discounted' || selected.discount,
@@ -192,10 +189,10 @@ const ProductList = ({
         </div>
         {isLoading
           ? 'Loading ...'
-          : sortedData && (
+          : filteredList && (
               <>
                 <div className={styles.cards}>
-                  {sortedData.map((product) => (
+                  {filteredList.map((product) => (
                     <Card
                       image={
                         product.images[0]
@@ -214,7 +211,7 @@ const ProductList = ({
                 </div>
                 <Pagination
                   onPageChange={setCurrentPage}
-                  totalCount={sortedData.length}
+                  totalCount={activeFilter ? filteredList.length : totalAmount}
                   currentPage={currentPage}
                   pageSize={12}
                 />
