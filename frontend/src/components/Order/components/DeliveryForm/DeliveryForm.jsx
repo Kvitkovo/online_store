@@ -95,31 +95,33 @@ const DeliverForm = ({ setDataOnSubmit }) => {
                 </div>
               </div>
               <div className={styles.house}>
-                <label>Будинок</label>
-                <input
-                  type="text"
-                  placeholder="Будинок"
-                  {...register('clientHouse', {
-                    required: 'Вкажіть будинок',
-                  })}
-                ></input>
                 <div>
-                  {errors?.clientHouse && (
-                    <p className={styles.error}>
-                      {errors?.clientHouse?.message}
-                    </p>
-                  )}
+                  <label>Будинок</label>
+                  <input
+                    type="text"
+                    placeholder="Будинок"
+                    {...register('clientHouse', {
+                      required: 'Вкажіть будинок',
+                    })}
+                  ></input>
+                  <div>
+                    {errors?.clientHouse && (
+                      <p className={styles.error}>
+                        {errors?.clientHouse?.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className={styles.flet}>
-                <label>Квартира</label>
-                <input
-                  type="text"
-                  placeholder="Квартира"
-                  {...register('clientFlat', {
-                    required: 'Вкажіть квартиру',
-                  })}
-                ></input>
+                <div>
+                  <label>Квартира</label>
+                  <input
+                    type="text"
+                    placeholder="Квартира"
+                    {...register('clientFlat', {
+                      required: 'Вкажіть квартиру',
+                    })}
+                  ></input>
+                </div>
               </div>
             </div>
           )}

@@ -9,7 +9,9 @@
 
 .clientDeliveryData {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 22px;
 }
 
 .continueButton {
@@ -39,5 +41,19 @@
     color: $discount-color;
     font-size: 12px;
     padding-top: 5px;
+  }
+
+  .street {
+    display: flex;
+    flex-direction: column;
+  }
+  .house div {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+  }
+  .house {
+    display: flex;
+    gap: 32px;
   }
 }
