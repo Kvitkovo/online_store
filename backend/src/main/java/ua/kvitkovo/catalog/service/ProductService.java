@@ -249,10 +249,9 @@ public class ProductService {
     private void addCategoryFilter(FilterRequestDto filter, Root<Object> root, List<Predicate> predicates) {
         if (filter.getCategories() != null) {
             Expression<String> inExpression = root.get("category");
-            List<Category> categoryList =
-                    filter.getCategories().stream()
-                            .map(categoryService::findById)
-                            .toList();
+            List<Category> categoryList = filter.getCategories().stream()
+                    .flatMap(id -> getCategoriesWithChildren(id).stream())
+                    .toList();
             Predicate inPredicate = inExpression.in(categoryList);
             predicates.add(inPredicate);
         }
