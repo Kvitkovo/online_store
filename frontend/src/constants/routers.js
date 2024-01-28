@@ -20,6 +20,7 @@ const ROUTES = {
   passwordReset: '/user/resetPassword/:code',
   specificCategory: '/categories/:categoryId',
   search: '/search/:query',
+  decor: '/decor',
 };
 
 export default ROUTES;

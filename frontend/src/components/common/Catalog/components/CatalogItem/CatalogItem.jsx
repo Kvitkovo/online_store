@@ -53,12 +53,14 @@ const CatalogItem = ({
           }
         >
           <div className={styles.categoryTitle}>
-            {icon && (
+            {icon ? (
               <img
                 className={styles.icon}
                 src={require(`../../../../ui-kit/icons/catalog-icons/${icon}.svg`)}
                 alt={icon}
               />
+            ) : (
+              <div className={styles.iconPlaceholder}></div>
             )}
 
             <div className={styles.categoryItemContent}>

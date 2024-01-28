@@ -66,6 +66,8 @@ function App() {
                 path={ROUTES.specificCategory}
                 element={<CategoryPage />}
               />
+              {/* temporary solurion. Change when decor page created */}
+              <Route path={ROUTES.decor} element={<Home />} />
               <Route
                 element={
                   <ProtectedRoutes
