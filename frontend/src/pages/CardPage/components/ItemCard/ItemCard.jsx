@@ -64,7 +64,7 @@ const ItemCard = ({ cardData }) => {
               handleAddToCart(
                 cardData.images[0]
                   ? cardData.images[0].url
-                  : '/images/no_image.jpg',
+                  : './images/no_image.jpg',
                 cardData.title,
                 cardData.discount,
                 cardData.price,
@@ -77,7 +77,7 @@ const ItemCard = ({ cardData }) => {
         </div>
         <div className={styles.features}>
           <ItemFeatures
-            type={cardData?.categoryName}
+            type={cardData?.productTypeName}
             color={cardData?.colorName}
             size={cardData?.sizeName}
           />

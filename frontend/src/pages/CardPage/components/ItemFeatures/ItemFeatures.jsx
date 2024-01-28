@@ -6,7 +6,7 @@ const ItemFeatures = ({ type, color, size }) => {
     <div className={styles.features}>
       {type && (
         <p>
-          Вид квітів: <span className={styles.type}> {type} </span>
+          Вид: <span className={styles.type}> {type} </span>
         </p>
       )}
       {color && (
@@ -16,7 +16,7 @@ const ItemFeatures = ({ type, color, size }) => {
       )}
       {size && (
         <p>
-          Висота букета: <span className={styles.type}> {size} </span>
+          Висота: <span className={styles.type}> {size} </span>
         </p>
       )}
     </div>
