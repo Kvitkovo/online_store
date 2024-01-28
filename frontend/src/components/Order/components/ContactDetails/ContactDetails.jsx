@@ -19,8 +19,11 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
     defaultValues: {
       recipient: contactData?.recipient ? contactData.recipient : 'I',
       clientFirstName: contactData?.clientFirstName,
+      clientEmail: contactData?.clientEmail,
       clientPhone: contactData?.clientPhone,
       recipientFirstName: contactData?.recipientFirstName,
+      recipientLastName: contactData?.recipientLastName,
+      recipientMiddleName: contactData?.recipientMiddleName,
       recipientPhone: contactData?.recipientPhone,
     },
     mode: 'onBlur',
