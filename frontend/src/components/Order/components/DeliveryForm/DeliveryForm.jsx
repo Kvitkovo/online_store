@@ -4,12 +4,15 @@ import styles from './DeliveryForm.module.scss';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 
-const DeliverForm = ({ setDataOnSubmit }) => {
-  const [showShopList, setShowShopList] = useState(true);
-  const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
+  const [showShopList, setShowShopList] = useState(
+    deliveryData?.delivery
+      ? deliveryData.delivery == 'Pick up from the shop'
+      : true,
+  );
 
   const addressList = [
-    { id: 1, address: 'вул. Хрещатик, 36' },
+    { id: 1, address: 'вул. Квіткова 18' },
     { id: 2, address: 'вул. Братиславська 17' },
     { id: 3, address: 'вул. Бердичівська 15' },
   ];
@@ -19,122 +22,138 @@ const DeliverForm = ({ setDataOnSubmit }) => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: { delivery: 'Pick up from the shop' },
+    defaultValues: {
+      delivery: deliveryData?.delivery
+        ? deliveryData.delivery
+        : 'Pick up from the shop',
+      shopAddress: 'вул. Квіткова 18',
+      clientStreet: deliveryData?.clientStreet,
+    },
   });
 
   const onSubmit = (data) => {
-    setDataOnSubmit(data);
+    let dataForOutput;
+
+    if (data.delivery == 'Pick up from the shop') {
+      dataForOutput = data.shopAddress;
+    } else {
+      dataForOutput =
+        data.clientStreet +
+        ' ' +
+        'буд. ' +
+        data.clientHouse +
+        ' ' +
+        ' кв. ' +
+        data.clientFlat;
+    }
+
+    setDataOnSubmit({
+      ...data,
+      outputString: dataForOutput,
+    });
   };
 
   return (
     <>
-      {/* <div className={styles.clientDataOutput}>
-      За адресою: {address}</div> */}
+      <div className={styles.city}>
+        <span>Місто:</span>
+        <span>
+          <ICONS.location />
+        </span>
+        <span>Київ</span>
+      </div>
 
-      <>
-        <div className={styles.city}>
-          <span>Місто:</span>
-          <span>
-            <ICONS.location />
-          </span>
-          <span>Київ</span>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formDelivery}>
+        <div className={styles.radioBtn}>
+          <label>Забрати з магазину</label>
+          <input
+            type="radio"
+            value="Pick up from the shop"
+            {...register('delivery')}
+            onChange={() => {
+              setShowShopList(true);
+            }}
+          ></input>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.formDelivery}>
-          <div className={styles.radioBtn}>
-            <label>Забрати з магазину</label>
-            <input
-              type="radio"
-              value="Pick up from the shop"
-              {...register('delivery')}
-              onChange={() => {
-                setShowDeliveryForm(false);
-                setShowShopList(true);
-              }}
-            ></input>
+        {showShopList && (
+          <div className={styles.shopAddress}>
+            <select {...register('shopAddress')}>
+              {addressList.map((element) => (
+                <option key={element.id}>{element.address}</option>
+              ))}
+            </select>
           </div>
-          {showShopList && (
-            <div className={styles.shopAddress}>
-              <select {...register('address')}>
-                <option>Виберіть магазин</option>
-                {addressList.map((element) => (
-                  <option key={element.id}>{element.address}</option>
-                ))}
-              </select>
+        )}
+        <div className={styles.radioBtn}>
+          <label>Доставка за адресою</label>
+          <input
+            type="radio"
+            value="Delivery by address"
+            {...register('delivery')}
+            onChange={() => {
+              setShowShopList(false);
+            }}
+          ></input>
+        </div>
+        {!showShopList && (
+          <div className={styles.clientDeliveryData}>
+            <div className={styles.street}>
+              <label>Вулиця</label>
+              <input
+                type="text"
+                placeholder="Введіть назву вулиці"
+                {...register('clientStreet', {
+                  required: 'Вкажіть вулицю',
+                })}
+              ></input>
+              <div>
+                {errors?.clientStreet && (
+                  <p className={styles.error}>
+                    {errors?.clientStreet?.message}
+                  </p>
+                )}
+              </div>
             </div>
-          )}
-          <div className={styles.radioBtn}>
-            <label>Доставка за адресою</label>
-            <input
-              type="radio"
-              value="Delivery by address"
-              {...register('delivery')}
-              onChange={() => {
-                setShowShopList(false);
-                setShowDeliveryForm(true);
-              }}
-            ></input>
-          </div>
-          {showDeliveryForm && (
-            <div className={styles.clientDeliveryData}>
-              <div className={styles.street}>
-                <label>Вулиця</label>
+            <div className={styles.house}>
+              <div>
+                <label>Будинок</label>
                 <input
                   type="text"
-                  placeholder="Введіть назву вулиці"
-                  {...register('clientStreet', {
-                    required: 'Вкажіть вулицю',
+                  placeholder="Будинок"
+                  {...register('clientHouse', {
+                    required: 'Вкажіть будинок',
                   })}
                 ></input>
                 <div>
-                  {errors?.clientStreet && (
+                  {errors?.clientHouse && (
                     <p className={styles.error}>
-                      {errors?.clientStreet?.message}
+                      {errors?.clientHouse?.message}
                     </p>
                   )}
                 </div>
               </div>
-              <div className={styles.house}>
-                <div>
-                  <label>Будинок</label>
-                  <input
-                    type="text"
-                    placeholder="Будинок"
-                    {...register('clientHouse', {
-                      required: 'Вкажіть будинок',
-                    })}
-                  ></input>
-                  <div>
-                    {errors?.clientHouse && (
-                      <p className={styles.error}>
-                        {errors?.clientHouse?.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div>
-                  <label>Квартира</label>
-                  <input
-                    type="text"
-                    placeholder="Квартира"
-                    {...register('clientFlat', {
-                      required: 'Вкажіть квартиру',
-                    })}
-                  ></input>
-                </div>
+              <div>
+                <label>Квартира</label>
+                <input
+                  type="text"
+                  placeholder="Квартира"
+                  {...register('clientFlat', {
+                    required: 'Вкажіть квартиру',
+                  })}
+                ></input>
               </div>
             </div>
-          )}
-          <div className={styles.continueButton}>
-            <Button
-              label="Продовжити"
-              variant="primary"
-              padding="padding-even"
-              type="submit"
-            />
           </div>
-        </form>
-      </>
+        )}
+        <div className={styles.continueButton}>
+          <Button
+            label="Продовжити"
+            variant="primary"
+            padding="padding-even"
+            type="submit"
+          />
+        </div>
+      </form>
     </>
   );
 };

@@ -48,10 +48,15 @@ const Order = () => {
               step={2}
               currentStep={currentStep}
               name={'Доставка'}
+              outputString={orderData.deliveryData?.outputString}
               handleBackEdit={handleChangeStep}
             >
               <DeliverForm
-                setDataOnSubmit={() => handleStepFinish(currentStep)}
+                deliveryData={orderData.deliveryData}
+                setDataOnSubmit={(newDeliveryData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({ ...orderData, deliveryData: newDeliveryData });
+                }}
               />
             </OrderSection>
           </div>
