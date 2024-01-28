@@ -26,8 +26,12 @@ const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
       delivery: deliveryData?.delivery
         ? deliveryData.delivery
         : 'Pick up from the shop',
-      shopAddress: 'вул. Квіткова 18',
+      shopAddress: deliveryData?.shopAddress
+        ? deliveryData.shopAddress
+        : 'вул. Квіткова 18',
       clientStreet: deliveryData?.clientStreet,
+      clientHouse: deliveryData?.clientHouse,
+      clientFlat: deliveryData?.clientFlat,
     },
   });
 
