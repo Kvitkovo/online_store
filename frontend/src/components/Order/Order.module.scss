@@ -22,4 +22,11 @@
   .orderBlock:not(:first-of-type) {
     margin-top: 16px;
   }
+
+  @include sm {
+    .mainGrid {
+      grid-template-columns: 1fr;
+      row-gap: 12px;
+    }
+  }
 }

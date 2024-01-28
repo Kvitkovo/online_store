@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .contactForm {
   label {
@@ -54,5 +55,16 @@
   }
   .clientData {
     margin-top: 22px;
+  }
+
+  @include md {
+    .clientData,
+    .anotherPerson {
+      grid-template-columns: 1fr;
+    }
+
+    .buttonSubmit {
+      width: 100%;
+    }
   }
 }

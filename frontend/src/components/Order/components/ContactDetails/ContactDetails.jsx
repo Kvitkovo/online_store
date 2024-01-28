@@ -38,11 +38,6 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
 
   return (
     <div>
-      {/* {!hideForm && (
-        <div className={styles.clientDataOutput}>
-          {client}, {phone}
-        </div>
-      )} */}
       <form
         className={styles.contactForm}
         onSubmit={handleSubmit(onSubmitButton)}
@@ -198,12 +193,14 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
             </div>
           </div>
         )}
-        <Button
-          label="Продовжити"
-          variant="primary"
-          padding="padding-even"
-          type="submit"
-        />
+        <div className={styles.buttonSubmit}>
+          <Button
+            label="Продовжити"
+            variant="primary"
+            padding="padding-even"
+            type="submit"
+          />
+        </div>
       </form>
     </div>
   );

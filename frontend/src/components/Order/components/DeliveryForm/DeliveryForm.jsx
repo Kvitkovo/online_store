@@ -81,7 +81,7 @@ const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
         </div>
         {showShopList && (
           <div className={styles.shopAddress}>
-            <select {...register('shopAddress')}>
+            <select {...register('shopAddress')} className={styles.selectShop}>
               {addressList.map((element) => (
                 <option key={element.id}>{element.address}</option>
               ))}

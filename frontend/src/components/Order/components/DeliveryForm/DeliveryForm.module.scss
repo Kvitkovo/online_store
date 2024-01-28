@@ -1,4 +1,5 @@
 @import '../../../../variables';
+@import '../../../../mixins';
 
 .city {
   display: flex;
@@ -55,5 +56,24 @@
   .house {
     display: flex;
     gap: 32px;
+  }
+  .selectShop {
+    width: 40%;
+    background-color: $white-color;
+  }
+
+  @include md {
+    .clientDeliveryData {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .continueButton {
+      width: 100%;
+    }
+
+    .selectShop {
+      width: 100%;
+    }
   }
 }
