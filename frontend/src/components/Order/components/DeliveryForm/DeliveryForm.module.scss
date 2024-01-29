@@ -38,6 +38,11 @@
     border: 1px solid $gray-dark-color;
     padding: 8px 12px;
   }
+  select {
+    appearance: none;
+    background: url(../../../../../public/images/icon-arrow-down.svg) 96%
+      no-repeat;
+  }
   .error {
     color: $discount-color;
     font-size: 12px;
