@@ -39,7 +39,7 @@
   justify-content: space-between;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   max-width: inherit;
-  margin: 0px auto;
+  margin: 0px auto 28px;
   & li {
     height: 100%;
   }
@@ -61,6 +61,7 @@
 @include lg {
   .cards {
     grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
+    margin-bottom: 22px;
   }
 
   .sortDropdown {
@@ -107,6 +108,7 @@
 @include md {
   .cards {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    margin-bottom: 24px;
   }
 }
 @include sm {

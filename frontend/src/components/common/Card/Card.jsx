@@ -31,7 +31,7 @@ const Card = (props) => {
   };
 
   return (
-    <div className={styles.card}>
+    <li className={styles.card}>
       <Link
         to={`/product/${props.id}`}
         className={styles.link}
@@ -102,7 +102,7 @@ const Card = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 export default Card;

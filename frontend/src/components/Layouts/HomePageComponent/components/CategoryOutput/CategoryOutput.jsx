@@ -56,24 +56,27 @@ const CategoryOutput = ({ title, categoryId }) => {
         <p>Loading...</p>
       ) : (
         <div className={styles.categoryOutput}>
-          <ul className={styles.cardOutput}>
+          <ul
+            className={`${styles.cardOutput} ${
+              title === 'Акційна ціна' ? styles.discounted : ''
+            }`}
+          >
             {data &&
               data.map((card) => (
-                <li key={card.id} className={styles.card}>
-                  <Card
-                    image={
-                      card.images[0]
-                        ? card.images[0].urlSmall
-                        : '/images/no_image.jpg'
-                    }
-                    title={card.title}
-                    discount={card.discount}
-                    oldPrice={card.price}
-                    price={card.priceWithDiscount}
-                    available={card.available}
-                    id={card.id}
-                  />
-                </li>
+                <Card
+                  image={
+                    card.images[0]
+                      ? card.images[0].urlSmall
+                      : './images/no_image.jpg'
+                  }
+                  title={card.title}
+                  discount={card.discount}
+                  oldPrice={card.price}
+                  price={card.priceWithDiscount}
+                  available={card.available}
+                  id={card.id}
+                  key={card.id}
+                />
               ))}
           </ul>
           <div className={styles.flexLink}>
