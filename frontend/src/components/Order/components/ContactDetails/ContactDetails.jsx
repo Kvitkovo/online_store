@@ -6,7 +6,7 @@ import Button from '../../../ui-kit/components/Button';
 
 const ContactDetails = ({ contactData, setDataOnSubmit }) => {
   const [showForm, setShowForm] = useState(
-    contactData?.recipient ? contactData?.recipient == 'anotherPerson' : false,
+    contactData?.recipient ? contactData?.recipient === 'anotherPerson' : false,
   );
 
   const {

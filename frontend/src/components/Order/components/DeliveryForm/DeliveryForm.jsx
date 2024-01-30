@@ -7,7 +7,7 @@ import Button from '../../../ui-kit/components/Button';
 const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
   const [showShopList, setShowShopList] = useState(
     deliveryData?.delivery
-      ? deliveryData.delivery == 'Pick up from the shop'
+      ? deliveryData.delivery === 'Pick up from the shop'
       : true,
   );
 
@@ -38,7 +38,7 @@ const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
   const onSubmit = (data) => {
     let dataForOutput;
 
-    if (data.delivery == 'Pick up from the shop') {
+    if (data.delivery === 'Pick up from the shop') {
       dataForOutput = data.shopAddress;
     } else {
       dataForOutput =
