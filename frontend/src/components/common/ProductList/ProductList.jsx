@@ -24,6 +24,7 @@ const ProductList = ({
   totalAmount,
   sortValue,
   setSortValue,
+  query = '',
 }) => {
   const { categoryId } = useParams();
   const [isFilterOpen, setFilterOpen] = useState(false);
@@ -58,10 +59,31 @@ const ProductList = ({
         ? await GetFiltersForDiscounted(categoryId)
         : await GetFiltersInCategory(categoryId);
     for (const [key, value] of Object.entries(result)) {
-      const filterOptions = Object.entries(value).map(([key, value]) => ({
-        id: key,
-        name: value,
-      }));
+      const filterOptions = Object.entries(value).map(([id, name]) => {
+        const keyMappings = {
+          Sizes: 'sizeId',
+          Types: 'productTypeId',
+          Colors: 'colorId',
+        };
+        const getKeyMapping = (key) => keyMappings[key] || 'categoryId';
+
+        const filter = getKeyMapping(key) || 'categoryId';
+
+        if (query === '') {
+          return {
+            id: id,
+            name: name,
+          };
+        }
+        if (query !== '' && data?.some((item) => item[filter] === +id)) {
+          return {
+            id: id,
+            name: name,
+          };
+        } else {
+          return;
+        }
+      });
       const filterName = key.toLowerCase();
       if (key === 'Prices') {
         const prices = Object.values(value);
@@ -71,13 +93,17 @@ const ProductList = ({
           priceTo: prices[1],
         }));
       } else {
-        setInitialFilterData((prev) => ({
-          ...prev,
-          [filterName]: filterOptions,
-        }));
+        setInitialFilterData((prev) => {
+          return {
+            ...prev,
+            [filterName]: filterOptions.filter(
+              (filter) => typeof filter === 'object',
+            ),
+          };
+        });
       }
     }
-  }, [categoryId, setInitialFilterData]);
+  }, [categoryId, data, query]);
 
   const getFilteredData = useCallback(
     async (selected) => {
@@ -91,6 +117,7 @@ const ProductList = ({
             discount: categoryId === 'discounted' || selected.discount,
             ...selected,
             sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+            title: query,
           });
           setFilteredList(data.content);
         }
@@ -101,7 +128,7 @@ const ProductList = ({
         setActiveFilter(null);
       }
     },
-    [categoryId, currentPage, sortValue],
+    [categoryId, currentPage, query, sortValue],
   );
 
   useEffect(() => {
@@ -141,6 +168,7 @@ const ProductList = ({
           resetFilter={resetFilter}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
+          filteredData={filteredList}
         />
       </div>
       <div className={styles.mainContent}>
