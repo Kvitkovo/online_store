@@ -4,7 +4,7 @@ import styles from './DeliveryForm.module.scss';
 import { ICONS } from '../../../ui-kit/icons';
 import Button from '../../../ui-kit/components/Button';
 
-const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
+const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
   const [showShopList, setShowShopList] = useState(
     deliveryData?.delivery
       ? deliveryData.delivery === 'Pick up from the shop'
@@ -162,4 +162,4 @@ const DeliverForm = ({ deliveryData, setDataOnSubmit }) => {
   );
 };
 
-export default DeliverForm;
+export default DeliveryForm;

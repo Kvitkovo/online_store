@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Order.module.scss';
 import OrderInfo from './components/OrderInfo';
-import DeliverForm from './components/DeliveryForm/DeliveryForm';
+import DeliveryForm from './components/DeliveryForm/DeliveryForm';
 import OrderSection from './components/OrderSection';
 import ContactDetails from './components/ContactDetails/ContactDetails';
 
@@ -51,7 +51,7 @@ const Order = () => {
               outputString={orderData.deliveryData?.outputString}
               handleBackEdit={handleChangeStep}
             >
-              <DeliverForm
+              <DeliveryForm
                 deliveryData={orderData.deliveryData}
                 setDataOnSubmit={(newDeliveryData) => {
                   handleStepFinish(currentStep);
