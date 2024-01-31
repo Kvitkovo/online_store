@@ -54,11 +54,13 @@ const OrderInfo = () => {
         <Link className={styles.link} to="/">
           Продовжити покупки
         </Link>
-        <Button
-          label="Оформити замовлення"
-          padding="padding-even"
-          variant="disabled"
-        ></Button>
+        <div className={styles.orderButton}>
+          <Button
+            label="Оформити замовлення"
+            padding="padding-even"
+            variant="disabled"
+          ></Button>
+        </div>
       </div>
     </div>
   );

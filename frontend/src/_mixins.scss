@@ -26,6 +26,12 @@
   font-size: 32px;
   line-height: 24px;
   font-weight: 400;
+
+  @include sm {
+    font-size: 22px;
+    line-height: 130%;
+    font-weight: 500;
+  }
 }
 
 // Style for subtitle (h3)
