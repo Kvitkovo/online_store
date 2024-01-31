@@ -9,10 +9,8 @@ import FilterShowbar from '../FilterSidebar/FilterShowbar';
 import FilterSidebar from '../FilterSidebar';
 import { GetProductsFilter } from '../../../services/products/productsAccess.service';
 import {
-  // GetMinMaxPrice,÷
   GetFiltersInCategory,
   GetFiltersForDiscounted,
-  // GetPricesForDiscounted,
 } from '../../../services/catalog/categoryAccess.service';
 import { useParams } from 'react-router-dom';
 import Card from '../Card';
@@ -28,7 +26,6 @@ const ProductList = ({
   setSortValue,
 }) => {
   const { categoryId } = useParams();
-  // const [sortValue, setSortValue] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [filteredList, setFilteredList] = useState(null);

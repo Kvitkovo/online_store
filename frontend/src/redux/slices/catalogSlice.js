@@ -8,6 +8,7 @@ const initialState = {
   menuItems: [],
   initialMenu: [],
   prevParents: [],
+  goBackToMenu: false,
 };
 
 export const fetchCategories = createAsyncThunk(
@@ -25,25 +26,21 @@ const catalogSlice = createSlice({
     goToSubMenu(state, action) {
       state.menuItems = action.payload.data;
       state.prevParents.push(action.payload.id);
+      state.goBackToMenu = false;
     },
-    goBack(state, action) {
+    goBack(state) {
       const { prevParents } = state;
-
-      if (prevParents.length === 0) {
-        action.payload.backFunc();
+      const parentsId = prevParents.pop();
+      const prevMenu =
+        state.initialMenu.find((category) => category.id === parentsId) || {};
+      if (prevMenu.parent) {
+        const newMenu = state.initialMenu.find(
+          (category) => category.id === prevMenu.parent.id,
+        );
+        state.menuItems = newMenu.children;
       } else {
-        const parentsId = prevParents.pop();
-        const prevMenu =
-          state.initialMenu.find((category) => category.id === parentsId) || {};
-        if (prevMenu.parent) {
-          const newMenu = state.initialMenu.find(
-            (category) => category.id === prevMenu.parent.id,
-          );
-          state.menuItems = newMenu.children;
-        } else {
-          state.menuItems = state.initialMenu;
-          state.prevParents = [];
-        }
+        state.menuItems = state.initialMenu;
+        state.prevParents = [];
       }
     },
     closeMenu(state) {

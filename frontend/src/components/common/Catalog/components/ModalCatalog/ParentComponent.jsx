@@ -1,13 +1,18 @@
 import React from 'react';
 import styles from './ModalCatalog.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { goBack } from '../../../../../redux/slices/catalogSlice';
 
 const ParentComponent = ({ category, toggleMenu, closeMenu }) => {
+  const { prevParents } = useSelector((state) => state.menu);
   const dispatch = useDispatch();
   const handleGoBack = () => {
-    dispatch(goBack({ backFunc: closeMenu }));
+    if (prevParents.length === 0) {
+      closeMenu();
+    } else {
+      dispatch(goBack());
+    }
   };
   return (
     <div>
