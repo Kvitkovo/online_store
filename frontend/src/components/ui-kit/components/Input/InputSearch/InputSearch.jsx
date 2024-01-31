@@ -1,39 +1,131 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import styles from './InputSearch.module.scss';
 
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 
 import { ICONS } from '../../../icons';
 import IconButton from '../../IconButton';
+// eslint-disable-next-line max-len
+import { GetProductsFilter } from '../../../../../services/products/productsAccess.service';
+import Divider from '../../Divider';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../Button';
 
-const InputSearch = memo(({ search, changeInput, clearInput }) => {
+const InputSearch = memo(() => {
   const [isFocused, setIsFocused] = useState(false);
+  const navigate = useNavigate();
 
   const { width } = useWindowSize();
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState(null);
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+  };
 
+  const showResults = () => {
+    const link = `search/${query}`;
+    setQuery('');
+    navigate(link);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (query.length >= 4) {
+          const data = await GetProductsFilter({
+            size: 3,
+            sortDirection: 'ASC',
+            title: query,
+          });
+          setSuggestions(
+            data.content.map((suggestion) => {
+              const { id, title } = suggestion;
+
+              return { id, title };
+            }),
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [query]);
+
+  const highlightWord = (name) => {
+    const lowerCaseName = name.toLowerCase();
+    const indexOfTerm = lowerCaseName.indexOf(query.toLowerCase());
+
+    if (indexOfTerm !== -1) {
+      const beforeTerm = name.slice(0, indexOfTerm);
+      const term = name.slice(indexOfTerm, indexOfTerm + query.length);
+      const afterTerm = name.slice(indexOfTerm + query.length);
+
+      return (
+        <>
+          {beforeTerm}
+          <span className={styles.highlightWord}>{term}</span>
+          {afterTerm}
+        </>
+      );
+    }
+
+    return name;
+  };
+  const handleGoToProduct = () => {
+    setSuggestions(null);
+    setQuery('');
+  };
   return (
     <div className={styles.root}>
       {width <= 510 ? (
         <IconButton icon={<ICONS.back />} />
       ) : (
         <ICONS.search
-          className={search || isFocused ? styles.iconGreen : styles.icon}
+          className={query || isFocused ? styles.iconGreen : styles.icon}
         />
       )}
-      {search && (
+      {query && (
         <div className={styles.clearBtn}>
-          <IconButton onClick={clearInput} icon={<ICONS.CloseIcon />} />
+          <IconButton onClick={handleGoToProduct} icon={<ICONS.CloseIcon />} />
         </div>
       )}
       <input
         className={styles.input}
         type="text"
         placeholder="Пошук"
-        value={search}
-        onChange={changeInput}
+        value={query}
+        onChange={handleSearch}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
+      <ul
+        className={`${styles.suggestions} ${
+          suggestions?.length > 0 && query.length >= 4 ? styles.visible : ''
+        }`}
+      >
+        <li className={styles.searchResults}>
+          <Button
+            label="Всі рeзультати пошуку"
+            variant="no-border"
+            icon={<ICONS.hideList />}
+            onClick={showResults}
+            tabIndex={-1}
+          />
+          <Divider />
+        </li>
+        {suggestions?.map((suggestion) => (
+          <li key={suggestion.id} className={styles.suggestion}>
+            <Link
+              to={`/product/${suggestion.id}`}
+              className={styles.link}
+              onClick={handleGoToProduct}
+            >
+              {highlightWord(suggestion.title)}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 });

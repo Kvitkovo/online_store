@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
@@ -11,6 +11,11 @@ const ClosedMenu = ({
   cartQuantity,
   toggleLogin,
 }) => {
+  const [isSearchActive, setSearchActive] = useState(false);
+
+  const handleToggle = useCallback(() => {
+    setSearchActive((prev) => !prev);
+  }, []);
   return (
     <div className={styles.burgerMenu}>
       <div className={styles.burgerHeader}>
@@ -22,7 +27,7 @@ const ClosedMenu = ({
         </div>
         <div className={styles.actionIcons}>
           <div className={styles.searchMobile}>
-            <IconButton icon={<ICONS.searchMobile />} />
+            <IconButton icon={<ICONS.searchMobile />} onClick={handleToggle} />
           </div>
           <div className={styles.bouquet}>
             <IconButton
@@ -40,6 +45,8 @@ const ClosedMenu = ({
             ) : null}
           </div>
         </div>
+        {isSearchActive && <InputSearch />}
+        {/* {console.log(isSearchActive)} */}
       </div>
     </div>
   );
