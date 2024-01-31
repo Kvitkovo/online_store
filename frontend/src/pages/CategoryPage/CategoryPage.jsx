@@ -18,7 +18,6 @@ const CategoryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [productsInCategory, setProductsInCategory] = useState(0);
-  const [sortValue, setSortValue] = useState(0);
 
   const getData = useCallback(async () => {
     try {
@@ -28,7 +27,7 @@ const CategoryPage = () => {
         products = await GetDiscountedProducts({
           page: currentPage,
           size: 12,
-          sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          sortDirection: 'ASC',
         });
         category = { name: 'Акційна ціна' };
       } else {
@@ -36,7 +35,7 @@ const CategoryPage = () => {
           page: currentPage,
           size: 12,
           categoryId: +categoryId,
-          sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          sortDirection: 'ASC',
         });
         category = await GetCategory(categoryId);
       }
@@ -48,8 +47,10 @@ const CategoryPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [categoryId, currentPage, sortValue]);
-
+  }, [categoryId, currentPage]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [categoryId]);
   useEffect(() => {
     getData();
   }, [getData]);
@@ -58,15 +59,15 @@ const CategoryPage = () => {
     <>
       <Path currentPageData={currentCategory} currentPageType={'category'} />
       <h2 className={styles.title}>{currentCategory?.name}</h2>
-      <ProductList
-        data={categoryProducts}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        isLoading={isLoading}
-        totalAmount={productsInCategory}
-        sortValue={sortValue}
-        setSortValue={setSortValue}
-      />
+      {categoryProducts && (
+        <ProductList
+          data={categoryProducts}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          isLoading={isLoading}
+          totalAmount={productsInCategory}
+        />
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Path from '../CardPage/components/Path';
 import styles from './SearchResult.module.scss';
 import ProductList from '../../components/common/ProductList';
@@ -11,8 +11,8 @@ const SearchResult = () => {
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(null);
   const [data, setData] = useState(null);
-  const quantity = useMemo(() => data?.length || 0, [data]);
-  const [sortValue, setSortValue] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+
   const getProductEnding = (amount) => {
     if (amount % 10 === 1 && amount % 100 !== 11) {
       return 'товар';
@@ -31,11 +31,12 @@ const SearchResult = () => {
       setLoading(true);
       const data = await GetProductsFilter({
         page: currentPage,
-        size: 30,
+        size: 12,
         sortDirection: 'ASC',
         title: query,
       });
       setData(data.content);
+      setQuantity(data.totalElements);
     } catch (error) {
       console.error(error);
     } finally {
@@ -64,9 +65,7 @@ const SearchResult = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           query={query}
-          totalAmount={data?.length}
-          sortValue={sortValue}
-          setSortValue={setSortValue}
+          totalAmount={quantity}
         />
       )}
     </>
