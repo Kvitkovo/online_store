@@ -8,6 +8,9 @@
   & button {
     height: auto;
     margin-left: -12px;
+    &:hover {
+      opacity: 1;
+    }
   }
   & span {
     font-size: 16px;

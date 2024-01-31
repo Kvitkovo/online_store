@@ -34,6 +34,14 @@ const CategoryList = ({ handleCategoryClick, setHoveredCategory }) => {
           />
         );
       })}
+      {!currentCategory && (
+        <CatalogItem
+          name={'Декор із квітів'}
+          link={'/decor'}
+          handleCategoryClick={handleCategoryClick}
+          setHoveredCategory={setHoveredCategory}
+        />
+      )}
     </ul>
   );
 };
