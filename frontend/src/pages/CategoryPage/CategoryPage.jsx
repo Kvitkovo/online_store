@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 
 import ProductList from '../../components/common/ProductList';
 
-const CategoryPage = () => {
+const CategoryPage = React.memo(() => {
   const { categoryId } = useParams();
   const [categoryProducts, setCategoryProducts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -70,6 +70,6 @@ const CategoryPage = () => {
       )}
     </>
   );
-};
+});
 
 export default CategoryPage;

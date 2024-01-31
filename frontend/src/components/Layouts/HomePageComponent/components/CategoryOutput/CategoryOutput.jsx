@@ -67,7 +67,7 @@ const CategoryOutput = ({ title, categoryId }) => {
                   image={
                     card.images[0]
                       ? card.images[0].urlSmall
-                      : './images/no_image.jpg'
+                      : '/images/no_image.jpg'
                   }
                   title={card.title}
                   discount={card.discount}

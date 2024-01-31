@@ -141,7 +141,7 @@ const ProductList = React.memo(
       if (Object.keys(selectedFilter).length > 0) {
         const timeoutId = setTimeout(() => {
           getFilteredData(selectedFilter);
-        }, 4500);
+        }, 5500);
 
         return () => clearTimeout(timeoutId);
       } else {
