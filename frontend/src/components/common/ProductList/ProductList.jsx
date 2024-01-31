@@ -138,21 +138,23 @@ const ProductList = React.memo(
     }, [getFilterData]);
 
     useEffect(() => {
-      if (Object.keys(selectedFilter).length > 0) {
-        const timeoutId = setTimeout(() => {
-          getFilteredData(selectedFilter);
-        }, 5500);
+      if (data) {
+        if (Object.keys(selectedFilter).length > 0) {
+          const timeoutId = setTimeout(() => {
+            getFilteredData(selectedFilter);
+          }, 5500);
 
-        return () => clearTimeout(timeoutId);
-      } else {
-        const sortedList = [...data].sort(
-          (a, b) => a.priceWithDiscount - b.priceWithDiscount,
-        );
-        if (sortValue === 1) {
-          setFilteredList(sortedList.reverse());
+          return () => clearTimeout(timeoutId);
+        } else {
+          const sortedList = Array.from(data).sort(
+            (a, b) => a.priceWithDiscount - b.priceWithDiscount,
+          );
+          if (sortValue === 1) {
+            setFilteredList(sortedList.reverse());
+          }
+          setFilteredList(sortedList);
+          setActiveFilter(null);
         }
-        setFilteredList(sortedList);
-        setActiveFilter(null);
       }
     }, [data, getFilteredData, selectedFilter, sortValue]);
 
