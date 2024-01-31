@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 
 import ProductList from '../../components/common/ProductList';
 
-const CategoryPage = () => {
+const CategoryPage = React.memo(() => {
   const { categoryId } = useParams();
   const [categoryProducts, setCategoryProducts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +49,9 @@ const CategoryPage = () => {
       setIsLoading(false);
     }
   }, [categoryId, currentPage, sortValue]);
-
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [categoryId]);
   useEffect(() => {
     getData();
   }, [getData]);
@@ -58,17 +60,19 @@ const CategoryPage = () => {
     <>
       <Path currentPageData={currentCategory} currentPageType={'category'} />
       <h2 className={styles.title}>{currentCategory?.name}</h2>
-      <ProductList
-        data={categoryProducts}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        isLoading={isLoading}
-        totalAmount={productsInCategory}
-        sortValue={sortValue}
-        setSortValue={setSortValue}
-      />
+      {categoryProducts && (
+        <ProductList
+          data={categoryProducts}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          isLoading={isLoading}
+          totalAmount={productsInCategory}
+          sortValue={sortValue}
+          setSortValue={setSortValue}
+        />
+      )}
     </>
   );
-};
+});
 
 export default CategoryPage;
