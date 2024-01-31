@@ -49,11 +49,9 @@ const CategoryPage = React.memo(() => {
       setIsLoading(false);
     }
   }, [categoryId, currentPage, sortValue]);
-
   useEffect(() => {
     setCurrentPage(1);
   }, [categoryId]);
-
   useEffect(() => {
     getData();
   }, [getData]);
