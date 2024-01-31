@@ -27,7 +27,6 @@ const ProductList = React.memo(
     setSortValue,
   }) => {
     const { categoryId } = useParams();
-    // const [sortValue, setSortValue] = useState(0);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState({});
     const [filteredList, setFilteredList] = useState(null);
@@ -121,7 +120,7 @@ const ProductList = React.memo(
       if (Object.keys(selectedFilter).length > 0) {
         const timeoutId = setTimeout(() => {
           getFilteredData(selectedFilter);
-        }, 4500);
+        }, 5500);
 
         return () => clearTimeout(timeoutId);
       } else {
@@ -196,7 +195,7 @@ const ProductList = React.memo(
                         image={
                           product.images[0]
                             ? product.images[0].urlSmall
-                            : './images/no_image.jpg'
+                            : '/images/no_image.jpg'
                         }
                         title={product.title}
                         discount={product.discount}
