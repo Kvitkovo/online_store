@@ -1,0 +1,84 @@
+@import '../../../../variables';
+@import '../../../../mixins';
+
+.city {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 8px 0;
+}
+
+.clientDeliveryData {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 22px;
+}
+
+.continueButton {
+  margin-top: 32px;
+}
+
+.radioBtn {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.formDelivery {
+  input,
+  select {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid $gray-dark-color;
+    padding: 8px 12px;
+  }
+  select {
+    appearance: none;
+    background: url(../../../../../public/images/icon-arrow-down.svg) 96%
+      no-repeat;
+  }
+  .error {
+    color: $discount-color;
+    font-size: 12px;
+    padding-top: 5px;
+  }
+
+  .street {
+    display: flex;
+    flex-direction: column;
+  }
+  .house div {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+  }
+  .house {
+    display: flex;
+    gap: 32px;
+  }
+  .selectShop {
+    width: 40%;
+    background-color: $white-color;
+  }
+
+  @include md {
+    .clientDeliveryData {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .continueButton {
+      width: 100%;
+    }
+
+    .selectShop {
+      width: 100%;
+    }
+  }
+}

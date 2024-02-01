@@ -46,3 +46,9 @@
   line-height: 24px;
   margin: 24px 18px;
 }
+
+@include sm {
+  .orderButton {
+    width: 100%;
+  }
+}
