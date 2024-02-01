@@ -25,6 +25,7 @@ const InputSearch = memo(({ isActive, setActive }) => {
   const showResults = () => {
     const link = `search/${query}`;
     setQuery('');
+    setActive(false);
     navigate(link);
   };
 
@@ -75,6 +76,7 @@ const InputSearch = memo(({ isActive, setActive }) => {
   const handleGoToProduct = () => {
     setSuggestions(null);
     setQuery('');
+    setActive(false);
   };
   const goBack = () => {
     setActive(false);

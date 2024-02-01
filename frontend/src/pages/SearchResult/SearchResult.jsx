@@ -5,6 +5,7 @@ import styles from './SearchResult.module.scss';
 import ProductList from '../../components/common/ProductList';
 import { useParams } from 'react-router-dom';
 import { GetProductsFilter } from '../../services/products/productsAccess.service';
+import RecentlyViewed from '../../components/common/RecentlyViewed/RecentlyViewed';
 
 const SearchResult = () => {
   const { query } = useParams();
@@ -12,7 +13,7 @@ const SearchResult = () => {
   const [currentPage, setCurrentPage] = useState(null);
   const [data, setData] = useState(null);
   const [quantity, setQuantity] = useState(0);
-
+  const isResultFound = data?.length > 0 || false;
   const getProductEnding = (amount) => {
     if (amount % 10 === 1 && amount % 100 !== 11) {
       return 'товар';
@@ -54,12 +55,17 @@ const SearchResult = () => {
         currentPageType={'section'}
       />
       <h2 className={styles.title}>
-        Результати пошуку: <span className={styles.query}>{query}</span>
-        <span className={styles.amount}>{` ${quantity} ${getProductEnding(
-          quantity,
-        )}`}</span>
+        Результати пошуку:{' '}
+        {isResultFound && (
+          <>
+            <span className={styles.query}>{query}</span>
+            <span className={styles.amount}>{` ${quantity} ${getProductEnding(
+              quantity,
+            )}`}</span>
+          </>
+        )}
       </h2>
-      {!isLoading && (
+      {!isLoading && isResultFound && (
         <ProductList
           data={data}
           currentPage={currentPage}
@@ -67,6 +73,15 @@ const SearchResult = () => {
           query={query}
           totalAmount={quantity}
         />
+      )}
+      {!isResultFound && (
+        <>
+          <p>
+            За запитом <span className={styles.query}>{query}</span>
+            <span className={styles.noResult}> Нічого не знайдено</span>
+          </p>
+          <RecentlyViewed />
+        </>
       )}
     </>
   );
