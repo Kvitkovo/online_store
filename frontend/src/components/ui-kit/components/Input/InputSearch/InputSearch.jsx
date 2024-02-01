@@ -11,7 +11,7 @@ import Divider from '../../Divider';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../Button';
 
-const InputSearch = memo(() => {
+const InputSearch = memo(({ isActive, setActive }) => {
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
@@ -76,56 +76,86 @@ const InputSearch = memo(() => {
     setSuggestions(null);
     setQuery('');
   };
+  const goBack = () => {
+    setActive(false);
+    setQuery('');
+  };
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => (document.body.style.overflow = 'unset');
+  }, [isActive]);
   return (
-    <div className={styles.root}>
-      {width <= 510 ? (
-        <IconButton icon={<ICONS.back />} />
-      ) : (
-        <ICONS.search
-          className={query || isFocused ? styles.iconGreen : styles.icon}
-        />
-      )}
-      {query && (
-        <div className={styles.clearBtn}>
-          <IconButton onClick={handleGoToProduct} icon={<ICONS.CloseIcon />} />
+    <div className={styles.overlayActive}>
+      {(width > 510 || isActive) && (
+        <div className={styles.root}>
+          {width <= 510 ? (
+            <div
+              className={`${
+                query || isFocused ? styles.iconGreen : styles.icon
+              } ${styles.backBtn}`}
+            >
+              <IconButton icon={<ICONS.back />} onClick={goBack} />
+            </div>
+          ) : (
+            <ICONS.search
+              className={query || isFocused ? styles.iconGreen : styles.icon}
+            />
+          )}
+          {query && (
+            <div className={styles.clearBtn}>
+              <IconButton
+                onClick={handleGoToProduct}
+                icon={<ICONS.CloseIcon />}
+              />
+            </div>
+          )}
+          {width <= 510 && !query && (
+            <ICONS.search
+              className={`${styles.icon} ${styles.mobileIcon} ${
+                isFocused && styles.iconGreen
+              }`}
+            />
+          )}
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Пошук"
+            value={query}
+            onChange={handleSearch}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+          <ul
+            className={`${styles.suggestions} ${
+              query.length >= 4 ? styles.visible : ''
+            }`}
+          >
+            <li className={styles.searchResults}>
+              <Button
+                label="Всі рeзультати пошуку"
+                variant="no-border"
+                icon={<ICONS.hideList />}
+                onClick={showResults}
+                tabIndex={-1}
+              />
+              <Divider />
+            </li>
+            {suggestions?.map((suggestion) => (
+              <li key={suggestion.id} className={styles.suggestion}>
+                <Link
+                  to={`/product/${suggestion.id}`}
+                  className={styles.link}
+                  onClick={handleGoToProduct}
+                >
+                  {highlightWord(suggestion.title)}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Пошук"
-        value={query}
-        onChange={handleSearch}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
-      <ul
-        className={`${styles.suggestions} ${
-          suggestions?.length > 0 && query.length >= 4 ? styles.visible : ''
-        }`}
-      >
-        <li className={styles.searchResults}>
-          <Button
-            label="Всі рeзультати пошуку"
-            variant="no-border"
-            icon={<ICONS.hideList />}
-            onClick={showResults}
-            tabIndex={-1}
-          />
-          <Divider />
-        </li>
-        {suggestions?.map((suggestion) => (
-          <li key={suggestion.id} className={styles.suggestion}>
-            <Link
-              to={`/product/${suggestion.id}`}
-              className={styles.link}
-              onClick={handleGoToProduct}
-            >
-              {highlightWord(suggestion.title)}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 });

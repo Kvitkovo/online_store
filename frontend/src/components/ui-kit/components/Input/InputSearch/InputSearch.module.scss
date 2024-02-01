@@ -20,7 +20,7 @@
 
 .iconGreen {
   margin-left: 5px;
-  path {
+  & path {
     stroke: $page-accent-color;
   }
 }
@@ -99,6 +99,12 @@
     outline: none;
   }
 }
+.mobileIcon {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 6px;
+}
 
 @include lg {
   .root {
@@ -107,12 +113,44 @@
 }
 
 @include sm {
+  .overlayActive {
+    position: fixed;
+    padding: 6px 16px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $white-color;
+  }
   .root {
-    width: 343px;
+    gap: 10px;
     .input {
-      width: 255px;
       padding: 6px;
       margin-left: 0;
     }
+  }
+  .mobileIcon {
+    display: block;
+  }
+  .backBtn {
+    padding: 6px;
+    height: 36px;
+    margin: 0;
+  }
+  .searchResults {
+    margin: 6px 16px;
+    & span:first-child {
+      padding: 0;
+    }
+  }
+  .suggestions {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    top: 56px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .suggestion {
+    padding: 6px 16px;
   }
 }
