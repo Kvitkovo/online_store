@@ -25,8 +25,22 @@ const InputSearch = memo(({ isActive, setActive }) => {
   const showResults = () => {
     const link = `search/${query}`;
     setQuery('');
-    setActive(false);
+    if (setActive) {
+      setActive(false);
+    }
     navigate(link);
+  };
+  const handleFocus = () => {
+    setIsFocused(true);
+    if (setActive) {
+      setActive(true);
+    }
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+    if (setActive) {
+      setActive(false);
+    }
   };
 
   useEffect(() => {
@@ -126,8 +140,8 @@ const InputSearch = memo(({ isActive, setActive }) => {
             placeholder="Пошук"
             value={query}
             onChange={handleSearch}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
           <ul
             className={`${styles.suggestions} ${
@@ -144,17 +158,18 @@ const InputSearch = memo(({ isActive, setActive }) => {
               />
               <Divider />
             </li>
-            {suggestions?.map((suggestion) => (
-              <li key={suggestion.id} className={styles.suggestion}>
-                <Link
-                  to={`/product/${suggestion.id}`}
-                  className={styles.link}
-                  onClick={handleGoToProduct}
-                >
-                  {highlightWord(suggestion.title)}
-                </Link>
-              </li>
-            ))}
+            {suggestions?.length > 0 &&
+              suggestions.map((suggestion) => (
+                <li key={suggestion.id} className={styles.suggestion}>
+                  <Link
+                    to={`/product/${suggestion.id}`}
+                    className={styles.link}
+                    onClick={handleGoToProduct}
+                  >
+                    {highlightWord(suggestion.title)}
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       )}

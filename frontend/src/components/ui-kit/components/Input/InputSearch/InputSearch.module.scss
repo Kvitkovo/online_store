@@ -1,6 +1,9 @@
 @import 'src/variables';
 @import 'src/mixins';
 
+.overlayActive {
+  width: inherit;
+}
 .root {
   position: relative;
   display: flex;
@@ -42,7 +45,6 @@
   border: none;
 }
 .searchResults {
-  margin-bottom: 4px;
   & span {
     padding-left: 12px;
     color: $page-accent-color;
@@ -63,7 +65,6 @@
   width: 100%;
   background: $white-color;
   border-radius: 8px;
-  padding-bottom: 8px;
   box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.1);
   transform: translateY(-20px);
   visibility: hidden;
@@ -84,6 +85,12 @@
 }
 .suggestion {
   padding: 6px 12px;
+  &:first-child {
+    margin-top: 4px;
+  }
+  &:last-child {
+    margin-bottom: 8px;
+  }
   & a:visited,
   & a:link {
     color: $gray-dark-color;

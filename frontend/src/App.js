@@ -39,7 +39,7 @@ function App() {
       <div className="App">
         <Header isLoggedIn={isLoggedIn} />
         <Wrapper>
-          <div>
+          <>
             <Routes>
               <Route path={ROUTES.home} element={<Home />} />
               <Route path={ROUTES.promotions} element={<Promotions />} />
@@ -93,7 +93,7 @@ function App() {
                 <Route path={ROUTES.orders} element={<Orders />} />
               </Route>
             </Routes>
-          </div>
+          </>
           <SupportModal />
         </Wrapper>
         <Footer />
