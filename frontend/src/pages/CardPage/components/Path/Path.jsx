@@ -2,33 +2,35 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Path.module.scss';
 import ROUTES from '../../../../constants/routers';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ICONS } from '../../../../components/ui-kit/icons';
 import { GetCategory } from '../../../../services/catalog/categoryAccess.service';
 
 const Path = React.memo(({ currentPageData, currentPageType }) => {
   const [parents, setParents] = useState([]);
+  const { categoryId } = useParams();
 
   useEffect(() => {
-    const fetchCategoryAndSubcategory = async () => {
-      const categoryId = currentPageData.categoryId;
-      const category = await GetCategory(categoryId);
-      const parents = [];
-      let parent = category;
-      while (parent !== null) {
-        const { id, name } = parent;
-        parents.push({ id, name });
-        parent = parent ? parent.parent : null;
+    if (currentPageType !== 'section') {
+      const fetchCategoryAndSubcategory = async (categoryId) => {
+        const category = (await GetCategory(categoryId)) || [];
+        const parents = [];
+        let parent = category;
+        while (parent) {
+          const { id, name } = parent;
+          parents.unshift({ id, name });
+          parent = parent ? parent.parent : null;
+        }
+        setParents(parents);
+      };
+      if (categoryId !== 'discounted') {
+        fetchCategoryAndSubcategory(currentPageData?.categoryId || categoryId);
       }
-      setParents(parents.reverse());
-    };
-    if (currentPageType === 'product') {
-      fetchCategoryAndSubcategory();
     }
     return () => {
       setParents([]);
     };
-  }, [currentPageData.categoryId, currentPageType]);
+  }, [categoryId, currentPageData, currentPageType]);
 
   return (
     <div className={styles.pathContainer}>
@@ -38,18 +40,17 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
         </Link>
         {currentPageData && (
           <>
-            {currentPageType === 'category' ||
-              (currentPageType === 'section' && (
-                <>
-                  <div className={styles.arrow}>
-                    <ICONS.pathArrow />
-                  </div>
-                  <span className={styles.navigation}>
-                    {currentPageData.name}
-                  </span>
-                </>
-              ))}
-            {parents.length > 0 &&
+            {parents.length < 1 && (
+              <>
+                <div className={styles.arrow}>
+                  <ICONS.pathArrow />
+                </div>
+                <span className={styles.navigation}>
+                  {currentPageData.name}
+                </span>
+              </>
+            )}
+            {parents.length >= 1 &&
               parents.map((parent) => {
                 return (
                   <>
@@ -58,7 +59,7 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
                     </div>
                     <Link
                       key={parent.id}
-                      to={`/categories/1`}
+                      to={`/categories/${parent.id}`}
                       className={styles.navigationLink}
                     >
                       {parent.name}
