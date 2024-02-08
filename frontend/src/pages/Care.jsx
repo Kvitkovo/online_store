@@ -1,5 +1,6 @@
 import React from 'react';
 import Path from './CardPage/components/Path';
+import CareList from '../components/common/CareList/CareList';
 
 const Care = () => {
   return (
@@ -8,7 +9,7 @@ const Care = () => {
         currentPageData={{ name: 'Догляд за квітами' }}
         currentPageType={'section'}
       />
-      <div>Догляд за квітами</div>
+      <CareList />
     </>
   );
 };
