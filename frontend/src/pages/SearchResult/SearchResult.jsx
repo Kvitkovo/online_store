@@ -8,10 +8,11 @@ import { GetProductsFilter } from '../../services/products/productsAccess.servic
 
 const SearchResult = () => {
   const { query } = useParams();
+  const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(null);
   const [data, setData] = useState(null);
   const quantity = useMemo(() => data?.length || 0, [data]);
-
+  const [sortValue, setSortValue] = useState(0);
   const getProductEnding = (amount) => {
     if (amount % 10 === 1 && amount % 100 !== 11) {
       return 'товар';
@@ -27,6 +28,7 @@ const SearchResult = () => {
   };
   const getData = useCallback(async () => {
     try {
+      setLoading(true);
       const data = await GetProductsFilter({
         page: currentPage,
         size: 30,
@@ -36,6 +38,8 @@ const SearchResult = () => {
       setData(data.content);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }, [currentPage, query]);
 
@@ -54,11 +58,17 @@ const SearchResult = () => {
           quantity,
         )}`}</span>
       </h2>
-      <ProductList
-        data={data}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {!isLoading && (
+        <ProductList
+          data={data}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          query={query}
+          totalAmount={data?.length}
+          sortValue={sortValue}
+          setSortValue={setSortValue}
+        />
+      )}
     </>
   );
 };
