@@ -6,15 +6,12 @@ import ItemFeatures from '../ItemFeatures/ItemFeatures';
 import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';
-import Slider from '../Slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../../../redux/slices/cartSlice';
 import { isItemInCart } from '../../../../utils/isItemInCart';
+import RecentlyViewed from '../../../../components/common/RecentlyViewed';
 
 const ItemCard = ({ cardData }) => {
-  const recentlyViewed = Array.from(
-    JSON.parse(localStorage.getItem('recentlyViewed') || ''),
-  );
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const [inCart, setInCart] = useState(false);
@@ -86,12 +83,7 @@ const ItemCard = ({ cardData }) => {
           <ItemDescription description={cardData?.description} />
         </div>
       </div>
-      {recentlyViewed.length > 1 && (
-        <>
-          <h2 className={styles.previous}>Раніше переглянуті</h2>
-          <Slider data={recentlyViewed} />
-        </>
-      )}
+      <RecentlyViewed />
     </div>
   );
 };
