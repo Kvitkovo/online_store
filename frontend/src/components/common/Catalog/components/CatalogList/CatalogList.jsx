@@ -38,6 +38,7 @@ const CategoryList = ({ handleCategoryClick, setHoveredCategory }) => {
         <CatalogItem
           name={'Декор із квітів'}
           link={'/decor'}
+          icon={'DECOR'}
           handleCategoryClick={handleCategoryClick}
           setHoveredCategory={setHoveredCategory}
         />
