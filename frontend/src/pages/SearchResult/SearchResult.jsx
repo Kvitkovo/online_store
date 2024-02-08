@@ -50,37 +50,41 @@ const SearchResult = () => {
   }, [getData]);
   return (
     <>
-      <Path
-        currentPageData={{ name: 'Результати пошуку' }}
-        currentPageType={'section'}
-      />
-      <h2 className={styles.title}>
-        Результати пошуку:{' '}
-        {isResultFound && (
-          <>
-            <span className={styles.query}>{query}</span>
-            <span className={styles.amount}>{` ${quantity} ${getProductEnding(
-              quantity,
-            )}`}</span>
-          </>
-        )}
-      </h2>
-      {!isLoading && isResultFound && (
-        <ProductList
-          data={data}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          query={query}
-          totalAmount={quantity}
-        />
-      )}
-      {!isResultFound && (
+      {data && (
         <>
-          <p>
-            За запитом <span className={styles.query}>{query}</span>
-            <span className={styles.noResult}> Нічого не знайдено</span>
-          </p>
-          <RecentlyViewed />
+          <Path
+            currentPageData={{ name: 'Результати пошуку' }}
+            currentPageType={'section'}
+          />
+          <h2 className={styles.title}>
+            Результати пошуку:{' '}
+            {isResultFound && (
+              <>
+                <span className={styles.query}>{query}</span>
+                <span
+                  className={styles.amount}
+                >{` ${quantity} ${getProductEnding(quantity)}`}</span>
+              </>
+            )}
+          </h2>
+          {!isLoading && isResultFound && (
+            <ProductList
+              data={data}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              query={query}
+              totalAmount={quantity}
+            />
+          )}
+          {!isResultFound && (
+            <>
+              <p>
+                За запитом <span className={styles.query}>{query}</span>
+                <span className={styles.noResult}> Нічого не знайдено</span>
+              </p>
+              <RecentlyViewed />
+            </>
+          )}
         </>
       )}
     </>

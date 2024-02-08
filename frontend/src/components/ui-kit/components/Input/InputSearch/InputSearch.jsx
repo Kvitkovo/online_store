@@ -11,7 +11,7 @@ import Divider from '../../Divider';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../Button';
 
-const InputSearch = memo(({ isActive, setActive }) => {
+const InputSearch = memo(({ isActive = false, setActive = null }) => {
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
