@@ -1,5 +1,45 @@
+@import '../../../../variables';
+
+.postcardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  line-height: 24px;
+  margin-top: 22px;
+}
+
 .radioBtn {
   display: flex;
   align-items: baseline;
   gap: 12px;
+}
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  label {
+    text-decoration: underline;
+    color: $page-accent-color;
+  }
+}
+textarea {
+  width: 500px;
+  height: 120px;
+  border: 1px solid $gray-dark-color;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    flex-shrink: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $page-accent-color;
+  }
+}
+
+.continueButton {
+  margin-top: 10px;
 }
