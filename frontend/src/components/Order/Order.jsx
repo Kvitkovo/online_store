@@ -66,8 +66,16 @@ const Order = () => {
               step={3}
               currentStep={currentStep}
               name={'Листівка та коментар'}
+              outputString={orderData.postcardData?.outputString}
+              handleBackEdit={handleChangeStep}
             >
-              <PostcardAndComment />
+              <PostcardAndComment
+                postcardData={orderData.postcardData}
+                setDataOnSubmit={(newPostcardData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({ ...orderData, postcardData: newPostcardData });
+                }}
+              />
             </OrderSection>
           </div>
         </div>

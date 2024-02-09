@@ -3,16 +3,35 @@ import { useForm } from 'react-hook-form';
 import styles from './PostcardAndComment.module.scss';
 import Button from '../../../ui-kit/components/Button';
 
-const PostcardAndComment = ({ postcardData }) => {
-  const [showPostcardText, setShowPostcardText] = useState(true);
-  const [showComment, setShowComment] = useState(false);
-  const { register } = useForm({
+const PostcardAndComment = ({ postcardData, setDataOnSubmit }) => {
+  const [showPostcardText, setShowPostcardText] = useState(
+    postcardData?.postcard ? postcardData.postcard === 'Add postcard' : true,
+  );
+  const [showComment, setShowComment] = useState(postcardData?.comment !== '');
+
+  const { register, handleSubmit } = useForm({
     defaultValues: {
-      postcard: postcardData?.postcard ? postcardData.postCard : 'Add postcard',
+      postcard: postcardData?.postcard ? postcardData.postcard : 'Add postcard',
+      postcardText: postcardData?.postcardText,
+      comment: postcardData?.comment,
     },
   });
+
+  const onSubmit = (data) => {
+    let dataForOutput;
+    if (data.postcard === 'Add postcard') {
+      dataForOutput = 'Додати листівку';
+    } else {
+      dataForOutput = ' Без листівки';
+    }
+
+    setDataOnSubmit({
+      ...data,
+      outputString: dataForOutput,
+    });
+  };
   return (
-    <form className={styles.postcardForm}>
+    <form className={styles.postcardForm} onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="postcard" className={styles.radioBtn}>
         <input
           type="radio"
