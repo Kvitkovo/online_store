@@ -62,7 +62,9 @@ const PostcardAndComment = ({ postcardData, setDataOnSubmit }) => {
         />
         Без листівки
       </label>
-      <div className={styles.comment}>
+      <div
+        className={`${styles.comment} ${showComment ? styles.commentOpen : ''}`}
+      >
         <label htmlFor="comment" onClick={() => setShowComment(true)}>
           Коментар до замовлення
         </label>

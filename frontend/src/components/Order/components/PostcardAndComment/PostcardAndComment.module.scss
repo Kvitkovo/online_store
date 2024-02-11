@@ -23,6 +23,12 @@
     color: $page-accent-color;
   }
 }
+
+.commentOpen {
+  label {
+    color: $text-color;
+  }
+}
 textarea {
   width: 500px;
   height: 120px;
@@ -30,7 +36,7 @@ textarea {
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 16px;
-  font-family: 'FixelDisplay';
+  font-family: $font-main;
 
   &::-webkit-scrollbar {
     width: 4px;
