@@ -1,0 +1,72 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+.decorForm {
+  z-index: 99;
+  margin-right: auto;
+  margin-left: auto;
+  width: 316px;
+
+  label {
+    @include paragraph;
+  }
+
+  input,
+  textarea {
+    @include paragraph;
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid $gray-dark-color;
+    padding: 8px 12px 5px 12px;
+    background-color: $white-color;
+    opacity: 1;
+  }
+
+  textarea {
+    max-height: 126px;
+    resize: none;
+    margin-bottom: 8px;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 4px;
+      border-radius: 2px;
+      background: $green-80-color;
+    }
+  }
+
+  .customerData {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 64px;
+    row-gap: 16px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .error {
+    color: $discount-color;
+    font-size: 12px;
+    padding-top: 5px;
+  }
+
+  .customerData {
+    margin-top: 22px;
+    margin-bottom: 22px;
+  }
+
+  .buttonSubmit {
+    width: 100%;
+  }
+
+  @include md {
+    .customerData {
+      grid-template-columns: 1fr;
+    }
+  }
+}

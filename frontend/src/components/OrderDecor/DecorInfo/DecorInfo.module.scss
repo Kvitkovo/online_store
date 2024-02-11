@@ -1,0 +1,91 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+.wrapper {
+  z-index: 11;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  max-width: 980px;
+  &::before {
+    background: no-repeat
+      url(../../../components/ui-kit/images/order-decor-left.png);
+    content: '';
+    position: absolute;
+    top: 37%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+  }
+
+  &::after {
+    background: no-repeat
+      url(../../../components/ui-kit/images/order-decor-right.png);
+    content: '';
+    position: absolute;
+    top: 42%;
+    left: 77%;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.title {
+  @include subtitle;
+  margin-top: 25px;
+  margin-bottom: 16px;
+}
+
+.desc {
+  @include paragraph;
+}
+
+.subtitle {
+  @include subtitle;
+  margin-top: 43px;
+  margin-bottom: 10px;
+}
+
+@include lg {
+  .wrapper {
+    max-width: 784px;
+  }
+}
+@include md {
+  .wrapper {
+    max-width: 690px;
+
+    &::before {
+      background: no-repeat
+        url(../../../components/ui-kit/images/flower-decor-left.png);
+      content: '';
+      position: absolute;
+      top: 725px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+    }
+
+    &::after {
+      background: no-repeat
+        url(../../../components/ui-kit/images/flower-decor-right.png);
+      content: '';
+      position: absolute;
+      top: 62px;
+      right: 190px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+@include sm {
+  .wrapper {
+    max-width: 343px;
+    &::before {
+      background: none;
+      &::after {
+        background: none;
+      }
+    }
+  }
+}

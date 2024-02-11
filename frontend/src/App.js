@@ -11,6 +11,7 @@ import Header from './components/Layouts/Header';
 import CardPage from './pages/CardPage';
 import Care from './pages/Care';
 import Contacts from './pages/Contacts';
+import Decor from './pages/Decor';
 import Faq from './pages/Faq';
 import OrderStatus from './pages/OrderStatus';
 import Partner from './pages/Partner';
@@ -46,6 +47,7 @@ function App() {
             <Route path={ROUTES.delivery} element={<Delivery />} />
             <Route path={ROUTES.care} element={<Care />} />
             <Route path={ROUTES.contacts} element={<Contacts />} />
+            <Route path={ROUTES.decor} element={<Decor />} />
             <Route path={ROUTES.faq} element={<Faq />} />
             <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
             <Route path={ROUTES.partner} element={<Partner />} />
