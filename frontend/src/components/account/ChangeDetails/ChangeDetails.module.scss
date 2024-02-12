@@ -1,0 +1,37 @@
+@import 'src/_variables.scss';
+
+.mainContainer {
+  padding-left: 32px;
+}
+.header {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 120%;
+  margin-bottom: 22px;
+}
+.formContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 59px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dataInput {
+  width: 292px;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid $gray-dark-color;
+  background: $white-color;
+  margin-bottom: 16px;
+}
+.btnContainer {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+}
