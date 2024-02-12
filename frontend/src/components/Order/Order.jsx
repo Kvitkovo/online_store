@@ -4,6 +4,7 @@ import OrderInfo from './components/OrderInfo';
 import DeliveryForm from './components/DeliveryForm/DeliveryForm';
 import OrderSection from './components/OrderSection';
 import ContactDetails from './components/ContactDetails/ContactDetails';
+import PostcardAndComment from './components/PostcardAndComment';
 
 const Order = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -56,6 +57,23 @@ const Order = () => {
                 setDataOnSubmit={(newDeliveryData) => {
                   handleStepFinish(currentStep);
                   setOrderData({ ...orderData, deliveryData: newDeliveryData });
+                }}
+              />
+            </OrderSection>
+          </div>
+          <div className={styles.orderBlock}>
+            <OrderSection
+              step={3}
+              currentStep={currentStep}
+              name={'Листівка та коментар'}
+              outputString={orderData.postcardData?.outputString}
+              handleBackEdit={handleChangeStep}
+            >
+              <PostcardAndComment
+                postcardData={orderData.postcardData}
+                setDataOnSubmit={(newPostcardData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({ ...orderData, postcardData: newPostcardData });
                 }}
               />
             </OrderSection>
