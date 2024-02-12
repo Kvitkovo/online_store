@@ -15,7 +15,7 @@ const CartItem = ({ items, cartClassName }) => {
   const { width } = useWindowSize();
 
   const handleRemoveFromCart = (cartItem) => {
-    dispatch(removeFromCart(cartItem));
+    dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
   };
 
   return (

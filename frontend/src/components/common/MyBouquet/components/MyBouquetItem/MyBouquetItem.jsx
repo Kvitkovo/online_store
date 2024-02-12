@@ -16,7 +16,7 @@ const MyBouquetItem = ({ items, count }) => {
             <div className={styles.leftBlock}>
               <IconButton icon={<ICONS.CloseIcon />} />
               <div className={styles.blockImg}>
-                <img src={item.img} alt={item.title} />
+                <img src={item.image} alt={item.title} />
                 <span>{item.title}</span>
               </div>
             </div>

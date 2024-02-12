@@ -27,7 +27,7 @@ const Card = (props) => {
   }, [cartItems, props.id]);
 
   const handleAddToCart = (props) => {
-    dispatch(addToCart(props));
+    dispatch(addToCart({ info: props, type: 'cart' }));
   };
 
   return (

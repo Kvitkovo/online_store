@@ -10,13 +10,13 @@ const PriceAndButtons = ({
   actualPrice,
   oldPrice,
   stockInfo,
-  addToConstructor,
+  addToConstructor: canUseInBouquet,
+  addToBouquet,
   addToCart,
   inCart,
 }) => {
   const isInStock = stockInfo === 'AVAILABLE';
 
-  const addToBouquete = addToConstructor === true;
   return (
     <div className={styles.desktopContainer}>
       {isInStock ? (
@@ -43,7 +43,7 @@ const PriceAndButtons = ({
                 onClick={addToCart}
               />
             )}
-            {addToBouquete ? (
+            {canUseInBouquet ? (
               <>
                 <div className={styles.bouquetDesktop}>
                   <Button
@@ -52,6 +52,7 @@ const PriceAndButtons = ({
                     padding="padding-header-sm"
                     reverse="true"
                     icon={<ICONS.toBouquet />}
+                    onClick={addToBouquet}
                   />
                 </div>
                 <div className={styles.bouquetTablet}>

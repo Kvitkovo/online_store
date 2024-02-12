@@ -11,11 +11,11 @@ import styles from './CountBlock.module.scss';
 const CountBlock = ({ item }) => {
   const dispatch = useDispatch();
   const handleDecreaseCart = (cartItem) => {
-    dispatch(decreaseCart(cartItem));
+    dispatch(decreaseCart({ info: cartItem, type: 'cart' }));
   };
 
   const handleIncreaseCart = (cartItem) => {
-    dispatch(increaseCart(cartItem));
+    dispatch(increaseCart({ info: cartItem, type: 'cart' }));
   };
 
   return (

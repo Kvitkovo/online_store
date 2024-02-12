@@ -15,7 +15,7 @@ const ItemCard = ({ cardData }) => {
   const recentlyViewed = Array.from(
     JSON.parse(localStorage.getItem('recentlyViewed') || ''),
   );
-  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const { cartItems } = useSelector((state) => state.cartSliceReducer);
   const dispatch = useDispatch();
   const [inCart, setInCart] = useState(false);
 
@@ -27,7 +27,20 @@ const ItemCard = ({ cardData }) => {
   }, [cartItems, cardData]);
 
   const handleAddToCart = (image, title, discount, oldPrice, price, id) => {
-    dispatch(addToCart({ image, title, discount, oldPrice, price, id }));
+    dispatch(
+      addToCart({
+        info: { image, title, discount, oldPrice, price, id },
+        type: 'cart',
+      }),
+    );
+  };
+  const handleAddToBouquet = (image, title, discount, oldPrice, price, id) => {
+    dispatch(
+      addToCart({
+        info: { image, title, discount, oldPrice, price, id },
+        type: 'bouquet',
+      }),
+    );
   };
 
   return (
@@ -60,6 +73,18 @@ const ItemCard = ({ cardData }) => {
             actualPrice={cardData.priceWithDiscount}
             stockInfo={cardData?.available}
             addToConstructor={cardData.allowAddToConstructor}
+            addToBouquet={() => {
+              handleAddToBouquet(
+                cardData.images[0]
+                  ? cardData.images[0].url
+                  : './images/no_image.jpg',
+                cardData.title,
+                cardData.discount,
+                cardData.price,
+                cardData.priceWithDiscount,
+                cardData.id,
+              );
+            }}
             addToCart={() =>
               handleAddToCart(
                 cardData.images[0]
