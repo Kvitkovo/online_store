@@ -11,3 +11,13 @@
     color: $discount-color;
   }
 }
+.categorySlider {
+  display: none;
+  overflow: auto;
+}
+@include md {
+  .categorySlider {
+    display: flex;
+    gap: 13px;
+  }
+}
