@@ -7,11 +7,13 @@ const PostcardAndComment = ({ postcardData, setDataOnSubmit }) => {
   const [showPostcardText, setShowPostcardText] = useState(
     postcardData?.postcard ? postcardData.postcard === 'Add postcard' : true,
   );
-  const [showComment, setShowComment] = useState(postcardData?.comment !== '');
+  const [showComment, setShowComment] = useState(
+    postcardData?.comment ? postcardData.comment !== '' : false,
+  );
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      postcard: postcardData?.postcard ? postcardData.postcard : 'Add postcard',
+      postcard: postcardData?.postcard || 'Add postcard',
       postcardText: postcardData?.postcardText,
       comment: postcardData?.comment,
     },
