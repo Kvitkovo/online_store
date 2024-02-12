@@ -35,7 +35,7 @@ const HomePageComponent = () => {
         <ul className={styles.categorySlider}>
           {mainCategories.map((category) => {
             return (
-              <li key={category.alias}>
+              <li key={category.id}>
                 <SmallCategories {...category} />
               </li>
             );
