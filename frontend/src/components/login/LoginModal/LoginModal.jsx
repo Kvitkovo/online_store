@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Modals from '../../common/Modals/Modals';
 import styles from './LoginModal.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
@@ -63,12 +63,15 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
       setPasswordError(loginResult.error);
     }
   };
-  const handleGoogleLogin = async (token, id) => {
-    const loginSuccess = await googleLoginRequest(token, id);
-    if (loginSuccess) {
-      handleUserData(loginSuccess.token, loginSuccess.id, navigate, dispatch);
-    }
-  };
+  const handleGoogleLogin = useCallback(
+    async (token, id) => {
+      const loginSuccess = await googleLoginRequest(token, id);
+      if (loginSuccess) {
+        handleUserData(loginSuccess.token, loginSuccess.id, navigate, dispatch);
+      }
+    },
+    [navigate, dispatch],
+  );
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setEmailError('');
@@ -161,10 +164,13 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
             </div>
             <div className={styles.googleLogin}>
               <GoogleLogin
-                handleGoogleLogin={(token) => {
-                  handleGoogleLogin(token);
-                  toggleLogin();
-                }}
+                handleGoogleLogin={useCallback(
+                  (token) => {
+                    handleGoogleLogin(token);
+                    toggleLogin();
+                  },
+                  [handleGoogleLogin, toggleLogin],
+                )}
               />
             </div>
           </form>
