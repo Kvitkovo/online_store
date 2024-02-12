@@ -8,14 +8,14 @@ import {
 } from '../../../../../redux/slices/cartSlice';
 import styles from './CountBlock.module.scss';
 
-const CountBlock = ({ item }) => {
+const CountBlock = ({ item, type }) => {
   const dispatch = useDispatch();
   const handleDecreaseCart = (cartItem) => {
-    dispatch(decreaseCart({ info: cartItem, type: 'cart' }));
+    dispatch(decreaseCart({ info: cartItem, type: type }));
   };
 
   const handleIncreaseCart = (cartItem) => {
-    dispatch(increaseCart({ info: cartItem, type: 'cart' }));
+    dispatch(increaseCart({ info: cartItem, type: type }));
   };
 
   return (
@@ -24,7 +24,7 @@ const CountBlock = ({ item }) => {
         icon={<ICONS.dash />}
         onClick={() => handleDecreaseCart(item)}
       />
-      <div className={styles.field}>{item.cardQuantity}</div>
+      <div className={styles.field}>{item?.cardQuantity}</div>
       <IconButton
         icon={
           <ICONS.addComponent

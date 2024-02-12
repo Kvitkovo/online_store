@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Modals from '../Modals';
 import Button from '../../ui-kit/components/Button';
@@ -11,51 +11,28 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 import { ICONS } from '../../ui-kit/icons';
 import styles from './MyBouquet.module.scss';
-
-// const itemsBouquet = [
-//   {
-//     id: 0,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1500,
-//   },
-//   {
-//     id: 1,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1500,
-//   },
-//   {
-//     id: 2,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1300,
-//   },
-//   {
-//     id: 3,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1500,
-//   },
-//   {
-//     id: 4,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1300,
-//   },
-//   {
-//     id: 5,
-//     title: 'Троянда червона',
-//     img: './images/bouquet.jpg',
-//     price: 1500,
-//   },
-// ];
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../../../redux/slices/cartSlice';
 
 const MyBouquet = ({ toggleMyBouquet }) => {
   const { width } = useWindowSize();
   const { bouquetItems } = useSelector((state) => state.cartSliceReducer);
+  const dispatch = useDispatch();
 
-  const totalSum = bouquetItems.reduce((sum, obj) => sum + obj.price, 0);
+  const totalSum = useMemo(
+    () =>
+      bouquetItems.reduce((sum, obj) => sum + obj.price * obj.cardQuantity, 0),
+    [bouquetItems],
+  );
+  const totalAmount = useMemo(
+    () => bouquetItems.reduce((sum, obj) => sum + obj.cardQuantity, 0),
+    [bouquetItems],
+  );
+  const clear = () => {
+    if (hasItems) {
+      dispatch(clearCart({ type: 'bouquet' }));
+    }
+  };
 
   const hasItems = bouquetItems.length > 0;
 
@@ -71,17 +48,14 @@ const MyBouquet = ({ toggleMyBouquet }) => {
             onClick={toggleMyBouquet}
           />
         </div>
-        {hasItems ? (
-          <MyBouquetItem items={bouquetItems} count={1} />
-        ) : (
-          <MyBouquetEmpty />
-        )}
+        {hasItems ? <MyBouquetItem items={bouquetItems} /> : <MyBouquetEmpty />}
       </div>
       <div className={styles.bottomBlock}>
         <div className={hasItems ? styles.reverse : ''}>
           <div className={styles.changeItems}>
             <span
               className={hasItems ? styles.deleteAll : styles.noActiveDelete}
+              onClick={clear}
             >
               Видалити все
             </span>
@@ -100,7 +74,7 @@ const MyBouquet = ({ toggleMyBouquet }) => {
           <div className={styles.total}>
             <p>Разом:</p>
             <div>
-              <b>99</b>
+              <b>{totalAmount}</b>
               <span>шт</span>
               <b className={styles.sum}>{totalSum}</b>
               <span>грн</span>

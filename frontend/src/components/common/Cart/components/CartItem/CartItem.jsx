@@ -49,7 +49,7 @@ const CartItem = ({ items, cartClassName }) => {
               </div>
             )}
             <div className={styles.countBlock}>
-              <CountBlock item={item} />
+              <CountBlock item={item} type={'cart'} />
             </div>
             <div
               className={
