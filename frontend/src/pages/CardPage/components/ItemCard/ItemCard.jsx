@@ -15,9 +15,12 @@ const ItemCard = ({ cardData }) => {
   const recentlyViewed = Array.from(
     JSON.parse(localStorage.getItem('recentlyViewed') || ''),
   );
-  const { cartItems } = useSelector((state) => state.cartSliceReducer);
+  const { cartItems, bouquetItems } = useSelector(
+    (state) => state.cartSliceReducer,
+  );
   const dispatch = useDispatch();
   const [inCart, setInCart] = useState(false);
+  const [inBouquet, setInBouquet] = useState(false);
 
   useEffect(() => {
     setInCart(false);
@@ -25,6 +28,12 @@ const ItemCard = ({ cardData }) => {
       setInCart(true);
     }
   }, [cartItems, cardData]);
+  useEffect(() => {
+    setInBouquet(false);
+    if (isItemInCart(bouquetItems, cardData.id)) {
+      setInBouquet(true);
+    }
+  }, [bouquetItems, cardData]);
 
   const handleAddToCart = (image, title, discount, oldPrice, price, id) => {
     dispatch(
@@ -98,6 +107,7 @@ const ItemCard = ({ cardData }) => {
               )
             }
             inCart={inCart}
+            inBouquet={inBouquet}
           />
         </div>
         <div className={styles.features}>

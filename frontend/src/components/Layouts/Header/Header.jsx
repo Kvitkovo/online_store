@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { NavLink, useLocation, useNavigate, Link } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
@@ -119,13 +119,13 @@ const Header = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
 
-  const toggleCart = () => {
+  const toggleCart = useCallback(() => {
     setIsOpenCart((prev) => !prev);
-  };
+  }, []);
 
-  const toggleMyBouquet = () => {
+  const toggleMyBouquet = useCallback(() => {
     setIsOpenMyBouquet((prev) => !prev);
-  };
+  }, []);
 
   const toggleRegister = () => {
     setIsOpenLogin(false);

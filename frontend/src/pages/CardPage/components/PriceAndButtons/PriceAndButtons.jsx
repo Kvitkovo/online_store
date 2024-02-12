@@ -14,6 +14,7 @@ const PriceAndButtons = ({
   addToBouquet,
   addToCart,
   inCart,
+  inBouquet,
 }) => {
   const isInStock = stockInfo === 'AVAILABLE';
 
@@ -45,20 +46,39 @@ const PriceAndButtons = ({
             )}
             {canUseInBouquet ? (
               <>
-                <div className={styles.bouquetDesktop}>
-                  <Button
-                    variant="no-border"
-                    label="Додати до букету"
-                    padding="padding-header-sm"
-                    reverse="true"
-                    icon={<ICONS.toBouquet />}
-                    onClick={addToBouquet}
-                  />
-                </div>
-                <div className={styles.bouquetTablet}>
-                  {' '}
-                  <IconButton icon={<ICONS.BouquetIcon />} />
-                </div>
+                {inBouquet ? (
+                  <>
+                    <div className={styles.bouquetDesktop}>
+                      <Button
+                        variant="no-border"
+                        label="Додано в букет"
+                        padding="padding-header-sm"
+                        reverse="true"
+                        icon={<ICONS.inBouquet />}
+                        onClick={addToBouquet}
+                      />
+                    </div>
+                    <div className={styles.bouquetTablet}>
+                      <IconButton icon={<ICONS.inBouquet />} />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.bouquetDesktop}>
+                      <Button
+                        variant="no-border"
+                        label="Додати до букету"
+                        padding="padding-header-sm"
+                        reverse="true"
+                        icon={<ICONS.toBouquet />}
+                        onClick={addToBouquet}
+                      />
+                    </div>
+                    <div className={styles.bouquetTablet}>
+                      <IconButton icon={<ICONS.BouquetIcon />} />
+                    </div>
+                  </>
+                )}
               </>
             ) : null}
           </div>
