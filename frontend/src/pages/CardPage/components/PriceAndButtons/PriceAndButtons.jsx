@@ -10,9 +10,9 @@ const PriceAndButtons = ({
   actualPrice,
   oldPrice,
   stockInfo,
-  addToConstructor: canUseInBouquet,
-  addToBouquet,
-  addToCart,
+  canUseInBouquet,
+  addToStack,
+  deleteFromStack,
   inCart,
   inBouquet,
 }) => {
@@ -32,7 +32,7 @@ const PriceAndButtons = ({
                 label="Додати у кошик"
                 padding="padding-sm"
                 icon={<ICONS.toCart />}
-                onClick={addToCart}
+                onClick={() => addToStack('cart')}
               />
             )}
             {inCart && (
@@ -41,7 +41,7 @@ const PriceAndButtons = ({
                 label="У кошику"
                 padding="padding-bg"
                 icon={<ICONS.cartChecked />}
-                onClick={addToCart}
+                onClick={() => deleteFromStack('cart')}
               />
             )}
             {canUseInBouquet ? (
@@ -55,11 +55,14 @@ const PriceAndButtons = ({
                         padding="padding-header-sm"
                         reverse="true"
                         icon={<ICONS.inBouquet />}
-                        onClick={addToBouquet}
+                        onClick={() => deleteFromStack('bouquet')}
                       />
                     </div>
                     <div className={styles.bouquetTablet}>
-                      <IconButton icon={<ICONS.inBouquet />} />
+                      <IconButton
+                        icon={<ICONS.inBouquet />}
+                        onClick={() => deleteFromStack('bouquet')}
+                      />
                     </div>
                   </>
                 ) : (
@@ -71,11 +74,14 @@ const PriceAndButtons = ({
                         padding="padding-header-sm"
                         reverse="true"
                         icon={<ICONS.toBouquet />}
-                        onClick={addToBouquet}
+                        onClick={() => addToStack('bouquet')}
                       />
                     </div>
                     <div className={styles.bouquetTablet}>
-                      <IconButton icon={<ICONS.BouquetIcon />} />
+                      <IconButton
+                        icon={<ICONS.BouquetIcon />}
+                        onClick={() => addToStack('bouquet')}
+                      />
                     </div>
                   </>
                 )}

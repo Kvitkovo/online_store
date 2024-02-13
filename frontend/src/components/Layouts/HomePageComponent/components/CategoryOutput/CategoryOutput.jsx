@@ -76,6 +76,7 @@ const CategoryOutput = ({ title, categoryId }) => {
                   available={card.available}
                   id={card.id}
                   key={card.id}
+                  allowAddToConstructor={card.allowAddToConstructor}
                 />
               ))}
           </ul>
