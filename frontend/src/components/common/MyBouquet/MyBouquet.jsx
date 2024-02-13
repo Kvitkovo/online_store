@@ -54,7 +54,6 @@ const MyBouquet = ({ toggleMyBouquet }) => {
     dispatch(
       addToCart({
         info: {
-          id: `00${findIdx}`,
           title: `Свій букет #${findIdx}`,
           cardQuantity: 1,
           discount: 0,

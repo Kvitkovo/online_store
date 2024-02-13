@@ -105,6 +105,9 @@
 .discountPriceOrder span {
   font-size: 16px;
 }
+.pencilIcon {
+  margin-left: auto;
+}
 @include sm {
   .itemsBlock {
     overflow-y: hidden;
