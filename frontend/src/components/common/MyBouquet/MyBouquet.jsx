@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import Modals from '../Modals';
 import Button from '../../ui-kit/components/Button';
@@ -14,15 +14,17 @@ import { ICONS } from '../../ui-kit/icons';
 import styles from './MyBouquet.module.scss';
 import { useDispatch } from 'react-redux';
 import { addToCart, clearCart } from '../../../redux/slices/cartSlice';
+import ConfirmationPopup from './components/ConfirmationPopup';
 
 const MyBouquet = ({ toggleMyBouquet }) => {
   const { width } = useWindowSize();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { bouquetItems, cartItems } = useSelector(
     (state) => state.cartSliceReducer,
   );
+  const [isModalOpen, setModalOpen] = useState(false);
   const hasItems = bouquetItems.length > 0;
-  const dispatch = useDispatch();
 
   const totalSum = useMemo(
     () =>
@@ -37,6 +39,7 @@ const MyBouquet = ({ toggleMyBouquet }) => {
     if (hasItems) {
       dispatch(clearCart({ type: 'bouquet' }));
     }
+    setModalOpen(false);
   }, [dispatch, hasItems]);
 
   const addMore = useCallback(() => {
@@ -58,7 +61,7 @@ const MyBouquet = ({ toggleMyBouquet }) => {
           image: '/images/new_bouquet.jpg',
           oldPrice: totalSum,
           price: totalSum,
-          consist: bouquetItems,
+          orderItemsCompositions: bouquetItems,
         },
         type: 'cart',
       }),
@@ -66,6 +69,10 @@ const MyBouquet = ({ toggleMyBouquet }) => {
     clearAll();
     toggleMyBouquet();
   }, [bouquetItems, cartItems, clearAll, dispatch, toggleMyBouquet, totalSum]);
+
+  const handleDeleteAll = useCallback(() => {
+    setModalOpen(true);
+  }, []);
 
   return (
     <Modals type="myBouquet" onClick={toggleMyBouquet}>
@@ -86,10 +93,17 @@ const MyBouquet = ({ toggleMyBouquet }) => {
           <div className={styles.changeItems}>
             <span
               className={hasItems ? styles.deleteAll : styles.noActiveDelete}
-              onClick={clearAll}
+              onClick={handleDeleteAll}
+              disabled={!hasItems}
             >
               Видалити все
             </span>
+            {isModalOpen && (
+              <ConfirmationPopup
+                setIsOpen={setModalOpen}
+                deleteAll={clearAll}
+              />
+            )}
             <Button
               label={width > 767 ? 'Додати компонент' : 'Додати'}
               variant="secondary"
