@@ -21,17 +21,15 @@ const CountBlock = ({ item, type }) => {
   return (
     <div className={styles.countBlock}>
       <IconButton
-        icon={<ICONS.dash />}
+        icon={<ICONS.dash className={styles.icon} />}
+        disabled={item?.cardQuantity === 1}
         onClick={() => handleDecreaseCart(item)}
       />
       <div className={styles.field}>{item?.cardQuantity}</div>
       <IconButton
-        icon={
-          <ICONS.addComponent
-            className={styles.icon}
-            onClick={() => handleIncreaseCart(item)}
-          />
-        }
+        icon={<ICONS.addComponent className={styles.icon} />}
+        onClick={() => handleIncreaseCart(item)}
+        disabled={item?.cardQuantity > 9998}
       />
     </div>
   );
