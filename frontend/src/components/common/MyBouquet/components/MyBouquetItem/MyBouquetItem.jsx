@@ -20,22 +20,20 @@ const MyBouquetItem = ({ items }) => {
       {items.map((item, index) => (
         <React.Fragment key={item.id}>
           <li className={styles.item}>
-            <div className={styles.leftBlock}>
+            <div className={styles.icon}>
               <IconButton
                 icon={<ICONS.CloseIcon />}
                 onClick={() => handleRemovePosition(item)}
               />
-              <div className={styles.blockImg}>
-                <img src={item.image} alt={item.title} />
-                <span>{item.title}</span>
-              </div>
             </div>
-            <div className={styles.rightBlock}>
-              <CountBlock item={item} type={'bouquet'} />
-              <div className={styles.price}>
-                <b>{item.price * item.cardQuantity} </b>
-                <span>грн</span>
-              </div>
+            <div className={styles.blockImg}>
+              <img src={item.image} alt={item.title} />
+              <span>{item.title}</span>
+            </div>
+            <CountBlock item={item} type={'bouquet'} />
+            <div className={styles.price}>
+              <b>{item.price * item.cardQuantity} </b>
+              <span>грн</span>
             </div>
           </li>
           {index < items.length - 1 && (

@@ -5,7 +5,6 @@
   padding-right: 15px;
   margin-top: 30px;
   overflow-y: auto;
-  height: 320px;
   max-width: 571px;
 
   &:hover {
@@ -30,9 +29,10 @@
   height: 60px;
   display: flex;
   justify-content: space-between;
+  gap: 16px;
 }
 
-.leftBlock {
+.icon {
   display: flex;
   align-items: center;
 }
@@ -40,6 +40,7 @@
 .blockImg {
   display: flex;
   align-items: center;
+  width: 254px;
 
   img {
     width: 59px;
@@ -54,18 +55,13 @@
   }
 }
 
-.rightBlock {
-  display: flex;
-  align-items: center;
-  gap: 29px;
-}
-
 .price {
   display: flex;
   align-items: center;
   margin-top: 5px;
   color: $page-accent-color;
   line-height: 24px;
+  width: 106px;
 
   span {
     margin-left: 12px;
