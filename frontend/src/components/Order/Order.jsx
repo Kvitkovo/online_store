@@ -88,6 +88,7 @@ const Order = () => {
               handleBackEdit={handleChangeStep}
             >
               <Payment
+                paymentData={orderData.paymentData}
                 setDataOnSubmit={(newPaymentData) => {
                   handleStepFinish(currentStep);
                   setOrderData({ ...orderData, paymentData: newPaymentData });

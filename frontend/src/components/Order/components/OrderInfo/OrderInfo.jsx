@@ -6,7 +6,7 @@ import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
 import Button from '../../../ui-kit/components/Button';
 
-const OrderInfo = () => {
+const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
 
   const productTotal = useMemo(() => {
@@ -25,6 +25,10 @@ const OrderInfo = () => {
     );
     return quantity;
   }, [cartItems]);
+
+  // const sendOrder = () => {
+  //   console.log(cartItems, orderData);
+  // };
 
   return (
     <div className={styles.cart}>
@@ -58,7 +62,9 @@ const OrderInfo = () => {
           <Button
             label="Оформити замовлення"
             padding="padding-even"
-            variant="disabled"
+            variant={orderData.paymentData ? 'primary' : 'disabled'}
+            disabled={orderData.paymentData ? false : true}
+            // onClick={() => sendOrder()}
           ></Button>
         </div>
       </div>
