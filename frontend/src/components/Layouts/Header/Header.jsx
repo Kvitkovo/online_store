@@ -298,7 +298,9 @@ const Header = () => {
           </div>
         </div>
       </header>
-      {isOpenCart && <CartPopup toggleCart={toggleCart} />}
+      {isOpenCart && (
+        <CartPopup toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      )}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       {isOpenLogin && (
         <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />

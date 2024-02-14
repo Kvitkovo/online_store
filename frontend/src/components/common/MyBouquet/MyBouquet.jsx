@@ -51,11 +51,12 @@ const MyBouquet = ({ toggleMyBouquet }) => {
     const findIdx =
       cartItems.filter((item) => item.title.includes('Свій букет'))?.length +
         1 || 1;
+    const formatedIdx = findIdx.toString().padStart(3, '0');
     dispatch(
       addToCart({
         info: {
-          id: `00${findIdx}`,
-          title: `Свій букет #${findIdx}`,
+          id: formatedIdx,
+          title: `Свій букет #${formatedIdx}`,
           cardQuantity: 1,
           discount: 0,
           image: '/images/new_bouquet.jpg',

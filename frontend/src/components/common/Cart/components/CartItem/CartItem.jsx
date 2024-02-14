@@ -10,7 +10,7 @@ import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';
 
-const CartItem = ({ items, cartClassName }) => {
+const CartItem = ({ items, cartClassName, editBouquet }) => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
 
@@ -38,16 +38,16 @@ const CartItem = ({ items, cartClassName }) => {
             <div className={styles.blockImg}>
               <img src={item.image} alt={item.title} />
               <span>{item.title}</span>
+              {item?.orderItemsCompositions && (
+                <div className={styles.pencilIcon}>
+                  <IconButton
+                    icon={<ICONS.PencilIcon />}
+                    isBorderYellow={width > 767}
+                    onClick={() => editBouquet(item)}
+                  />
+                </div>
+              )}
             </div>
-
-            {item.status && (
-              <div className={styles.pencilIcon}>
-                <IconButton
-                  icon={<ICONS.PencilIcon />}
-                  isBorderYellow={width > 767}
-                />
-              </div>
-            )}
             <div className={styles.countBlock}>
               <CountBlock item={item} type={'cart'} />
             </div>
