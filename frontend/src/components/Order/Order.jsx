@@ -80,12 +80,23 @@ const Order = () => {
             </OrderSection>
           </div>
           <div className={styles.orderBlock}>
-            <OrderSection step={4} currentStep={currentStep} name={'Оплата'}>
-              <Payment />
+            <OrderSection
+              step={4}
+              currentStep={currentStep}
+              name={'Оплата'}
+              outputString={orderData.paymentData?.outputString}
+              handleBackEdit={handleChangeStep}
+            >
+              <Payment
+                setDataOnSubmit={(newPaymentData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({ ...orderData, paymentData: newPaymentData });
+                }}
+              />
             </OrderSection>
           </div>
         </div>
-        <OrderInfo />
+        <OrderInfo orderData={orderData} />
       </div>
     </div>
   );
