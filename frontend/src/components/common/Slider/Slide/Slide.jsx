@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../../../../components/common/Card/Card';
+import Card from '../../Card/Card';
 import styles from './Slide.module.scss';
 
 const Slide = ({ card }) => {

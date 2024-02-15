@@ -1,0 +1,54 @@
+@import '../../../../variables';
+
+.postcardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  line-height: 24px;
+  margin-top: 22px;
+}
+
+.radioBtn {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  label {
+    text-decoration: underline;
+    color: $page-accent-color;
+  }
+}
+
+.commentOpen {
+  label {
+    color: $text-color;
+  }
+}
+textarea {
+  width: 500px;
+  height: 120px;
+  border: 1px solid $gray-dark-color;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-family: $font-main;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    flex-shrink: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $page-accent-color;
+    border-radius: 2px;
+    padding-top: 8px;
+  }
+}
+
+.continueButton {
+  margin-top: 10px;
+}
