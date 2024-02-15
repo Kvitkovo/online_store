@@ -15,10 +15,12 @@ import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
+import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
 import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
+import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.dto.admin.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
@@ -50,6 +52,7 @@ public class OrderService {
     private final UserService userService;
     private final ProductService productService;
     private final NotificationService emailService;
+    private final OrderDtoMapper orderDtoMapper;
 
     public Order findById(Long id) throws ItemNotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Order not found"));
@@ -80,7 +83,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order addOrder(OrderRequestDto dto, BindingResult bindingResult) {
+    public OrderResponseDto addOrder(OrderRequestDto dto, BindingResult bindingResult) {
         orderDtoValidator.validate(dto, bindingResult);
 
         Order order = new Order();
@@ -100,15 +103,17 @@ public class OrderService {
             //NOP
         }
         orderRepository.save(order);
+        OrderResponseDto orderResponseDto = orderDtoMapper.mapEntityToDto(order);
 
         NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
         Map<String, Object> fields = Map.of(
-            "order", order
+            "order", orderResponseDto,
+            "shop", order.getShop()
         );
         emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
 
         log.info("The Order was created");
-        return order;
+        return orderResponseDto;
     }
 
     private String getFullTextAddress(Order order) {

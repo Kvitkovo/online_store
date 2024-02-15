@@ -169,7 +169,8 @@ span.MsoHyperlinkFollowed {
                                 Ваше замовлення <a
                                   style="mso-line-height-rule:exactly;text-decoration:underline;color:#6CC25E;font-size:18px;line-height:27px"
                                   target="_blank"
-                                  href="https://delicate-sopapillas-73d2b2.netlify.app/">№0000000</a><span
+                                  th:text="'№' + ${order.id}"
+                                  href="https://delicate-sopapillas-73d2b2.netlify.app/"></a><span
                                   style="color:#6CC25E"> </span>успішно оформлене!</p></td>
                             </tr>
                           </table>
@@ -193,7 +194,8 @@ span.MsoHyperlinkFollowed {
                                 <span style="background:transparent"
                                       th:text="'Номер замовлення №' + ${order.id}"></span></p>
                                 <p style="Margin:0;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:32px !important;letter-spacing:0;color:#333333;font-size:16px">
-                                  <span style="background:transparent">Дата: 00.00.0000</span></p>
+                                  <span style="background:transparent"
+                                        th:text="'Дата: ' + ${order.created}"></span></p>
                                 <p style="Margin:0;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;line-height:32px !important;letter-spacing:0;color:#333333;font-size:16px">
                                   <span
                                       style="background:transparent">Кількість товарів: 4 шт</span>
@@ -801,7 +803,7 @@ span.MsoHyperlinkFollowed {
                                   style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;letter-spacing:0;color:#ffffff;font-size:14px">
                                 Телефон: <span class="es-text-mobile-size-16"
                                                style="font-size:16px;line-height:24px"
-                                               th:text="${order.shop.phone}"></span></p></td>
+                                               th:text="${shop.phone}"></span></p></td>
                             </tr>
                           </table>
                         </td>
@@ -827,10 +829,10 @@ span.MsoHyperlinkFollowed {
                             <tr>
                               <td align="left" class="es-text-2105" style="padding:0;Margin:0"><p
                                   style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;letter-spacing:0;color:#ffffff;font-size:14px"
-                                  align="right" class=" es-m-txt-l" th:text="${order.shop.city}">
+                                  align="right" class=" es-m-txt-l" th:text="${shop.city}">
                                 <span class="es-text-mobile-size-16"
                                       style="font-size:16px;line-height:24px"
-                                      th:text="${order.shop.address}"></span></p></td>
+                                      th:text="${shop.address}"></span></p></td>
                             </tr>
                           </table>
                         </td>
@@ -885,7 +887,7 @@ span.MsoHyperlinkFollowed {
                                   align="right" class=" es-m-txt-l">e-mail: <span
                                   class="es-text-mobile-size-16"
                                   style="font-size:16px;line-height:24px"
-                                  th:text="${order.shop.email}"></span></p></td>
+                                  th:text="${shop.email}"></span></p></td>
                             </tr>
                           </table>
                         </td>
