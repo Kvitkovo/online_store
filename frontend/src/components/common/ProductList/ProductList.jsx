@@ -234,6 +234,7 @@ const ProductList = React.memo(
                         available={product.available}
                         key={product.id}
                         id={product.id}
+                        allowAddToConstructor={product.allowAddToConstructor}
                       />
                     ))}
                   </div>

@@ -5,6 +5,11 @@
   gap: 12px;
   display: flex;
   align-items: center;
+  & button:disabled {
+    path {
+      stroke: $gray-light-color;
+    }
+  }
 }
 
 .field {

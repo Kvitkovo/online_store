@@ -17,6 +17,7 @@ const Slide = ({ card }) => {
         oldPrice={card.price}
         price={card.priceWithDiscount}
         id={card.id}
+        allowAddToConstructor={card.allowAddToConstructor}
       />
     </swiper-slide>
   );

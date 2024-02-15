@@ -15,8 +15,15 @@ const CartItem = ({ items, cartClassName }) => {
   const { width } = useWindowSize();
 
   const handleRemoveFromCart = (cartItem) => {
-    dispatch(removeFromCart(cartItem));
+    dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
   };
+  // const editBouquet = (item) => {
+  //   dispatch(clearCart({ type: 'bouquet' }));
+  //   item.orderItemsCompositions.map((elem) => {
+  //     dispatch(addToCart({ info: elem, type: 'bouquet' }));
+  //   });
+  //   toggleMyBouquet();
+  // };
 
   return (
     <div
@@ -38,18 +45,18 @@ const CartItem = ({ items, cartClassName }) => {
             <div className={styles.blockImg}>
               <img src={item.image} alt={item.title} />
               <span>{item.title}</span>
+              {item?.orderItemsCompositions && (
+                <div className={styles.pencilIcon}>
+                  <IconButton
+                    icon={<ICONS.PencilIcon />}
+                    isBorderYellow={width > 767}
+                    // onClick={() => editBouquet(item)}
+                  />
+                </div>
+              )}
             </div>
-
-            {item.status && (
-              <div className={styles.pencilIcon}>
-                <IconButton
-                  icon={<ICONS.PencilIcon />}
-                  isBorderYellow={width > 767}
-                />
-              </div>
-            )}
             <div className={styles.countBlock}>
-              <CountBlock item={item} />
+              <CountBlock item={item} type={'cart'} />
             </div>
             <div
               className={

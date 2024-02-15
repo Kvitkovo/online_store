@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   cartItems: [],
+  bouquetItems: [],
 };
 
 const cartSlice = createSlice({
@@ -9,45 +10,63 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id,
+      const { info, type } = action.payload;
+
+      const itemIndex = state[type + 'Items'].findIndex(
+        (item) => item.id === info.id,
       );
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].cardQuantity += 1;
+        state[type + 'Items'][itemIndex].cardQuantity += 1;
       } else {
-        const tempProduct = { ...action.payload, cardQuantity: 1 };
-        state.cartItems.push(tempProduct);
+        const tempProduct = { ...info, cardQuantity: 1 };
+        state[type + 'Items'].push(tempProduct);
       }
     },
     removeFromCart(state, action) {
-      const newCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.id !== action.payload.id,
+      const { info, type } = action.payload;
+
+      const newCartItems = state[type + 'Items'].filter(
+        (cartItem) => cartItem.id !== info.id,
       );
-      state.cartItems = newCartItems;
+      state[type + 'Items'] = newCartItems;
     },
     decreaseCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id,
+      const { info, type } = action.payload;
+
+      const itemIndex = state[type + 'Items'].findIndex(
+        (item) => item.id === info.id,
       );
-      if (state.cartItems[itemIndex].cardQuantity > 1) {
-        state.cartItems[itemIndex].cardQuantity -= 1;
+      if (state[type + 'Items'][itemIndex].cardQuantity > 1) {
+        state[type + 'Items'][itemIndex].cardQuantity -= 1;
       } else {
-        const newCartItems = state.cartItems.filter(
-          (cartItem) => cartItem.id !== action.payload.id,
+        const newCartItems = state[type + 'Items'].filter(
+          (cartItem) => cartItem.id !== info.id,
         );
-        state.cartItems = newCartItems;
+        state[type + 'Items'] = newCartItems;
       }
     },
     increaseCart(state, action) {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id,
+      const { info, type } = action.payload;
+
+      const itemIndex = state[type + 'Items'].findIndex(
+        (item) => item.id === info.id,
       );
-      state.cartItems[itemIndex].cardQuantity += 1;
+      state[type + 'Items'][itemIndex].cardQuantity += 1;
+    },
+    clearCart(state, action) {
+      const { type } = action.payload;
+
+      state[type + 'Items'] = [];
     },
   },
 });
 
-export const { addToCart, removeFromCart, decreaseCart, increaseCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  decreaseCart,
+  increaseCart,
+  clearCart,
+} = cartSlice.actions;
 
 export const cartSliceReducer = cartSlice.reducer;

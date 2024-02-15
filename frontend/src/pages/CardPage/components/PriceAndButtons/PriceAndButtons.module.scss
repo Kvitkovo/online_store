@@ -13,6 +13,11 @@
 }
 .bouquetDesktop {
   display: flex;
+
+  & button {
+    width: 178px;
+    justify-content: space-between;
+  }
 }
 .bouquetTablet {
   display: none;
