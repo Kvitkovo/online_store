@@ -1,5 +1,6 @@
 package ua.kvitkovo.orders.service;
 
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -11,6 +12,9 @@ import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
+import ua.kvitkovo.notifications.NotificationService;
+import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
 import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
@@ -45,6 +49,7 @@ public class OrderService {
     private final ShopService shopService;
     private final UserService userService;
     private final ProductService productService;
+    private final NotificationService emailService;
 
     public Order findById(Long id) throws ItemNotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Order not found"));
@@ -95,6 +100,12 @@ public class OrderService {
             //NOP
         }
         orderRepository.save(order);
+
+        NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
+        Map<String, Object> fields = Map.of(
+            "order", order
+        );
+        emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
 
         log.info("The Order was created");
         return order;
