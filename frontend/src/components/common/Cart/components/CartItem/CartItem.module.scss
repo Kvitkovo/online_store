@@ -6,6 +6,8 @@
   margin-top: 24px;
   overflow-y: auto;
   height: 479px;
+  scrollbar-width: 4px;
+  scrollbar-color: $page-accent-color transparent;
 
   &:hover {
     overflow-y: auto;
@@ -157,5 +159,15 @@
   }
   .priceWithoutDiscount {
     margin-top: -28px;
+  }
+}
+
+@include md {
+  .itemsCart {
+    margin-top: 0;
+    background: $background-gradient;
+    padding: 58px 27px;
+    height: 898px;
+    overflow-y: auto;
   }
 }

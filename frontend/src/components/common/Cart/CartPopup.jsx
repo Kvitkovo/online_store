@@ -15,11 +15,14 @@ import {
   clearCart,
   removeFromCart,
 } from '../../../redux/slices/cartSlice';
+import Footer from '../../Footer';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { width } = useWindowSize();
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -56,37 +59,36 @@ const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
             onClick={toggleCart}
           />
         </div>
-        <div className={styles.mobileBackground}>
-          {cartItems.length > 0 ? (
-            <CartItem
-              items={cartItems}
-              cartClassName="itemsCart"
-              editBouquet={editBouquet}
-            />
-          ) : (
-            <CartEmpty />
-          )}
-        </div>
-      </div>
-      <div className={styles.bottomBlock}>
-        <Divider />
-        <div className={styles.bottom}>
-          <div className={styles.total}>
-            Разом:
-            <b>
-              {productTotal}
-              <span className={styles.currency}>грн</span>
-            </b>
-          </div>
-          <Button
-            label="Оформити замовлення"
-            variant={cartItems.length > 0 ? 'primary' : 'disabled'}
-            padding="padding-even"
-            onClick={() => handleOrder()}
-            disabled={cartItems.length === 0}
+        {cartItems.length > 0 ? (
+          <CartItem
+            items={cartItems}
+            cartClassName="itemsCart"
+            editBouquet={editBouquet}
           />
+        ) : (
+          <CartEmpty />
+        )}
+        <div className={styles.bottomBlock}>
+          <Divider />
+          <div className={styles.bottom}>
+            <div className={styles.total}>
+              Разом:
+              <b>
+                {productTotal}
+                <span className={styles.currency}>грн</span>
+              </b>
+            </div>
+            <Button
+              label="Оформити замовлення"
+              variant={cartItems.length > 0 ? 'primary' : 'disabled'}
+              padding="padding-even"
+              onClick={() => handleOrder()}
+              disabled={cartItems.length === 0}
+            />
+          </div>
         </div>
       </div>
+      {width < 868 && <Footer />}
     </Modals>
   );
 };

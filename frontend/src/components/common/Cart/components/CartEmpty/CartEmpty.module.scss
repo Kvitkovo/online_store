@@ -28,8 +28,13 @@
   }
 }
 
-@include sm {
+@include md {
   .root {
+    height: 894px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 46px;
     p {
       text-align: center;
     }
