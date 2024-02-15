@@ -4,8 +4,9 @@
 .itemsBlock {
   padding-right: 15px;
   margin-top: 30px;
-  max-width: 571px;
-  max-height: 100%;
+  width: 571px;
+  min-height: 816px;
+  max-height: 90%;
   overflow-y: auto;
   scrollbar-width: 4px;
   scrollbar-color: $page-accent-color transparent;
@@ -27,10 +28,12 @@
 }
 
 .item {
+  box-sizing: content-box;
   height: 60px;
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  padding: 8px 0;
 }
 
 .icon {
@@ -76,15 +79,21 @@
   padding: 12px 0;
 }
 
-@include sm {
+@include md {
   .itemsBlock {
-    padding-right: 0;
-    height: 100%;
-    overflow-y: hidden;
+    width: 100%;
+    max-height: 796px;
+    margin-top: 0;
+    padding: 0 27px 20px;
+    overflow-y: scroll;
+    background: $background-gradient;
   }
   .item {
-    height: 116px;
-    flex-direction: column;
+    width: 100%;
+  }
+
+  .blockImg {
+    flex: 2 2;
   }
   .rightBlock {
     margin-left: 95px;

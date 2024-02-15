@@ -57,9 +57,11 @@
   height: fit-content;
 }
 
-@include sm {
+@include md {
   .drawer {
     overflow-y: auto;
     max-height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
   }
 }
