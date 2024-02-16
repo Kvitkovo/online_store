@@ -1,6 +1,5 @@
 package ua.kvitkovo.orders.service;
 
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -10,11 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
@@ -37,18 +34,12 @@ import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.Helper;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class OrderService {
-
-    @Value("${site.base.url}")
-    private String baseSiteUrl;
 
     private final OrderRepository orderRepository;
     private final OrderDtoValidator orderDtoValidator;
@@ -58,6 +49,8 @@ public class OrderService {
     private final ProductService productService;
     private final NotificationService emailService;
     private final OrderDtoMapper orderDtoMapper;
+    @Value("${site.base.url}")
+    private String baseSiteUrl;
 
     public Order findById(Long id) throws ItemNotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Order not found"));
@@ -114,9 +107,9 @@ public class OrderService {
 
         NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
         Map<String, Object> fields = Map.of(
-            "order", orderResponseDto,
-            "productsCount", productsCount,
-            "shop", order.getShop(),
+                "order", orderResponseDto,
+                "productsCount", productsCount,
+                "shop", order.getShop(),
                 "baseSiteUrl", baseSiteUrl
         );
         emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
