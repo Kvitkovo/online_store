@@ -1,6 +1,7 @@
 @import '../../../../variables';
 
 .button {
+  position: relative;
   width: inherit;
   height: 48px;
   font-family: $font-main;

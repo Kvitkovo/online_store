@@ -1,0 +1,27 @@
+@import '/src/variables';
+
+.cartQuantity {
+  padding: 1px 5px 0;
+  font-family: 'FixelDisplay';
+  border-radius: 100px;
+  background-color: #de5f38;
+  color: #fff;
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -6px;
+  right: -8px;
+}
+.totalBouquet {
+  top: 7px;
+}
+.cartQuantityHide {
+  height: 14px;
+  width: 14px;
+  visibility: hidden;
+  position: absolute;
+}

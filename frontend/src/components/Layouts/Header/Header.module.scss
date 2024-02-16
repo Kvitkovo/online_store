@@ -209,10 +209,12 @@ header {
   align-items: center;
 }
 .bouquete {
+  position: relative;
   margin: 0 8px;
 }
 
 .cart {
+  position: relative;
   cursor: pointer;
   margin-left: 8px;
   display: flex;
@@ -222,27 +224,6 @@ header {
 }
 .tabletContacts {
   display: none;
-}
-
-.cartQuantity {
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  background-color: $discount-color;
-  color: $white-color;
-  font-size: 10px;
-  text-align: center;
-  position: relative;
-  left: -8px;
-  top: -6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cartQuantityHide {
-  height: 14px;
-  width: 14px;
-  visibility: hidden;
 }
 
 @include lg {

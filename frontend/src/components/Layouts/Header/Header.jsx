@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { getUser } from '../../../redux/slices/userSlice';
 import { GetProductsFilter } from '../../../services/products/productsAccess.service';
 import Divider from '../../ui-kit/components/Divider';
+import TotalItems from './components/TotalItems';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -100,7 +101,9 @@ const Header = () => {
     setQuery('');
   };
 
-  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const { cartItems, bouquetItems } = useSelector(
+    (state) => state.cartSliceReducer,
+  );
 
   const productQuantity = useMemo(() => {
     const quantity = cartItems.reduce(
@@ -109,6 +112,14 @@ const Header = () => {
     );
     return quantity;
   }, [cartItems]);
+  const flowerQuantity = useMemo(
+    () =>
+      bouquetItems.reduce(
+        (accumulator, item) => accumulator + item.cardQuantity,
+        0,
+      ),
+    [bouquetItems],
+  );
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -276,6 +287,7 @@ const Header = () => {
                 icon={<ICONS.toBouquet />}
                 onClick={toggleMyBouquet}
               />
+              <TotalItems productQuantity={flowerQuantity} type={'Bouquet'} />
             </div>
 
             <div className={styles.login}>
@@ -288,11 +300,7 @@ const Header = () => {
             </div>
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />}>
-                {productQuantity !== 0 ? (
-                  <div className={styles.cartQuantity}>{productQuantity}</div>
-                ) : (
-                  <div className={styles.cartQuantityHide} />
-                )}
+                <TotalItems productQuantity={productQuantity} />
               </IconButton>
             </div>
           </div>
