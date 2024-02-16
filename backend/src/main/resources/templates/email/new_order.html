@@ -91,7 +91,7 @@
                         <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:560px">
                           <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                             <tr>
-                              <td align="left" style="padding:0;Margin:0;padding-left:5px;font-size:0"><a target="_blank" href="https://delicate-sopapillas-73d2b2.netlify.app/" style="mso-line-height-rule:exactly;text-decoration:underline;color:#2CB543;font-size:14px"><img src="https://eeobtaw.stripocdn.email/content/guids/CABINET_11acc139d65709c9d4fde9a4fe310386da562cf0ffd76dcf5431f6928c7733f3/images/logokvitkovo.png" alt="logo-kvitkovo" width="137" title="logo-kvitkovo" height="50" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none"></a></td>
+                              <td align="left" style="padding:0;Margin:0;padding-left:5px;font-size:0"><a target="_blank" th:href="${baseSiteUrl}" style="mso-line-height-rule:exactly;text-decoration:underline;color:#2CB543;font-size:14px"><img src="https://eeobtaw.stripocdn.email/content/guids/CABINET_11acc139d65709c9d4fde9a4fe310386da562cf0ffd76dcf5431f6928c7733f3/images/logokvitkovo.png" alt="logo-kvitkovo" width="137" title="logo-kvitkovo" height="50" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none"></a></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -124,7 +124,7 @@
                         <td align="left" style="padding:0;Margin:0;width:560px">
                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                             <tr>
-                              <td align="left" class="es-text-4549" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:27px;letter-spacing:0;color:#333333;font-size:18px">Ваше замовлення <a style="mso-line-height-rule:exactly;text-decoration:underline;color:#6CC25E;font-size:18px;line-height:27px" target="_blank" href="https://delicate-sopapillas-73d2b2.netlify.app/" th:text="'№' + ${order.id}"></a><span style="color:#6CC25E"> </span>успішно оформлене!</p></td>
+                              <td align="left" class="es-text-4549" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:27px;letter-spacing:0;color:#333333;font-size:18px">Ваше замовлення <a style="mso-line-height-rule:exactly;text-decoration:underline;color:#6CC25E;font-size:18px;line-height:27px" target="_blank" th:href="${baseSiteUrl} + '/account/orders'" th:text="'№' + ${order.id}"></a><span style="color:#6CC25E"> </span>успішно оформлене!</p></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -222,9 +222,17 @@
                       <tr>
                         <td align="left" style="padding:0;Margin:0;width:54px">
                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                            <tr>
-                              <td align="center" style="padding:0;Margin:0;font-size:0"><img src="https://eeobtaw.stripocdn.email/content/guids/CABINET_11acc139d65709c9d4fde9a4fe310386da562cf0ffd76dcf5431f6928c7733f3/images/101troyanda.png" alt="101 buket" width="50" title="101 buket" height="50" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none"></td>
-                            </tr>
+                            <th:block th:if="${item.product != null}">
+                              <tr>
+                                <td align="center" style="padding:0;Margin:0;font-size:0"><img th:src="${item.product.mainImageSmallUrl}"  th:alt="${item.productTitle}" width="50" th:title="${item.productTitle}" height="50" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none"></td>
+                              </tr>
+                            </th:block>
+                            <th:block th:unless="${item.product != null}">
+                              <tr>
+                                <td align="center" style="padding:0;Margin:0;font-size:0"><img th:src="${baseSiteUrl} + '/images/no_image.jpg'"  th:alt="${item.productTitle}" width="50" th:title="${item.productTitle}" height="50" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none"></td>
+                              </tr>
+                            </th:block>
+
                           </table></td>
                         <td class="es-hidden" style="padding:0;Margin:0;width:20px"></td>
                       </tr>
@@ -234,16 +242,18 @@
                         <td align="left" style="padding:0;Margin:0;width:241px">
                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                             <tr>
-                              <td align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#242424;font-size:14px" th:text="${item.product.title}">Букет “101 троянда”</p></td>
+                              <td align="left" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#242424;font-size:14px" th:text="${item.productTitle}">Букет “101 троянда”</p></td>
                             </tr>
                           </table></td>
                       </tr>
                       <tr>
                         <td align="left" style="padding:0;Margin:0;width:241px">
                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                            <tr>
-                              <td align="left" class="es-text-1712" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#979797;font-size:12px" th:text="'код ' +${item.product.id}">код 000000000</p></td>
-                            </tr>
+                            <th:block th:if="${item.product != null}">
+                              <tr>
+                                <td align="left" class="es-text-1712" style="padding:0;Margin:0;padding-top:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#979797;font-size:12px" th:text="'код ' +${item.product.id}">код 000000000</p></td>
+                              </tr>
+                            </th:block>
                           </table></td>
                       </tr>
                     </table><!--[if mso]></td><td style="width:20px"></td><td style="width:175px" valign="top"><![endif]-->
@@ -445,7 +455,7 @@
                         <td align="left" style="padding:0;Margin:0;width:560px">
                           <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                             <tr>
-                              <td align="left" class="es-text-1361" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px;letter-spacing:0;color:#ffffff;font-size:10px" align="center">Ви отримали цього листа, тому що є клієнтом онлайн-магазину <a style="mso-line-height-rule:exactly;text-decoration:underline;color:#ffffff;font-size:10px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px" target="_blank" href="https://delicate-sopapillas-73d2b2.netlify.app/">Kvitkovo</a>.&nbsp;</p></td>
+                              <td align="left" class="es-text-1361" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px;letter-spacing:0;color:#ffffff;font-size:10px" align="center">Ви отримали цього листа, тому що є клієнтом онлайн-магазину <a style="mso-line-height-rule:exactly;text-decoration:underline;color:#ffffff;font-size:10px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px" target="_blank" th:href="${baseSiteUrl}">Kvitkovo</a>.&nbsp;</p></td>
                             </tr>
                           </table></td>
                       </tr>

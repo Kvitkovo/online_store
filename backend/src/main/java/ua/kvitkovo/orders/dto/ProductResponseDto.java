@@ -1,6 +1,7 @@
 package ua.kvitkovo.orders.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Setter
@@ -19,4 +20,10 @@ public class ProductResponseDto {
 
     @Schema(example = "Buket-z-gortenziyami", description = "Product alias")
     private String alias;
+
+    @Schema(example = "https://kvitkovo.s3.eu-north-1.amazonaws.com/images/products/1_lHyUK_s.webp",
+            description = "Link to a small product image"
+    )
+    @NotBlank
+    private String mainImageSmallUrl;
 }

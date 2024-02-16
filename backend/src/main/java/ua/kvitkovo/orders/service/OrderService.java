@@ -4,14 +4,17 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import ua.kvitkovo.catalog.entity.Product;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
+import ua.kvitkovo.images.entity.Image;
 import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
@@ -43,6 +46,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Service
 public class OrderService {
+
+    @Value("${site.base.url}")
+    private String baseSiteUrl;
 
     private final OrderRepository orderRepository;
     private final OrderDtoValidator orderDtoValidator;
@@ -110,7 +116,8 @@ public class OrderService {
         Map<String, Object> fields = Map.of(
             "order", orderResponseDto,
             "productsCount", productsCount,
-            "shop", order.getShop()
+            "shop", order.getShop(),
+                "baseSiteUrl", baseSiteUrl
         );
         emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
 
