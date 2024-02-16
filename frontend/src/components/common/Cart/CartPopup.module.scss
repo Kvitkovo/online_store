@@ -54,7 +54,6 @@
   .container {
     padding: 0;
     overflow: initial;
-    background: $background-gradient;
   }
   .headerBlock {
     padding: 16px 27px;
@@ -85,5 +84,17 @@
       font-size: 22px;
       line-height: 24px;
     }
+  }
+}
+
+@include sm {
+  .bottom {
+    padding: 17px 16px 46px;
+    background-color: $white-color;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .total {
+    padding: 6px;
   }
 }
