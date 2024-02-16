@@ -30,7 +30,9 @@ const MyBouquetItem = ({ items }) => {
               <img src={item.image} alt={item.title} />
               <span>{item.title}</span>
             </div>
-            <CountBlock item={item} type={'bouquet'} />
+            <div className={styles.countBlock}>
+              <CountBlock item={item} type={'bouquet'} />
+            </div>
             <div className={styles.price}>
               <b>{item.price * item.cardQuantity} </b>
               <span>грн</span>

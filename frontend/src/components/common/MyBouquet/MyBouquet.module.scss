@@ -118,3 +118,19 @@
     }
   }
 }
+
+@include sm {
+  .changeItems {
+    padding-bottom: 24px;
+  }
+  .bottom {
+    flex-direction: column;
+    padding-top: 0;
+  }
+  .button {
+    width: 100%;
+  }
+  .divider {
+    display: none;
+  }
+}

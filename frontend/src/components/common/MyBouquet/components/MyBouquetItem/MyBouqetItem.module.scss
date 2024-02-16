@@ -5,7 +5,7 @@
   padding-right: 15px;
   margin-top: 30px;
   width: 571px;
-  min-height: 816px;
+  height: 816px;
   max-height: 90%;
   overflow-y: auto;
   scrollbar-width: 4px;
@@ -33,7 +33,7 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 8px 0;
+  // padding: 8px 0;
 }
 
 .icon {
@@ -84,7 +84,7 @@
     width: 100%;
     max-height: 796px;
     margin-top: 0;
-    padding: 0 27px 20px;
+    padding: 8px 27px 20px;
     overflow-y: scroll;
     background: $background-gradient;
   }
@@ -98,5 +98,33 @@
   .rightBlock {
     margin-left: 95px;
     justify-content: space-between;
+  }
+}
+
+@include sm {
+  .itemsBlock {
+    // min-height: 587px;÷
+    max-height: 587px;
+  }
+  .item {
+    height: max-content;
+    display: grid;
+    gap: 16px 0;
+    grid-template-areas: 'icon title title title .' '. . countBlock price .';
+  }
+  .icon {
+    grid-area: icon;
+  }
+  .blockImg {
+    grid-area: title;
+    img {
+      margin-left: 0;
+    }
+  }
+  .countBlock {
+    grid-area: countBlock;
+  }
+  .price {
+    grid-area: price;
   }
 }
