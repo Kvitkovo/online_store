@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
@@ -9,13 +9,22 @@ import CountBlock from '../CountBlock';
 import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';
+import ConfirmationPopup from '../../../MyBouquet/components/ConfirmationPopup';
 
 const CartItem = ({ items, cartClassName, editBouquet }) => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
-
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
+  };
+
+  const handleSetConfirmation = () => {
+    setConfirmationOpen(true);
+  };
+  const handleEditing = (item) => {
+    setConfirmationOpen(false);
+    editBouquet(item);
   };
 
   return (
@@ -43,8 +52,15 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                   <IconButton
                     icon={<ICONS.PencilIcon />}
                     isBorderYellow={width > 767}
-                    onClick={() => editBouquet(item)}
+                    onClick={handleSetConfirmation}
                   />
+                  {isConfirmationOpen && (
+                    <ConfirmationPopup
+                      setIsOpen={setConfirmationOpen}
+                      confirmedAction={() => handleEditing(item)}
+                      action={'Продовжити'}
+                    />
+                  )}
                 </div>
               )}
             </div>

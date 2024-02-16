@@ -1,4 +1,5 @@
 @import '/src/variables';
+@import '/src/mixins';
 
 .cartQuantity {
   padding: 1px 5px 0;
@@ -24,4 +25,11 @@
   width: 14px;
   visibility: hidden;
   position: absolute;
+}
+
+@include md {
+  .cartQuantity {
+    top: 3px;
+    right: -4px;
+  }
 }

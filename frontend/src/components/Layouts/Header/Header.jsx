@@ -181,6 +181,7 @@ const Header = () => {
         toggleMyBouquet={toggleMyBouquet}
         toggleLogin={toggleLogin}
         cartQuantity={productQuantity}
+        flowerQuantity={flowerQuantity}
       />
       <header>
         <div className={styles.containerTop}>

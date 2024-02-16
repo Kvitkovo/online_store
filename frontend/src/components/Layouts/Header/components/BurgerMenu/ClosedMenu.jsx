@@ -3,6 +3,7 @@ import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import InputSearch from '../../../../ui-kit/components/Input/InputSearch';
+import TotalItems from '../TotalItems';
 
 const ClosedMenu = ({
   toggleMenu,
@@ -10,6 +11,7 @@ const ClosedMenu = ({
   toggleMyBouquet,
   cartQuantity,
   toggleLogin,
+  flowerQuantity,
 }) => {
   return (
     <div className={styles.burgerMenu}>
@@ -29,15 +31,14 @@ const ClosedMenu = ({
               icon={<ICONS.BouquetIcon />}
               onClick={toggleMyBouquet}
             />
+            <TotalItems productQuantity={flowerQuantity} />
           </div>
           <div className={styles.account}>
             <IconButton icon={<ICONS.halfPerson />} onClick={toggleLogin} />
           </div>
           <div className={styles.cart}>
             <IconButton icon={<ICONS.CartIcon />} onClick={toggleCart} />
-            {cartQuantity !== 0 ? (
-              <div className={styles.cartQuantity}>{cartQuantity}</div>
-            ) : null}
+            <TotalItems productQuantity={cartQuantity} />
           </div>
         </div>
       </div>

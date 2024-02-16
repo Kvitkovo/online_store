@@ -30,6 +30,9 @@
   .root {
     padding-top: 146px;
   }
+  .block {
+    width: 100%;
+  }
 }
 
 @include sm {

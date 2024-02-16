@@ -99,7 +99,11 @@ const MyBouquet = ({ toggleMyBouquet }) => {
             Видалити все
           </span>
           {isModalOpen && (
-            <ConfirmationPopup setIsOpen={setModalOpen} deleteAll={clearAll} />
+            <ConfirmationPopup
+              setIsOpen={setModalOpen}
+              confirmedAction={clearAll}
+              action={'Видалити'}
+            />
           )}
           <Button
             label={width > 767 ? 'Додати компонент' : 'Додати'}

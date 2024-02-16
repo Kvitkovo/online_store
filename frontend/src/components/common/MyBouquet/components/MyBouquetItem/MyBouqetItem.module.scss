@@ -31,9 +31,9 @@
   box-sizing: content-box;
   height: 60px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  // padding: 8px 0;
 }
 
 .icon {
