@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,6 +38,9 @@ import ua.kvitkovo.utils.Helper;
 @RequiredArgsConstructor
 @Service
 public class FeedbackService {
+
+    @Value("${site.base.url}")
+    private String baseSiteUrl;
 
     private final FeedbackRepository feedbackRepository;
     private final AnswerRepository answerRepository;
@@ -125,6 +129,7 @@ public class FeedbackService {
         Map<String, Object> fields = Map.of(
             "files", files,
             "message", message,
+                "baseSiteUrl", baseSiteUrl,
             "mainImageId", mainImageId
         );
         emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);
