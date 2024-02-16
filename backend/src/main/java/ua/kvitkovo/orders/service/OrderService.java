@@ -16,7 +16,6 @@ import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
-import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
 import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
@@ -105,9 +104,12 @@ public class OrderService {
         orderRepository.save(order);
         OrderResponseDto orderResponseDto = orderDtoMapper.mapEntityToDto(order);
 
+        int productsCount = order.getOrderItems().stream().mapToInt(i -> i.getQty()).sum();
+
         NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
         Map<String, Object> fields = Map.of(
             "order", orderResponseDto,
+            "productsCount", productsCount,
             "shop", order.getShop()
         );
         emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
