@@ -29,6 +29,8 @@ import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.notifications.UserMessage;
+import ua.kvitkovo.shop.entity.Shop;
+import ua.kvitkovo.shop.service.ShopService;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
@@ -47,6 +49,7 @@ public class FeedbackService {
     private final UserService userService;
     private final FeedBackMessageFileService feedBackMessageFileService;
     private final NotificationService emailService;
+    private final ShopService shopService;
 
     @Transactional
     public FeedbackMessage addEmailFeedback(FeedbackMessageEmailRequestDto dto,
@@ -126,10 +129,12 @@ public class FeedbackService {
         feedbackMessage.getAnswers().add(answerMessage);
 
         NotificationUser notificationUser = NotificationUser.build(feedbackMessage);
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
             "files", files,
             "message", message,
                 "baseSiteUrl", baseSiteUrl,
+                "shop", shop,
             "mainImageId", mainImageId
         );
         emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);
