@@ -50,6 +50,7 @@ const OrderInfo = ({ orderData }) => {
         receiverPhone: orderData.contactData.clientPhone,
         delivery: orderData.deliveryData.delivery,
         pay: orderData.paymentData.payment,
+        shopId: 1,
         orderItmes: orderItems,
       }),
     );
