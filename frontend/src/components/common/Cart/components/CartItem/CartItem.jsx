@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
 import Divider from '../../../../ui-kit/components/Divider';
@@ -13,19 +13,31 @@ import ConfirmationPopup from '../../../MyBouquet/components/ConfirmationPopup';
 
 const CartItem = ({ items, cartClassName, editBouquet }) => {
   const dispatch = useDispatch();
+  const { bouquetItems } = useSelector((state) => state.cartSliceReducer);
   const { width } = useWindowSize();
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
   };
 
-  const handleSetConfirmation = () => {
-    setConfirmationOpen(true);
-  };
-  const handleEditing = (item) => {
-    setConfirmationOpen(false);
-    editBouquet(item);
-  };
+  const handleEditing = useCallback(
+    (item) => {
+      setConfirmationOpen(false);
+      editBouquet(item);
+    },
+    [editBouquet],
+  );
+
+  const handleSetConfirmation = useCallback(
+    (item) => {
+      if (bouquetItems.length > 0) {
+        setConfirmationOpen(true);
+      } else {
+        editBouquet(item);
+      }
+    },
+    [bouquetItems.length, editBouquet],
+  );
 
   return (
     <div
@@ -52,7 +64,7 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                   <IconButton
                     icon={<ICONS.PencilIcon />}
                     isBorderYellow={width > 767}
-                    onClick={handleSetConfirmation}
+                    onClick={() => handleSetConfirmation(item)}
                   />
                   {isConfirmationOpen && (
                     <ConfirmationPopup

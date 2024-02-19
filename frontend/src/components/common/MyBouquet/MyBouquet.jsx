@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import Modals from '../Modals';
 import Button from '../../ui-kit/components/Button';
@@ -74,8 +74,6 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
   const handleDeleteAll = useCallback(() => {
     setModalOpen(true);
   }, []);
-
-  useEffect(() => {}, []);
 
   return (
     <Modals type="myBouquet" onClick={toggleMyBouquet}>

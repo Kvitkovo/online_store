@@ -54,7 +54,7 @@ const ItemCard = ({ cardData }) => {
       dispatch(
         addToCart({
           info: {
-            image: images[0] ? images[0].url : './images/no_image.jpg',
+            image: images[0] ? images[0].url : '/images/no_image.jpg',
             title: title,
             discount: discount,
             price: price,
