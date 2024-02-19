@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
 import Button from '../../../ui-kit/components/Button';
+import { PostOrder } from '../../../../services/order';
 
 const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
@@ -26,9 +27,33 @@ const OrderInfo = ({ orderData }) => {
     return quantity;
   }, [cartItems]);
 
-  // const sendOrder = () => {
-  //   console.log(cartItems, orderData);
-  // };
+  const sendOrder = () => {
+    const orderItems = cartItems.map((item) => {
+      return {
+        productId: item.id,
+        productTitle: item.title,
+        price: item.price,
+        qty: item.cardQuantity,
+      };
+    });
+
+    PostOrder(
+      JSON.stringify({
+        postcardText: orderData.postcardData.postcardText,
+        customerName: orderData.contactData.clientFirstName,
+        customerPhone: orderData.contactData.clientPhone,
+        customerEmail: orderData.contactData.clientEmail,
+        addressStreet: orderData.deliveryData.clientStreet,
+        addressHous: orderData.deliveryData.clientHouse,
+        addressApartment: orderData.deliveryData.clientFlat,
+        receiverName: orderData.contactData.clientFirstName,
+        receiverPhone: orderData.contactData.clientPhone,
+        delivery: orderData.deliveryData.delivery,
+        pay: orderData.paymentData.payment,
+        orderItmes: orderItems,
+      }),
+    );
+  };
 
   return (
     <div className={styles.cart}>
@@ -64,7 +89,7 @@ const OrderInfo = ({ orderData }) => {
             padding="padding-even"
             variant={orderData.paymentData ? 'primary' : 'disabled'}
             disabled={orderData.paymentData ? false : true}
-            // onClick={() => sendOrder()}
+            onClick={() => sendOrder()}
           ></Button>
         </div>
       </div>
