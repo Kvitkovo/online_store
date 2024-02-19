@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './BurgerMenu.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import IconButton from '../../../../ui-kit/components/IconButton';
@@ -13,18 +13,27 @@ const ClosedMenu = ({
   toggleLogin,
   flowerQuantity,
 }) => {
+  const [isSearchActive, setSearchActive] = useState(false);
+
+  const toggleSearch = () => {
+    setSearchActive((prev) => !prev);
+  };
   return (
     <div className={styles.burgerMenu}>
       <div className={styles.burgerHeader}>
         <div className={styles.burgerIcon} onClick={toggleMenu}>
           <IconButton icon={<ICONS.burgerMenu />} />
         </div>
-        <div className={styles.searchField}>
-          <InputSearch />
+        <div
+          className={`${styles.searchField} ${
+            isSearchActive ? styles.visible : ''
+          }`}
+        >
+          <InputSearch isActive={isSearchActive} setActive={setSearchActive} />
         </div>
         <div className={styles.actionIcons}>
           <div className={styles.searchMobile}>
-            <IconButton icon={<ICONS.searchMobile />} />
+            <IconButton icon={<ICONS.searchMobile />} onClick={toggleSearch} />
           </div>
           <div className={styles.bouquet}>
             <IconButton

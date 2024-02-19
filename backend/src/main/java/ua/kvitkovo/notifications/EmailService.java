@@ -1,11 +1,25 @@
 package ua.kvitkovo.notifications;
 
-import jakarta.mail.*;
+import jakarta.mail.BodyPart;
+import jakarta.mail.Flags;
+import jakarta.mail.Folder;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Store;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import jakarta.mail.search.FlagTerm;
 import jakarta.mail.search.SearchTerm;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +29,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -51,16 +56,41 @@ public class EmailService implements NotificationService {
     public void send(NotificationType type, Map<String, Object> fields, NotificationUser user) {
         log.info("send message to {} with text: {}", user.getEmail(), fields.get("link"));
         switch (type) {
-            case MAIL_CONFIRMATION -> sendEmailMessage("Підтвердження пошти", "email/confirm-email.html", fields, user);
-            case MAIL_CONFIRMATION_SUCCESSFULLY ->
-                    sendEmailMessage("Ви успішно підтвердили пошту", "email/confirm-email-successfully.html", fields, user);
-            case RESET_PASSWORD -> sendEmailMessage("Запит на зміну паролю", "email/reset-password.html", fields, user);
-            case CHANGE_PASSWORD ->
-                    sendEmailMessage("Ви успішно змінили пароль", "email/reset-password-successfully.html", fields, user);
-            case CREATE_NEW_USER ->
-                    sendEmailMessage("Вас було зареєстровано на сайті", "email/confirm-email-after_admin-add-user.html", fields, user);
-            case ANSWER_FEEDBACK_MESSAGE ->
-                    sendEmailMessage("Служба підтримки Kvitkovo", "email/answer-message.html", fields, user);
+            case MAIL_CONFIRMATION -> sendEmailMessage("Підтвердження пошти",
+                "email/confirm-email.html",
+                fields,
+                user
+            );
+            case MAIL_CONFIRMATION_SUCCESSFULLY -> sendEmailMessage("Ви успішно підтвердили пошту",
+                "email/confirm-email-successfully.html",
+                fields,
+                user
+            );
+            case RESET_PASSWORD -> sendEmailMessage("Запит на зміну паролю",
+                "email/reset-password.html",
+                fields,
+                user
+            );
+            case CHANGE_PASSWORD -> sendEmailMessage("Ви успішно змінили пароль",
+                "email/reset-password-successfully.html",
+                fields,
+                user
+            );
+            case CREATE_NEW_USER -> sendEmailMessage("Вас було зареєстровано на сайті",
+                "email/confirm-email-after_admin-add-user.html",
+                fields,
+                user)
+            ;
+            case ANSWER_FEEDBACK_MESSAGE -> sendEmailMessage("Служба підтримки Kvitkovo",
+                "email/answer-message.html",
+                fields,
+                user
+            );
+            case NEW_ORDER -> sendEmailMessage("Нове замовлення на сайті Kvitkovo",
+                "email/new_order.html",
+                fields,
+                user
+            );
         }
     }
 
@@ -71,7 +101,8 @@ public class EmailService implements NotificationService {
             Properties properties = new Properties();
             properties.setProperty("mail.store.protocol", "imaps");
 
-            properties.setProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            properties.setProperty("mail.imaps.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
             properties.setProperty("mail.imaps.socketFactory.fallback", "false");
             properties.setProperty("mail.imaps.ssl.enable", "false");
             properties.setProperty("mail.imaps.socketFactory.port", imapPort);
@@ -105,10 +136,10 @@ public class EmailService implements NotificationService {
                             Long messageId = getMessageId(messageContentText);
 
                             messageList.add(UserMessage.builder()
-                                    .address(address)
-                                    .mainMessageId(messageId)
-                                    .message(messageText)
-                                    .build()
+                                .address(address)
+                                .mainMessageId(messageId)
+                                .message(messageText)
+                                .build()
                             );
                         }
                     }
@@ -120,10 +151,10 @@ public class EmailService implements NotificationService {
                     Long messageId = getMessageId(messageContentText);
 
                     messageList.add(UserMessage.builder()
-                            .address(address)
-                            .mainMessageId(messageId)
-                            .message(messageText)
-                            .build()
+                        .address(address)
+                        .mainMessageId(messageId)
+                        .message(messageText)
+                        .build()
                     );
                 }
 
@@ -132,7 +163,6 @@ public class EmailService implements NotificationService {
 
             inbox.close(true);
             store.close();
-
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
@@ -140,13 +170,14 @@ public class EmailService implements NotificationService {
         return messageList;
     }
 
-    private void sendEmailMessage(String subject, String template, Map<String, Object> fields, NotificationUser user) {
+    private void sendEmailMessage(String subject, String template, Map<String, Object> fields,
+        NotificationUser user) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = null;
         try {
             mimeMessageHelper = new MimeMessageHelper(message,
-                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
+                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                StandardCharsets.UTF_8.name());
             Context context = new Context();
             context.setVariables(fields);
             String emailContent = templateEngine.process(template, context);

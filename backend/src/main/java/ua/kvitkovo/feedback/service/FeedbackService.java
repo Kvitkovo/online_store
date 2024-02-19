@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,6 +29,8 @@ import ua.kvitkovo.notifications.NotificationService;
 import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.notifications.UserMessage;
+import ua.kvitkovo.shop.entity.Shop;
+import ua.kvitkovo.shop.service.ShopService;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.ErrorUtils;
@@ -38,11 +41,15 @@ import ua.kvitkovo.utils.Helper;
 @Service
 public class FeedbackService {
 
+    @Value("${site.base.url}")
+    private String baseSiteUrl;
+
     private final FeedbackRepository feedbackRepository;
     private final AnswerRepository answerRepository;
     private final UserService userService;
     private final FeedBackMessageFileService feedBackMessageFileService;
     private final NotificationService emailService;
+    private final ShopService shopService;
 
     @Transactional
     public FeedbackMessage addEmailFeedback(FeedbackMessageEmailRequestDto dto,
@@ -122,9 +129,12 @@ public class FeedbackService {
         feedbackMessage.getAnswers().add(answerMessage);
 
         NotificationUser notificationUser = NotificationUser.build(feedbackMessage);
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
             "files", files,
             "message", message,
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop,
             "mainImageId", mainImageId
         );
         emailService.send(NotificationType.ANSWER_FEEDBACK_MESSAGE, fields, notificationUser);

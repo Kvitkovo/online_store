@@ -138,8 +138,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(ErrorUtils.getErrorsString(bindingResult));
         }
-        Order order = orderService.addOrder(request, bindingResult);
-        return orderDtoMapper.mapEntityToDto(order);
+        return orderService.addOrder(request, bindingResult);
     }
 
     @Operation(summary = "Set orders status")

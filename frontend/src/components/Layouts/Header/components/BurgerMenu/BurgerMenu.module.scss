@@ -124,8 +124,21 @@
   }
 }
 @include sm {
+  .root {
+    position: relative;
+  }
   .searchField {
-    display: none;
+    // position: absolute;
+    width: 100%;
+    max-width: 94%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $white-color;
+    visibility: hidden;
+  }
+  .visible {
+    visibility: visible;
   }
   .searchMobile {
     display: flex;
