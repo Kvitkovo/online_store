@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styles from './ItemCard.module.scss';
 import Path from '../../components/Path';
 import ItemImage from '../ItemImage';
-import ItemFeatures from '../ItemFeatures/ItemFeatures';
+import ItemFeatures from '../ItemFeatures';
 import ItemDescription from '../ItemDescription';
 import PriceAndButtons from '../PriceAndButtons/PriceAndButtons';
 import Stock from '../Stock';

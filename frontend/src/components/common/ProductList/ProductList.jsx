@@ -225,7 +225,7 @@ const ProductList = React.memo(
                         image={
                           product.images[0]
                             ? product.images[0].urlSmall
-                            : './images/no_image.jpg'
+                            : '/images/no_image.jpg'
                         }
                         title={product.title}
                         discount={product.discount}

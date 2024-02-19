@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from '../Slider';
+import Slider from './Slider';
 import styles from './RecentlyViewed.module.scss';
 
 const RecentlyViewed = () => {
