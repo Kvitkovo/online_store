@@ -9,7 +9,7 @@ import styles from './MyBouqetItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { useDispatch } from 'react-redux';
 
-const MyBouquetItem = ({ items }) => {
+const MyBouquetItem = React.memo(({ items }) => {
   const dispatch = useDispatch();
   const handleRemovePosition = (cartItem) => {
     dispatch(removeFromCart({ info: cartItem, type: 'bouquet' }));
@@ -47,6 +47,6 @@ const MyBouquetItem = ({ items }) => {
       ))}
     </ul>
   );
-};
+});
 
 export default MyBouquetItem;

@@ -9,6 +9,10 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    initiateCart(state, action) {
+      const { type, items } = action.payload;
+      state[type + 'Items'] = items;
+    },
     addToCart(state, action) {
       const saveToLocalStorige = (id) => {
         let items = JSON.parse(localStorage.getItem(type)) || [];
@@ -154,6 +158,7 @@ export const {
   decreaseCart,
   increaseCart,
   clearCart,
+  initiateCart,
 } = cartSlice.actions;
 
 export const cartSliceReducer = cartSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Modals from '../Modals';
 import Button from '../../ui-kit/components/Button';
@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart, clearCart } from '../../../redux/slices/cartSlice';
 import ConfirmationPopup from './components/ConfirmationPopup';
 
-const MyBouquet = ({ toggleMyBouquet }) => {
+const MyBouquet = React.memo(({ toggleMyBouquet }) => {
   const { width } = useWindowSize();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,6 +74,8 @@ const MyBouquet = ({ toggleMyBouquet }) => {
   const handleDeleteAll = useCallback(() => {
     setModalOpen(true);
   }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <Modals type="myBouquet" onClick={toggleMyBouquet}>
@@ -141,6 +143,6 @@ const MyBouquet = ({ toggleMyBouquet }) => {
       {width < 868 && <Footer />}
     </Modals>
   );
-};
+});
 
 export default MyBouquet;

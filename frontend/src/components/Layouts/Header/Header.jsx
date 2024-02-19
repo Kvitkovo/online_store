@@ -18,11 +18,15 @@ import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
 import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/slices/userSlice';
-import { GetProductsFilter } from '../../../services/products/productsAccess.service';
+import {
+  GetProducts,
+  GetProductsFilter,
+} from '../../../services/products/productsAccess.service';
 import Divider from '../../ui-kit/components/Divider';
 import TotalItems from './components/TotalItems';
+import { initiateCart } from '../../../redux/slices/cartSlice';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -30,6 +34,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const user = useSelector(getUser);
+  const dispatch = useDispatch();
 
   const toggleLogin = () => {
     if (user && user.loggedIn) {
@@ -174,6 +179,37 @@ const Header = () => {
       window.onscroll = null;
     };
   }, []);
+
+  useEffect(() => {
+    const getPrevData = async (type) => {
+      const prevList = JSON.parse(localStorage.getItem(type)) || [];
+      const cartList = [];
+      for (const item of prevList) {
+        const info = await GetProducts(item.id);
+        const { id, images, title, price } = info;
+
+        const newItem = {
+          id: id,
+          title: title,
+          price: price,
+          image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
+          cardQuantity: item.cardQuantity,
+        };
+
+        cartList.push(newItem);
+      }
+
+      dispatch(
+        initiateCart({
+          items: cartList,
+          type: type,
+        }),
+      );
+    };
+    getPrevData('bouquet');
+    getPrevData('cart');
+  }, [dispatch]);
+
   return (
     <div>
       <BurgerMenu
