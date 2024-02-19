@@ -105,26 +105,36 @@ public class OrderService {
 
         int productsCount = order.getOrderItems().stream().mapToInt(i -> i.getQty()).sum();
 
-        NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
-        Map<String, Object> fields = Map.of(
-                "order", orderResponseDto,
-                "productsCount", productsCount,
-                "shop", order.getShop(),
-                "baseSiteUrl", baseSiteUrl
-        );
-        emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
+        if (order.getCustomer()!=null){
+            NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
+            Map<String, Object> fields = Map.of(
+                    "order", orderResponseDto,
+                    "productsCount", productsCount,
+                    "shop", order.getShop(),
+                    "baseSiteUrl", baseSiteUrl
+            );
+            emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
+        }
 
         log.info("The Order was created");
         return orderResponseDto;
     }
 
     private String getFullTextAddress(Order order) {
-        return String.join(", ",
-                order.getAddressCity(),
-                order.getAddressStreet(),
-                order.getAddressHouse(),
-                order.getAddressApartment()
-        );
+        List<String> addressItems = new ArrayList<>();
+        if (order.getAddressCity() != null){
+            addressItems.add(order.getAddressCity());
+        }
+        if (order.getAddressStreet() != null){
+            addressItems.add(order.getAddressStreet());
+        }
+        if (order.getAddressHouse() != null){
+            addressItems.add(order.getAddressHouse());
+        }
+        if (order.getAddressApartment() != null){
+            addressItems.add(order.getAddressApartment());
+        }
+        return String.join(", ", addressItems);
     }
 
     private BigDecimal calculateTotalSum(Order order) {
