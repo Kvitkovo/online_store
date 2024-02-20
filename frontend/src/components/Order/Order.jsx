@@ -5,6 +5,7 @@ import DeliveryForm from './components/DeliveryForm/DeliveryForm';
 import OrderSection from './components/OrderSection';
 import ContactDetails from './components/ContactDetails/ContactDetails';
 import PostcardAndComment from './components/PostcardAndComment';
+import Payment from './components/Payment';
 
 const Order = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -78,8 +79,25 @@ const Order = () => {
               />
             </OrderSection>
           </div>
+          <div className={styles.orderBlock}>
+            <OrderSection
+              step={4}
+              currentStep={currentStep}
+              name={'Оплата'}
+              outputString={orderData.paymentData?.outputString}
+              handleBackEdit={handleChangeStep}
+            >
+              <Payment
+                paymentData={orderData.paymentData}
+                setDataOnSubmit={(newPaymentData) => {
+                  handleStepFinish(currentStep);
+                  setOrderData({ ...orderData, paymentData: newPaymentData });
+                }}
+              />
+            </OrderSection>
+          </div>
         </div>
-        <OrderInfo />
+        <OrderInfo orderData={orderData} />
       </div>
     </div>
   );
