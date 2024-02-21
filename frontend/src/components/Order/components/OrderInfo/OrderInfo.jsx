@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './OrderInfo.module.scss';
 import { useSelector } from 'react-redux';
 import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
 import Button from '../../../ui-kit/components/Button';
-import { PostOrder } from '../../../../services/order';
+import { addOrderToDB } from '../../../../services/order';
 
 const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const navigate = useNavigate();
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -27,7 +28,7 @@ const OrderInfo = ({ orderData }) => {
     return quantity;
   }, [cartItems]);
 
-  const sendOrder = () => {
+  const sendOrder = async () => {
     const orderItems = cartItems.map((item) => {
       return {
         productId: item.id,
@@ -37,23 +38,25 @@ const OrderInfo = ({ orderData }) => {
       };
     });
 
-    PostOrder(
-      JSON.stringify({
-        postcardText: orderData.postcardData.postcardText,
-        customerName: orderData.contactData.clientFirstName,
-        customerPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
-        customerEmail: orderData.contactData.clientEmail,
-        addressStreet: orderData.deliveryData.clientStreet,
-        addressHous: orderData.deliveryData.clientHouse,
-        addressApartment: orderData.deliveryData.clientFlat,
-        receiverName: orderData.contactData.clientFirstName,
-        receiverPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
-        delivery: orderData.deliveryData.delivery,
-        pay: orderData.paymentData.payment,
-        shopId: 1,
-        orderItmes: orderItems,
-      }),
-    );
+    const result = await addOrderToDB({
+      postcardText: orderData.postcardData.postcardText,
+      customerName: orderData.contactData.clientFirstName,
+      customerPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
+      customerEmail: orderData.contactData.clientEmail,
+      addressStreet: orderData.deliveryData.clientStreet,
+      addressHous: orderData.deliveryData.clientHouse,
+      addressApartment: orderData.deliveryData.clientFlat,
+      receiverName: orderData.contactData.clientFirstName,
+      receiverPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
+      delivery: orderData.deliveryData.delivery,
+      pay: orderData.paymentData.payment,
+      shopId: 1,
+      orderItems: orderItems,
+    });
+
+    if (result) {
+      navigate(`/order/${result}`);
+    }
   };
 
   return (
