@@ -1,12 +1,27 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import Button from '../../components/ui-kit/components/Button';
+import styles from './PlacedOrder.module.scss';
 
 const PlasedOrder = () => {
   const { orderNumber } = useParams();
+  const navigate = useNavigate();
+
+  const goToMainPage = () => {
+    navigate('/');
+  };
   return (
-    <div>
-      <h1>Дякуємо за замовлення!</h1>
-      <p>Ваше замовлення номер {orderNumber}</p>
+    <div className={styles.placedOrder}>
+      <h1 className={styles.title}>Дякуємо за замовлення!</h1>
+      <p className={styles.orderInformation}>
+        Ваше замовлення за номером <span>№{orderNumber}</span> успішно
+        оформлене.
+      </p>
+      <Button
+        label="На головну"
+        padding="padding-even"
+        onClick={() => goToMainPage()}
+      />
     </div>
   );
 };

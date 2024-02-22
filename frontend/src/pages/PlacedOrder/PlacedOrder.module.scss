@@ -1,0 +1,25 @@
+@import '../../variables';
+@import '../../mixins';
+
+.placedOrder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  @include title;
+  margin: 170px 0 52px;
+}
+
+.orderInformation {
+  @include subtitle;
+  margin-bottom: 46px;
+  text-align: center;
+
+  span {
+    color: $green-dark-color;
+    text-decoration: underline;
+    line-height: 26px;
+  }
+}
