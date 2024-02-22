@@ -34,7 +34,6 @@ public class OrderRequestDto {
     @Schema(example = "+380991234567", description = "Customer phone")
     private String customerPhone;
 
-    @NotBlank
     @Size(max = 255, message = "customerEmail must be less than 255 characters.")
     @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     @Schema(example = "test@mail.com", description = "Customer email")

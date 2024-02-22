@@ -104,9 +104,20 @@ public class OrderService {
         OrderResponseDto orderResponseDto = orderDtoMapper.mapEntityToDto(order);
 
         int productsCount = order.getOrderItems().stream().mapToInt(i -> i.getQty()).sum();
+        NotificationUser notificationUser = null;
 
         if (order.getCustomer()!=null){
-            NotificationUser notificationUser = NotificationUser.build(order.getCustomer());
+            notificationUser = NotificationUser.build(order.getCustomer());
+        }
+
+        if (order.getCustomerEmail() != null && !order.getCustomerEmail().isEmpty()){
+            notificationUser = NotificationUser.build(order.getCustomerEmail(),
+                    order.getCustomerPhone(),
+                    order.getCustomerName()
+            );
+        }
+
+        if (notificationUser != null){
             Map<String, Object> fields = Map.of(
                     "order", orderResponseDto,
                     "productsCount", productsCount,
