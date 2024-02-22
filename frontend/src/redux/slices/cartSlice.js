@@ -4,6 +4,17 @@ const initialState = {
   cartItems: [],
   bouquetItems: [],
 };
+const updateLocalStorage = (type, items) => {
+  try {
+    if (items.length > 0) {
+      localStorage.setItem(type, JSON.stringify(items));
+    } else {
+      localStorage.removeItem(type);
+    }
+  } catch (error) {
+    console.error('Error saving to localStorage:', error);
+  }
+};
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -14,7 +25,8 @@ const cartSlice = createSlice({
       state[type + 'Items'] = items;
     },
     addToCart(state, action) {
-      const saveToLocalStorige = (id) => {
+      const saveToLocalStorage = (item) => {
+        const { id, orderItemsCompositions } = item;
         let items = JSON.parse(localStorage.getItem(type)) || [];
         const isExist = items.some((item) => item.id === id);
 
@@ -25,20 +37,22 @@ const cartSlice = createSlice({
           items = items.map((item) =>
             item.id === id
               ? {
-                  id: item.id,
+                  ...item,
                   cardQuantity: item.cardQuantity + 1,
                 }
               : item,
           );
         } else {
-          const newItem = { id: id, cardQuantity: 1 };
+          const newItem = orderItemsCompositions
+            ? {
+                id: id,
+                cardQuantity: 1,
+                orderItemsCompositions: orderItemsCompositions,
+              }
+            : { id: id, cardQuantity: 1 };
           items.push(newItem);
         }
-        try {
-          localStorage.setItem(type, JSON.stringify(items));
-        } catch (error) {
-          console.error('Error saving to localStorage:', error);
-        }
+        updateLocalStorage(type, items);
       };
       const { info, type } = action.payload;
 
@@ -47,15 +61,11 @@ const cartSlice = createSlice({
       );
       if (itemIndex >= 0) {
         state[type + 'Items'][itemIndex].cardQuantity += 1;
-        saveToLocalStorige(
-          info.id,
-          state[type + 'Items'][itemIndex].cardQuantity + 1,
-        );
       } else {
         const tempProduct = { ...info, cardQuantity: 1 };
         state[type + 'Items'].push(tempProduct);
       }
-      saveToLocalStorige(info.id);
+      saveToLocalStorage(info);
     },
     removeFromCart(state, action) {
       const removeFromLocalStorige = (id) => {
@@ -66,15 +76,7 @@ const cartSlice = createSlice({
           items = items.filter((item) => item.id !== id);
         }
 
-        try {
-          if (items.length > 0) {
-            localStorage.setItem(type, JSON.stringify(items));
-          } else {
-            localStorage.removeItem(type);
-          }
-        } catch (error) {
-          console.error('Error saving to localStorage:', error);
-        }
+        updateLocalStorage(type, items);
       };
       const { info, type } = action.payload;
       const newCartItems = state[type + 'Items'].filter(
@@ -96,11 +98,7 @@ const cartSlice = createSlice({
             : item,
         );
 
-        try {
-          localStorage.setItem(type, JSON.stringify(items));
-        } catch (error) {
-          console.error('Error saving to localStorage:', error);
-        }
+        updateLocalStorage(type, items);
       };
       const { info, type } = action.payload;
 
@@ -130,11 +128,7 @@ const cartSlice = createSlice({
             : item,
         );
 
-        try {
-          localStorage.setItem(type, JSON.stringify(items));
-        } catch (error) {
-          console.error('Error saving to localStorage:', error);
-        }
+        updateLocalStorage(type, items);
       };
       const { info, type } = action.payload;
 
@@ -146,7 +140,7 @@ const cartSlice = createSlice({
     },
     clearCart(state, action) {
       const { type } = action.payload;
-
+      localStorage.removeItem(type);
       state[type + 'Items'] = [];
     },
   },

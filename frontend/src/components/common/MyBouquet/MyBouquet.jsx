@@ -28,7 +28,10 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
 
   const totalSum = useMemo(
     () =>
-      bouquetItems.reduce((sum, obj) => sum + obj.price * obj.cardQuantity, 0),
+      bouquetItems.reduce(
+        (sum, obj) => sum + obj.priceWithDiscount * obj.cardQuantity,
+        0,
+      ),
     [bouquetItems],
   );
   const totalAmount = useMemo(
@@ -60,7 +63,7 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
           cardQuantity: 1,
           discount: 0,
           image: '/images/new_bouquet.jpg',
-          oldPrice: totalSum,
+          priceWithDiscount: totalSum,
           price: totalSum,
           orderItemsCompositions: bouquetItems,
         },
@@ -106,7 +109,7 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
             />
           )}
           <Button
-            label={width > 767 ? 'Додати компонент' : 'Додати'}
+            label={width > 867 ? 'Додати компонент' : 'Додати'}
             variant="secondary"
             padding="padding-sm"
             icon={<ICONS.addComponent />}

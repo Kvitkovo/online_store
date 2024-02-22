@@ -120,18 +120,37 @@ const Header = () => {
       const prevList = JSON.parse(localStorage.getItem(type)) || [];
       const cartList = [];
       for (const item of prevList) {
-        const info = await GetProducts(item.id);
-        const { id, images, title, price, priceWithDiscount } = info;
-        const newItem = {
-          id: id,
-          title: title,
-          price: price,
-          priceWithDiscount: priceWithDiscount,
-          image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
-          cardQuantity: item.cardQuantity,
-        };
+        const { id, cardQuantity, orderItemsCompositions } = item;
+        if (orderItemsCompositions) {
+          const price = orderItemsCompositions.reduce(
+            (acc, flower) => acc + flower.price,
+            0,
+          );
+          const newItem = {
+            id: id,
+            title: `Свій букет #${id}`,
+            cardQuantity: cardQuantity,
+            discount: 0,
+            image: '/images/new_bouquet.jpg',
+            price: price,
+            orderItemsCompositions: orderItemsCompositions,
+          };
 
-        cartList.push(newItem);
+          cartList.push(newItem);
+        } else {
+          const info = await GetProducts(item.id);
+          const { id, images, title, price, priceWithDiscount } = info;
+          const newItem = {
+            id: id,
+            title: title,
+            price: price,
+            priceWithDiscount: priceWithDiscount,
+            image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
+            cardQuantity: item.cardQuantity,
+          };
+
+          cartList.push(newItem);
+        }
       }
 
       dispatch(
