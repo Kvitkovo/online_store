@@ -10,6 +10,8 @@ import { addOrderToDB } from '../../../../services/order';
 const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const navigate = useNavigate();
+  let receiverName = '';
+  let receiverPhone = '';
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -38,6 +40,19 @@ const OrderInfo = ({ orderData }) => {
       };
     });
 
+    if (orderData.contactData.recipient === 'I') {
+      receiverName = orderData.contactData.clientFirstName;
+      receiverPhone = orderData.contactData.clientPhone;
+    } else {
+      receiverName =
+        orderData.contactData.recipientLastName +
+        ' ' +
+        orderData.contactData.recipientFirstName +
+        ' ' +
+        orderData.contactData.recipientMiddleName;
+      receiverPhone = orderData.contactData.recipientPhone;
+    }
+
     const result = await addOrderToDB({
       postcardText: orderData.postcardData.postcardText,
       customerName: orderData.contactData.clientFirstName,
@@ -46,8 +61,8 @@ const OrderInfo = ({ orderData }) => {
       addressStreet: orderData.deliveryData.clientStreet,
       addressHous: orderData.deliveryData.clientHouse,
       addressApartment: orderData.deliveryData.clientFlat,
-      receiverName: orderData.contactData.clientFirstName,
-      receiverPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
+      receiverName: receiverName,
+      receiverPhone: receiverPhone.replace(/[\s()]/g, ''),
       delivery: orderData.deliveryData.delivery,
       pay: orderData.paymentData.payment,
       shopId: 1,
