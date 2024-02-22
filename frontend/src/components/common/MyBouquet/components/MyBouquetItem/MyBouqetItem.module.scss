@@ -60,18 +60,13 @@
 }
 
 .price {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 5px;
-  color: $page-accent-color;
-  line-height: 24px;
-  width: 106px;
-
-  span {
-    margin-left: 12px;
-    font-weight: 400;
-    font-size: 14px;
+  & p {
+    font-size: 18px;
+  }
+  &:has(:nth-child(2)) {
+    & p:first-child {
+      font-size: 15px;
+    }
   }
 }
 

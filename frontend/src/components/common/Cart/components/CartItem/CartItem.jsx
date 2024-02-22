@@ -97,9 +97,10 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                     : ''
                 }
               >
+                {/* {console.log(item)} */}
                 <DiscountPrice
-                  oldPrice={item.oldPrice}
-                  actualPrice={item.price}
+                  oldPrice={item.price}
+                  actualPrice={item.priceWithDiscount}
                 />
               </div>
             </div>

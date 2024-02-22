@@ -1,6 +1,10 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
+p {
+  text-align: right;
+}
+
 .oldPrice {
   font-size: 18px;
   line-height: 24px;

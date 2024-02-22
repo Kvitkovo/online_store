@@ -121,12 +121,12 @@ const Header = () => {
       const cartList = [];
       for (const item of prevList) {
         const info = await GetProducts(item.id);
-        const { id, images, title, price } = info;
-
+        const { id, images, title, price, priceWithDiscount } = info;
         const newItem = {
           id: id,
           title: title,
           price: price,
+          priceWithDiscount: priceWithDiscount,
           image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
           cardQuantity: item.cardQuantity,
         };

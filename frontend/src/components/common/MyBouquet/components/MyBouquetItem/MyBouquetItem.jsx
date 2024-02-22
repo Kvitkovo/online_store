@@ -8,6 +8,7 @@ import { removeFromCart } from '../../../../../redux/slices/cartSlice';
 import styles from './MyBouqetItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';
 import { useDispatch } from 'react-redux';
+import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
 
 const MyBouquetItem = React.memo(({ items }) => {
   const dispatch = useDispatch();
@@ -34,8 +35,10 @@ const MyBouquetItem = React.memo(({ items }) => {
               <CountBlock item={item} type={'bouquet'} />
             </div>
             <div className={styles.price}>
-              <b>{item.price * item.cardQuantity} </b>
-              <span>грн</span>
+              <DiscountPrice
+                oldPrice={item.price}
+                actualPrice={item.priceWithDiscount}
+              />
             </div>
           </li>
           {index < items.length - 1 && (
