@@ -58,7 +58,7 @@ const PriceAndButtons = ({
                         onClick={() => deleteFromStack('bouquet')}
                       />
                     </div>
-                    <div className={styles.bouquetTablet}>
+                    <div className={styles.bouquetMobile}>
                       <IconButton
                         icon={<ICONS.inBouquet />}
                         onClick={() => deleteFromStack('bouquet')}
@@ -77,7 +77,7 @@ const PriceAndButtons = ({
                         onClick={() => addToStack('bouquet')}
                       />
                     </div>
-                    <div className={styles.bouquetTablet}>
+                    <div className={styles.bouquetMobile}>
                       <IconButton
                         icon={<ICONS.BouquetIcon />}
                         onClick={() => addToStack('bouquet')}

@@ -22,7 +22,7 @@
     'image image image image image . . . . . . .';
 
   padding: 32px 20px 32px 16px;
-  margin-top: 22px;
+  margin: 22px 0 32px;
   border-radius: 8px;
   background: $white-color;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
@@ -97,7 +97,7 @@
   }
   .itemBlock {
     display: flex;
-    margin-bottom: 38px;
+    margin: 0 -15px 38px;
     flex-direction: column;
     padding: 16px;
   }
