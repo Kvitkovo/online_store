@@ -34,6 +34,13 @@ const googleLoginRequest = async (token, id) => {
   }
 };
 
+const sendTokenToBackend = async (token) => {
+  const response = await axiosInstance.post('/auth/google', {
+    token,
+  });
+  return response.data;
+};
+
 const resetPasswordRequest = async (email) => {
   try {
     const response = await axiosInstance.post(`/users/resetPassword/${email}`);
@@ -49,4 +56,9 @@ const resetPasswordRequest = async (email) => {
   }
 };
 
-export { loginUser, resetPasswordRequest, googleLoginRequest };
+export {
+  loginUser,
+  googleLoginRequest,
+  sendTokenToBackend,
+  resetPasswordRequest,
+};

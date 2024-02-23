@@ -72,6 +72,15 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     },
     [navigate, dispatch],
   );
+
+  const handleGoogleLoginCallback = useCallback(
+    (token) => {
+      handleGoogleLogin(token);
+      toggleLogin();
+    },
+    [handleGoogleLogin, toggleLogin],
+  );
+
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setEmailError('');
@@ -163,15 +172,7 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
               <p>або</p>
             </div>
             <div className={styles.googleLogin}>
-              <GoogleLogin
-                handleGoogleLogin={useCallback(
-                  (token) => {
-                    handleGoogleLogin(token);
-                    toggleLogin();
-                  },
-                  [handleGoogleLogin, toggleLogin],
-                )}
-              />
+              <GoogleLogin handleGoogleLogin={handleGoogleLoginCallback} />
             </div>
           </form>
           <div className={styles.resetPassword}>

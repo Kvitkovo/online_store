@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import './GoogleLogin.scss';
-import axios from 'axios';
-
-const sendTokenToBackend = async (token) => {
-  return axios.post('https://api.imperiaholoda.com.ua:4446/v1/auth/google', {
-    token,
-  });
-};
+import { sendTokenToBackend } from '../../../services/login/login.service';
 
 const GoogleLogin = React.memo(({ handleGoogleLogin }) => {
   const handleCallbackResponse = useCallback(
