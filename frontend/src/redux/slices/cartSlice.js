@@ -68,7 +68,7 @@ const cartSlice = createSlice({
       saveToLocalStorage(info);
     },
     removeFromCart(state, action) {
-      const removeFromLocalStorige = (id) => {
+      const removeFromLocalStorage = (id) => {
         let items = JSON.parse(localStorage.getItem(type)) || [];
         const isExist = items.some((item) => item.id === id);
 
@@ -83,10 +83,10 @@ const cartSlice = createSlice({
         (cartItem) => cartItem.id !== info.id,
       );
       state[type + 'Items'] = newCartItems;
-      removeFromLocalStorige(info.id);
+      removeFromLocalStorage(info.id);
     },
     decreaseCart(state, action) {
-      const decreaseInLocalStorige = (id) => {
+      const decreaseInLocalStorage = (id) => {
         let items = JSON.parse(localStorage.getItem(type)) || [];
 
         items = items.map((item) =>
@@ -113,10 +113,10 @@ const cartSlice = createSlice({
         );
         state[type + 'Items'] = newCartItems;
       }
-      decreaseInLocalStorige(info.id);
+      decreaseInLocalStorage(info.id);
     },
     increaseCart(state, action) {
-      const increaseInLocalStorige = (id) => {
+      const increaseInLocalStorage = (id) => {
         let items = JSON.parse(localStorage.getItem(type)) || [];
 
         items = items.map((item) =>
@@ -136,7 +136,7 @@ const cartSlice = createSlice({
         (item) => item.id === info.id,
       );
       state[type + 'Items'][itemIndex].cardQuantity += 1;
-      increaseInLocalStorige(info.id);
+      increaseInLocalStorage(info.id);
     },
     clearCart(state, action) {
       const { type } = action.payload;
