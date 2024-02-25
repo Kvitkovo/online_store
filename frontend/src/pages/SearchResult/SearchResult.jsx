@@ -13,7 +13,7 @@ const SearchResult = () => {
   const [currentPage, setCurrentPage] = useState(null);
   const [data, setData] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const isResultFound = data?.length > 0 || false;
+  const isResultFound = data?.data.length > 0 || false;
   const getProductEnding = (amount) => {
     if (amount % 10 === 1 && amount % 100 !== 11) {
       return 'товар';
@@ -36,7 +36,10 @@ const SearchResult = () => {
         sortDirection: 'ASC',
         title: query,
       });
-      setData(data.content);
+      setData({
+        data: data.content,
+        totalAmount: data.totalElements,
+      });
       setQuantity(data.totalElements);
     } catch (error) {
       console.error(error);
@@ -74,6 +77,7 @@ const SearchResult = () => {
               setCurrentPage={setCurrentPage}
               query={query}
               totalAmount={quantity}
+              setTotalAmount={setQuantity}
             />
           )}
           {!isResultFound && (

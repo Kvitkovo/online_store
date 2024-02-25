@@ -40,7 +40,10 @@ const CategoryPage = React.memo(() => {
         category = await GetCategory(categoryId);
       }
       setCurrentCategory(category);
-      setCategoryProducts(products.content);
+      setCategoryProducts({
+        data: products.content,
+        totalAmount: products.totalElements,
+      });
       setProductsInCategory(products.totalElements);
     } catch (err) {
       console.error(err);
@@ -66,6 +69,7 @@ const CategoryPage = React.memo(() => {
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
           totalAmount={productsInCategory}
+          setTotalAmount={setProductsInCategory}
         />
       )}
     </>
