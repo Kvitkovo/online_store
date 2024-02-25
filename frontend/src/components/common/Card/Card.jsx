@@ -34,9 +34,21 @@ const Card = React.memo((props) => {
 
   const handleAddToStack = useCallback(
     (props, type) => {
-      dispatch(addToCart({ info: props, type: type }));
+      dispatch(
+        addToCart({
+          info: {
+            image: image,
+            title: title,
+            discount: discount,
+            price: oldPrice,
+            priceWithDiscount: price,
+            id: id,
+          },
+          type: type,
+        }),
+      );
     },
-    [dispatch],
+    [discount, dispatch, id, image, oldPrice, price, title],
   );
 
   const handleDeleteFromStack = useCallback(

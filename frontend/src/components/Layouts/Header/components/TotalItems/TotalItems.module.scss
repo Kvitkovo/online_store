@@ -1,0 +1,35 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.cartQuantity {
+  padding: 1px 5px 0;
+  font-family: 'FixelDisplay';
+  border-radius: 100px;
+  background-color: $discount-color;
+  color: #fff;
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -6px;
+  right: -8px;
+}
+.totalBouquet {
+  top: 7px;
+}
+.cartQuantityHide {
+  height: 14px;
+  width: 14px;
+  visibility: hidden;
+  position: absolute;
+}
+
+@include md {
+  .cartQuantity {
+    top: 3px;
+    right: -4px;
+  }
+}

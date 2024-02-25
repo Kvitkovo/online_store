@@ -6,6 +6,8 @@
   margin-top: 24px;
   overflow-y: auto;
   height: 479px;
+  scrollbar-width: 4px;
+  scrollbar-color: $page-accent-color transparent;
 
   &:hover {
     overflow-y: auto;
@@ -27,18 +29,14 @@
 .item {
   display: grid;
   grid-template-columns: 1fr 16fr 5fr 4fr;
-  grid-column-gap: 31px;
+  column-gap: 31px;
   align-items: center;
-  padding: 12px 8px 12px 0;
-}
-.priceWithoutDiscount {
-  margin-top: -34px;
+  padding: 12px 0;
 }
 
 .blockImg {
   display: flex;
   align-items: center;
-  text-transform: uppercase;
 
   img {
     width: 96px;
@@ -69,7 +67,7 @@
   .item {
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    row-gap: 10px;
     padding: 12px 0px;
   }
   .leftBlock {
@@ -100,6 +98,9 @@
     margin-top: -28px;
   }
 }
+.price {
+  text-align: right;
+}
 
 .discountPriceOrder p,
 .discountPriceOrder span {
@@ -108,18 +109,31 @@
 .pencilIcon {
   margin-left: auto;
 }
-@include sm {
-  .itemsBlock {
-    overflow-y: hidden;
-    height: 100%;
-    padding: 0 16px;
+
+@include md {
+  .itemsCart {
+    height: 898px;
     margin-top: 0;
+    padding: 58px 27px;
+    background: $background-gradient;
+    overflow-y: auto;
   }
   .item {
+    column-gap: 16px;
+  }
+}
+
+@include sm {
+  .itemsCart {
+    height: 628px;
+    padding: 24px 16px;
+  }
+  .item {
+    position: relative;
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    padding: 12px 0px;
+    padding: 12px 6px 12px 0;
   }
   .leftBlock {
     justify-content: space-between;
@@ -133,12 +147,13 @@
       width: 56px;
       height: 56px;
       margin-left: 0;
-      margin-right: 16px;
+      margin-right: 18px;
     }
   }
 
   .trashIcon {
     justify-self: end;
+    padding: 6px;
   }
   .countBlock {
     grid-row: 2/3;
@@ -149,13 +164,10 @@
     grid-row: 2/3;
     grid-column: 2/3;
     justify-self: end;
+    padding: 6px;
   }
   .pencilIcon {
     position: absolute;
-    top: 18px;
-    right: 45px;
-  }
-  .priceWithoutDiscount {
-    margin-top: -28px;
+    right: 56px;
   }
 }

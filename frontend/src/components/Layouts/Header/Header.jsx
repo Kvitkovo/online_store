@@ -18,8 +18,11 @@ import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
 import LoginModal from '../../login/LoginModal';
 import RegisterModal from '../../login/RegisterModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/slices/userSlice';
+import { GetProducts } from '../../../services/products/productsAccess.service';
+import TotalItems from './components/TotalItems';
+import { initiateCart } from '../../../redux/slices/cartSlice';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -27,6 +30,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const user = useSelector(getUser);
+  const dispatch = useDispatch();
 
   const toggleLogin = () => {
     if (user && user.loggedIn) {
@@ -37,7 +41,9 @@ const Header = () => {
     }
   };
 
-  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const { cartItems, bouquetItems } = useSelector(
+    (state) => state.cartSliceReducer,
+  );
 
   const productQuantity = useMemo(() => {
     const quantity = cartItems.reduce(
@@ -46,6 +52,14 @@ const Header = () => {
     );
     return quantity;
   }, [cartItems]);
+  const flowerQuantity = useMemo(
+    () =>
+      bouquetItems.reduce(
+        (accumulator, item) => accumulator + item.cardQuantity,
+        0,
+      ),
+    [bouquetItems],
+  );
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -100,6 +114,56 @@ const Header = () => {
       window.onscroll = null;
     };
   }, []);
+
+  useEffect(() => {
+    const getPrevData = async (type) => {
+      const prevList = JSON.parse(localStorage.getItem(type)) || [];
+      const cartList = [];
+      for (const item of prevList) {
+        const { id, cardQuantity, orderItemsCompositions } = item;
+        if (orderItemsCompositions) {
+          const price = orderItemsCompositions.reduce(
+            (acc, flower) => acc + flower.price,
+            0,
+          );
+          const newItem = {
+            id: id,
+            title: `Свій букет #${id}`,
+            cardQuantity: cardQuantity,
+            discount: 0,
+            image: '/images/new_bouquet.jpg',
+            price: price,
+            orderItemsCompositions: orderItemsCompositions,
+          };
+
+          cartList.push(newItem);
+        } else {
+          const info = await GetProducts(item.id);
+          const { id, images, title, price, priceWithDiscount } = info;
+          const newItem = {
+            id: id,
+            title: title,
+            price: price,
+            priceWithDiscount: priceWithDiscount,
+            image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
+            cardQuantity: item.cardQuantity,
+          };
+
+          cartList.push(newItem);
+        }
+      }
+
+      dispatch(
+        initiateCart({
+          items: cartList,
+          type: type,
+        }),
+      );
+    };
+    getPrevData('bouquet');
+    getPrevData('cart');
+  }, [dispatch]);
+
   return (
     <div>
       <BurgerMenu
@@ -107,6 +171,7 @@ const Header = () => {
         toggleMyBouquet={toggleMyBouquet}
         toggleLogin={toggleLogin}
         cartQuantity={productQuantity}
+        flowerQuantity={flowerQuantity}
       />
       <header>
         <div className={styles.containerTop}>
@@ -179,6 +244,7 @@ const Header = () => {
                 icon={<ICONS.toBouquet />}
                 onClick={toggleMyBouquet}
               />
+              <TotalItems productQuantity={flowerQuantity} type={'Bouquet'} />
             </div>
 
             <div className={styles.login}>
@@ -191,17 +257,15 @@ const Header = () => {
             </div>
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />}>
-                {productQuantity !== 0 ? (
-                  <div className={styles.cartQuantity}>{productQuantity}</div>
-                ) : (
-                  <div className={styles.cartQuantityHide} />
-                )}
+                <TotalItems productQuantity={productQuantity} />
               </IconButton>
             </div>
           </div>
         </div>
       </header>
-      {isOpenCart && <CartPopup toggleCart={toggleCart} />}
+      {isOpenCart && (
+        <CartPopup toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+      )}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       {isOpenLogin && (
         <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />

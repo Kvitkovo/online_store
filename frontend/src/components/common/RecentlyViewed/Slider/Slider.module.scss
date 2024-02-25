@@ -1,5 +1,5 @@
-@import '../../../mixins';
-@import '../../../variables';
+@import '../../../../mixins';
+@import '../../../../variables';
 
 .sliderContainer {
   position: relative;
@@ -48,7 +48,6 @@
 
 @include sm {
   .sliderContainer {
-    // box-sizing: content-box;
     margin: 0 auto;
     padding: 0 16px;
     min-width: 334px;

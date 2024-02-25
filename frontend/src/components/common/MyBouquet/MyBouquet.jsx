@@ -9,14 +9,14 @@ import MyBouquetEmpty from './components/MyBuoquetEmpty';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from 'react-router-dom';
-
+import Footer from '../../Footer';
 import { ICONS } from '../../ui-kit/icons';
 import styles from './MyBouquet.module.scss';
 import { useDispatch } from 'react-redux';
 import { addToCart, clearCart } from '../../../redux/slices/cartSlice';
 import ConfirmationPopup from './components/ConfirmationPopup';
 
-const MyBouquet = ({ toggleMyBouquet }) => {
+const MyBouquet = React.memo(({ toggleMyBouquet }) => {
   const { width } = useWindowSize();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,7 +28,10 @@ const MyBouquet = ({ toggleMyBouquet }) => {
 
   const totalSum = useMemo(
     () =>
-      bouquetItems.reduce((sum, obj) => sum + obj.price * obj.cardQuantity, 0),
+      bouquetItems.reduce(
+        (sum, obj) => sum + obj.priceWithDiscount * obj.cardQuantity,
+        0,
+      ),
     [bouquetItems],
   );
   const totalAmount = useMemo(
@@ -51,14 +54,16 @@ const MyBouquet = ({ toggleMyBouquet }) => {
     const findIdx =
       cartItems.filter((item) => item.title.includes('Свій букет'))?.length +
         1 || 1;
+    const formatedIdx = findIdx.toString().padStart(3, '0');
     dispatch(
       addToCart({
         info: {
-          title: `Свій букет #${findIdx}`,
+          id: formatedIdx,
+          title: `Свій букет #${formatedIdx}`,
           cardQuantity: 1,
           discount: 0,
           image: '/images/new_bouquet.jpg',
-          oldPrice: totalSum,
+          priceWithDiscount: totalSum,
           price: totalSum,
           orderItemsCompositions: bouquetItems,
         },
@@ -78,7 +83,7 @@ const MyBouquet = ({ toggleMyBouquet }) => {
       <div className={styles.container}>
         <div className={styles.headerBlock}>
           <p className={styles.title}>
-            {width > 767 ? 'Створення власного букету' : 'Створення букету'}
+            {width > 867 ? 'Створення власного букету' : 'Створення букету'}
           </p>
           <IconButton
             icon={<ICONS.CloseIcon className={styles.icon} />}
@@ -88,33 +93,33 @@ const MyBouquet = ({ toggleMyBouquet }) => {
         {hasItems ? <MyBouquetItem items={bouquetItems} /> : <MyBouquetEmpty />}
       </div>
       <div className={styles.bottomBlock}>
-        <div className={hasItems ? styles.reverse : ''}>
-          <div className={styles.changeItems}>
-            <span
-              className={hasItems ? styles.deleteAll : styles.noActiveDelete}
-              onClick={handleDeleteAll}
-              disabled={!hasItems}
-            >
-              Видалити все
-            </span>
-            {isModalOpen && (
-              <ConfirmationPopup
-                setIsOpen={setModalOpen}
-                deleteAll={clearAll}
-              />
-            )}
-            <Button
-              label={width > 767 ? 'Додати компонент' : 'Додати'}
-              variant="secondary"
-              padding="padding-sm"
-              icon={<ICONS.addComponent />}
-              onClick={addMore}
+        <div className={styles.changeItems}>
+          <span
+            className={hasItems ? styles.deleteAll : styles.noActiveDelete}
+            onClick={handleDeleteAll}
+            disabled={!hasItems}
+          >
+            Видалити все
+          </span>
+          {isModalOpen && (
+            <ConfirmationPopup
+              setIsOpen={setModalOpen}
+              confirmedAction={clearAll}
+              action={'Видалити'}
             />
-          </div>
-          <div className={hasItems ? styles.divider : ''}>
-            <Divider />
-          </div>
+          )}
+          <Button
+            label={width > 867 ? 'Додати компонент' : 'Додати'}
+            variant="secondary"
+            padding="padding-sm"
+            icon={<ICONS.addComponent />}
+            onClick={addMore}
+          />
         </div>
+        <div className={styles.divider}>
+          <Divider />
+        </div>
+
         <div className={styles.bottom}>
           <div className={styles.total}>
             <p>Разом:</p>
@@ -125,17 +130,20 @@ const MyBouquet = ({ toggleMyBouquet }) => {
               <span>грн</span>
             </div>
           </div>
-          <Button
-            label="Зібрати букет"
-            variant={hasItems ? 'primary' : 'disabled'}
-            padding="padding-even"
-            onClick={addBouquetToCart}
-            disabled={bouquetItems.length === 0}
-          />
+          <div className={styles.button}>
+            <Button
+              label="Зібрати букет"
+              variant={hasItems ? 'primary' : 'disabled'}
+              padding="padding-even"
+              onClick={addBouquetToCart}
+              disabled={bouquetItems.length === 0}
+            />
+          </div>
         </div>
       </div>
+      {width < 868 && <Footer />}
     </Modals>
   );
-};
+});
 
 export default MyBouquet;
