@@ -23,6 +23,7 @@ const ProductList = React.memo(
     currentPage = 1,
     isLoading = false,
     totalAmount,
+    setTotalAmount,
     query = '',
   }) => {
     const { categoryId } = useParams();
@@ -37,7 +38,9 @@ const ProductList = React.memo(
     };
     const resetFilter = () => {
       setSelectedFilter({});
-      setFilteredList(data);
+      setCurrentPage(1);
+      setTotalAmount(data.totalAmount);
+      setFilteredList(data.data);
       setActiveFilter(null);
     };
     const sortOptions = [
@@ -75,7 +78,7 @@ const ProductList = React.memo(
               name: name,
             };
           }
-          if (query !== '' && data?.some((item) => item[filter] === +id)) {
+          if (query !== '' && data.data?.some((item) => item[filter] === +id)) {
             return {
               id: id,
               name: name,
@@ -109,7 +112,7 @@ const ProductList = React.memo(
       async (selected) => {
         try {
           const data = await GetProductsFilter({
-            page: currentPage,
+            page: 1,
             size: 12,
             categories:
               categoryId !== 'discounted' ? categoryId : selected.categories,
@@ -118,6 +121,7 @@ const ProductList = React.memo(
             sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
             title: query,
           });
+          setTotalAmount(data.totalElements);
           setFilteredList(data.content);
         } catch (error) {
           console.error(error);
@@ -126,7 +130,7 @@ const ProductList = React.memo(
           setActiveFilter(null);
         }
       },
-      [categoryId, currentPage, query, sortValue],
+      [categoryId, query, setTotalAmount, sortValue],
     );
 
     useEffect(() => {
@@ -146,7 +150,7 @@ const ProductList = React.memo(
 
           return () => clearTimeout(timeoutId);
         } else {
-          const sortedList = Array.from(data).sort(
+          const sortedList = Array.from(data.data).sort(
             (a, b) => a.priceWithDiscount - b.priceWithDiscount,
           );
           if (sortValue === 1) {
@@ -240,9 +244,7 @@ const ProductList = React.memo(
                   </div>
                   <Pagination
                     onPageChange={setCurrentPage}
-                    totalCount={
-                      activeFilter ? filteredList.length : totalAmount
-                    }
+                    totalCount={totalAmount}
                     currentPage={currentPage}
                     pageSize={12}
                   />
