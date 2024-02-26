@@ -11,8 +11,8 @@ import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import { useNavigate } from 'react-router-dom';
 import {
-  addToCart,
   clearCart,
+  initiateCart,
   removeFromCart,
 } from '../../../redux/slices/cartSlice';
 import Footer from '../../Footer';
@@ -35,10 +35,11 @@ const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
   const editBouquet = useCallback(
     (item) => {
       dispatch(clearCart({ type: 'bouquet' }));
+
+      dispatch(
+        initiateCart({ items: item.orderItemsCompositions, type: 'bouquet' }),
+      );
       dispatch(removeFromCart({ info: item, type: 'cart' }));
-      item.orderItemsCompositions.map((elem) => {
-        dispatch(addToCart({ info: elem, type: 'bouquet' }));
-      });
       toggleCart();
       toggleMyBouquet();
     },

@@ -50,6 +50,7 @@ const cartSlice = createSlice({
                 orderItemsCompositions: orderItemsCompositions,
               }
             : { id: id, cardQuantity: 1 };
+
           items.push(newItem);
         }
         updateLocalStorage(type, items);
