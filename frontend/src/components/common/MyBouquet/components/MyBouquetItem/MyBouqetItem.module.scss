@@ -4,35 +4,39 @@
 .itemsBlock {
   padding-right: 15px;
   margin-top: 30px;
+  width: 571px;
+  height: 816px;
+  max-height: 90%;
   overflow-y: auto;
-  height: 320px;
-  max-width: 571px;
-
-  &:hover {
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
-  }
+  scrollbar-width: 4px;
+  scrollbar-color: $page-accent-color transparent;
+  -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar {
     width: 4px;
     border-radius: 2px;
   }
 
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
   &::-webkit-scrollbar-thumb {
+    background-color: $page-accent-color;
     border-radius: 2px;
-    background: $page-accent-color;
   }
 }
 
 .item {
+  box-sizing: content-box;
   height: 60px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
-.leftBlock {
+.icon {
   display: flex;
   align-items: center;
 }
@@ -40,6 +44,7 @@
 .blockImg {
   display: flex;
   align-items: center;
+  width: 254px;
 
   img {
     width: 59px;
@@ -54,23 +59,14 @@
   }
 }
 
-.rightBlock {
-  display: flex;
-  align-items: center;
-  gap: 29px;
-}
-
 .price {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-  color: $page-accent-color;
-  line-height: 24px;
-
-  span {
-    margin-left: 12px;
-    font-weight: 400;
-    font-size: 14px;
+  & p {
+    font-size: 18px;
+  }
+  &:has(:nth-child(2)) {
+    & p:first-child {
+      font-size: 15px;
+    }
   }
 }
 
@@ -78,18 +74,51 @@
   padding: 12px 0;
 }
 
-@include sm {
+@include md {
   .itemsBlock {
-    padding-right: 0;
-    height: 100%;
-    overflow-y: hidden;
+    width: 100%;
+    max-height: 796px;
+    margin-top: 0;
+    padding: 8px 27px 20px;
+    overflow-y: scroll;
+    background: $background-gradient;
   }
   .item {
-    height: 116px;
-    flex-direction: column;
+    width: 100%;
+  }
+
+  .blockImg {
+    flex: 2 2;
   }
   .rightBlock {
     margin-left: 95px;
     justify-content: space-between;
+  }
+}
+
+@include sm {
+  .itemsBlock {
+    max-height: 587px;
+  }
+  .item {
+    height: max-content;
+    display: grid;
+    gap: 16px 0;
+    grid-template-areas: 'icon title title title .' '. . countBlock price .';
+  }
+  .icon {
+    grid-area: icon;
+  }
+  .blockImg {
+    grid-area: title;
+    img {
+      margin-left: 0;
+    }
+  }
+  .countBlock {
+    grid-area: countBlock;
+  }
+  .price {
+    grid-area: price;
   }
 }

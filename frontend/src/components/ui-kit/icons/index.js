@@ -47,6 +47,7 @@ import { ReactComponent as radiobtn } from './icon-radiobtn.svg';
 import { ReactComponent as filter } from './filter.svg';
 import { ReactComponent as btnPointer } from './btn-pointer.svg';
 import { ReactComponent as pointer } from './pointer.svg';
+import { ReactComponent as inBouquet } from './in-bouquet.svg';
 
 export const ICONS = {
   addComponent,
@@ -98,4 +99,5 @@ export const ICONS = {
   filter,
   btnPointer,
   pointer,
+  inBouquet,
 };

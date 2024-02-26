@@ -1,10 +1,16 @@
 @import '/src/variables';
+@import '/src/mixins';
 
 .countBlock {
   width: 125px;
   gap: 12px;
   display: flex;
   align-items: center;
+  & button:disabled {
+    path {
+      stroke: $gray-light-color;
+    }
+  }
 }
 
 .field {
@@ -19,5 +25,11 @@
 .icon {
   path {
     stroke: $text-color;
+  }
+}
+
+@include sm {
+  .field {
+    font-size: 14px;
   }
 }

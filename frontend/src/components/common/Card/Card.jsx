@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Card.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
@@ -7,96 +7,142 @@ import Discount from '../../ui-kit/components/Discount';
 import DiscountPrice from '../../ui-kit/components/DiscountPrice';
 import { inActive } from '../../../utils/ClassActiveAndInactive';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../../../redux/slices/cartSlice';
+import { addToCart, removeFromCart } from '../../../redux/slices/cartSlice';
 import { isItemInCart } from '../../../utils/isItemInCart';
 
-const Card = (props) => {
-  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+const Card = React.memo((props) => {
+  const {
+    id,
+    image,
+    available,
+    price,
+    oldPrice,
+    title,
+    discount,
+    allowAddToConstructor,
+  } = props;
+  const { cartItems, bouquetItems } = useSelector(
+    (state) => state.cartSliceReducer,
+  );
   const dispatch = useDispatch();
   const [inCart, setInCart] = useState(false);
+  const [inBouquet, setInBouquet] = useState(false);
 
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
 
+  const handleAddToStack = useCallback(
+    (props, type) => {
+      dispatch(
+        addToCart({
+          info: {
+            image: image,
+            title: title,
+            discount: discount,
+            price: oldPrice,
+            priceWithDiscount: price,
+            id: id,
+          },
+          type: type,
+        }),
+      );
+    },
+    [discount, dispatch, id, image, oldPrice, price, title],
+  );
+
+  const handleDeleteFromStack = useCallback(
+    (props, type) => {
+      dispatch(removeFromCart({ info: props, type: type }));
+    },
+    [dispatch],
+  );
   useEffect(() => {
     setInCart(false);
-    if (isItemInCart(cartItems, props.id)) {
+    if (isItemInCart(cartItems, id)) {
       setInCart(true);
     }
-  }, [cartItems, props.id]);
+  }, [cartItems, id]);
 
-  const handleAddToCart = (props) => {
-    dispatch(addToCart(props));
-  };
+  useEffect(() => {
+    setInBouquet(false);
+    if (isItemInCart(bouquetItems, props.id)) {
+      setInBouquet(true);
+    }
+  }, [bouquetItems, props]);
 
   return (
-    <li className={styles.card}>
+    <li className={styles.card} key={id}>
       <Link
-        to={`/product/${props.id}`}
+        to={`/product/${id}`}
         className={styles.link}
         onClick={handleCardClick}
       >
         <div>
           <img
-            src={props.image}
+            src={image}
             alt="букет"
-            className={inActive(
-              props.available,
-              styles.foto,
-              styles.fotoInactive,
-            )}
+            className={inActive(available, styles.foto, styles.fotoInactive)}
           />
-          <h3 className={styles.title}>{props.title}</h3>
+          <h3 className={styles.title}>{title}</h3>
         </div>
       </Link>
-      <div
-        className={
-          props.discount === 0 ? `${styles.hide}` : `${styles.discount}`
-        }
-      >
-        {props.available === 'AVAILABLE' && (
-          <Discount discount={props.discount} />
-        )}
+      <div className={discount === 0 ? `${styles.hide}` : `${styles.discount}`}>
+        {available === 'AVAILABLE' && <Discount discount={discount} />}
       </div>
       <div className={styles.cardInfo}>
         <div className={styles.textFlex}>
-          <p
-            className={inActive(props.available, styles.price, styles.inactive)}
-          >
+          <p className={inActive(available, styles.price, styles.inactive)}>
             Ціна
           </p>
-          {props.available === 'UNAVAILABLE' && (
+          {available === 'UNAVAILABLE' && (
             <p className={styles.outOfStock}>Немає в наявності</p>
           )}
         </div>
         <div className={styles.cardFlexBottom}>
           <div className={styles.priceWrapper}>
             <DiscountPrice
-              oldPrice={props.oldPrice}
-              actualPrice={props.price}
-              isActive={props.available}
+              oldPrice={oldPrice}
+              actualPrice={price}
+              isActive={available}
               isSmallCard={true}
             />
           </div>
           <div className={styles.cardFlexBottom}>
             <div
               className={
-                props.available === 'UNAVAILABLE'
+                available === 'UNAVAILABLE'
                   ? `${styles.hide}`
                   : `${styles.icons}`
               }
             >
-              {props.bouquet && <IconButton icon={<ICONS.BouquetIcon />} />}
+              {allowAddToConstructor &&
+                (inBouquet ? (
+                  <IconButton
+                    icon={<ICONS.inBouquet />}
+                    onClick={() => handleDeleteFromStack(props, 'bouquet')}
+                  />
+                ) : (
+                  <IconButton
+                    icon={<ICONS.BouquetIcon />}
+                    onClick={() => handleAddToStack(props, 'bouquet')}
+                  />
+                ))}
               {!inCart && (
                 <IconButton
                   icon={<ICONS.CartIcon />}
                   isBorderYellow={true}
-                  onClick={() => handleAddToCart(props)}
+                  onClick={() => handleAddToStack(props, 'cart')}
+                  key={'add_to_cart'}
                 />
               )}
               {inCart && (
-                <IconButton icon={<ICONS.InCartIcon />} isBorderGreen={true} />
+                <IconButton
+                  icon={<ICONS.InCartIcon />}
+                  isBorderGreen={true}
+                  onClick={() => handleDeleteFromStack(props, 'cart')}
+                  key={'delete_to_cart'}
+                />
               )}
             </div>
           </div>
@@ -104,5 +150,5 @@ const Card = (props) => {
       </div>
     </li>
   );
-};
+});
 export default Card;

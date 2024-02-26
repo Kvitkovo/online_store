@@ -1,0 +1,23 @@
+@import '/src/_variables';
+.header {
+  padding: 16px 20px 17px 95px;
+  display: flex;
+  justify-content: space-between;
+  background-color: $page-background-color;
+}
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 31.2px;
+  color: $text-color;
+}
+.body {
+  padding: 48px 56px 32px;
+  & button {
+    width: 100%;
+  }
+}
+.question {
+  margin-bottom: 61px;
+  text-align: center;
+}

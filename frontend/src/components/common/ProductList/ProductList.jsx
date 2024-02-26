@@ -23,10 +23,11 @@ const ProductList = React.memo(
     currentPage = 1,
     isLoading = false,
     totalAmount,
-    sortValue,
-    setSortValue,
+    setTotalAmount,
+    query = '',
   }) => {
     const { categoryId } = useParams();
+    const [sortValue, setSortValue] = useState(0);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState({});
     const [filteredList, setFilteredList] = useState(null);
@@ -37,7 +38,9 @@ const ProductList = React.memo(
     };
     const resetFilter = () => {
       setSelectedFilter({});
-      setFilteredList(data);
+      setCurrentPage(1);
+      setTotalAmount(data.totalAmount);
+      setFilteredList(data.data);
       setActiveFilter(null);
     };
     const sortOptions = [
@@ -59,10 +62,31 @@ const ProductList = React.memo(
           ? await GetFiltersForDiscounted(categoryId)
           : await GetFiltersInCategory(categoryId);
       for (const [key, value] of Object.entries(result)) {
-        const filterOptions = Object.entries(value).map(([key, value]) => ({
-          id: key,
-          name: value,
-        }));
+        const filterOptions = Object.entries(value).map(([id, name]) => {
+          const keyMappings = {
+            Sizes: 'sizeId',
+            Types: 'productTypeId',
+            Colors: 'colorId',
+          };
+          const getKeyMapping = (key) => keyMappings[key] || 'categoryId';
+
+          const filter = getKeyMapping(key) || 'categoryId';
+
+          if (query === '') {
+            return {
+              id: id,
+              name: name,
+            };
+          }
+          if (query !== '' && data.data?.some((item) => item[filter] === +id)) {
+            return {
+              id: id,
+              name: name,
+            };
+          } else {
+            return;
+          }
+        });
         const filterName = key.toLowerCase();
         if (key === 'Prices') {
           const prices = Object.values(value);
@@ -72,29 +96,33 @@ const ProductList = React.memo(
             priceTo: prices[1],
           }));
         } else {
-          setInitialFilterData((prev) => ({
-            ...prev,
-            [filterName]: filterOptions,
-          }));
+          setInitialFilterData((prev) => {
+            return {
+              ...prev,
+              [filterName]: filterOptions.filter(
+                (filter) => typeof filter === 'object',
+              ),
+            };
+          });
         }
       }
-    }, [categoryId, setInitialFilterData]);
+    }, [categoryId, data, query]);
 
     const getFilteredData = useCallback(
       async (selected) => {
         try {
-          if (Object.keys(selected).length > 0) {
-            const data = await GetProductsFilter({
-              page: currentPage,
-              size: 12,
-              categories:
-                categoryId !== 'discounted' ? categoryId : selected.categories,
-              discount: categoryId === 'discounted' || selected.discount,
-              ...selected,
-              sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
-            });
-            setFilteredList(data.content);
-          }
+          const data = await GetProductsFilter({
+            page: 1,
+            size: 12,
+            categories:
+              categoryId !== 'discounted' ? categoryId : selected.categories,
+            discount: categoryId === 'discounted' || selected.discount,
+            ...selected,
+            sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+            title: query,
+          });
+          setTotalAmount(data.totalElements);
+          setFilteredList(data.content);
         } catch (error) {
           console.error(error);
         } finally {
@@ -102,7 +130,7 @@ const ProductList = React.memo(
           setActiveFilter(null);
         }
       },
-      [categoryId, currentPage, sortValue],
+      [categoryId, query, setTotalAmount, sortValue],
     );
 
     useEffect(() => {
@@ -112,22 +140,27 @@ const ProductList = React.memo(
         setActiveFilter(null);
       };
     }, [getFilterData]);
-    useEffect(() => {
-      setFilteredList(data);
-    }, [data]);
 
     useEffect(() => {
-      if (Object.keys(selectedFilter).length > 0) {
-        const timeoutId = setTimeout(() => {
-          getFilteredData(selectedFilter);
-        }, 5500);
+      if (data) {
+        if (Object.keys(selectedFilter).length > 0) {
+          const timeoutId = setTimeout(() => {
+            getFilteredData(selectedFilter);
+          }, 5500);
 
-        return () => clearTimeout(timeoutId);
-      } else {
-        setFilteredList(data);
-        setActiveFilter(null);
+          return () => clearTimeout(timeoutId);
+        } else {
+          const sortedList = Array.from(data.data).sort(
+            (a, b) => a.priceWithDiscount - b.priceWithDiscount,
+          );
+          if (sortValue === 1) {
+            setFilteredList(sortedList.reverse());
+          }
+          setFilteredList(sortedList);
+          setActiveFilter(null);
+        }
       }
-    }, [data, getFilteredData, selectedFilter]);
+    }, [data, getFilteredData, selectedFilter, sortValue]);
 
     return (
       <div className={styles.mainContainer}>
@@ -142,6 +175,7 @@ const ProductList = React.memo(
             resetFilter={resetFilter}
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
+            filteredData={filteredList}
           />
         </div>
         <div className={styles.mainContent}>
@@ -204,14 +238,13 @@ const ProductList = React.memo(
                         available={product.available}
                         key={product.id}
                         id={product.id}
+                        allowAddToConstructor={product.allowAddToConstructor}
                       />
                     ))}
                   </div>
                   <Pagination
                     onPageChange={setCurrentPage}
-                    totalCount={
-                      activeFilter ? filteredList.length : totalAmount
-                    }
+                    totalCount={totalAmount}
                     currentPage={currentPage}
                     pageSize={12}
                   />

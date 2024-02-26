@@ -2,8 +2,8 @@
 /* eslint-disable import/no-unresolved */
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './Slider.module.scss';
-import IconButton from '../../../../components/ui-kit/components/IconButton';
-import { ICONS } from '../../../../components/ui-kit/icons';
+import IconButton from '../../../ui-kit/components/IconButton';
+import { ICONS } from '../../../ui-kit/icons';
 import { register } from 'swiper/element/bundle';
 import { GetProducts } from '../../../../services/products/productsAccess.service';
 import { useParams } from 'react-router-dom';

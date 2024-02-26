@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Modals from '../Modals';
 import CartItem from './components/CartItem';
 import CartEmpty from './components/CartEmpty';
@@ -10,10 +10,19 @@ import IconButton from '../../ui-kit/components/IconButton';
 import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import { useNavigate } from 'react-router-dom';
+import {
+  clearCart,
+  initiateCart,
+  removeFromCart,
+} from '../../../redux/slices/cartSlice';
+import Footer from '../../Footer';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
-const CartPopup = ({ toggleCart }) => {
+const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { width } = useWindowSize();
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -23,7 +32,19 @@ const CartPopup = ({ toggleCart }) => {
     );
     return total;
   }, [cartItems]);
+  const editBouquet = useCallback(
+    (item) => {
+      dispatch(clearCart({ type: 'bouquet' }));
 
+      dispatch(
+        initiateCart({ items: item.orderItemsCompositions, type: 'bouquet' }),
+      );
+      dispatch(removeFromCart({ info: item, type: 'cart' }));
+      toggleCart();
+      toggleMyBouquet();
+    },
+    [dispatch, toggleCart, toggleMyBouquet],
+  );
   const handleOrder = () => {
     navigate('/order');
     toggleCart();
@@ -39,33 +60,36 @@ const CartPopup = ({ toggleCart }) => {
             onClick={toggleCart}
           />
         </div>
-        <div className={styles.mobileBackground}>
-          {cartItems.length > 0 ? (
-            <CartItem items={cartItems} cartClassName="itemsCart" />
-          ) : (
-            <CartEmpty />
-          )}
-        </div>
-      </div>
-      <div className={styles.bottomBlock}>
-        <Divider />
-        <div className={styles.bottom}>
-          <div className={styles.total}>
-            Разом:
-            <b>
-              {productTotal}
-              <span className={styles.currency}>грн</span>
-            </b>
-          </div>
-          <Button
-            label="Оформити замовлення"
-            variant={cartItems.length > 0 ? 'primary' : 'disabled'}
-            padding="padding-even"
-            onClick={() => handleOrder()}
-            disabled={cartItems.length === 0}
+        {cartItems.length > 0 ? (
+          <CartItem
+            items={cartItems}
+            cartClassName="itemsCart"
+            editBouquet={editBouquet}
           />
+        ) : (
+          <CartEmpty />
+        )}
+        <div className={styles.bottomBlock}>
+          <Divider />
+          <div className={styles.bottom}>
+            <div className={styles.total}>
+              Разом:
+              <b>
+                {productTotal}
+                <span className={styles.currency}>грн</span>
+              </b>
+            </div>
+            <Button
+              label="Оформити замовлення"
+              variant={cartItems.length > 0 ? 'primary' : 'disabled'}
+              padding="padding-even"
+              onClick={() => handleOrder()}
+              disabled={cartItems.length === 0}
+            />
+          </div>
         </div>
       </div>
+      {width < 868 && <Footer />}
     </Modals>
   );
 };

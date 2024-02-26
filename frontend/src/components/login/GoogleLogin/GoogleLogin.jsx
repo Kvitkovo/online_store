@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './GoogleLogin.scss';
-import axios from 'axios';
+import { sendTokenToBackend } from '../../../services/login/login.service';
 
-const GoogleLogin = ({ handleGoogleLogin }) => {
-  useEffect(() => {
-    async function handleCallbackResponse(response) {
+const GoogleLogin = React.memo(({ handleGoogleLogin }) => {
+  const handleCallbackResponse = useCallback(
+    async (response) => {
       const token = response.credential;
       await sendTokenToBackend(token);
       handleGoogleLogin(token);
-    }
+    },
+    [handleGoogleLogin],
+  );
 
-    const sendTokenToBackend = async (token) => {
-      return axios.post(
-        'https://api.imperiaholoda.com.ua:4446/v1/auth/google',
-        {
-          token,
-        },
-      );
-    };
-
+  useEffect(() => {
     const initializeGoogleSignIn = () => {
       /* global google */
       google.accounts.id.initialize({
@@ -44,13 +38,13 @@ const GoogleLogin = ({ handleGoogleLogin }) => {
     if (typeof google !== 'undefined' && google.accounts) {
       initializeGoogleSignIn();
     }
-  }, [handleGoogleLogin]);
+  }, [handleCallbackResponse]);
 
   return (
     <div>
       <div id="signInDiv"></div>
     </div>
   );
-};
+});
 
 export default GoogleLogin;

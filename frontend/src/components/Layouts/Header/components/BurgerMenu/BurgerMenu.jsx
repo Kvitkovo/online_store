@@ -10,6 +10,7 @@ const BurgerMenu = ({
   toggleMyBouquet,
   cartQuantity,
   toggleLogin,
+  flowerQuantity,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -34,6 +35,7 @@ const BurgerMenu = ({
           toggleMyBouquet={toggleMyBouquet}
           toggleLogin={toggleLogin}
           cartQuantity={cartQuantity}
+          flowerQuantity={flowerQuantity}
         />
       )}
     </>

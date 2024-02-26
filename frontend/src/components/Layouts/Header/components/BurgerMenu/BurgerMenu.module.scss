@@ -29,6 +29,7 @@
 .bouquet,
 .account,
 .cart {
+  position: relative;
   display: flex;
   padding: 8px 8px 0;
 }
@@ -123,8 +124,21 @@
   }
 }
 @include sm {
+  .root {
+    position: relative;
+  }
   .searchField {
-    display: none;
+    // position: absolute;
+    width: 100%;
+    max-width: 94%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $white-color;
+    visibility: hidden;
+  }
+  .visible {
+    visibility: visible;
   }
   .searchMobile {
     display: flex;

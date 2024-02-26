@@ -24,7 +24,7 @@
 @include md {
   .path {
     font-size: 14px;
-    margin: 16px 0 0;
+    margin: 5px 0 25px;
   }
 }
 @include sm {
@@ -41,6 +41,10 @@
       max-height: 20px;
       margin-top: 16px;
     }
+    &::-webkit-scrollbar-corner {
+      border-radius: 2px;
+    }
+
     &::-webkit-scrollbar-track {
       background-color: transparent;
     }
