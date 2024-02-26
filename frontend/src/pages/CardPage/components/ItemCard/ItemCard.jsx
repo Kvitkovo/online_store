@@ -11,7 +11,7 @@ import { addToCart, removeFromCart } from '../../../../redux/slices/cartSlice';
 import { isItemInCart } from '../../../../utils/isItemInCart';
 import RecentlyViewed from '../../../../components/common/RecentlyViewed';
 
-const ItemCard = ({ cardData }) => {
+const ItemCard = React.memo(({ cardData }) => {
   const {
     images,
     title,
@@ -117,5 +117,5 @@ const ItemCard = ({ cardData }) => {
       <RecentlyViewed />
     </div>
   );
-};
+});
 export default ItemCard;
