@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './OrderInfo.module.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
 import Button from '../../../ui-kit/components/Button';
 import { addOrderToDB } from '../../../../services/order';
+import { clearCart } from '../../../../redux/slices/cartSlice';
 
 const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let receiverName = '';
   let receiverPhone = '';
@@ -70,6 +72,7 @@ const OrderInfo = ({ orderData }) => {
     });
 
     if (result) {
+      dispatch(clearCart({ type: 'cart' }));
       navigate(`/order/${result}`);
     }
   };
