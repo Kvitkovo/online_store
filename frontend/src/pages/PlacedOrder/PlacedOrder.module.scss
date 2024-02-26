@@ -5,6 +5,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &::after {
+    background: url(../../../public/images/flowers.svg) no-repeat;
+    content: '';
+    position: fixed;
+    bottom: -344px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &::before {
+    background: no-repeat url(../../../public/images/flower.svg);
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 456px;
+    width: 456px;
+    transform: rotate(-14.48deg);
+    z-index: 1;
+  }
 }
 
 .title {
