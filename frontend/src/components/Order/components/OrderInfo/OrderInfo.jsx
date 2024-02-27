@@ -34,12 +34,29 @@ const OrderInfo = ({ orderData }) => {
 
   const sendOrder = async () => {
     const orderItems = cartItems.map((item) => {
-      return {
-        productId: item.id,
-        productTitle: item.title,
-        price: item.price,
-        qty: item.cardQuantity,
-      };
+      if (item.orderItemsCompositions) {
+        const bouquetItems = item.orderItemsCompositions.map(
+          (compositionItem) => {
+            return {
+              productId: compositionItem.id,
+              qty: compositionItem.cardQuantity,
+            };
+          },
+        );
+        return {
+          productId: item.id,
+          productTitle: item.title,
+          price: item.price,
+          qty: item.cardQuantity,
+          orderItemsCompositions: bouquetItems,
+        };
+      } else
+        return {
+          productId: item.id,
+          productTitle: item.title,
+          price: item.price,
+          qty: item.cardQuantity,
+        };
     });
 
     if (orderData.contactData.recipient === 'I') {
