@@ -44,7 +44,6 @@ const OrderInfo = ({ orderData }) => {
           },
         );
         return {
-          productId: item.id,
           productTitle: item.title,
           price: item.price,
           qty: item.cardQuantity,
