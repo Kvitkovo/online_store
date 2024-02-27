@@ -20,7 +20,7 @@ const PlasedOrder = () => {
       <Button
         label="На головну"
         padding="padding-even"
-        onClick={() => goToMainPage()}
+        onClick={goToMainPage}
       />
     </div>
   );
