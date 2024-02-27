@@ -18,15 +18,16 @@ const RecentlyViewed = React.memo(() => {
     const fetchDataForAll = async () => {
       setLoading(true);
       try {
-        const requests = recentlyViewed.map(async (id) => {
-          return await GetProducts(id);
-        });
+        const requests = recentlyViewed
+          .filter((item) => {
+            return item.id !== +myId;
+          })
+          .map(async (id) => {
+            return await GetProducts(id);
+          });
         requests &&
           (await Promise.all(requests).then((value) => {
-            const result = value.filter((item) => {
-              return item.id !== +myId;
-            });
-            setReceivedData(result);
+            setReceivedData(value);
           }));
       } catch (error) {
         console.error(error);
