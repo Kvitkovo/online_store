@@ -71,20 +71,29 @@ const OrderInfo = ({ orderData }) => {
       receiverPhone = orderData.contactData.recipientPhone;
     }
 
+    const {
+      postcardText,
+      contactData: { clientFirstName, clientPhone, clientEmail },
+      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+      paymentData: { payment },
+    } = orderData;
+
+    const formattedPhone = (phoneNumber) => phoneNumber.replace(/[\s()]/g, '');
+
     const result = await addOrderToDB({
-      postcardText: orderData.postcardData.postcardText,
-      customerName: orderData.contactData.clientFirstName,
-      customerPhone: orderData.contactData.clientPhone.replace(/[\s()]/g, ''),
-      customerEmail: orderData.contactData.clientEmail,
-      addressStreet: orderData.deliveryData.clientStreet,
-      addressHous: orderData.deliveryData.clientHouse,
-      addressApartment: orderData.deliveryData.clientFlat,
-      receiverName: receiverName,
-      receiverPhone: receiverPhone.replace(/[\s()]/g, ''),
-      delivery: orderData.deliveryData.delivery,
-      pay: orderData.paymentData.payment,
+      postcardText,
+      customerName: clientFirstName,
+      customerPhone: formattedPhone(clientPhone),
+      customerEmail: clientEmail,
+      addressStreet: clientStreet,
+      addressHous: clientHouse,
+      addressApartment: clientFlat,
+      receiverName,
+      receiverPhone: formattedPhone(receiverPhone),
+      delivery,
+      pay: payment,
       shopId: 1,
-      orderItems: orderItems,
+      orderItems,
     });
 
     if (result) {
