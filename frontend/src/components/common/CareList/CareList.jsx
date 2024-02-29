@@ -53,11 +53,12 @@ export default function CareList() {
                 {item.title}
               </p>
             </div>
-
             <p
               style={
                 selected.includes(item.id)
-                  ? { height: contentRefs.current[item.id]?.scrollHeight }
+                  ? {
+                      height: contentRefs.current[item.id]?.scrollHeight,
+                    }
                   : { height: '0px' }
               }
               ref={(el) => (contentRefs.current[item.id] = el)}

@@ -15,6 +15,7 @@
 }
 
 .titleWrapper {
+  max-width: fit-content;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -74,11 +75,13 @@
   line-height: 1.3;
   padding-left: 51px;
   overflow: hidden;
-  transition: height 0.7s ease-in-out;
+  transition:
+    height 0.7s ease-in-out,
+    width 0.7s ease-in-out;
 }
 
 .content.expanded {
-  max-height: 500px; // Adjust this value as needed to fit your content
+  max-height: fit-content;
 }
 
 .selected {
