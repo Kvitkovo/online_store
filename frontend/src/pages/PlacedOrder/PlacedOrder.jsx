@@ -12,16 +12,18 @@ const PlasedOrder = () => {
   };
   return (
     <div className={styles.placedOrder}>
-      <h1 className={styles.title}>Дякуємо за замовлення!</h1>
-      <p className={styles.orderInformation}>
-        Ваше замовлення за номером <span>№{orderNumber}</span> успішно
-        оформлене.
-      </p>
-      <Button
-        label="На головну"
-        padding="padding-even"
-        onClick={goToMainPage}
-      />
+      <div className={styles.container}>
+        <h1 className={styles.title}>Дякуємо за замовлення!</h1>
+        <p className={styles.orderInformation}>
+          Ваше замовлення за номером <span>№{orderNumber}</span> успішно
+          оформлене.
+        </p>
+        <Button
+          label="На головну"
+          padding="padding-even"
+          onClick={goToMainPage}
+        />
+      </div>
     </div>
   );
 };
