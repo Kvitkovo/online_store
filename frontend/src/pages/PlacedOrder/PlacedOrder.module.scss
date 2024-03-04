@@ -1,11 +1,9 @@
 @import '../../variables';
 @import '../../mixins';
 
-.container {
+.placedOrder {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
   &::before {
     background: no-repeat url(../../../public/images/flower.svg);
     content: '';
@@ -25,6 +23,13 @@
     width: 1087px;
     height: 824px;
   }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
 }
 
 .title {
