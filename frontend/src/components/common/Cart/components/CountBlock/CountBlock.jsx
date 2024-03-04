@@ -2,34 +2,33 @@ import React from 'react';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
 import { useDispatch } from 'react-redux';
-import {
-  decreaseCart,
-  increaseCart,
-} from '../../../../../redux/slices/cartSlice';
+import { updateQuantityInCart } from '../../../../../redux/slices/cartSlice';
 import styles from './CountBlock.module.scss';
 
 const CountBlock = ({ item, type }) => {
+  const { cardQuantity, id } = item;
   const dispatch = useDispatch();
-  const handleDecreaseCart = (cartItem) => {
-    dispatch(decreaseCart({ info: cartItem, type: type }));
-  };
-
-  const handleIncreaseCart = (cartItem) => {
-    dispatch(increaseCart({ info: cartItem, type: type }));
+  const handleChangeQuantity = (id, quantity) => {
+    dispatch(updateQuantityInCart({ id: id, quantity: quantity, type: type }));
   };
 
   return (
     <div className={styles.countBlock}>
       <IconButton
         icon={<ICONS.dash className={styles.icon} />}
-        disabled={item?.cardQuantity === 1}
-        onClick={() => handleDecreaseCart(item)}
+        disabled={cardQuantity === 1}
+        onClick={() => handleChangeQuantity(id, cardQuantity - 1)}
       />
-      <div className={styles.field}>{item?.cardQuantity}</div>
+      <input
+        type="number"
+        className={styles.field}
+        value={cardQuantity}
+        onChange={(e) => handleChangeQuantity(id, e.target.value)}
+      />
       <IconButton
         icon={<ICONS.addComponent className={styles.icon} />}
-        onClick={() => handleIncreaseCart(item)}
-        disabled={item?.cardQuantity > 9998}
+        onClick={() => handleChangeQuantity(id, cardQuantity + 1)}
+        disabled={cardQuantity > 9998}
       />
     </div>
   );

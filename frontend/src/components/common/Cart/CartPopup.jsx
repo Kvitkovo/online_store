@@ -10,15 +10,11 @@ import IconButton from '../../ui-kit/components/IconButton';
 import styles from './CartPopup.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import { useNavigate } from 'react-router-dom';
-import {
-  clearCart,
-  initiateCart,
-  removeFromCart,
-} from '../../../redux/slices/cartSlice';
+import { clearCart, removeFromCart } from '../../../redux/slices/cartSlice';
 import Footer from '../../Footer';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 
-const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
+const CartPopup = ({ toggleCart, toggleMyBouquet, getBouquetData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,15 +31,16 @@ const CartPopup = ({ toggleCart, toggleMyBouquet }) => {
   const editBouquet = useCallback(
     (item) => {
       dispatch(clearCart({ type: 'bouquet' }));
-
-      dispatch(
-        initiateCart({ items: item.orderItemsCompositions, type: 'bouquet' }),
+      localStorage.setItem(
+        'bouquet',
+        JSON.stringify(item.orderItemsCompositions),
       );
+      getBouquetData('bouquet');
       dispatch(removeFromCart({ info: item, type: 'cart' }));
       toggleCart();
       toggleMyBouquet();
     },
-    [dispatch, toggleCart, toggleMyBouquet],
+    [dispatch, getBouquetData, toggleCart, toggleMyBouquet],
   );
   const handleOrder = () => {
     navigate('/order');
