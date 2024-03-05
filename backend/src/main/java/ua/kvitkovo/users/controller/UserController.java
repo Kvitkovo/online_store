@@ -231,7 +231,7 @@ public class UserController {
     @PutMapping("/{id}")
     @PreAuthorize("#id == authentication.principal.id or hasRole('ROLE_ADMIN')")
     public UserResponseDto updateUser(
-            @RequestBody @NotNull(message = "Request body is mandatory") final UserRequestDto request,
+            @RequestBody @NotNull(message = "Request body is mandatory") final UpdateUserRequestDto request,
             @Parameter(description = "The ID of the user to update", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
