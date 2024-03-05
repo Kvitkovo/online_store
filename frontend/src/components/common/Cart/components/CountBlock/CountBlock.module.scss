@@ -20,6 +20,12 @@
   border: 1px solid $gray-dark-color;
   border-radius: 8px;
   padding: 11px 12px 5px;
+  appearance: textfield;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 .icon {

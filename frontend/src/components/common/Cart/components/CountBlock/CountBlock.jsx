@@ -9,7 +9,16 @@ const CountBlock = ({ item, type }) => {
   const { cardQuantity, id } = item;
   const dispatch = useDispatch();
   const handleChangeQuantity = (id, quantity) => {
-    dispatch(updateQuantityInCart({ id: id, quantity: quantity, type: type }));
+    let qty = quantity;
+    if (quantity <= 0) {
+      qty = 1;
+    }
+    if (quantity > 9999) {
+      qty = 9999;
+    }
+    dispatch(
+      updateQuantityInCart({ id: id, quantity: Number(qty), type: type }),
+    );
   };
 
   return (
@@ -23,6 +32,8 @@ const CountBlock = ({ item, type }) => {
         type="number"
         className={styles.field}
         value={cardQuantity}
+        min="1"
+        max="9999"
         onChange={(e) => handleChangeQuantity(id, e.target.value)}
       />
       <IconButton
