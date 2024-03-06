@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Services.module.scss';
-import { ICONS } from '../../../components/ui-kit/icons';
+import { ICONS } from '../../../../components/ui-kit/icons';
 
 const Services = ({ data }) => {
   return (

@@ -1,0 +1,19 @@
+@import '/src/variables';
+@import '../../extention';
+
+.list {
+  margin-bottom: 64px;
+}
+.item {
+  padding-left: 55px;
+  background: url('../../../../components/ui-kit/icons/flower.svg') no-repeat
+    left 3px;
+  background-size: auto;
+}
+.title {
+  @extend %subtitle;
+}
+.description {
+  @extend %description;
+  width: 50%;
+}

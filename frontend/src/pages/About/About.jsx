@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './About.module.scss';
 import Path from '../CardPage/components/Path';
-import servicesData from '../../data/aboutUsData.json';
-import Services from './Services';
+import infoData from '../../data/aboutUsData.json';
+import Services from './components/Services';
+import InsightList from './components/InsightList';
 
 const About = () => {
   return (
@@ -64,7 +65,23 @@ const About = () => {
         <div className={styles.services__bg}></div>
         <div className={styles.services__content}>
           <h2 className={styles.services__title}>Наші Основні Послуги:</h2>
-          <Services data={servicesData.services} />
+          <Services data={infoData.services} />
+        </div>
+      </section>
+      <section className={styles.insights}>
+        <h2 className={styles.insights__title}>Чому саме Kvitkovo?</h2>
+        <InsightList data={infoData.insights} />
+      </section>
+      <section className={styles.conclusion}>
+        <h2 className={styles.conclusion__title}>Kvitkovo</h2>
+        <p className={styles.conclusion__description}>
+          Там, де кожен букет – це історія кохання, поваги та краси. Робіть світ
+          яскравішим разом із нами!
+        </p>
+        <div className={styles.conclusion__images}>
+          {infoData.conclusionImages.map((image) => (
+            <img src={image} alt="Kvitkovo" key={image} />
+          ))}
         </div>
       </section>
     </>
