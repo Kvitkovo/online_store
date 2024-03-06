@@ -1,0 +1,34 @@
+@import '/src/variables';
+@import '../extention';
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
+}
+.service {
+  display: flex;
+  gap: 100px;
+  &:nth-child(2n) {
+    flex-direction: row-reverse;
+  }
+  &__title {
+    margin-top: 130px;
+    @extend %subtitle;
+  }
+  &__description {
+    @extend %description;
+  }
+  &__images {
+    img {
+      border-radius: 50%;
+    }
+  }
+  &__image {
+    width: 565px;
+    transition: transform 0.3s ease;
+
+    &:hover ~ image {
+      transform: scale(1.5);
+    }
+  }
+}

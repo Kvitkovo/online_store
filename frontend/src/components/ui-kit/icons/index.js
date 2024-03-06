@@ -48,6 +48,8 @@ import { ReactComponent as filter } from './filter.svg';
 import { ReactComponent as btnPointer } from './btn-pointer.svg';
 import { ReactComponent as pointer } from './pointer.svg';
 import { ReactComponent as inBouquet } from './in-bouquet.svg';
+import { ReactComponent as service1 } from './services-images/service1.svg';
+import { ReactComponent as service2 } from './services-images/service2.svg';
 
 export const ICONS = {
   addComponent,
@@ -100,4 +102,6 @@ export const ICONS = {
   btnPointer,
   pointer,
   inBouquet,
+  service1,
+  service2,
 };
