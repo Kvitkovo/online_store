@@ -30,7 +30,8 @@
     height: 574px;
     margin: 0 auto;
     z-index: 2;
-    &:after {
+
+    &_cover {
       position: absolute;
       content: '';
       display: block;
@@ -38,7 +39,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 1);
     }
   }
   &__left {
@@ -141,5 +142,18 @@
         top: 19px;
       }
     }
+  }
+}
+
+@keyframes firstScreen {
+  0% {
+  }
+  40% {
+  }
+  60% {
+  }
+  80% {
+  }
+  100% {
   }
 }
