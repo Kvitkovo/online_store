@@ -1,101 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
+import { getUsersOrders } from '../../../services/order';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const [data, setData] = useState([]);
 
-  const data = [
-    {
-      orderNumber: '№0000001',
-      date: '01.10.2023',
-      recipient: 'Шевченко Олена Олегівна',
-      totalPrice: '0000000',
-      status: 'Новий',
-      orderItems: [
-        {
-          code: '3',
-          item: 'Букет весняний',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '200',
-        },
-        {
-          code: '4',
-          item: 'Букет 101 троянда',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '300',
-        },
-        {
-          code: '13',
-          item: 'Букет осіння мрія',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '500',
-        },
-      ],
-      city: 'Київ',
-      street: 'Михайла Грушевського',
-      house: '30',
-      apartment: '329',
-      phone: '+38(067)0000000',
-    },
-    {
-      orderNumber: '№0000002',
-      date: '02.10.2023',
-      recipient: 'Сидорчук Валерія',
-      totalPrice: '0000000',
-      status: 'Новий',
-      orderItems: [
-        {
-          code: '5',
-          item: 'Букет 101 троянда',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '300',
-        },
-        {
-          code: '6',
-          item: 'Букет тюльпанів',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '700',
-        },
-      ],
-      city: 'Київ',
-      street: 'Михайла Грушевського',
-      house: '30',
-      apartment: '329',
-      phone: '+38(067)0000000',
-    },
-    {
-      orderNumber: '№0000003',
-      date: '03.10.2023',
-      recipient: 'Корнійчук Наталія',
-      totalPrice: '0000000',
-      status: 'В обробці',
-      orderItems: [
-        {
-          code: '7',
-          item: 'Букет 101 троянда',
-          img: '/images/bouquet_order.jpg',
-          quantity: '1',
-          price: '400',
-        },
-      ],
-      city: 'Київ',
-      street: 'Михайла Грушевського',
-      house: '30',
-      apartment: '329',
-      phone: '+38(067)0000000',
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUsersOrders();
+        // console.log(response);
+        setData(response);
+      } catch (error) {
+        console.error(
+          'Помилка при отриманні замовлень коричтувача: ',
+          error.message,
+        )();
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Account title="Вітаємо, Олена">
@@ -111,28 +42,26 @@ const Orders = () => {
         </div>
         {data &&
           data.map((order) => (
-            <div key={order.orderNumber}>
+            <div key={order.id}>
               <div className={styles.gridTable}>
                 <div
                   className={
-                    showOrdersDetails === order.orderNumber
+                    showOrdersDetails === order.id
                       ? `${styles.number}`
                       : `${styles.numberActive}  + ' ' + ${styles.number}`
                   }
                   onClick={() => {
                     setShowOrderDetails(
-                      order.orderNumber === showOrdersDetails
-                        ? null
-                        : order.orderNumber,
+                      order.id === showOrdersDetails ? null : order.id,
                     );
                     setQuantity(order.orderItems.length);
                   }}
                 >
-                  {order.orderNumber}
+                  {order.id}
                 </div>
-                <div>{order.date}</div>
-                <div>{order.recipient}</div>
-                <div>{order.totalPrice} грн</div>
+                <div>{order.dateOfShipment}</div>
+                <div>{order.receiverName}</div>
+                <div>{order.totalSum} грн</div>
                 <div>{order.status}</div>
 
                 {order.status === 'Новий' ? (
@@ -141,28 +70,28 @@ const Orders = () => {
                   ''
                 )}
               </div>
-              {showOrdersDetails === order.orderNumber && (
+              {showOrdersDetails === order.id && (
                 <>
                   <div className={styles.item}></div>
                   {order.orderItems.map((item, index) => (
                     <OrderItem
                       key={index}
                       number={index + 1}
-                      code={item.code}
-                      item={item.item}
-                      img={item.img}
-                      itemQuantity={item.quantity}
+                      code={item.product?.id}
+                      item={item.product?.title}
+                      img={item.product?.mainImageSmallUrl}
+                      itemQuantity={item.qty}
                       price={item.price}
                     />
                   ))}
                   <div className={styles.item}></div>
                   <RecipientDetails
-                    city={order.city}
-                    street={order.street}
-                    house={order.house}
-                    apartment={order.apartment}
-                    recipient={order.recipient}
-                    phone={order.phone}
+                    city={order.addressCity}
+                    street={order.addressStreet}
+                    house={order.addressHouse}
+                    apartment={order.addressApartment}
+                    recipient={order.receiverName}
+                    phone={order.receiverPhone}
                     quantity={quantity}
                   />
                 </>
@@ -170,20 +99,18 @@ const Orders = () => {
               <div className={styles.arrowDown}>
                 <button
                   className={
-                    showOrdersDetails === order.orderNumber
+                    showOrdersDetails === order.id
                       ? `${styles.btnArrowUp} + ' ' + ${styles.btn}`
                       : `${styles.btnArrowDown}  + ' ' + ${styles.btn}`
                   }
                   onClick={() => {
                     setShowOrderDetails(
-                      order.orderNumber === showOrdersDetails
-                        ? null
-                        : order.orderNumber,
+                      order.id === showOrdersDetails ? null : order.id,
                     );
                     setQuantity(order.orderItems.length);
                   }}
                 >
-                  {showOrdersDetails === order.orderNumber ? (
+                  {showOrdersDetails === order.id ? (
                     <ICONS.arrowUpWhite />
                   ) : (
                     <ICONS.arrowDown />
