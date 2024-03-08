@@ -17,9 +17,8 @@ export const addOrderToDB = async (request) => {
 };
 
 export const getUsersOrders = async () => {
-  const userId = localStorage.getItem('authId');
   try {
-    const response = await axiosInstance.get(`/orders/user/${userId}`);
+    const response = await axiosInstance.get(`/orders/user/current`);
     if (response.status === 200) {
       return response.data.content;
     } else {
