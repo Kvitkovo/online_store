@@ -11,11 +11,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -211,7 +213,7 @@ public class OrderController {
     @ApiResponseForbidden
     @ApiResponseNotFound
     @GetMapping("/print/{id}")
-    public ResponseEntity<Void> printOrder(
+    public ResponseEntity<InputStreamResource> printOrder(
             @Parameter(description = "The ID of the order", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )
@@ -219,7 +221,19 @@ public class OrderController {
         log.debug("Received request to print order with id - {}.", id);
         Order order = orderService.findById(id);
         accessCheckerService.checkUpdateAccess(order);
-        orderPrint.printSalesReceipt(order);
-        return ResponseEntity.status(HttpStatus.OK).build();
+
+        InputStreamResource resource = null;
+        try {
+            resource = orderPrint.printSalesReceipt(order);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
     }
 }

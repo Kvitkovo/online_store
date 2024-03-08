@@ -1,7 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="uk">
-<HEAD>
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
     <TITLE></TITLE>
     <STYLE TYPE="text/css">
         body { background: #ffffff; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; }
@@ -12,7 +16,7 @@
         tr.R0 td.R10C4{ text-align: right; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; }
         tr.R0 td.R10C5{ text-align: center; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; }
         tr.R0 td.R10C7{ text-align: right; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; border-right: #000000 2px solid; }
-        tr.R0 td.R16C1{ font-family: Microsoft Sans Serif; font-size: 8pt; font-style: normal; text-align: left; }
+        tr.R0 td.R16C1{ font-family: Arial; font-size: 8pt; font-style: normal; text-align: left; }
         tr.R0 td.R23C14{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; border-bottom: #ffffff 1px none; }
         tr.R0 td.R23C4{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; }
         tr.R1{ height: 28px; }
@@ -45,7 +49,7 @@
         td { padding: 0px; padding-left: 2px; overflow:hidden; }
     </STYLE>
 </HEAD>
-<BODY STYLE="background: #ffffff; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; ">
+<BODY STYLE="background: #ffffff; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; width: 820px;">
 <TABLE style="width:100%; height:0px; " CELLSPACING=0>
     <COL WIDTH=7>
     <COL WIDTH=21>
@@ -120,7 +124,7 @@
     </TR>
     <TR CLASS=R1>
         <TD CLASS="R1C0"><DIV STYLE="position:relative; height:28px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
-        <TD CLASS="R1C1" COLSPAN=32><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="'Товарний №' +${order.id} + ' від ' + ${#temporals.format(order.updated, 'dd-MM-yyyy HH:mm')}"></SPAN></TD>
+        <TD CLASS="R1C1" COLSPAN=32><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="'Товарний чек №' +${order.id} + ' від ' + ${#temporals.format(order.created, 'dd-MM-yyyy HH:mm:ss')}"></SPAN></TD>
         <TD><DIV STYLE="position:relative; height:28px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
         <TD><DIV STYLE="width:100%;height:28px;overflow:hidden;"></DIV></TD>
     </TR>
@@ -163,8 +167,8 @@
     </TR>
     <TR CLASS=R3>
         <TD><SPAN></SPAN></TD>
-        <TD CLASS="R3C1" COLSPAN=4><SPAN STYLE="white-space:nowrap;max-width:0px;">Постачальник:</SPAN></TD>
-        <TD CLASS="R3C5" COLSPAN=28 th:text="${shop.title} + '<br>' + ${shop.city} + ' ' + ${shop.address}"></TD>
+        <TD CLASS="R3C1" COLSPAN=4><SPAN STYLE="white-space:nowrap;max-width:0px;">Постачальник:  </SPAN></TD>
+        <TD CLASS="R3C5" COLSPAN=28 th:text="${shop.title} + ' ' + ${shop.city} + ' ' + ${shop.address}"></TD>
         <TD><SPAN></SPAN></TD>
         <TD></TD>
     </TR>
@@ -311,12 +315,14 @@
     <TR CLASS=R0 th:each="item, index : ${order.orderItems}">
         <TD CLASS="R0C0"><SPAN></SPAN></TD>
         <TD CLASS="R10C1"><SPAN STYLE="white-space:nowrap;max-width:0px;">1</SPAN></TD>
-        <TD CLASS="R10C2"><SPAN></SPAN></TD>
+        <TD CLASS="R10C2"><div th:if="${item.product != null}">
+            <span th:text="${item.product.id}"></span>
+        </div></TD>
         <TD CLASS="R10C2" th:text="${item.productTitle}"></TD>
         <TD CLASS="R10C4"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.qty}"></SPAN></TD>
         <TD CLASS="R10C5"><SPAN STYLE="white-space:nowrap;max-width:0px;">шт</SPAN></TD>
         <TD CLASS="R10C4"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.price}"></SPAN></TD>
-        <TD CLASS="R10C7"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.qty} * ${item.price}"></SPAN></TD>
+        <TD CLASS="R10C7"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.price.multiply(item.qty)}"></SPAN></TD>
         <TD><SPAN></SPAN></TD>
         <TD></TD>
     </TR>
