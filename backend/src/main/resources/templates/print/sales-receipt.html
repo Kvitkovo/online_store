@@ -1,0 +1,562 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<html dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="uk">
+<HEAD>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=utf-8">
+    <TITLE></TITLE>
+    <STYLE TYPE="text/css">
+        body { background: #ffffff; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; }
+        tr.R0{ height: 15px; }
+        tr.R0 td.R0C0{ text-align: left; }
+        tr.R0 td.R10C1{ text-align: left; vertical-align: top; border-left: #000000 2px solid; border-top: #000000 1px solid; }
+        tr.R0 td.R10C2{ text-align: left; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; }
+        tr.R0 td.R10C4{ text-align: right; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; }
+        tr.R0 td.R10C5{ text-align: center; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; }
+        tr.R0 td.R10C7{ text-align: right; vertical-align: top; border-left: #000000 1px solid; border-top: #000000 1px solid; border-right: #000000 2px solid; }
+        tr.R0 td.R16C1{ font-family: Microsoft Sans Serif; font-size: 8pt; font-style: normal; text-align: left; }
+        tr.R0 td.R23C14{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; border-bottom: #ffffff 1px none; }
+        tr.R0 td.R23C4{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; }
+        tr.R1{ height: 28px; }
+        tr.R1 td.R1C0{ text-align: left; }
+        tr.R1 td.R1C1{ font-family: Arial; font-size: 14pt; font-style: normal; font-weight: bold; text-align: left; vertical-align: middle; border-bottom: #000000 2px solid; }
+        tr.R3{ height: 33px; }
+        tr.R3 td.R3C1{ font-family: Arial; font-size: 9pt; font-style: normal; text-align: left; vertical-align: middle; }
+        tr.R3 td.R3C5{ font-family: Arial; font-size: 9pt; font-style: normal; font-weight: bold; text-align: left; vertical-align: top; }
+        tr.R4{ font-family: Arial; font-size: 6pt; font-style: normal; height: 11px; }
+        tr.R5{ height: 17px; }
+        tr.R5 td.R12C6{ font-family: Arial; font-size: 9pt; font-style: normal; text-align: right; vertical-align: top; }
+        tr.R5 td.R13C6{ font-family: Arial; font-size: 9pt; font-style: normal; font-weight: bold; text-align: right; vertical-align: top; }
+        tr.R5 td.R20C1{ font-family: Arial; font-size: 9pt; font-style: normal; font-weight: bold; text-align: left; }
+        tr.R5 td.R20C13{ text-align: left; border-bottom: #ffffff 1px none; }
+        tr.R5 td.R20C4{ text-align: left; border-bottom: #000000 1px solid; }
+        tr.R5 td.R21C14{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; border-bottom: #ffffff 1px none; }
+        tr.R5 td.R21C4{ font-family: Arial; font-size: 6pt; font-style: normal; text-align: center; vertical-align: top; }
+        tr.R5 td.R5C1{ font-family: Arial; font-size: 9pt; font-style: normal; text-align: left; vertical-align: middle; }
+        tr.R5 td.R5C2{ text-align: left; }
+        tr.R5 td.R5C5{ font-family: Arial; font-size: 9pt; font-style: normal; font-weight: bold; text-align: left; vertical-align: top; }
+        tr.R5 td.R9C1{ font-family: Arial; font-size: 10pt; font-style: normal; font-weight: bold; text-align: center; vertical-align: middle; border-left: #000000 2px solid; border-top: #000000 2px solid; border-bottom: #000000 1px solid; }
+        tr.R5 td.R9C2{ font-family: Arial; font-size: 10pt; font-style: normal; font-weight: bold; text-align: center; vertical-align: middle; border-left: #000000 1px solid; border-top: #000000 2px solid; border-bottom: #000000 1px solid; border-right: #000000 1px solid; }
+        tr.R5 td.R9C3{ font-family: Arial; font-size: 10pt; font-style: normal; font-weight: bold; text-align: center; vertical-align: middle; border-left: #000000 1px solid; border-top: #000000 2px solid; border-bottom: #000000 1px solid; }
+        tr.R5 td.R9C7{ font-family: Arial; font-size: 10pt; font-style: normal; font-weight: bold; text-align: center; vertical-align: middle; border-left: #000000 1px solid; border-top: #000000 2px solid; border-bottom: #000000 1px solid; border-right: #000000 2px solid; }
+        tr.R8{ height: 9px; }
+        tr.R8 td.R11C0{ text-align: left; }
+        tr.R8 td.R11C1{ text-align: left; border-top: #000000 2px solid; }
+        tr.R8 td.R18C1{ text-align: left; border-bottom: #000000 2px solid; }
+        table {table-layout: fixed; padding: 0px; padding-left: 2px; vertical-align:bottom; border-collapse:collapse;width: 100%; font-family: Arial; font-size: 8pt; font-style: normal; }
+        td { padding: 0px; padding-left: 2px; overflow:hidden; }
+    </STYLE>
+</HEAD>
+<BODY STYLE="background: #ffffff; margin: 0; font-family: Arial; font-size: 8pt; font-style: normal; ">
+<TABLE style="width:100%; height:0px; " CELLSPACING=0>
+    <COL WIDTH=7>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=137>
+    <COL>
+    <TR CLASS=R0>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD>&nbsp;</TD>
+    </TR>
+    <TR CLASS=R1>
+        <TD CLASS="R1C0"><DIV STYLE="position:relative; height:28px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R1C1" COLSPAN=32><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="'Товарний №' +${order.id} + ' від ' + ${#temporals.format(order.updated, 'dd-MM-yyyy HH:mm')}"></SPAN></TD>
+        <TD><DIV STYLE="position:relative; height:28px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="width:100%;height:28px;overflow:hidden;"></DIV></TD>
+    </TR>
+    <TR CLASS=R0>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD>&nbsp;</TD>
+    </TR>
+    <TR CLASS=R3>
+        <TD><SPAN></SPAN></TD>
+        <TD CLASS="R3C1" COLSPAN=4><SPAN STYLE="white-space:nowrap;max-width:0px;">Постачальник:</SPAN></TD>
+        <TD CLASS="R3C5" COLSPAN=28 th:text="${shop.title} + '<br>' + ${shop.city} + ' ' + ${shop.address}"></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R4>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD>&nbsp;</TD>
+    </TR>
+    <TR CLASS=R4>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD>&nbsp;</TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD><SPAN></SPAN></TD>
+        <TD CLASS="R5C1" COLSPAN=4><SPAN STYLE="white-space:nowrap;max-width:0px;">Покупець:</SPAN></TD>
+        <TD CLASS="R5C5" COLSPAN=28 th:text="${order.customerName} + ' ' + ${order.customerPhone}"></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R8>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="width:100%;height:9px;overflow:hidden;">&nbsp;</DIV></TD>
+    </TR>
+</TABLE>
+<TABLE style="width:100%; height:0px; " CELLSPACING=0>
+    <COL WIDTH=7>
+    <COL WIDTH=28>
+    <COL WIDTH=77>
+    <COL WIDTH=417>
+    <COL WIDTH=63>
+    <COL WIDTH=28>
+    <COL WIDTH=77>
+    <COL WIDTH=98>
+    <COL>
+    <TR CLASS=R5>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R9C1"><SPAN STYLE="white-space:nowrap;max-width:0px;">№</SPAN></TD>
+        <TD CLASS="R9C2"><SPAN STYLE="white-space:nowrap;max-width:0px;">Код</SPAN></TD>
+        <TD CLASS="R9C3"><SPAN STYLE="white-space:nowrap;max-width:0px;">Товар</SPAN></TD>
+        <TD CLASS="R9C3" COLSPAN=2><SPAN STYLE="white-space:nowrap;max-width:0px;">Кількість</SPAN></TD>
+        <TD CLASS="R9C3"><SPAN STYLE="white-space:nowrap;max-width:0px;">Ціна</SPAN></TD>
+        <TD CLASS="R9C7"><SPAN STYLE="white-space:nowrap;max-width:0px;">Сума</SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R0 th:each="item, index : ${order.orderItems}">
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R10C1"><SPAN STYLE="white-space:nowrap;max-width:0px;">1</SPAN></TD>
+        <TD CLASS="R10C2"><SPAN></SPAN></TD>
+        <TD CLASS="R10C2" th:text="${item.productTitle}"></TD>
+        <TD CLASS="R10C4"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.qty}"></SPAN></TD>
+        <TD CLASS="R10C5"><SPAN STYLE="white-space:nowrap;max-width:0px;">шт</SPAN></TD>
+        <TD CLASS="R10C4"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.price}"></SPAN></TD>
+        <TD CLASS="R10C7"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${item.qty} * ${item.price}"></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R8>
+        <TD CLASS="R11C0"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R11C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="width:100%;height:9px;overflow:hidden;">&nbsp;</DIV></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R12C6" COLSPAN=7><SPAN STYLE="white-space:nowrap;max-width:0px;">Сума:</SPAN></TD>
+        <TD CLASS="R12C6"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${order.totalSum}"></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R13C6" COLSPAN=7><SPAN STYLE="white-space:nowrap;max-width:0px;">Без&nbsp;податку&nbsp;(ПДВ)</SPAN></TD>
+        <TD CLASS="R13C6"><SPAN STYLE="white-space:nowrap;max-width:0px;">-</SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R13C6" COLSPAN=7><SPAN STYLE="white-space:nowrap;max-width:0px;">Разом:</SPAN></TD>
+        <TD CLASS="R13C6"><SPAN STYLE="white-space:nowrap;max-width:0px;" th:text="${order.totalSum}"></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+</TABLE>
+<TABLE style="width:100%; height:0px; " CELLSPACING=0>
+    <COL WIDTH=7>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=21>
+    <COL WIDTH=137>
+    <COL>
+    <TR CLASS=R8>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="width:100%;height:9px;overflow:hidden;">&nbsp;</DIV></TD>
+    </TR>
+    <TR CLASS=R0>
+        <TD><SPAN></SPAN></TD>
+        <TD CLASS="R16C1" COLSPAN=32><SPAN STYLE="white-space:nowrap;max-width:0px;"
+            th:text="'Всього найменувань ' + ${order.orderItems.size()} + ' на суму ' + ${order.totalSum} + ' грн.'"></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD><SPAN></SPAN></TD>
+        <TD CLASS="R5C5" COLSPAN=32 th:text="${amountInWords}"></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R8>
+        <TD CLASS="R11C0"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD CLASS="R18C1"><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="position:relative; height:9px;width: 100%; overflow:hidden;"><SPAN></SPAN></DIV></TD>
+        <TD><DIV STYLE="width:100%;height:9px;overflow:hidden;">&nbsp;</DIV></TD>
+    </TR>
+    <TR CLASS=R0>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0" COLSPAN=24><SPAN></SPAN></TD>
+        <TD>&nbsp;</TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R20C1" COLSPAN=3><SPAN STYLE="white-space:nowrap;max-width:0px;">Видав</SPAN></TD>
+        <TD CLASS="R20C4" COLSPAN=9><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD CLASS="R20C4" COLSPAN=7><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD CLASS="R20C4" COLSPAN=10><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R20C1"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R21C4" COLSPAN=9><SPAN STYLE="white-space:nowrap;max-width:0px;">Посада</SPAN></TD>
+        <TD CLASS="R21C4"><SPAN></SPAN></TD>
+        <TD CLASS="R21C14" COLSPAN=7><SPAN STYLE="white-space:nowrap;max-width:0px;">Підпис</SPAN></TD>
+        <TD CLASS="R21C14"><SPAN></SPAN></TD>
+        <TD CLASS="R21C4" COLSPAN=10><SPAN STYLE="white-space:nowrap;max-width:0px;">Розшифровка</SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R5>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R20C1" COLSPAN=3><SPAN STYLE="white-space:nowrap;max-width:0px;">Отримав</SPAN></TD>
+        <TD CLASS="R20C4" COLSPAN=9><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD CLASS="R20C4" COLSPAN=7><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD CLASS="R20C13"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD CLASS="R5C2"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+    <TR CLASS=R0>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R23C4" COLSPAN=9><SPAN STYLE="white-space:nowrap;max-width:0px;">Розшифровка</SPAN></TD>
+        <TD CLASS="R23C4"><SPAN></SPAN></TD>
+        <TD CLASS="R23C14" COLSPAN=7><SPAN STYLE="white-space:nowrap;max-width:0px;">Підпис</SPAN></TD>
+        <TD CLASS="R23C4"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD CLASS="R0C0"><SPAN></SPAN></TD>
+        <TD><SPAN></SPAN></TD>
+        <TD></TD>
+    </TR>
+</TABLE>
+</BODY>
+</HTML>
