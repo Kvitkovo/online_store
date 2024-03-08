@@ -15,3 +15,18 @@ export const addOrderToDB = async (request) => {
     );
   }
 };
+
+export const getUsersOrders = async () => {
+  const userId = localStorage.getItem('authId');
+  try {
+    const response = await axiosInstance.get(`/orders/user/${userId}`);
+    if (response.status === 200) {
+      return response.data.content;
+    } else {
+      throw new Error(`Помилка: Отримано статус відповіді ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Помилка отримання данних', error.message);
+    throw error;
+  }
+};
