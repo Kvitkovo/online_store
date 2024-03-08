@@ -166,6 +166,12 @@
             <version>2.1.214</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.javadev</groupId>
+            <artifactId>moneytostr</artifactId>
+            <version>1.21</version>
+        </dependency>
+
     </dependencies>
 
     <build>
