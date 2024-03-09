@@ -4,18 +4,9 @@ import Path from '../CardPage/components/Path';
 import infoData from '../../data/aboutUsData.json';
 import Services from './components/Services';
 import InsightList from './components/InsightList';
-import { motion } from 'framer-motion';
+import RevealAnimation from './components/Reveal/RevealAnimation';
 
 const About = () => {
-  const cover = { initial: { opacity: 0.5 }, animated: { opacity: 0 } };
-  const leftImg = {
-    initial: { left: 350, opacity: 0 },
-    animated: { left: 0, opacity: 1 },
-  };
-  const rightImg = {
-    initial: { right: 350, opacity: 0 },
-    animated: { right: 0, opacity: 1 },
-  };
   return (
     <>
       <Path currentPageData={{ name: 'Про Нас' }} currentPageType={'section'} />
@@ -36,59 +27,7 @@ const About = () => {
           покупок, але і куточок, де кожен квітковий букет стає часткою Ваших
           емоцій та важливих подій.
         </p>
-        <div className={styles.mainImgs}>
-          <motion.div
-            className={styles.mainImgs__left}
-            variants={leftImg}
-            initial="initial"
-            animate="animated"
-            transition={{
-              durtion: 0.25,
-              delay: 1.25,
-              type: 'spring',
-              stiffness: 234,
-              damping: 17.65,
-              mass: 1,
-            }}
-          >
-            <img
-              src="/images/about-us/first_screen_left.jpg"
-              alt="Працівники Kvitkovo "
-            />
-          </motion.div>
-          <div className={styles.mainImgs__main}>
-            <img
-              src="/images/about-us/first_screen_main.jpg"
-              alt="Працівники Kvitkovo "
-            />
-            <motion.div
-              variants={cover}
-              initial="initial"
-              animate="animated"
-              className={styles.mainImgs__main_cover}
-              transition={{ durtion: 0.75, delay: 0.25 }}
-            ></motion.div>
-          </div>
-          <motion.div
-            className={styles.mainImgs__right}
-            variants={rightImg}
-            initial="initial"
-            animate="animated"
-            transition={{
-              durtion: 0.25,
-              delay: 1,
-              type: 'spring',
-              stiffness: 234,
-              damping: 17.65,
-              mass: 1,
-            }}
-          >
-            <img
-              src="/images/about-us/first_screen_right.jpg"
-              alt="Працівники Kvitkovo "
-            />
-          </motion.div>
-        </div>
+        <RevealAnimation data={infoData.mainScreenImgs} />
       </section>
       <section className={styles.mission}>
         <div className={styles.mission__text}>

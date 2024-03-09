@@ -1,4 +1,33 @@
 {
+  "mainScreenImgs": [
+    {
+      "name": "main",
+      "src": "/images/about-us/first_screen_main.jpg",
+      "transition": { "delayChildren": 0.5 }
+    },
+    {
+      "name": "left",
+      "src": "/images/about-us/first_screen_left.jpg",
+      "transition": {
+        "delay": 1.5,
+        "type": "spring",
+        "stiffness": 234,
+        "damping": 17.65,
+        "mass": 1
+      }
+    },
+    {
+      "name": "right",
+      "src": "/images/about-us/first_screen_right.jpg",
+      "transition": {
+        "delay": 1,
+        "type": "spring",
+        "stiffness": 234,
+        "damping": 17.65,
+        "mass": 1
+      }
+    }
+  ],
   "services": [
     {
       "id": 1,
