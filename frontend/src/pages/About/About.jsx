@@ -4,15 +4,10 @@ import Path from '../CardPage/components/Path';
 import infoData from '../../data/aboutUsData.json';
 import Services from './components/Services';
 import InsightList from './components/InsightList';
-import { motion } from 'framer-motion';
 import RevealAnimation from './components/RevealAnimation';
+import MissionScreen from './components/MissionScreen';
 
 const About = () => {
-  const animationPoints = {
-    initial: { opacity: 0 },
-    animated: { opacity: 1 },
-  };
-
   return (
     <>
       <Path currentPageData={{ name: 'Про Нас' }} currentPageType={'section'} />
@@ -45,36 +40,7 @@ const About = () => {
             найпрекрасніший спосіб – квіти.
           </p>
         </div>
-        <motion.div className={styles.mission__image}>
-          <img src="/images/about-us/second_screen.jpg" alt="Оранжерея" />
-          <motion.div
-            layout
-            variants={animationPoints}
-            initial="initial"
-            whileInView={{ opacity: [0, 0.25, 0.75, 1, 0.75, 0.25, 0] }}
-            transition={{
-              duration: 5.5,
-            }}
-            viewport={{ once: true, margin: '-40% 0px' }}
-            className={styles.mission__image_cover}
-          ></motion.div>
-          <motion.img
-            variants={animationPoints}
-            initial="initial"
-            whileInView="animated"
-            viewport={{ once: true, margin: '-40% 0px' }}
-            transition={{
-              delay: 1.5,
-              type: 'spring',
-              mass: 1,
-              stiffness: 5.96,
-              damping: 5.45,
-            }}
-            src="/images/about-us/second_screen.jpg"
-            alt="Оранжерея"
-            className={styles.mission__image_smallCopy}
-          />
-        </motion.div>
+        <MissionScreen />
       </section>
       <section className={styles.services}>
         <div className={styles.services__bg}></div>

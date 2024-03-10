@@ -39,7 +39,7 @@ const RevealAnimation = ({ data }) => {
                   durtion: 0.75,
                   delay: 0.25,
                 }}
-                viewport={{ once: true, margin: '-50% 0px' }}
+                viewport={{ once: true, margin: '-60% 0px' }}
               ></motion.div>
             )}
           </motion.li>
