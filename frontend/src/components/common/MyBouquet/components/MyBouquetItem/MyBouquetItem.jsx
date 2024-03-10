@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CountBlock from '../../../Cart/components/CountBlock';
+import CountBlock from '../../../CountBlock';
 import Divider from '../../../../ui-kit/components/Divider';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { removeFromCart } from '../../../../../redux/slices/cartSlice';

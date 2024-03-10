@@ -4,7 +4,7 @@ import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
 import Divider from '../../../../ui-kit/components/Divider';
 import IconButton from '../../../../ui-kit/components/IconButton';
-import CountBlock from '../CountBlock';
+import CountBlock from '../../../CountBlock';
 
 import styles from './CartItem.module.scss';
 import { ICONS } from '../../../../ui-kit/icons';

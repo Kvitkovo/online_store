@@ -1,8 +1,8 @@
 import React from 'react';
-import IconButton from '../../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../../ui-kit/icons';
+import IconButton from '../../ui-kit/components/IconButton';
+import { ICONS } from '../../ui-kit/icons';
 import { useDispatch } from 'react-redux';
-import { updateQuantityInCart } from '../../../../../redux/slices/cartSlice';
+import { updateQuantityInCart } from '../../../redux/slices/cartSlice';
 import styles from './CountBlock.module.scss';
 
 const CountBlock = ({ item, type }) => {
