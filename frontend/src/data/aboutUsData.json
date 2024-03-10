@@ -3,7 +3,7 @@
     {
       "name": "main",
       "src": "/images/about-us/first_screen_main.jpg",
-      "transition": { "delayChildren": 0.5 }
+      "transition": {}
     },
     {
       "name": "left",
