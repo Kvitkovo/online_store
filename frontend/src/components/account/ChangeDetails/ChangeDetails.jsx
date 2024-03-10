@@ -5,6 +5,7 @@ import Button from '../../ui-kit/components/Button';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { editUserData } from '../../../services/userData/editUserData';
 
 const ChangeDetails = () => {
   const userData = useSelector((state) => state.user.user);
@@ -38,9 +39,17 @@ const ChangeDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    /* console.log('Update user details', correctUserData); */
+
+    /* console.log('New User Data:', correctUserData); */
+
+    try {
+      const updatedUserData = await editUserData(correctUserData);
+      alert('Update user details', updatedUserData);
+    } catch (error) {
+      console.error('Error updating user details:', error);
+    }
   };
 
   const handleCancel = () => {
