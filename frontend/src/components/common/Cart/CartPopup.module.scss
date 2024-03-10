@@ -16,7 +16,6 @@
   font-size: 32px;
   font-weight: 500;
   line-height: 41.6px;
-  padding: 6px;
 }
 
 .icon {
@@ -51,30 +50,33 @@
   margin-left: 12px;
 }
 
-@include sm {
+@include md {
   .container {
     padding: 0;
-    overflow: unset;
+    overflow: initial;
   }
   .headerBlock {
-    display: grid;
-    grid-template-columns: 11.5fr 0.5fr;
-    padding: 13.5px 16px;
+    padding: 16px 27px;
+    background-color: $white-color;
   }
   .title {
     font-size: 22px;
     font-weight: 600;
     line-height: 28.6px;
     justify-self: center;
-    padding-left: 24px;
+    flex-basis: 100%;
+    text-align: center;
+  }
+  .bottmBlock {
+    background: $background-gradient;
   }
   .bottom {
-    padding: 16px 16px 46px;
-    flex-direction: column;
+    padding: 24px 27px 67px;
   }
   .total {
+    display: flex;
+    gap: 16px;
     justify-content: space-between;
-    padding-bottom: 24px;
     font-size: 22px;
     line-height: 24px;
     b {
@@ -83,7 +85,16 @@
       line-height: 24px;
     }
   }
-  .mobileBackground {
-    background: $background-gradient;
+}
+
+@include sm {
+  .bottom {
+    padding: 17px 16px 46px;
+    background-color: $white-color;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .total {
+    padding: 6px;
   }
 }

@@ -28,7 +28,7 @@ public class CategoryService {
     private final TransliterateUtils transliterateUtils;
 
     public List<Category> getAll() {
-        return categoryRepository.findAllByOrderByParentAscSortValueAsc();
+        return categoryRepository.findAllByStatusOrderByParentAscSortValueAsc(CategoryStatus.ACTIVE);
     }
 
     public List<Category> findAllByParent(Category category) {

@@ -25,6 +25,8 @@ import ua.kvitkovo.notifications.NotificationType;
 import ua.kvitkovo.notifications.NotificationUser;
 import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
 import ua.kvitkovo.security.jwt.AuthenticationRequestDto;
+import ua.kvitkovo.shop.entity.Shop;
+import ua.kvitkovo.shop.service.ShopService;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
 import ua.kvitkovo.users.entity.Role;
@@ -63,6 +65,7 @@ public class UserAuthService {
     private final EmployeeRequestDtoValidator employeeRequestDtoValidator;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
+    private final ShopService shopService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Value("${site.base.url}")
@@ -91,12 +94,16 @@ public class UserAuthService {
         LocalDateTime dateEnding = currentDate.plusHours(1);
         user.setCodeVerificationEnd(dateEnding);
 
+
+
         User registeredUser = userRepository.save(user);
         NotificationUser notificationUser = NotificationUser.build(registeredUser);
-
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
             "link", constructUrlForConfirmEmailMessage(registeredUser),
-            "userName", user.getFirstName()
+            "userName", user.getFirstName(),
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
 
@@ -115,10 +122,12 @@ public class UserAuthService {
             throw new ItemNotUpdatedException("The email is already confirmed");
         }
         NotificationUser notificationUser = NotificationUser.build(user);
-
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
             "link", constructUrlForConfirmEmailMessage(user),
-            "userName", user.getFirstName()
+                "baseSiteUrl", baseSiteUrl,
+            "userName", user.getFirstName(),
+                "shop", shop
         );
         emailService.send(NotificationType.MAIL_CONFIRMATION, fields, notificationUser);
     }
@@ -163,19 +172,21 @@ public class UserAuthService {
 
         User registeredUser = userRepository.save(user);
         NotificationUser notificationUser = NotificationUser.build(registeredUser);
-
+        Shop shop = shopService.findById(1L);
         log.debug("user: {} successfully created", registeredUser);
 
         Map<String, Object> fields = Map.of(
                 "link", constructUrlForConfirmEmailMessage(registeredUser),
                 "userName", user.getFirstName(),
-                "password", newPassword
+                "password", newPassword,
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop
         );
         emailService.send(NotificationType.CREATE_NEW_USER, fields, notificationUser);
         return userMapper.mapEntityToDto(registeredUser);
     }
 
-    public UserResponseDto updateUser(Long id, UserRequestDto dto, BindingResult bindingResult) {
+    public UserResponseDto updateUser(Long id, UpdateUserRequestDto dto, BindingResult bindingResult) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ItemNotFoundException("User not found")
         );
@@ -192,10 +203,6 @@ public class UserAuthService {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
         BeanUtils.copyProperties(dto, user, Helper.getNullPropertyNames(dto));
-        if (dto.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        }
-
         userRepository.save(user);
         return userMapper.mapEntityToDto(user);
     }
@@ -230,10 +237,11 @@ public class UserAuthService {
 
         if (codeActive) {
             NotificationUser notificationUser = NotificationUser.build(user);
-
+            Shop shop = shopService.findById(1L);
             Map<String, Object> fields = Map.of(
                 "message", "Ви успішно підтвердили пошту.",
-                "link", baseSiteUrl
+                "baseSiteUrl", baseSiteUrl,
+                    "shop", shop
             );
             emailService.send(NotificationType.MAIL_CONFIRMATION_SUCCESSFULLY, fields,
                 notificationUser);
@@ -255,8 +263,11 @@ public class UserAuthService {
         userRepository.save(user);
 
         NotificationUser notificationUser = NotificationUser.build(user);
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
-                "link", constructUrlForResetPasswordEmailMessage(user)
+                "link", constructUrlForResetPasswordEmailMessage(user),
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop
         );
         emailService.send(NotificationType.RESET_PASSWORD, fields, notificationUser);
     }
@@ -282,9 +293,11 @@ public class UserAuthService {
         user.setEmailConfirmCode("");
         userRepository.save(user);
         NotificationUser notificationUser = NotificationUser.build(user);
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
-                "link", baseSiteUrl
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop
         );
         emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }
@@ -302,9 +315,11 @@ public class UserAuthService {
         user.setPassword(passwordEncoder.encode(changePasswordRequestDto.getNewPassword()));
         userRepository.save(user);
         NotificationUser notificationUser = NotificationUser.build(user);
+        Shop shop = shopService.findById(1L);
         Map<String, Object> fields = Map.of(
                 "message", "Ви успішно змінили пароль.",
-                "link", baseSiteUrl
+                "baseSiteUrl", baseSiteUrl,
+                "shop", shop
         );
         emailService.send(NotificationType.CHANGE_PASSWORD, fields, notificationUser);
     }

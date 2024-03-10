@@ -1,0 +1,31 @@
+@import '../../variables';
+@import '../../mixins';
+
+.title {
+  margin: 22px 0;
+  color: $text-color;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.query {
+  color: $page-accent-color;
+  font-weight: 700;
+}
+
+.amount {
+  color: $gray-dark-color;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+@include sm {
+  .noResult {
+    display: block;
+    margin-top: 16px;
+  }
+}

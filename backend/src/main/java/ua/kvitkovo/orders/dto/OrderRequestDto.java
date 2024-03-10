@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Set;
+import ua.kvitkovo.orders.entity.Delivery;
+import ua.kvitkovo.orders.entity.Pay;
 
 @Setter
 @Getter
@@ -32,7 +34,6 @@ public class OrderRequestDto {
     @Schema(example = "+380991234567", description = "Customer phone")
     private String customerPhone;
 
-    @NotBlank
     @Size(max = 255, message = "customerEmail must be less than 255 characters.")
     @Pattern(regexp = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$")
     @Schema(example = "test@mail.com", description = "Customer email")
@@ -66,6 +67,11 @@ public class OrderRequestDto {
     @NotNull
     @Schema(example = "1", description = "Shop ID")
     private Long shopId;
+
+    @NotNull
+    private Delivery delivery;
+    @NotNull
+    private Pay pay;
 
     private Set<OrderItemRequestDto> orderItems;
 }

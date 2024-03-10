@@ -3,7 +3,7 @@
 
 .path {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .navigationLink {
@@ -24,23 +24,29 @@
 @include md {
   .path {
     font-size: 14px;
-    margin: 16px 0;
-    margin-bottom: 16px;
+    margin: 5px 0 25px;
   }
 }
 @include sm {
   .pathContainer {
     overflow: auto;
     white-space: nowrap;
+    max-height: 63px;
     scrollbar-width: 128px;
+    scroll-margin-top: 16px;
     scrollbar-color: $page-accent-color transparent;
     &::-webkit-scrollbar {
       width: 128px;
       height: 4px;
+      max-height: 20px;
+      margin-top: 16px;
+    }
+    &::-webkit-scrollbar-corner {
+      border-radius: 2px;
     }
 
     &::-webkit-scrollbar-track {
-      background: transparent;
+      background-color: transparent;
     }
 
     &::-webkit-scrollbar-thumb {

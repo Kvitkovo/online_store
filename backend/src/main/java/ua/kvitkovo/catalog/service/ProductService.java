@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.dto.request.FilterRequestDto;
 import ua.kvitkovo.catalog.dto.request.ProductRequestDto;
+import ua.kvitkovo.catalog.dto.response.FilterPricesIntervalResponseDto;
 import ua.kvitkovo.catalog.entity.*;
 import ua.kvitkovo.catalog.repository.ProductRepository;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
@@ -42,16 +43,42 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Category> getAllCategoriesByProducts() {
+        return productRepository.findCategoriesByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<Size> getAllSizesByProducts() {
+        return productRepository.findSizesByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<Color> getAllColorsByProducts() {
+        return productRepository.findColorsByStatus(ProductStatus.ACTIVE);
+    }
+
+    public List<ProductType> getAllProductTypesByProducts() {
+        return productRepository.findProductTypesByStatus(ProductStatus.ACTIVE);
+    }
+
     public Product findById(long id) throws ItemNotFoundException {
         return productRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Product not found"));
     }
 
-    public Product findFirstByCategoryIdAndStatusOrderByPriceAsc(Long id, ProductStatus status){
-        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceAsc(id, status);
+    public FilterPricesIntervalResponseDto getProductPriceRange() {
+        FilterPricesIntervalResponseDto priceRange = productRepository.getProductPriceRange();
+        completeFilterRange(priceRange);
+        return priceRange;
     }
 
-    public Product findFirstByCategoryIdAndStatusOrderByPriceDesc(Long id, ProductStatus status){
-        return productRepository.findFirstByCategoryIdAndStatusOrderByPriceDesc(id, status);
+    public Object getProductByCategoryPriceRange(List<Category> categories) {
+        FilterPricesIntervalResponseDto priceRange = productRepository.getProductByCategoryPriceRange(categories);
+        completeFilterRange(priceRange);
+        return priceRange;
+    }
+
+    public FilterPricesIntervalResponseDto getDiscountProductPriceRange() {
+        FilterPricesIntervalResponseDto priceRange = productRepository.getDiscountProductPriceRange();
+        completeFilterRange(priceRange);
+        return priceRange;
     }
 
     @Transactional
@@ -117,9 +144,7 @@ public class ProductService {
     }
 
     public Page<Product> getAllByCategory(Pageable pageable, long categoryId) {
-        Category category = categoryService.findById(categoryId);
-        List<Category> allByParent = categoryService.findAllByParent(category);
-        allByParent.add(category);
+        List<Category> allByParent = getCategoriesWithChildren(categoryId);
 
         Page<Product> products = productRepository.findAllByCategoryInAndStatusEquals(pageable,
                 allByParent, ProductStatus.ACTIVE);
@@ -155,6 +180,15 @@ public class ProductService {
         }
     }
 
+    private static void completeFilterRange(FilterPricesIntervalResponseDto priceRange) {
+        if (priceRange.getMaxPrice() == null) {
+            priceRange.setMaxPrice(BigDecimal.ZERO);
+        }
+        if (priceRange.getMinPrice() == null) {
+            priceRange.setMinPrice(BigDecimal.ZERO);
+        }
+    }
+
     private void addProductTypesFilter(FilterRequestDto filter, Root<Object> root,
                                        List<Predicate> predicates) {
         if (filter.getProductTypes() != null) {
@@ -187,7 +221,8 @@ public class ProductService {
         if (filter.getTitle() != null) {
             titlePredicate = criteriaBuilder.like(root.get("title"), "%" + filter.getTitle() + "%");
 
-            Join<Object, Object> productTypeJoin = root.join("productType", JoinType.INNER);
+            Path<?> productTypePath = root.get("productType");
+            Join<Object, Object> productTypeJoin = root.join("productType", JoinType.LEFT);
             productTypePredicate = criteriaBuilder.like(productTypeJoin.get("name"),
                     "%" + filter.getTitle() + "%");
 
@@ -212,12 +247,12 @@ public class ProductService {
     }
 
     private void addCategoryFilter(FilterRequestDto filter, Root<Object> root, List<Predicate> predicates) {
-        if (filter.getCategoryId() != null) {
-            Category category = categoryService.findById(filter.getCategoryId());
-            List<Category> allByParent = categoryService.findAllByParent(category);
-            allByParent.add(category);
+        if (filter.getCategories() != null) {
             Expression<String> inExpression = root.get("category");
-            Predicate inPredicate = inExpression.in(allByParent);
+            List<Category> categoryList = filter.getCategories().stream()
+                    .flatMap(id -> getCategoriesWithChildren(id).stream())
+                    .toList();
+            Predicate inPredicate = inExpression.in(categoryList);
             predicates.add(inPredicate);
         }
     }
@@ -229,8 +264,11 @@ public class ProductService {
     private void addDiscountFilter(FilterRequestDto filter, Root<Object> root,
                                    List<Predicate> predicates, CriteriaBuilder criteriaBuilder) {
         if (filter.getDiscount() != null) {
-            predicates.add(
-                    criteriaBuilder.equal(root.get("allowAddToConstructor"), filter.getDiscount()));
+            if (filter.getDiscount()) {
+                predicates.add(criteriaBuilder.greaterThan(root.get("discount"), 0));
+            } else {
+                predicates.add(criteriaBuilder.equal(root.get("discount"), 0));
+            }
         }
     }
 
@@ -270,11 +308,26 @@ public class ProductService {
         return product;
     }
 
-    public List<Color> getAllColorsIdByCategory(long categoryId) {
+    public List<Category> getCategoriesWithChildren(long categoryId) {
         Category category = categoryService.findById(categoryId);
+        List<Category> allByParent = categoryService.findAllByParent(category);
+        allByParent.add(category);
+        return allByParent;
+    }
 
-        List<Color> colors = productRepository.findColorByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE);
+    public List<Color> getAllColorsIdByCategory(long categoryId) {
+        List<Category> allByParent = getCategoriesWithChildren(categoryId);
+
+        List<Color> colors = productRepository.findColorByCategoryIdAndStatus(allByParent, ProductStatus.ACTIVE);
+        if (colors.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return colors;
+        }
+    }
+
+    public List<Color> getAllColorsIdByDiscount() {
+        List<Color> colors = productRepository.findColorsByDiscountAndStatus(ProductStatus.ACTIVE);
         if (colors.isEmpty()) {
             return Collections.emptyList();
         } else {
@@ -283,11 +336,18 @@ public class ProductService {
     }
 
     public List<Size> getAllSizesIdByCategory(long categoryId) {
-        Category category = categoryService.findById(categoryId);
+        List<Category> allByParent = getCategoriesWithChildren(categoryId);
 
-        List<Size> sizes = productRepository.findSizeByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE
-        );
+        List<Size> sizes = productRepository.findSizeByCategoryIdAndStatus(allByParent, ProductStatus.ACTIVE);
+        if (sizes.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return sizes;
+        }
+    }
+
+    public List<Size> getAllSizesIdByDiscount() {
+        List<Size> sizes = productRepository.findSizesByDiscountAndStatus(ProductStatus.ACTIVE);
         if (sizes.isEmpty()) {
             return Collections.emptyList();
         } else {
@@ -296,11 +356,18 @@ public class ProductService {
     }
 
     public List<ProductType> getAllProductTypesIdByCategory(long categoryId) {
-        Category category = categoryService.findById(categoryId);
+        List<Category> allByParent = getCategoriesWithChildren(categoryId);
 
-        List<ProductType> types = productRepository.findProductTypesByCategoryIdAndStatus(
-                category.getId(), ProductStatus.ACTIVE
-        );
+        List<ProductType> types = productRepository.findProductTypesByCategoryIdAndStatus(allByParent, ProductStatus.ACTIVE);
+        if (types.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return types;
+        }
+    }
+
+    public List<ProductType> getAllProductTypesIdByDiscount() {
+        List<ProductType> types = productRepository.findProductTypesByDiscountAndStatus(ProductStatus.ACTIVE);
         if (types.isEmpty()) {
             return Collections.emptyList();
         } else {
@@ -315,5 +382,14 @@ public class ProductService {
 
     public void minusStock(@NonNull Product product, int stock) {
         changeStock(product, product.getStock() - stock);
+    }
+
+    public List<Category> getAllCategoriesByDiscount() {
+        List<Category> types = productRepository.findCategoriesByDiscountAndStatus(ProductStatus.ACTIVE);
+        if (types.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return types;
+        }
     }
 }

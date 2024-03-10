@@ -6,7 +6,7 @@ import RadioButton from '../RadioButton';
 
 const DropDown = ({ sortValue, setValue, options }) => {
   const [open, setOpen] = useState(false);
-
+  const label = options[sortValue].labelMobile;
   const handleClick = () => {
     setOpen(!open);
   };
@@ -17,7 +17,7 @@ const DropDown = ({ sortValue, setValue, options }) => {
   return (
     <>
       <Button
-        label={options[sortValue].label}
+        label={label}
         variant={'secondary'}
         icon={<ICONS.sortIcon />}
         onClick={handleClick}
@@ -26,7 +26,7 @@ const DropDown = ({ sortValue, setValue, options }) => {
       {open && (
         <div className={styles.sortOptions}>
           {options.map((option) => {
-            const { value, label } = option;
+            const { value, labelMobile: label } = option;
             return (
               <RadioButton
                 key={value}

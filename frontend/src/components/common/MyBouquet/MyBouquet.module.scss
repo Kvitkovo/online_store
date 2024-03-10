@@ -42,6 +42,7 @@
   color: $gray-light-color;
   text-decoration: underline;
   cursor: auto;
+  pointer-events: none;
 }
 
 .bottomBlock {
@@ -73,39 +74,63 @@
   }
 }
 
-@include sm {
+@include md {
   .container {
-    padding: 16px;
-    overflow: unset;
+    padding: 0;
+    margin-bottom: 0;
+    overflow: initial;
+  }
+  .headerBlock {
+    padding: 16px 27px;
+  }
+  .icon {
+    flex-basis: 24px;
   }
   .title {
+    flex-basis: 100%;
     font-size: 22px;
     font-weight: 600;
     line-height: 28.6px;
+    text-align: center;
   }
-  .reverse {
-    display: flex;
-    flex-direction: column-reverse;
+  .bottomBlock {
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
   }
   .changeItems {
-    padding: 16px 16px 0;
+    padding: 26px 27px;
     margin-bottom: 0;
   }
-  .divider {
-    padding-top: 60px;
-  }
   .bottom {
-    padding: 24px 16px 46px;
-    flex-direction: column;
+    padding: 26px 27px 44px;
+  }
+  .button {
+    width: 238px;
   }
   .total {
     justify-content: space-between;
-    padding-bottom: 24px;
+    gap: 12px;
+    padding: 12px 6px;
     b {
       margin-left: 0;
     }
     .sum {
-      margin-left: 14px;
+      margin-left: 24px;
     }
+  }
+}
+
+@include sm {
+  .changeItems {
+    padding-bottom: 24px;
+  }
+  .bottom {
+    flex-direction: column;
+    padding-top: 0;
+  }
+  .button {
+    width: 100%;
+  }
+  .divider {
+    display: none;
   }
 }

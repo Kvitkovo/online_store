@@ -1,6 +1,7 @@
 package ua.kvitkovo.orders.dto.admin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -8,7 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.orders.entity.Delivery;
 import ua.kvitkovo.orders.entity.OrderStatus;
+import ua.kvitkovo.orders.entity.Pay;
 
 @Setter
 @Builder
@@ -38,6 +41,8 @@ public class OrderAdminResponseDto {
     private LocalDateTime dateOfShipment;
     private Long customerId;
     private Long shopId;
+    private Delivery delivery;
+    private Pay pay;
     private Set<OrderItemAdminResponseDto> orderItems;
 
     public Set<OrderItemAdminResponseDto> getOrderItems() {
@@ -143,5 +148,13 @@ public class OrderAdminResponseDto {
 
     public Long getShopId() {
         return shopId;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public Pay getPay() {
+        return pay;
     }
 }

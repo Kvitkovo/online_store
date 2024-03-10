@@ -22,7 +22,7 @@
     'image image image image image . . . . . . .';
 
   padding: 32px 20px 32px 16px;
-  margin-top: 22px;
+  margin: 22px 0 32px;
   border-radius: 8px;
   background: $white-color;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
@@ -51,14 +51,6 @@
   padding: 6px 0;
 }
 
-.previous {
-  font-size: 32px;
-  padding: 0 6px;
-  margin-top: 28px;
-  margin-bottom: 32px;
-  font-weight: 500;
-}
-
 @include lg {
   .itemBlock {
     grid-template-areas:
@@ -78,12 +70,15 @@
 
 @include md {
   .itemBlock {
+    margin-top: 0;
+    column-gap: 92px;
     grid-template-columns: 1fr 1fr;
-    margin-bottom: 46px;
-    padding: 32px 0;
+    padding: 32px 25px;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 38px;
     overflow: hidden;
-    background-color: transparent;
-    box-shadow: none;
+    border-radius: 0;
   }
   .path {
     margin-top: 16px;
@@ -102,7 +97,7 @@
   }
   .itemBlock {
     display: flex;
-    margin-bottom: 38px;
+    margin: 0 -15px 38px;
     flex-direction: column;
     padding: 16px;
   }

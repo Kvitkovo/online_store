@@ -58,7 +58,6 @@ public class ProductRequestDto {
     @Schema(example = "2", description = "Product color ID")
     private Long colorId;
 
-    @NotNull
     @Schema(example = "1", description = "Product size ID")
     private Long sizeId;
 

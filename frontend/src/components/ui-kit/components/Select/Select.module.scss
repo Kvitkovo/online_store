@@ -1,12 +1,21 @@
 @import '/src/variables';
-
-.root {
+.container {
+  position: relative;
   width: 246px;
-  max-height: 80px;
+  height: 42px;
+}
+.root {
   border: 1px solid $gray-dark-color;
   border-radius: 8px;
   padding: 8px 12px;
   background-color: $white-color;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  &:focus {
+    background: #000;
+  }
 }
 
 .select {
@@ -22,6 +31,8 @@
 }
 
 .option {
+  display: flex;
+  align-items: center;
   height: 40px;
   margin-top: 10px;
 

@@ -13,8 +13,13 @@
 }
 .bouquetDesktop {
   display: flex;
+
+  & button {
+    width: 178px;
+    justify-content: space-between;
+  }
 }
-.bouquetTablet {
+.bouquetMobile {
   display: none;
 }
 .outOfStock {
@@ -24,15 +29,14 @@
 }
 
 @include md {
+  .buttons {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
   .price {
     margin-top: 26px;
     margin-bottom: 26px;
-  }
-  .bouquetDesktop {
-    display: none;
-  }
-  .bouquetTablet {
-    display: flex;
   }
 }
 @include sm {
@@ -46,5 +50,16 @@
   .buttons {
     width: 100%;
     margin-top: 32px;
+    position: relative;
+  }
+  .bouquetDesktop {
+    display: none;
+  }
+  .bouquetMobile {
+    display: flex;
+    top: -60px;
+    position: absolute;
+    z-index: 22;
+    right: 0;
   }
 }

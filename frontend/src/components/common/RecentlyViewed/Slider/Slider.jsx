@@ -1,53 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from './Slider.module.scss';
-import IconButton from '../../../../components/ui-kit/components/IconButton';
-import { ICONS } from '../../../../components/ui-kit/icons';
+import IconButton from '../../../ui-kit/components/IconButton';
+import { ICONS } from '../../../ui-kit/icons';
 import { register } from 'swiper/element/bundle';
-import { GetProducts } from '../../../../services/products/productsAccess.service';
-import { useParams } from 'react-router-dom';
 import './swiper.scss';
 import Slide from './Slide';
 
 const Slider = React.memo(({ data }) => {
-  const { myId } = useParams();
   const swiperElRef = useRef(null);
   const showNavigation = data.length > 5;
-  const [receivedData, setReceivedData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    setReceivedData([]);
-
-    const fetchDataForAll = async () => {
-      try {
-        const requests = data.map(async (id) => {
-          if (myId !== id) {
-            const response = await GetProducts(id);
-            if (isMounted) {
-              setReceivedData((prev) => [...prev, response]);
-            }
-          }
-        });
-
-        await Promise.all(requests);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchDataForAll();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [data, myId]);
 
   useEffect(() => {
     register();
@@ -105,7 +68,7 @@ const Slider = React.memo(({ data }) => {
     Object.assign(swiperElRef.current, params);
 
     swiperElRef.current.initialize();
-  }, []);
+  }, [swiperElRef]);
 
   return (
     <div className={styles.sliderContainer}>
@@ -126,8 +89,9 @@ const Slider = React.memo(({ data }) => {
       )}
       <div>
         <swiper-container ref={swiperElRef} init={false}>
-          {!isLoading &&
-            receivedData.map((card) => <Slide card={card} key={card.alias} />)}
+          {data.map((card) => (
+            <Slide card={card} key={card.alias} />
+          ))}
         </swiper-container>
         {showNavigation && (
           <div className={`swiper-pagination ${styles.pagination}`}> </div>

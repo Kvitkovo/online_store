@@ -5,13 +5,14 @@
 }
 
 .listData {
-  margin-top: 16px;
+  margin: 16px 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .listItem {
+  position: relative;
   display: flex;
   gap: 6px;
 }

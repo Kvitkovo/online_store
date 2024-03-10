@@ -2,19 +2,24 @@ import React, { useCallback, useEffect, useState } from 'react';
 import OpenMenu from './OpenMenu';
 import ClosedMenu from './ClosedMenu';
 import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { closeMenu } from '../../../../../redux/slices/catalogSlice';
 
 const BurgerMenu = ({
   toggleCart,
   toggleMyBouquet,
   cartQuantity,
   toggleLogin,
+  flowerQuantity,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const toggleMenu = useCallback(() => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
-  }, []);
+    dispatch(closeMenu());
+  }, [dispatch]);
 
   useEffect(() => {
     setIsOpen(false);
@@ -30,6 +35,7 @@ const BurgerMenu = ({
           toggleMyBouquet={toggleMyBouquet}
           toggleLogin={toggleLogin}
           cartQuantity={cartQuantity}
+          flowerQuantity={flowerQuantity}
         />
       )}
     </>

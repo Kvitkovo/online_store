@@ -38,7 +38,56 @@ header {
   gap: 26px;
 }
 .location {
+  position: relative;
   display: flex;
+  &:hover .locationTooltip {
+    transition-delay: 1.5s;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+.locationTooltip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  position: absolute;
+  bottom: -150%;
+  left: -100%;
+  width: max-content;
+  padding: 20px 26px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+  background-color: $white-color;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.3s ease,
+    visibility 0.5s ease,
+    transform 0.5s ease;
+  transition-delay: 0.8s;
+  &::before {
+    content: url(../../ui-kit/icons/pointer.svg);
+    position: absolute;
+    top: -15px;
+    left: calc(50% - 23px);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: calc(50% - 5px);
+    transform: translateX(-50%);
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 16.5px solid rgba(0, 0, 0, 0.019);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    z-index: -1;
+  }
 }
 .phoneLink {
   display: flex;
@@ -87,6 +136,7 @@ header {
   background-color: $white-color;
 }
 .searchField {
+  position: relative;
   display: flex;
   max-width: 526px;
   width: 100%;
@@ -103,10 +153,12 @@ header {
   align-items: center;
 }
 .bouquete {
+  position: relative;
   margin: 0 8px;
 }
 
 .cart {
+  position: relative;
   cursor: pointer;
   margin-left: 8px;
   display: flex;
@@ -116,20 +168,6 @@ header {
 }
 .tabletContacts {
   display: none;
-}
-
-.cartQuantity {
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  background-color: $discount-color;
-  color: $white-color;
-  font-size: 10px;
-  text-align: center;
-  position: relative;
-  left: -8px;
-  top: -6px;
-  padding-top: 2px;
 }
 
 @include lg {

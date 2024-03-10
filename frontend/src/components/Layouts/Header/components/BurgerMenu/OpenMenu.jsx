@@ -13,12 +13,25 @@ import NavigationMenu from '../NavigationMenu';
 import Catalog from '../../../../common/Catalog';
 import ModalCatalog from '../../../../common/Catalog/components/ModalCatalog/ModalCatalog';
 import ParentComponent from '../../../../common/Catalog/components/ModalCatalog/ParentComponent';
+import { useSelector } from 'react-redux';
 
 const OpenMenu = ({ toggleMenu }) => {
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
-
+  const { prevParents, initialMenu } = useSelector((state) => state.menu);
+  const currentCategory =
+    initialMenu.find((category) => category.id === prevParents.at(-1))?.name ||
+    'Каталог товарів';
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
+  };
+  const openGoogleMaps = () => {
+    const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
+
+    const googleMapsLink =
+      'https://www.google.com/maps/dir/?api=1' +
+      `&destination=${encodeURIComponent(destination)}`;
+
+    window.open(googleMapsLink, '_blank');
   };
   return (
     <div className={styles.openMenu}>
@@ -43,8 +56,9 @@ const OpenMenu = ({ toggleMenu }) => {
           {isCatalogOpened && (
             <ModalCatalog>
               <ParentComponent
-                category="Каталог товарів"
+                category={currentCategory}
                 toggleMenu={toggleMenu}
+                closeMenu={setIsCatalogOpened}
               />
               <Catalog setIsOpen={setIsCatalogOpened} />
             </ModalCatalog>
@@ -66,6 +80,7 @@ const OpenMenu = ({ toggleMenu }) => {
               padding="padding-header-even"
               reverse="true"
               icon={<ICONS.location />}
+              onClick={openGoogleMaps}
             />
           </div>
         </div>

@@ -27,6 +27,7 @@ import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
 import CategoryPage from './pages/CategoryPage';
+import SearchResult from './pages/SearchResult/SearchResult';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,58 +39,53 @@ function App() {
       <div className="App">
         <Header isLoggedIn={isLoggedIn} />
         <Wrapper>
-          <div>
-            <Routes>
-              <Route path={ROUTES.home} element={<Home />} />
-              <Route path={ROUTES.promotions} element={<Promotions />} />
-              <Route path={ROUTES.about} element={<About />} />
-              <Route path={ROUTES.delivery} element={<Delivery />} />
-              <Route path={ROUTES.care} element={<Care />} />
-              <Route path={ROUTES.contacts} element={<Contacts />} />
-              <Route path={ROUTES.faq} element={<Faq />} />
-              <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
-              <Route path={ROUTES.partner} element={<Partner />} />
-              <Route path={ROUTES.privacy} element={<Privacy />} />
-              <Route path={ROUTES.card} element={<CardPage />} />
-              <Route path={ROUTES.order} element={<Order />} />
+          <Routes>
+            <Route path={ROUTES.home} element={<Home />} />
+            <Route path={ROUTES.promotions} element={<Promotions />} />
+            <Route path={ROUTES.about} element={<About />} />
+            <Route path={ROUTES.delivery} element={<Delivery />} />
+            <Route path={ROUTES.care} element={<Care />} />
+            <Route path={ROUTES.contacts} element={<Contacts />} />
+            <Route path={ROUTES.faq} element={<Faq />} />
+            <Route path={ROUTES.orderStatus} element={<OrderStatus />} />
+            <Route path={ROUTES.partner} element={<Partner />} />
+            <Route path={ROUTES.privacy} element={<Privacy />} />
+            <Route path={ROUTES.card} element={<CardPage />} />
+            <Route path={ROUTES.order} element={<Order />} />
+            <Route path={ROUTES.search} element={<SearchResult />} />
+            <Route
+              path={ROUTES.emailConfirmation}
+              element={<RegisterConfirm />}
+            />
+            <Route
+              path={ROUTES.passwordReset}
+              element={<ResetPasswordPage />}
+            />
+            <Route path={ROUTES.specificCategory} element={<CategoryPage />} />
+            {/* temporary solurion. Change when decor page created */}
+            <Route path={ROUTES.decor} element={<Home />} />
+            <Route
+              element={
+                <ProtectedRoutes
+                  isLoggedIn={isLoggedIn}
+                  updateLoginStatus={updateLoginStatus}
+                />
+              }
+            >
               <Route
-                path={ROUTES.emailConfirmation}
-                element={<RegisterConfirm />}
-              />
-              <Route
-                path={ROUTES.passwordReset}
-                element={<ResetPasswordPage />}
-              />
-              <Route
-                path={ROUTES.specificCategory}
-                element={<CategoryPage />}
-              />
-              <Route
+                path={ROUTES.account}
                 element={
-                  <ProtectedRoutes
-                    isLoggedIn={isLoggedIn}
-                    updateLoginStatus={updateLoginStatus}
-                  />
+                  <ContactDetails updateLoginStatus={updateLoginStatus} />
                 }
-              >
-                <Route
-                  path={ROUTES.account}
-                  element={
-                    <ContactDetails updateLoginStatus={updateLoginStatus} />
-                  }
-                />
-                <Route
-                  path={ROUTES.changeDetails}
-                  element={<ChangeDetails />}
-                />
-                <Route
-                  path={ROUTES.changePassword}
-                  element={<ChangePassword />}
-                />
-                <Route path={ROUTES.orders} element={<Orders />} />
-              </Route>
-            </Routes>
-          </div>
+              />
+              <Route path={ROUTES.changeDetails} element={<ChangeDetails />} />
+              <Route
+                path={ROUTES.changePassword}
+                element={<ChangePassword />}
+              />
+              <Route path={ROUTES.orders} element={<Orders />} />
+            </Route>
+          </Routes>
           <SupportModal />
         </Wrapper>
         <Footer />

@@ -1,0 +1,119 @@
+@import './../../../variables';
+@import './../../../_mixins';
+
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sortBlock {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  background-color: $white-color;
+  border-radius: 8px;
+}
+
+.sortTitle {
+  margin-right: 16px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.sortDropdown {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sortSmallDevices {
+  display: none;
+}
+
+.cards {
+  display: grid;
+  gap: 20px;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  max-width: inherit;
+  margin: 0px auto 28px;
+  & li {
+    height: 100%;
+  }
+}
+
+.mainContent {
+  width: 880px;
+}
+
+.filterButton {
+  display: none;
+}
+
+.filterShowbar {
+  display: flex;
+  margin-top: 16px;
+}
+
+@include lg {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(204px, 1fr));
+    margin-bottom: 22px;
+  }
+
+  .sortDropdown {
+    display: none;
+  }
+
+  .sortTitle {
+    display: none;
+  }
+
+  .sortBlock {
+    background: transparent;
+    flex-direction: row;
+    padding: 0;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .filterButton {
+    grid-column: 2;
+    width: 100%;
+    display: inline-block;
+  }
+
+  .sortSmallDevices {
+    position: relative;
+    display: block;
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .mainContainer {
+    display: block;
+  }
+  .mainContent {
+    width: auto;
+  }
+
+  .filterShowbar {
+    display: none;
+  }
+}
+
+@include md {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    margin-bottom: 24px;
+  }
+}
+@include sm {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
+    gap: 10px;
+  }
+}

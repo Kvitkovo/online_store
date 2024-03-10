@@ -31,6 +31,18 @@
 .inactive {
   color: $gray-light-color;
 }
+.oldPriceSmall {
+  padding-bottom: 0;
+}
+
+@include lg {
+  .actualPriceSmall {
+    font-size: 1.33em;
+  }
+  .oldPriceSmall {
+    font-size: 1em;
+  }
+}
 
 @include sm {
   .oldPrice {
@@ -44,5 +56,11 @@
   .currency {
     font-size: 16px;
     line-height: 21px;
+  }
+  .actualPriceSmall {
+    font-size: 1.33em;
+  }
+  .oldPriceSmall {
+    font-size: 1em;
   }
 }

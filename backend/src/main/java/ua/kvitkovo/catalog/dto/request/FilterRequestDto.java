@@ -18,7 +18,7 @@ public class FilterRequestDto {
     private String title;
     private Integer priceFrom;
     private Integer priceTo;
-    private Long categoryId;
+    private List<Long> categories;
     private List<Long> colors;
     private List<Long> sizes;
     private List<Long> productTypes;

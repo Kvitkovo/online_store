@@ -138,19 +138,18 @@ public class ProductController {
             ) @RequestParam(defaultValue = "30") int size,
             @Parameter(description = "Get products whose price is equal to or higher than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "0")
-            ) @RequestParam(required = false, defaultValue = "0")
+            ) @RequestParam(required = false)
             @Min(value = 0, message = "priceFrom should not be less than 0") Integer priceFrom,
             @Parameter(description = "Get products whose price is equal to or less than the specified price",
                     schema = @Schema(type = "integer", defaultValue = "5000")
-            ) @RequestParam(required = false, defaultValue = "5000")
+            ) @RequestParam(required = false)
             @Min(value = 0, message = "priceTo should not be less than 0") Integer priceTo,
             @Parameter(description = "Get products whose name is similar to the specified term",
                     schema = @Schema(type = "string")
             ) @RequestParam(required = false) String title,
-            @Parameter(description = "ID of the category of which the products will be returned",
-                    schema = @Schema(type = "integer")
-            ) @RequestParam(required = false)
-            @Min(value = 1, message = "categoryId should not be less than 1") Long categoryId,
+            @Parameter(description = "List of categories identifiers",
+                    schema = @Schema(type = "array[integer]")
+            ) @RequestParam(required = false) List<Long> categories,
             @Parameter(description = "List of color identifiers",
                     schema = @Schema(type = "array[integer]")
             ) @RequestParam(required = false) List<Long> colors,
@@ -171,7 +170,7 @@ public class ProductController {
                 .priceFrom(priceFrom)
                 .priceTo(priceTo)
                 .title(title)
-                .categoryId(categoryId)
+                .categories(categories)
                 .colors(colors)
                 .sizes(sizes)
                 .productTypes(types)
