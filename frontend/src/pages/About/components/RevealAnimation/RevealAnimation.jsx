@@ -14,7 +14,7 @@ const RevealAnimation = ({ data }) => {
           name !== 'main'
             ? {
                 initial: { [name]: 350, opacity: 0 },
-                animated: { [name]: 0, opacity: 1 },
+                animated: { [name]: 0, opacity: 1, transition: transition },
               }
             : {};
         return (
@@ -24,7 +24,6 @@ const RevealAnimation = ({ data }) => {
             variants={variants}
             initial="initial"
             whileInView="animated"
-            transition={transition}
             viewport={{ once: true, margin: '-50% 0px' }}
           >
             <img src={src} alt="Працівники Kvitkovo " />
@@ -32,13 +31,15 @@ const RevealAnimation = ({ data }) => {
               <motion.div
                 variants={cover}
                 initial="initial"
-                whileInView={{ opacity: [0.75, 0.5, 0.25, 0.1, 0] }}
-                className={styles.mainImgs__main_cover}
-                transition={{
-                  times: [0, 0.2, 0.4, 0.9, 1],
-                  durtion: 0.75,
-                  delay: 0.25,
+                whileInView={{
+                  opacity: 0,
+                  transition: {
+                    durtion: 0.75,
+                    ease: 'easeOut',
+                    delay: 0.25,
+                  },
                 }}
+                className={styles.mainImgs__main_cover}
                 viewport={{ once: true, margin: '-60% 0px' }}
               ></motion.div>
             )}

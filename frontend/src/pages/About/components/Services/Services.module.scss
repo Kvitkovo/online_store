@@ -5,9 +5,32 @@
   flex-direction: column;
   gap: 110px;
 }
+.img {
+  position: relative;
+  width: 565px;
+
+  &:hover image {
+    transform: scale(1.5);
+  }
+  &__stroke {
+    overflow: visible;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+  }
+  &__cover {
+    background-color: rgba(108, 194, 94, 0.26);
+  }
+}
 .service {
   display: flex;
   gap: 100px;
+
+  &__textSide {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+  }
   &:nth-child(2n) {
     flex-direction: row-reverse;
   }
@@ -17,18 +40,5 @@
   }
   &__description {
     @extend %description;
-  }
-  &__images {
-    img {
-      border-radius: 50%;
-    }
-  }
-  &__image {
-    width: 565px;
-    transition: transform 0.3s ease;
-
-    &:hover ~ image {
-      transform: scale(1.5);
-    }
   }
 }

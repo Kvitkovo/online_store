@@ -51,6 +51,7 @@ import { ReactComponent as inBouquet } from './in-bouquet.svg';
 import { ReactComponent as service1 } from './services-images/service1.svg';
 import { ReactComponent as service2 } from './services-images/service2.svg';
 import { ReactComponent as flower } from './flower.svg';
+import { ReactComponent as lotus } from './lotus.svg';
 
 export const ICONS = {
   addComponent,
@@ -106,4 +107,5 @@ export const ICONS = {
   service1,
   service2,
   flower,
+  lotus,
 };
