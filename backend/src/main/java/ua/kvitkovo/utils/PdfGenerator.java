@@ -15,9 +15,7 @@ import java.nio.file.FileSystems;
 public class PdfGenerator {
 
     public static InputStreamResource generatePdfFromThymeleaf(String html) throws Exception {
-        ClassPathResource resource = new ClassPathResource("fonts/arial.ttf");
-        File file = resource.getFile();
-        String fontPath = file.getPath();
+        String fontPath = "fonts/arial.ttf";
 
         ITextRenderer renderer = new ITextRenderer();
         renderer.getFontResolver().addFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
