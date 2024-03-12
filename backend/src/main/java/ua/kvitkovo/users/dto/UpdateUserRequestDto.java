@@ -1,5 +1,6 @@
 package ua.kvitkovo.users.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -13,7 +14,6 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "UpdateUserRequest")
 public class UpdateUserRequestDto {
 
     @NotBlank
@@ -43,5 +43,6 @@ public class UpdateUserRequestDto {
     private String phone;
 
     @Schema(example = "2001-09-01", description = "User birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 }
