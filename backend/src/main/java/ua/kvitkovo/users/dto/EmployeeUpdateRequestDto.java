@@ -1,5 +1,6 @@
 package ua.kvitkovo.users.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class EmployeeUpdateRequestDto {
     private String password;
 
     @Schema(example = "2001-09-01", description = "User birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Schema(example = "employee", description = "User comment")
