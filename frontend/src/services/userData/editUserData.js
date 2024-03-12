@@ -1,18 +1,23 @@
-import axiosInstance from '../httpClient';
+import axios from 'axios';
+import { updateUser } from '../../redux/slices/userSlice';
 
-export const editUserData = async (updatedData) => {
+export const editUserData = async (updatedData, dispatch) => {
   const id = localStorage.getItem('authId');
   const token = localStorage.getItem('authToken');
   try {
-    const response = await axiosInstance.put(`/users/${id}`, updatedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.put(
+      `https://api.imperiaholoda.com.ua:4446/v1/users/${id}`,
+      updatedData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (response.status === 200) {
       const updatedUserData = response.data;
-      alert('User data updated successfully:', updatedUserData);
+      dispatch(updateUser(updatedUserData));
       return updatedUserData;
     }
   } catch (error) {

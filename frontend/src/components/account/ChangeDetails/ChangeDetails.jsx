@@ -4,12 +4,13 @@ import styles from './ChangeDetails.module.scss';
 import Button from '../../ui-kit/components/Button';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editUserData } from '../../../services/userData/editUserData';
 
 const ChangeDetails = () => {
   const userData = useSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [correctUserData, setCorrectUserData] = useState({
     firstName: userData.firstName || '',
@@ -42,11 +43,9 @@ const ChangeDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /* console.log('New User Data:', correctUserData); */
-
     try {
-      const updatedUserData = await editUserData(correctUserData);
-      alert('Update user details', updatedUserData);
+      const updatedUserData = await editUserData(correctUserData, dispatch);
+      navigate('/account', updatedUserData);
     } catch (error) {
       console.error('Error updating user details:', error);
     }
@@ -68,7 +67,6 @@ const ChangeDetails = () => {
                   id="firstName"
                   className={styles.dataInput}
                   type="text"
-                  placeholder=""
                   value={correctUserData.firstName}
                   onChange={handleChange}
                 />
@@ -79,7 +77,6 @@ const ChangeDetails = () => {
                   id="lastName"
                   className={styles.dataInput}
                   type="text"
-                  placeholder=""
                   value={correctUserData.lastName}
                   onChange={handleChange}
                 />
@@ -90,7 +87,6 @@ const ChangeDetails = () => {
                   id="surname"
                   className={styles.dataInput}
                   type="text"
-                  placeholder=""
                   value={correctUserData.surname}
                   onChange={handleChange}
                 />
@@ -116,7 +112,6 @@ const ChangeDetails = () => {
                   id="email"
                   className={styles.dataInput}
                   type="email"
-                  placeholder=""
                   value={correctUserData.email}
                   onChange={handleChange}
                 />
@@ -127,7 +122,6 @@ const ChangeDetails = () => {
                   id="birthday"
                   className={styles.dataInput}
                   type="date"
-                  placeholder=""
                   value={correctUserData.birthday}
                   onChange={handleChange}
                 />
@@ -140,6 +134,7 @@ const ChangeDetails = () => {
               label="Зберегти"
               padding="padding-sm"
               type="submit"
+              onClick={handleSubmit}
             />
             <Button
               variant="no-border-hovered"
