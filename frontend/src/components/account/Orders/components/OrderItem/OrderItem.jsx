@@ -7,7 +7,11 @@ const OrderItem = ({ number, code, item, img, itemQuantity, price }) => {
       <div>{number}</div>
       <div>код {code}</div>
       <div className={styles.imageAndTitle}>
-        <img src={img} className={styles.image} /> {item}
+        <img
+          src={img ? img : '/images/new_bouquet.jpg'}
+          className={styles.image}
+        />
+        {item}
       </div>
       <div>{itemQuantity} шт</div>
       <div>{price} грн</div>

@@ -91,7 +91,7 @@ const Orders = () => {
                       key={index}
                       number={index + 1}
                       code={item.product?.id}
-                      item={item.product?.title}
+                      item={item.productTitle}
                       img={item.product?.mainImageSmallUrl}
                       itemQuantity={item.qty}
                       price={item.price}
