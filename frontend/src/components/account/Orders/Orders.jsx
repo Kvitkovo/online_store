@@ -11,6 +11,13 @@ const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [data, setData] = useState([]);
+  const statusMapping = {
+    NEW: 'Новий',
+    ACCEPT: 'Прийнятий',
+    IS_DELIVERED: 'Доставляється',
+    DONE: 'Виконаний',
+    CANCELED: 'Скасований',
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +75,9 @@ const Orders = () => {
                 </div>
                 <div>{order.receiverName}</div>
                 <div>{order.totalSum} грн</div>
-                <div>{order.status}</div>
+                <div>{statusMapping[order.status]}</div>
 
-                {order.status === 'Новий' ? (
+                {statusMapping[order.status] === 'Новий' ? (
                   <IconButton icon={<ICONS.deleteIcon />}></IconButton>
                 ) : (
                   ''
