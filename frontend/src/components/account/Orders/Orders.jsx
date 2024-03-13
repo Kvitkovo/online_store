@@ -59,7 +59,13 @@ const Orders = () => {
                 >
                   {order.id}
                 </div>
-                <div>{order.dateOfShipment}</div>
+                <div>
+                  {order.dateOfShipment.substring(8, 10) +
+                    '.' +
+                    order.dateOfShipment.substring(5, 7) +
+                    '.' +
+                    order.dateOfShipment.substring(0, 4)}
+                </div>
                 <div>{order.receiverName}</div>
                 <div>{order.totalSum} грн</div>
                 <div>{order.status}</div>
