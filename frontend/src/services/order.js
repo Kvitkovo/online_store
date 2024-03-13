@@ -29,3 +29,20 @@ export const getUsersOrders = async () => {
     throw error;
   }
 };
+
+export const cancelUserOrder = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/orders/${id}/cancel`);
+    if (response.status === 200) {
+      return response.data.id;
+    } else {
+      throw new Error(`Помилка: Отримано статус відповіді ${response.status}`);
+    }
+  } catch (error) {
+    console.error(
+      'Виникла помилка при зміні статусу замовлення',
+      error.message,
+    );
+    throw error;
+  }
+};

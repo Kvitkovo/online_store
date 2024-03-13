@@ -5,7 +5,7 @@ import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
-import { getUsersOrders } from '../../../services/order';
+import { cancelUserOrder, getUsersOrders } from '../../../services/order';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
@@ -33,6 +33,11 @@ const Orders = () => {
     };
     fetchData();
   }, []);
+
+  const cancelOrder = async (id) => {
+    // console.log('cancel Order', id);
+    await cancelUserOrder(id);
+  };
 
   return (
     <Account title="Вітаємо, Олена">
@@ -77,7 +82,10 @@ const Orders = () => {
                 <div>{statusMapping[order.status]}</div>
 
                 {statusMapping[order.status] === 'Новий' ? (
-                  <IconButton icon={<ICONS.deleteIcon />}></IconButton>
+                  <IconButton
+                    icon={<ICONS.deleteIcon />}
+                    onClick={() => cancelOrder(order.id)}
+                  ></IconButton>
                 ) : (
                   ''
                 )}
