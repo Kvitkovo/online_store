@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { ReactComponent as addComponent } from './icon-add.svg';
 import { ReactComponent as cartChecked } from './icon-check.svg';
 import { ReactComponent as toCart } from './icon-cart.svg';
@@ -48,10 +49,13 @@ import { ReactComponent as filter } from './filter.svg';
 import { ReactComponent as btnPointer } from './btn-pointer.svg';
 import { ReactComponent as pointer } from './pointer.svg';
 import { ReactComponent as inBouquet } from './in-bouquet.svg';
-import { ReactComponent as service1 } from './services-images/service1.svg';
-import { ReactComponent as service2 } from './services-images/service2.svg';
 import { ReactComponent as flower } from './flower.svg';
 import { ReactComponent as lotus } from './lotus.svg';
+import { ReactComponent as branchWithFlower } from './about-us/insights/flower-with-leaves.svg';
+import { ReactComponent as branchWithLeaves } from './about-us/insights/branch-with-leaves.svg';
+import { ReactComponent as insightsFlower } from './about-us/insights/insights-flower.svg';
+import { ReactComponent as insightsLeaves } from './about-us/insights/insights-leaf.svg';
+import { ReactComponent as chamomile } from './about-us/insights/chamomile.svg';
 
 export const ICONS = {
   addComponent,
@@ -104,8 +108,11 @@ export const ICONS = {
   btnPointer,
   pointer,
   inBouquet,
-  service1,
-  service2,
+  branchWithFlower,
   flower,
   lotus,
+  branchWithLeaves,
+  insightsFlower,
+  insightsLeaves,
+  chamomile,
 };

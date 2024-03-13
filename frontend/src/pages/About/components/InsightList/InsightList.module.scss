@@ -2,7 +2,8 @@
 @import '../../extention';
 
 .list {
-  margin-bottom: 64px;
+  position: relative;
+  padding: 60px 0;
 }
 .item {
   padding-left: 55px;
@@ -12,8 +13,10 @@
 }
 .title {
   @extend %subtitle;
+  margin-bottom: 16px;
 }
 .description {
   @extend %description;
-  width: 50%;
+  margin-bottom: 32px;
+  width: 685px;
 }

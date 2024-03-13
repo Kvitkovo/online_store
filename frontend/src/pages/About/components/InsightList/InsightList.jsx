@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './InsightList.module.scss';
+import InsightsAnimation from '../InsightsAnimation/InsightsAnimation';
 
 const Insightlist = ({ data }) => {
   return (
@@ -13,6 +14,7 @@ const Insightlist = ({ data }) => {
           </li>
         );
       })}
+      <InsightsAnimation />
     </ul>
   );
 };

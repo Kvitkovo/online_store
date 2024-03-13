@@ -54,8 +54,10 @@
 }
 
 .insights {
+  position: relative;
   &__title {
     @extend %title;
+    margin-bottom: 0;
     color: $page-accent-color;
   }
 }
