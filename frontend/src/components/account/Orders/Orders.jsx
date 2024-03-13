@@ -23,7 +23,6 @@ const Orders = () => {
     const fetchData = async () => {
       try {
         const response = await getUsersOrders();
-        // console.log(response);
         setData(response);
       } catch (error) {
         console.error(
@@ -99,6 +98,7 @@ const Orders = () => {
                   ))}
                   <div className={styles.item}></div>
                   <RecipientDetails
+                    delivery={order.delivery}
                     city={order.addressCity}
                     street={order.addressStreet}
                     house={order.addressHouse}
