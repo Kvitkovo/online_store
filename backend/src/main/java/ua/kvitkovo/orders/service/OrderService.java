@@ -206,19 +206,13 @@ public class OrderService {
     }
 
     @Transactional
-    public List<Order> updateOrdersStatus(List<Long> ordersID, OrderStatus status) {
-        List<Order> orders = ordersID.stream()
-                .map(id -> orderRepository.findById(id)
-                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
-                .toList();
-
+    public void updateOrdersStatus(List<Order> orders, OrderStatus status) {
         for (Order order : orders) {
             checkIfCanChangeOrder(order);
             order.setStatus(status);
             orderRepository.save(order);
             changeStocks(order);
         }
-        return orders;
     }
 
     private void checkIfCanChangeOrder(Order order) {
@@ -257,8 +251,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order cancelOrder(Long id) {
-        Order order = findById(id);
+    public Order cancelOrder(Order order) {
         order.setStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
         return order;
@@ -291,5 +284,12 @@ public class OrderService {
         } else {
             return orders;
         }
+    }
+
+    public List<Order> getAllOrdersByIds(List<Long> ordersID) {
+        return ordersID.stream()
+                .map(id -> orderRepository.findById(id)
+                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+                .toList();
     }
 }

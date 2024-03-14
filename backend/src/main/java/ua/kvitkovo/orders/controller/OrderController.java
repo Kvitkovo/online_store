@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.annotations.*;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
@@ -163,8 +164,9 @@ public class OrderController {
     public List<OrderResponseDto> setOrdersStatus(@PathVariable List<Long> ordersID,
                                                   @RequestParam OrderStatus status) {
         log.debug("Received request to set Orders with ids {} status {}.", ordersID, status);
-        List<Order> orders = orderService.updateOrdersStatus(ordersID, status);
+        List<Order> orders = orderService.getAllOrdersByIds(ordersID);
         accessCheckerService.checkUpdateStatusAccess(orders);
+        orderService.updateOrdersStatus(orders, status);
         return orderDtoMapper.mapEntityToDto(orders);
     }
 
@@ -179,8 +181,9 @@ public class OrderController {
     @PutMapping("/{id}/cancel")
     public OrderResponseDto cancelOrder(@PathVariable Long id) {
         log.debug("Received request to cancel order with id {} status {}.", id);
-        Order order = orderService.cancelOrder(id);
+        Order order = orderService.findById(id);
         accessCheckerService.checkUpdateStatusAccess(order);
+        orderService.cancelOrder(order);
         return orderDtoMapper.mapEntityToDto(order);
     }
 
