@@ -35,7 +35,7 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
     [bouquetItems],
   );
   const totalAmount = useMemo(
-    () => bouquetItems.reduce((sum, obj) => sum + obj.cardQuantity, 0),
+    () => bouquetItems.reduce((sum, obj) => sum + +obj.cardQuantity, 0),
     [bouquetItems],
   );
   const clearAll = useCallback(() => {
@@ -51,9 +51,11 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
   }, [navigate, toggleMyBouquet]);
 
   const addBouquetToCart = useCallback(() => {
-    const findIdx =
-      cartItems.filter((item) => item.title.includes('Свій букет'))?.length +
-        1 || 1;
+    const createdBouquets = cartItems
+      .filter((item) => item.title.includes('Свій букет'))
+      .sort((a, b) => Number(a.id) - Number(b.id));
+    const lastIdx = +createdBouquets[createdBouquets.length - 1]?.id;
+    const findIdx = lastIdx ? lastIdx + 1 : 1;
     const formatedIdx = findIdx.toString().padStart(3, '0');
     dispatch(
       addToCart({
@@ -63,16 +65,16 @@ const MyBouquet = React.memo(({ toggleMyBouquet }) => {
           cardQuantity: 1,
           discount: 0,
           image: '/images/new_bouquet.jpg',
-          priceWithDiscount: totalSum,
           price: totalSum,
-          orderItemsCompositions: bouquetItems,
+          priceWithDiscount: totalSum,
+          orderItemsCompositions: JSON.parse(localStorage.getItem('bouquet')),
         },
         type: 'cart',
       }),
     );
     clearAll();
     toggleMyBouquet();
-  }, [bouquetItems, cartItems, clearAll, dispatch, toggleMyBouquet, totalSum]);
+  }, [cartItems, clearAll, dispatch, toggleMyBouquet, totalSum]);
 
   const handleDeleteAll = useCallback(() => {
     setModalOpen(true);

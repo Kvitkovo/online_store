@@ -47,7 +47,7 @@ const Header = () => {
 
   const productQuantity = useMemo(() => {
     const quantity = cartItems.reduce(
-      (accumulator, item) => accumulator + item.cardQuantity,
+      (accumulator, item) => accumulator + +item.cardQuantity,
       0,
     );
     return quantity;
@@ -55,7 +55,7 @@ const Header = () => {
   const flowerQuantity = useMemo(
     () =>
       bouquetItems.reduce(
-        (accumulator, item) => accumulator + item.cardQuantity,
+        (accumulator, item) => accumulator + +item.cardQuantity,
         0,
       ),
     [bouquetItems],
@@ -114,18 +114,16 @@ const Header = () => {
       window.onscroll = null;
     };
   }, []);
-
-  useEffect(() => {
-    const getPrevData = async (type) => {
+  const getPrevData = useCallback(
+    async (type) => {
       const prevList = JSON.parse(localStorage.getItem(type)) || [];
       const cartList = [];
       for (const item of prevList) {
         const { id, cardQuantity, orderItemsCompositions } = item;
         if (orderItemsCompositions) {
-          const price = orderItemsCompositions.reduce(
-            (acc, flower) => acc + flower.price,
-            0,
-          );
+          const price = orderItemsCompositions.reduce((acc, item) => {
+            acc + item.cardQuantity * item.priceWithDiscount;
+          }, 0);
           const newItem = {
             id: id,
             title: `Свій букет #${id}`,
@@ -133,6 +131,7 @@ const Header = () => {
             discount: 0,
             image: '/images/new_bouquet.jpg',
             price: price,
+            priceWithDiscount: price,
             orderItemsCompositions: orderItemsCompositions,
           };
 
@@ -159,10 +158,14 @@ const Header = () => {
           type: type,
         }),
       );
-    };
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
     getPrevData('bouquet');
     getPrevData('cart');
-  }, [dispatch]);
+  }, [dispatch, getPrevData]);
 
   return (
     <div>
@@ -264,7 +267,11 @@ const Header = () => {
         </div>
       </header>
       {isOpenCart && (
-        <CartPopup toggleCart={toggleCart} toggleMyBouquet={toggleMyBouquet} />
+        <CartPopup
+          toggleCart={toggleCart}
+          toggleMyBouquet={toggleMyBouquet}
+          getBouquetData={getPrevData}
+        />
       )}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
       {isOpenLogin && (
