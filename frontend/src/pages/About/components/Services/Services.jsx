@@ -33,7 +33,7 @@ const Services = ({ data }) => {
         opacity: 0,
         transition: {
           delay: 0.25,
-          duration: 1.18,
+          duration: 1,
           ease: 'linear',
         },
       },
@@ -45,8 +45,8 @@ const Services = ({ data }) => {
     animated: {
       marginTop: [0, 67, 0],
       transition: {
-        times: [0, 0.6, 1],
-        duration: 1.4,
+        times: [0, 0.4, 1],
+        duration: 2,
         ease: 'linear',
       },
     },
@@ -220,10 +220,10 @@ const Services = ({ data }) => {
                           scale: 1.15,
                           opacity: [0, 1, 0],
                           transition: {
-                            delay: 1.65,
+                            delay: 1.15,
                             repeat: 3,
                             repeatDelay: -0.15,
-                            duration: 1.7,
+                            duration: 1.1,
                             ease: 'linear',
                           },
                           transitionEnd: {
@@ -231,7 +231,6 @@ const Services = ({ data }) => {
                             scale: [1.15, 1],
                           },
                         }}
-                        // transition={{ delay: 0.55 }}
                         viewport={{ once: true }}
                       />
                     )}

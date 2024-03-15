@@ -76,8 +76,31 @@
     }
   ],
   "conclusionImages": [
-    "/images/about-us/conclusion2.jpg",
-    "/images/about-us/conclusion1.jpg",
-    "/images/about-us/conclusion3.jpg"
+    {
+      "src": "/images/about-us/conclusion2.jpg",
+      "variants": {
+        "initial": { "left": "24%", "top": "19px", "rotate": 1 },
+        "animated": { "rotate": -18, "left": 0, "top": 80 }
+      }
+    },
+    {
+      "src": "/images/about-us/conclusion1.jpg",
+      "variants": {
+        "initial": {},
+        "animated": {}
+      }
+    },
+    {
+      "src": "/images/about-us/conclusion3.jpg",
+      "variants": {
+        "initial": {
+          "right": "24.3%",
+          "top": "15px",
+          "transitionOrigin": "right bottom",
+          "rotate": -1
+        },
+        "animated": { "rotate": 18, "right": 0, "top": 80 }
+      }
+    }
   ]
 }

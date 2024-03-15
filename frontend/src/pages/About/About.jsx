@@ -6,6 +6,7 @@ import Services from './components/Services';
 import InsightList from './components/InsightList';
 import RevealAnimation from './components/RevealAnimation';
 import MissionScreen from './components/MissionScreen';
+import { motion } from 'framer-motion';
 
 const About = () => {
   return (
@@ -61,7 +62,16 @@ const About = () => {
         </p>
         <div className={styles.conclusion__images}>
           {infoData.conclusionImages.map((image) => (
-            <img src={image} alt="Kvitkovo" key={image} />
+            <motion.img
+              src={image.src}
+              alt="Kvitkovo"
+              key={image.scr}
+              variants={image.variants}
+              initial="initial"
+              whileInView="animated"
+              viewport={{ once: true, margin: '-150px 0px' }}
+              transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+            />
           ))}
         </div>
       </section>

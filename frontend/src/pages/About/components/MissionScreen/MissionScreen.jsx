@@ -17,19 +17,18 @@ const MissionScreen = () => {
         whileInView={{
           opacity: [0, 1, 0],
           transition: {
-            // type: 'e',
             duration: 2.4,
             ease: 'easeInOut',
           },
         }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: '-150px 0px' }}
         className={styles.image__cover}
       ></motion.div>
       <motion.img
         variants={animationPoints}
         initial="initial"
         whileInView="animated"
-        viewport={{ once: true, margin: '-40% 0px' }}
+        viewport={{ once: true, margin: '-150px 0px' }}
         transition={{
           delay: 0.5,
           type: 'spring',

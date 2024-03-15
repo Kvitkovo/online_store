@@ -84,9 +84,6 @@
         position: absolute;
       }
       &:nth-child(1) {
-        transform: rotate(1deg);
-        left: 24%;
-        top: 19px;
         z-index: 1;
       }
       &:nth-child(2) {
@@ -95,24 +92,6 @@
         margin: 0 auto;
         z-index: 2;
       }
-      &:nth-child(3) {
-        transform: rotate(-1deg);
-        right: 24.3%;
-        top: 19px;
-      }
     }
-  }
-}
-
-@keyframes firstScreen {
-  0% {
-  }
-  40% {
-  }
-  60% {
-  }
-  80% {
-  }
-  100% {
   }
 }
