@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './MissionScreen.module.scss';
 import { motion } from 'framer-motion';
 
-export default function MissionScreen() {
+const MissionScreen = () => {
   const animationPoints = {
     initial: { opacity: 0 },
     animated: { opacity: 1 },
@@ -14,11 +14,15 @@ export default function MissionScreen() {
         layout
         variants={animationPoints}
         initial="initial"
-        whileInView={{ opacity: [0, 0.25, 0.75, 1, 0.75, 0.25, 0] }}
-        transition={{
-          duration: 5.5,
+        whileInView={{
+          opacity: [0, 1, 0],
+          transition: {
+            // type: 'e',
+            duration: 2.4,
+            ease: 'easeInOut',
+          },
         }}
-        viewport={{ once: true, margin: '-40% 0px' }}
+        viewport={{ once: true }}
         className={styles.image__cover}
       ></motion.div>
       <motion.img
@@ -27,7 +31,7 @@ export default function MissionScreen() {
         whileInView="animated"
         viewport={{ once: true, margin: '-40% 0px' }}
         transition={{
-          delay: 1.5,
+          delay: 0.5,
           type: 'spring',
           mass: 1,
           stiffness: 5.96,
@@ -39,4 +43,6 @@ export default function MissionScreen() {
       />
     </motion.div>
   );
-}
+};
+
+export default MissionScreen;

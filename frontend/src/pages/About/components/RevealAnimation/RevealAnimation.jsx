@@ -4,7 +4,18 @@ import { motion } from 'framer-motion';
 
 const RevealAnimation = ({ data }) => {
   const ref = useRef(null);
-  const cover = { initial: { opacity: 0.7 }, animated: { opacity: 0 } };
+  const cover = {
+    initial: { opacity: 0.5 },
+    animated: {
+      opacity: 0,
+      transition: {
+        opacity: {
+          durtion: 0.72,
+          ease: 'easeOut',
+        },
+      },
+    },
+  };
 
   return (
     <ul ref={ref} className={styles.mainImgs}>
@@ -24,6 +35,7 @@ const RevealAnimation = ({ data }) => {
             variants={variants}
             initial="initial"
             whileInView="animated"
+            transition={{ delay: 2.5 }}
             viewport={{ once: true, margin: '-50% 0px' }}
           >
             <img src={src} alt="Працівники Kvitkovo " />
@@ -31,14 +43,7 @@ const RevealAnimation = ({ data }) => {
               <motion.div
                 variants={cover}
                 initial="initial"
-                whileInView={{
-                  opacity: 0,
-                  transition: {
-                    durtion: 0.75,
-                    ease: 'easeOut',
-                    delay: 0.25,
-                  },
-                }}
+                whileInView="animated"
                 className={styles.mainImgs__main_cover}
                 viewport={{ once: true, margin: '-60% 0px' }}
               ></motion.div>

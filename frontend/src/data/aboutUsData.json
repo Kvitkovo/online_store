@@ -9,10 +9,9 @@
       "name": "left",
       "src": "/images/about-us/first_screen_left.jpg",
       "transition": {
-        "duration": 0.68,
         "delay": 1.5,
         "type": "spring",
-        "stiffness": 234,
+        "stiffness": 233,
         "damping": 17.65,
         "mass": 1
       }
@@ -21,10 +20,9 @@
       "name": "right",
       "src": "/images/about-us/first_screen_right.jpg",
       "transition": {
-        "duration": 0.68,
         "delay": 0.82,
         "type": "spring",
-        "stiffness": 234,
+        "stiffness": 235,
         "damping": 17.65,
         "mass": 1
       }

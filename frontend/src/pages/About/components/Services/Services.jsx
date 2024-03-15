@@ -4,7 +4,6 @@ import { ICONS } from '../../../../components/ui-kit/icons';
 import { motion } from 'framer-motion';
 
 const Services = ({ data }) => {
-  // const imgScaleDelay = 0.25;
   const circleAnimation = {
     first: {
       initial: {
@@ -15,19 +14,27 @@ const Services = ({ data }) => {
       animated: {
         scale: 1,
         opacity: 1,
-        rotate: -90,
-        transition: { duration: 0.64, rotate: { duration: 1, delay: 0.84 } },
+        rotate: -179,
+        transition: {
+          duration: 0.64,
+          rotate: {
+            type: 'spring',
+            stiffness: 14.73,
+            damping: 8.57,
+            delay: 0.84,
+          },
+        },
       },
     },
     second: {
-      initial: { scale: 0.9, opacity: 0.3 },
+      initial: { scale: 1, opacity: 1 },
       animated: {
-        scale: [0.9, 1.15],
-        opacity: [0, 1, 0],
-        transition: { repeat: 3, duration: 0.6 },
-        transitionEnd: {
-          opacity: 1,
-          scale: 1,
+        scale: 1.15,
+        opacity: 0,
+        transition: {
+          delay: 0.25,
+          duration: 1.18,
+          ease: 'linear',
         },
       },
     },
@@ -36,9 +43,10 @@ const Services = ({ data }) => {
   const textSlide = {
     initial: { marginTop: 0 },
     animated: {
-      marginTop: [67, 0],
+      marginTop: [0, 67, 0],
       transition: {
-        delay: 0.25,
+        times: [0, 0.6, 1],
+        duration: 1.4,
         ease: 'linear',
       },
     },
@@ -59,13 +67,22 @@ const Services = ({ data }) => {
               <p className={styles.service__description}>{description}</p>
               {id === 1 && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{
-                    opacity: 1,
-                    scale: 1,
-                    transition: { duration: 0.35, delay: 0.6 },
+                  className={styles.lotus}
+                  initial={{
+                    borderRadius: '50%',
+                    clipPath: 'circle(0px at 50% 50%)',
                   }}
-                  viewport={{ once: true, margin: '-20% 0px' }}
+                  whileInView={{
+                    borderRadius: '0%',
+                    clipPath: 'circle(382px at 50% 50%)',
+                    transition: {
+                      delay: 0.9,
+                      type: 'spring',
+                      stiffness: 35.73,
+                      Damping: 13.33,
+                    },
+                  }}
+                  viewport={{ once: true, margin: '-10% 0px' }}
                 >
                   <ICONS.lotus />
                 </motion.div>
@@ -78,6 +95,7 @@ const Services = ({ data }) => {
                 viewBox="0 0 570 577"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                style={{ position: 'relative', zIndex: 2 }}
               >
                 <defs>
                   <pattern
@@ -190,15 +208,31 @@ const Services = ({ data }) => {
                       stroke="#6CC25E"
                       initial={'initial'}
                       whileInView={'animated'}
-                      viewport={{ once: true, margin: '-20% 0px' }}
+                      viewport={{ once: true }}
                     />
                     {id === 4 && (
                       <motion.use
                         href="#myCircle"
                         stroke="#6CC25E"
                         variants={circleAnimation.second}
-                        initial={'initial'}
-                        whileInView={'animated'}
+                        initial={{ scale: 0.9 }}
+                        whileInView={{
+                          scale: 1.15,
+                          opacity: [0, 1, 0],
+                          transition: {
+                            delay: 1.65,
+                            repeat: 3,
+                            repeatDelay: -0.15,
+                            duration: 1.7,
+                            ease: 'linear',
+                          },
+                          transitionEnd: {
+                            opacity: 1,
+                            scale: [1.15, 1],
+                          },
+                        }}
+                        // transition={{ delay: 0.55 }}
+                        viewport={{ once: true }}
                       />
                     )}
                   </>
