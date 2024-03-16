@@ -33,7 +33,6 @@ const ChangePassword = () => {
                 label="Підтвердити"
                 padding="padding-sm"
                 type="submit"
-                /* onClick={handleSubmit} */
               />
               <Button
                 variant="no-border-hovered"
