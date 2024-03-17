@@ -1,8 +1,9 @@
 import React from 'react';
 import Account from '../Account';
-import styles from './ChangePassword.module.scss';
+import styles from './ChangePasswordForm.module.scss';
 import Button from '../../ui-kit/components/Button';
 import { useNavigate } from 'react-router-dom';
+import ChangePasswordForm from './ChangePasswordForm';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -10,11 +11,15 @@ const ChangePassword = () => {
   const NavigateAccount = () => {
     navigate('/account');
   };
+
+  const navigateChangePassword = () => {
+    navigate(<ChangePasswordForm />);
+  };
   return (
     <div>
       <Account title="Редагування особистої інформації">
-        <h2 className={styles.title}> Зміна паролю</h2>
-        <div>
+        <div className={styles.formContainer}>
+          <h2 className={styles.title}> Зміна паролю</h2>
           <form action="">
             <div className={styles.passwordContainer}>
               <label htmlFor="password">Введіть старий пароль</label>
@@ -33,6 +38,7 @@ const ChangePassword = () => {
                 label="Підтвердити"
                 padding="padding-sm"
                 type="submit"
+                onClick={navigateChangePassword}
               />
               <Button
                 variant="no-border-hovered"
