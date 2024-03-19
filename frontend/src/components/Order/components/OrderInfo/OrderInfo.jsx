@@ -16,7 +16,7 @@ const OrderInfo = ({ orderData }) => {
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
       (accumulator, element) =>
-        accumulator + element.cardQuantity * element.price,
+        accumulator + element.cardQuantity * element.priceWithDiscount,
       0,
     );
     return total;
@@ -29,13 +29,6 @@ const OrderInfo = ({ orderData }) => {
     );
     return quantity;
   }, [cartItems]);
-
-  const {
-    postcardText,
-    contactData: { clientFirstName, clientPhone, clientEmail },
-    deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
-    paymentData: { payment },
-  } = orderData;
 
   const formattedPhone = (phoneNumber) => phoneNumber.replace(/[\s()]/g, '');
 
@@ -80,6 +73,13 @@ const OrderInfo = ({ orderData }) => {
   };
 
   const sendOrder = async () => {
+    const {
+      postcardText,
+      contactData: { clientFirstName, clientPhone, clientEmail },
+      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+      paymentData: { payment },
+    } = orderData;
+
     const { receiverName, receiverPhone } = getReceiverInfo();
     const orderItems = getOrderItems();
 
