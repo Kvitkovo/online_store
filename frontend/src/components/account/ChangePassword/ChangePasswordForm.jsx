@@ -10,6 +10,7 @@ const ChangePasswordForm = () => {
   const NavigateAccount = () => {
     navigate('/account');
   };
+
   return (
     <div>
       <Account title="Редагування особистої інформації">

@@ -1,34 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Account from '../Account';
 import styles from './ChangePasswordForm.module.scss';
 import Button from '../../ui-kit/components/Button';
 import { useNavigate } from 'react-router-dom';
-import ChangePasswordForm from './ChangePasswordForm';
+/* eslint-disable max-len */
+import { changePassword } from '../../../services/userData/changePassword.service';
 
 const ChangePassword = () => {
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const NavigateAccount = () => {
     navigate('/account');
   };
 
-  const navigateChangePassword = () => {
-    navigate(<ChangePasswordForm />);
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await changePassword({
+        email: localStorage.getItem('email'),
+        oldPassword,
+        newPassword,
+      });
+      if (response.success) {
+        navigate('/account');
+      } else {
+        setError(response.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+      setError('Something went wrong. Please try again.');
+    }
   };
+
   return (
     <div>
       <Account title="Редагування особистої інформації">
         <div className={styles.formContainer}>
           <h2 className={styles.title}> Зміна паролю</h2>
-          <form action="">
+          <form onSubmit={handlePasswordChange}>
             <div className={styles.passwordContainer}>
               <label htmlFor="password">Введіть старий пароль</label>
               <input
                 className={styles.dataInput}
-                id="password"
-                name="password"
+                id="oldPassword"
+                name="oldPassword"
                 type="password"
                 placeholder="Введіть ваш пароль"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
+
+            <div className={styles.passwordContainer}>
+              <label htmlFor="password">Введіть новий пароль</label>
+              <input
+                className={styles.dataInput}
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                placeholder="Введіть новий пароль"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
 
@@ -38,7 +73,6 @@ const ChangePassword = () => {
                 label="Підтвердити"
                 padding="padding-sm"
                 type="submit"
-                onClick={navigateChangePassword}
               />
               <Button
                 variant="no-border-hovered"
@@ -48,6 +82,7 @@ const ChangePassword = () => {
               />
             </div>
           </form>
+          {error && <p className={styles.error}>{error}</p>}
         </div>
       </Account>
     </div>
