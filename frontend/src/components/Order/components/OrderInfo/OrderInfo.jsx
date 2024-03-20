@@ -12,7 +12,7 @@ const OrderInfo = ({ orderData }) => {
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
       (accumulator, element) =>
-        accumulator + element.cardQuantity * element.price,
+        accumulator + element.cardQuantity * element.priceWithDiscount,
       0,
     );
     return total;
