@@ -5,12 +5,14 @@ import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
-import { cancelUserOrder, getUsersOrders } from '../../../services/order';
+import { getUsersOrders } from '../../../services/order';
+import ConfirmCancellationModal from './components/ConfirmCancellationModal';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [data, setData] = useState([]);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -34,9 +36,14 @@ const Orders = () => {
     fetchData();
   }, []);
 
+  const toggleShowModal = () => {
+    setShowCancelModal((prev) => !prev);
+  };
+
   const cancelOrder = async (id) => {
-    // console.log('cancel Order', id);
-    await cancelUserOrder(id);
+    alert('cancel Order', id);
+    toggleShowModal();
+    // await cancelUserOrder(id);
   };
 
   return (
@@ -148,6 +155,9 @@ const Orders = () => {
           </div>
         )}
       </div>
+      {showCancelModal && (
+        <ConfirmCancellationModal toggleShowModal={toggleShowModal} />
+      )}
     </Account>
   );
 };
