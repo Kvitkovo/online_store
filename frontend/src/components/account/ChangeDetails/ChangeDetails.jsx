@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Account from '../Account';
 import styles from './ChangeDetails.module.scss';
 import Button from '../../ui-kit/components/Button';
@@ -12,25 +12,7 @@ const ChangeDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [correctUserData, setCorrectUserData] = useState({
-    firstName: userData.firstName || '',
-    lastName: userData.lastName || '',
-    surname: userData.surname || '',
-    email: userData.email || '',
-    phone: userData.phone || '',
-    birthday: userData.birthday || '',
-  });
-
-  useEffect(() => {
-    setCorrectUserData({
-      firstName: userData.firstName || '',
-      lastName: userData.lastName || '',
-      surname: userData.surname || '',
-      email: userData.email || '',
-      phone: userData.phone || '',
-      birthday: userData.birthday || '',
-    });
-  }, [userData]);
+  const [correctUserData, setCorrectUserData] = useState(userData);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
