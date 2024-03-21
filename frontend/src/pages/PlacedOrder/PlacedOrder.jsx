@@ -18,11 +18,13 @@ const PlasedOrder = () => {
           Ваше замовлення за номером <span>№{orderNumber}</span> успішно
           оформлене.
         </p>
-        <Button
-          label="На головну"
-          padding="padding-even"
-          onClick={goToMainPage}
-        />
+        <div className={styles.btn}>
+          <Button
+            label="На головну"
+            padding="padding-even"
+            onClick={goToMainPage}
+          />
+        </div>
       </div>
     </div>
   );
