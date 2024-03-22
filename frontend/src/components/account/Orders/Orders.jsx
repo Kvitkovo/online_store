@@ -7,13 +7,16 @@ import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
 import { getUsersOrders, cancelUserOrder } from '../../../services/order';
 import ConfirmCancellationModal from './components/ConfirmCancellationModal';
+import OrderDeletedModal from './components/OrderDeletedModal';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [data, setData] = useState([]);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
   const [cancelOrderId, setCancellOrderId] = useState(null);
+  // const [orderCancelled, setOrderCancelled] = useState(false);
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -41,6 +44,10 @@ const Orders = () => {
     setShowCancelModal((prev) => !prev);
   };
 
+  const toggleShowModalDeleted = () => {
+    setShowOrderDeletedModal((prev) => !prev);
+  };
+
   const cancelOrder = (id) => {
     setCancellOrderId(id);
     toggleShowModal();
@@ -49,6 +56,7 @@ const Orders = () => {
   const handleCancellOrder = async () => {
     await cancelUserOrder(cancelOrderId);
     toggleShowModal();
+    toggleShowModalDeleted();
     const response = await getUsersOrders();
     setData(response);
   };
@@ -168,6 +176,9 @@ const Orders = () => {
           onClose={toggleShowModal}
           onCancelOrder={handleCancellOrder}
         />
+      )}
+      {showOrderDeletedModal && (
+        <OrderDeletedModal toggleShowModalDeleted={toggleShowModalDeleted} />
       )}
     </Account>
   );
