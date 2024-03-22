@@ -4,7 +4,19 @@ import Modals from '../../../../common/Modals';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
 
-const CancelOrderConfirmation = ({ toggleShowModal }) => {
+const CancelOrderConfirmation = ({
+  toggleShowModal,
+  onClose,
+  onCancelOrder,
+}) => {
+  const handleYesClick = () => {
+    onCancelOrder();
+  };
+
+  const handleNoClick = () => {
+    onClose();
+  };
+
   return (
     <Modals type="confirmationPopup">
       <div className={styles.confirmCancelOrder}>
@@ -16,10 +28,10 @@ const CancelOrderConfirmation = ({ toggleShowModal }) => {
           Ви дійсно бажаете скасувати ваше замовлення?
         </p>
         <div className={styles.buttonsBlock}>
-          <button>
+          <button onClick={handleYesClick}>
             Так <ICONS.yesIcon />
           </button>
-          <button>
+          <button onClick={handleNoClick}>
             Ні <ICONS.deleteIcon />
           </button>
         </div>

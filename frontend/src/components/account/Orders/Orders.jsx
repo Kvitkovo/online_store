@@ -5,7 +5,7 @@ import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
-import { getUsersOrders } from '../../../services/order';
+import { getUsersOrders, cancelUserOrder } from '../../../services/order';
 import ConfirmCancellationModal from './components/ConfirmCancellationModal';
 
 const Orders = () => {
@@ -13,6 +13,7 @@ const Orders = () => {
   const [quantity, setQuantity] = useState(0);
   const [data, setData] = useState([]);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelOrderId, setCancellOrderId] = useState(null);
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -40,10 +41,16 @@ const Orders = () => {
     setShowCancelModal((prev) => !prev);
   };
 
-  const cancelOrder = async (id) => {
-    alert('cancel Order', id);
+  const cancelOrder = (id) => {
+    setCancellOrderId(id);
     toggleShowModal();
-    // await cancelUserOrder(id);
+  };
+
+  const handleCancellOrder = async () => {
+    await cancelUserOrder(cancelOrderId);
+    toggleShowModal();
+    const response = await getUsersOrders();
+    setData(response);
   };
 
   return (
@@ -156,7 +163,11 @@ const Orders = () => {
         )}
       </div>
       {showCancelModal && (
-        <ConfirmCancellationModal toggleShowModal={toggleShowModal} />
+        <ConfirmCancellationModal
+          toggleShowModal={toggleShowModal}
+          onClose={toggleShowModal}
+          onCancelOrder={handleCancellOrder}
+        />
       )}
     </Account>
   );
