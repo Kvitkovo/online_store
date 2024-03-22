@@ -1,0 +1,22 @@
+@import '/src/variables';
+@import '../../extention';
+
+.list {
+  position: relative;
+  padding: 60px 0;
+}
+.item {
+  padding-left: 55px;
+  background: url('../../../../components/ui-kit/icons/flower.svg') no-repeat
+    left 3px;
+  background-size: auto;
+}
+.title {
+  @extend %subtitle;
+  margin-bottom: 16px;
+}
+.description {
+  @extend %description;
+  margin-bottom: 32px;
+  width: 685px;
+}

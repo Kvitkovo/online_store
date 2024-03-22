@@ -7,10 +7,10 @@ import { ICONS } from '../../icons';
 const Pagination = (props) => {
   const {
     onPageChange,
-    totalCount,
+    totalCount = 0,
     siblingCount = 0,
-    currentPage,
-    pageSize,
+    currentPage = 1,
+    pageSize = 12,
   } = props;
 
   const paginationRange = usePagination({

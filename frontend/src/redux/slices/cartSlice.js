@@ -86,58 +86,29 @@ const cartSlice = createSlice({
       state[type + 'Items'] = newCartItems;
       removeFromLocalStorage(info.id);
     },
-    decreaseCart(state, action) {
-      const decreaseInLocalStorage = (id) => {
+
+    updateQuantityInCart(state, action) {
+      const updateQuantityLocalStorage = (id, amount) => {
         let items = JSON.parse(localStorage.getItem(type)) || [];
 
         items = items.map((item) =>
           item.id === id
             ? {
-                id: item.id,
-                cardQuantity: item.cardQuantity - 1,
+                ...item,
+                cardQuantity: amount,
               }
             : item,
         );
 
         updateLocalStorage(type, items);
       };
-      const { info, type } = action.payload;
+      const { id, quantity, type } = action.payload;
 
       const itemIndex = state[type + 'Items'].findIndex(
-        (item) => item.id === info.id,
+        (item) => item.id === id,
       );
-      if (state[type + 'Items'][itemIndex].cardQuantity > 1) {
-        state[type + 'Items'][itemIndex].cardQuantity -= 1;
-      } else {
-        const newCartItems = state[type + 'Items'].filter(
-          (cartItem) => cartItem.id !== info.id,
-        );
-        state[type + 'Items'] = newCartItems;
-      }
-      decreaseInLocalStorage(info.id);
-    },
-    increaseCart(state, action) {
-      const increaseInLocalStorage = (id) => {
-        let items = JSON.parse(localStorage.getItem(type)) || [];
-
-        items = items.map((item) =>
-          item.id === id
-            ? {
-                id: item.id,
-                cardQuantity: item.cardQuantity + 1,
-              }
-            : item,
-        );
-
-        updateLocalStorage(type, items);
-      };
-      const { info, type } = action.payload;
-
-      const itemIndex = state[type + 'Items'].findIndex(
-        (item) => item.id === info.id,
-      );
-      state[type + 'Items'][itemIndex].cardQuantity += 1;
-      increaseInLocalStorage(info.id);
+      state[type + 'Items'][itemIndex].cardQuantity = quantity;
+      updateQuantityLocalStorage(id, quantity);
     },
     clearCart(state, action) {
       const { type } = action.payload;
@@ -150,8 +121,7 @@ const cartSlice = createSlice({
 export const {
   addToCart,
   removeFromCart,
-  decreaseCart,
-  increaseCart,
+  updateQuantityInCart,
   clearCart,
   initiateCart,
 } = cartSlice.actions;

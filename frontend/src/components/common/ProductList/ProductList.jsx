@@ -150,7 +150,7 @@ const ProductList = React.memo(
 
           return () => clearTimeout(timeoutId);
         } else {
-          const sortedList = Array.from(data.data).sort(
+          const sortedList = Array.from(data?.data || []).sort(
             (a, b) => a.priceWithDiscount - b.priceWithDiscount,
           );
           if (sortValue === 1) {

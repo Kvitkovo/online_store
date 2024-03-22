@@ -186,7 +186,7 @@ public class UserAuthService {
         return userMapper.mapEntityToDto(registeredUser);
     }
 
-    public UserResponseDto updateUser(Long id, UserRequestDto dto, BindingResult bindingResult) {
+    public UserResponseDto updateUser(Long id, UpdateUserRequestDto dto, BindingResult bindingResult) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ItemNotFoundException("User not found")
         );
@@ -203,10 +203,6 @@ public class UserAuthService {
             throw new ItemNotUpdatedException(errorUtils.getErrorsString(bindingResult));
         }
         BeanUtils.copyProperties(dto, user, Helper.getNullPropertyNames(dto));
-        if (dto.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        }
-
         userRepository.save(user);
         return userMapper.mapEntityToDto(user);
     }
