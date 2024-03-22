@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding: 16px 20px 17px 85px;
     background-color: $page-background-color;
+    border-radius: 8px 8px 0 0;
 
     p {
       font-size: 24px;
@@ -22,5 +23,20 @@
     padding: 0 66px 48px;
     display: flex;
     justify-content: space-between;
+
+    button {
+      display: flex;
+      font-size: 18px;
+      line-height: 23.4px;
+      font-weight: 500;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: 1px solid $page-accent-color;
+      background-color: $white-color;
+    }
+    button:nth-of-type(2) {
+      padding: 12px 34px;
+    }
   }
 }

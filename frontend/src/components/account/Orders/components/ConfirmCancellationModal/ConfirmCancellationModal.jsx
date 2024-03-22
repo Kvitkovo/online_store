@@ -16,8 +16,12 @@ const CancelOrderConfirmation = ({ toggleShowModal }) => {
           Ви дійсно бажаете скасувати ваше замовлення?
         </p>
         <div className={styles.buttonsBlock}>
-          <button>Так</button>
-          <button>Ні</button>
+          <button>
+            Так <ICONS.yesIcon />
+          </button>
+          <button>
+            Ні <ICONS.deleteIcon />
+          </button>
         </div>
       </div>
     </Modals>
