@@ -53,10 +53,17 @@ const Orders = () => {
     toggleShowModal();
   };
 
+  const autoCloseModal = () => {
+    setTimeout(() => {
+      toggleShowModalDeleted();
+    }, 3000);
+  };
+
   const handleCancellOrder = async () => {
     await cancelUserOrder(cancelOrderId);
     toggleShowModal();
     toggleShowModalDeleted();
+    autoCloseModal();
     const response = await getUsersOrders();
     setData(response);
   };
