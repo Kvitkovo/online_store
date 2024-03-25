@@ -27,42 +27,30 @@ const Services = ({ data }) => {
       },
     },
     second: {
-      initial: { scale: 1, opacity: 1 },
+      initial: { scale: 0.9, opacity: 0 },
       animated: {
-        scale: 1.15,
-        opacity: 0,
+        scale: 1,
+        opacity: [1, 0],
         transition: {
           delay: 0.25,
-          duration: 1,
+          duration: 0.54,
           ease: 'linear',
+          opacity: {
+            delay: 1.05,
+          },
         },
       },
     },
   };
+  const waveDelay = [1, 1.7, 2.4, 3.1, 3.8];
 
-  const textSlide = {
-    initial: { marginTop: 0 },
-    animated: {
-      marginTop: [0, 67, 0],
-      transition: {
-        times: [0, 0.4, 1],
-        duration: 2,
-        ease: 'linear',
-      },
-    },
-  };
   return (
     <ul className={styles.servicesList}>
       {data.map((service) => {
         const { id, title, description, shape, strokeShape } = service;
         return (
           <li className={styles.service} key={id}>
-            <motion.div
-              className={styles.service__textSide}
-              variants={id === 3 ? textSlide : {}}
-              initial="initial"
-              whileInView="animated"
-            >
+            <div className={styles.service__textSide}>
               <h3 className={styles.service__title}>{title}</h3>
               <p className={styles.service__description}>{description}</p>
               {id === 1 && (
@@ -78,8 +66,7 @@ const Services = ({ data }) => {
                     transition: {
                       delay: 0.9,
                       type: 'spring',
-                      stiffness: 35.73,
-                      Damping: 13.33,
+                      duration: 6,
                     },
                   }}
                   viewport={{ once: true, margin: '-10% 0px' }}
@@ -87,7 +74,7 @@ const Services = ({ data }) => {
                   <ICONS.lotus />
                 </motion.div>
               )}
-            </motion.div>
+            </div>
             <motion.div className={styles.img}>
               <svg
                 width="570"
@@ -114,7 +101,7 @@ const Services = ({ data }) => {
                       initial={{ scale: 1 }}
                       whileInView={{
                         scale: 1.1,
-                        transition: { duration: 0.64 },
+                        transition: { duration: 0.64, delay: 0.25 },
                       }}
                       viewport={{ once: true, margin: '-30% 0px' }}
                     />
@@ -211,28 +198,26 @@ const Services = ({ data }) => {
                       viewport={{ once: true }}
                     />
                     {id === 4 && (
-                      <motion.use
-                        href="#myCircle"
-                        stroke="#6CC25E"
-                        variants={circleAnimation.second}
-                        initial={{ scale: 0.9 }}
-                        whileInView={{
-                          scale: 1.15,
-                          opacity: [0, 1, 0],
-                          transition: {
-                            delay: 1.15,
-                            repeat: 3,
-                            repeatDelay: -0.15,
-                            duration: 1.1,
-                            ease: 'linear',
-                          },
-                          transitionEnd: {
-                            opacity: 1,
-                            scale: [1.15, 1],
-                          },
-                        }}
-                        viewport={{ once: true }}
-                      />
+                      <>
+                        {waveDelay.map((delay, idx) => (
+                          <motion.use
+                            href="#myCircle"
+                            stroke="#6CC25E"
+                            key={delay}
+                            initial={{ scale: idx === 0 ? 1 : 0.9 }}
+                            whileInView={{
+                              scale: idx === 4 ? 1 : 1.2,
+                              opacity: idx === 4 ? [0, 1] : [0, 1, 0],
+                              transition: {
+                                delay: delay,
+                                duration: idx === 4 ? 0.8 : 1.6,
+                                ease: 'linear',
+                              },
+                            }}
+                            viewport={{ once: true }}
+                          />
+                        ))}
+                      </>
                     )}
                   </>
                 )}
