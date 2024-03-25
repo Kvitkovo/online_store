@@ -30,7 +30,7 @@ const MissionScreen = () => {
         whileInView="animated"
         viewport={{ once: true, margin: '-150px 0px' }}
         transition={{
-          delay: 0.5,
+          delay: 1.2,
           type: 'spring',
           mass: 1,
           stiffness: 5.96,
