@@ -6,9 +6,7 @@ import Button from '../../../ui-kit/components/Button';
 
 const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
   const [showShopList, setShowShopList] = useState(
-    deliveryData?.delivery
-      ? deliveryData.delivery === 'Pick up from the shop'
-      : true,
+    deliveryData?.delivery ? deliveryData.delivery === 'PICKUP' : true,
   );
 
   const addressList = [
@@ -23,9 +21,7 @@ const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      delivery: deliveryData?.delivery
-        ? deliveryData.delivery
-        : 'Pick up from the shop',
+      delivery: deliveryData?.delivery ? deliveryData.delivery : 'PICKUP',
       shopAddress: deliveryData?.shopAddress
         ? deliveryData.shopAddress
         : 'вул. Квіткова 18',
@@ -38,7 +34,7 @@ const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
   const onSubmit = (data) => {
     let dataForOutput;
 
-    if (data.delivery === 'Pick up from the shop') {
+    if (data.delivery === 'PICKUP') {
       dataForOutput = data.shopAddress;
     } else {
       dataForOutput =
@@ -72,7 +68,7 @@ const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
           <label>Забрати з магазину</label>
           <input
             type="radio"
-            value="Pick up from the shop"
+            value="PICKUP"
             {...register('delivery')}
             onChange={() => {
               setShowShopList(true);
@@ -92,7 +88,7 @@ const DeliveryForm = ({ deliveryData, setDataOnSubmit }) => {
           <label>Доставка за адресою</label>
           <input
             type="radio"
-            value="Delivery by address"
+            value="COURIER"
             {...register('delivery')}
             onChange={() => {
               setShowShopList(false);

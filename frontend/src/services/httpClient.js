@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((request) => {
   request.headers = {
-    authorization: `Bearer ` + localStorage.getItem('token'),
+    authorization: `Bearer ` + localStorage.getItem('authToken'),
   };
   return request;
 });
