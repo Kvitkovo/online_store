@@ -6,8 +6,10 @@ import { motion } from 'framer-motion';
 import InsightsItem from './InsightsItem';
 const InsightsAnimation = () => {
   const thirdStepTransition = {
+    type: 'spring',
     stiffness: 80,
     damping: 20,
+    mass: 1,
   };
   const valuesLeaves = [
     { rightPos: [475, 132], topPos: [-190, 223], rotate: -172, scaleY: -1 },
@@ -78,11 +80,10 @@ const InsightsAnimation = () => {
       </InsightsAnimationUnit>
       <InsightsAnimationUnit
         variants={createAnimation(
-          { delay: 3, ...thirdStepTransition },
+          { delay: 2.42, ...thirdStepTransition },
           {
             right: '288px',
             scale: 1.64,
-            transition: { scale: { delay: 2.42 } },
           },
           {
             right: '288px',

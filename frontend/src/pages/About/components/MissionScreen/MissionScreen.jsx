@@ -17,7 +17,8 @@ const MissionScreen = () => {
         whileInView={{
           opacity: [0, 1, 0],
           transition: {
-            duration: 2.4,
+            times: [0, 0.2, 1],
+            duration: 3,
             ease: 'easeInOut',
           },
         }}
@@ -30,11 +31,7 @@ const MissionScreen = () => {
         whileInView="animated"
         viewport={{ once: true, margin: '-150px 0px' }}
         transition={{
-          delay: 0.5,
-          type: 'spring',
-          mass: 1,
-          stiffness: 5.96,
-          damping: 5.45,
+          delay: 0.8,
         }}
         src="/images/about-us/second_screen.jpg"
         alt="Оранжерея"
