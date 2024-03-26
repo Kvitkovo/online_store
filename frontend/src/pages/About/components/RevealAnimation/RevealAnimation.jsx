@@ -1,11 +1,8 @@
 import React, { useRef } from 'react';
 import styles from './RevealAnimation.module.scss';
 import { motion } from 'framer-motion';
-// import { useWindowSize } from '../../../../hooks/useWindowSize';
 
-const RevealAnimation = ({ data }) => {
-  // const {width} = useWindowSize();
-  // const position = useMemo(() => (), width);
+const RevealAnimation = ({ data, lastPosition }) => {
   const ref = useRef(null);
   const cover = {
     initial: { opacity: 0.7 },
@@ -23,7 +20,6 @@ const RevealAnimation = ({ data }) => {
     <ul ref={ref} className={styles.mainImgs}>
       {data.map((img) => {
         const { name, src, transition } = img;
-        const lastPosition = (window.innerWidth - 1250) / 2;
         const variants =
           name !== 'main'
             ? {
@@ -42,7 +38,7 @@ const RevealAnimation = ({ data }) => {
             variants={variants}
             initial="initial"
             whileInView="animated"
-            viewport={{ once: true, margin: '-30% 0px' }}
+            viewport={{ once: true, margin: '0px 0px -400px' }}
           >
             <img src={src} alt="Працівники Kvitkovo " />
             {name === 'main' && (
@@ -51,7 +47,7 @@ const RevealAnimation = ({ data }) => {
                 initial="initial"
                 whileInView="animated"
                 className={styles.mainImgs__main_cover}
-                viewport={{ once: true, margin: '-30% 0px' }}
+                viewport={{ once: true, margin: '0px 0px -400px' }}
               ></motion.div>
             )}
           </motion.li>

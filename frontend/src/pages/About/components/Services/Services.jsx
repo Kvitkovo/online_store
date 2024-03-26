@@ -99,11 +99,15 @@ const Services = ({ data }) => {
                       width="100%"
                       height="100%"
                       initial={{ scale: 1 }}
+                      style={{ originX: '50%', originY: '50%' }}
                       whileInView={{
                         scale: 1.1,
-                        transition: { duration: 0.64, delay: 0.25 },
+                        transition: {
+                          duration: 0.64,
+                          delay: 0.25,
+                        },
                       }}
-                      viewport={{ once: true, margin: '-30% 0px' }}
+                      viewport={{ once: true, margin: '0px 0px -30%' }}
                     />
                   </pattern>
                 </defs>
