@@ -10,7 +10,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 457px;
+    height: 64vh;
     width: 430px;
     transform: rotate(-14.48deg);
   }
@@ -21,7 +21,7 @@
     bottom: 95px;
     left: 0;
     width: 1087px;
-    height: 824px;
+    height: 64vh;
   }
 }
 
@@ -87,10 +87,20 @@
       width: 400px;
       bottom: 250px;
     }
+    .container {
+      height: 55vh;
+    }
+    .btn {
+      width: 100%;
+      margin-top: auto;
+    }
   }
 
   .title {
     margin-top: 95px;
+    font-size: 26px;
+    line-height: 24px;
+    font-weight: 400;
   }
   .orderInformation {
     text-align: center;

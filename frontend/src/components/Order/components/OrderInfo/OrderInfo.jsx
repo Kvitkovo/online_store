@@ -12,8 +12,20 @@ const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let receiverName = '';
-  let receiverPhone = '';
+  const {
+    postcardText,
+    contactData: {
+      clientFirstName,
+      clientPhone,
+      clientEmail,
+      recipientFirstName,
+      recipientLastName,
+      recipientMiddleName,
+      recipientPhone,
+    },
+    deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+    paymentData: { payment },
+  } = orderData;
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -32,53 +44,51 @@ const OrderInfo = ({ orderData }) => {
     return quantity;
   }, [cartItems]);
 
-  const sendOrder = async () => {
-    const orderItems = cartItems.map((item) => {
-      if (item.orderItemsCompositions) {
-        const bouquetItems = item.orderItemsCompositions.map(
-          (compositionItem) => {
-            return {
-              productId: compositionItem.id,
-              qty: compositionItem.cardQuantity,
-            };
-          },
-        );
-        return {
-          productTitle: item.title,
-          price: item.price,
-          qty: item.cardQuantity,
-          orderItemsCompositions: bouquetItems,
-        };
-      } else
-        return {
-          productId: item.id,
-          productTitle: item.title,
-          price: item.price,
-          qty: item.cardQuantity,
-        };
-    });
+  const formattedPhone = (phoneNumber) => phoneNumber.replace(/[\s()]/g, '');
+
+  const getReceiverInfo = () => {
+    let receiverName = '';
+    let receiverPhone = '';
 
     if (orderData.contactData.recipient === 'I') {
-      receiverName = orderData.contactData.clientFirstName;
-      receiverPhone = orderData.contactData.clientPhone;
+      receiverName = clientFirstName;
+      receiverPhone = formattedPhone(clientPhone);
     } else {
       receiverName =
-        orderData.contactData.recipientLastName +
+        recipientLastName +
         ' ' +
-        orderData.contactData.recipientFirstName +
+        recipientFirstName +
         ' ' +
-        orderData.contactData.recipientMiddleName;
-      receiverPhone = orderData.contactData.recipientPhone;
+        recipientMiddleName;
+      receiverPhone = formattedPhone(recipientPhone);
     }
 
-    const {
-      postcardText,
-      contactData: { clientFirstName, clientPhone, clientEmail },
-      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
-      paymentData: { payment },
-    } = orderData;
+    return { receiverName, receiverPhone };
+  };
 
-    const formattedPhone = (phoneNumber) => phoneNumber.replace(/[\s()]/g, '');
+  const getOrderItems = () => {
+    return cartItems.map((item) => {
+      const orderItem = {
+        productId: item.id,
+        productTitle: item.title,
+        price: item.price,
+        qty: item.cardQuantity,
+      };
+      if (item.orderItemsCompositions) {
+        orderItem.orderItemsCompositions = item.orderItemsCompositions.map(
+          (compositionItem) => ({
+            productId: compositionItem.id,
+            qty: compositionItem.cardQuantity,
+          }),
+        );
+      }
+      return orderItem;
+    });
+  };
+
+  const sendOrder = async () => {
+    const { receiverName, receiverPhone } = getReceiverInfo();
+    const orderItems = getOrderItems();
 
     const result = await addOrderToDB({
       postcardText,
@@ -89,7 +99,7 @@ const OrderInfo = ({ orderData }) => {
       addressHous: clientHouse,
       addressApartment: clientFlat,
       receiverName,
-      receiverPhone: formattedPhone(receiverPhone),
+      receiverPhone,
       delivery,
       pay: payment,
       shopId: 1,
