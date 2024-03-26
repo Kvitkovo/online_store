@@ -16,7 +16,6 @@ const Orders = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
   const [cancelOrderId, setCancellOrderId] = useState(null);
-  // const [orderCancelled, setOrderCancelled] = useState(false);
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
