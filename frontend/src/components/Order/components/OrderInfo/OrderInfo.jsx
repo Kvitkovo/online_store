@@ -12,6 +12,20 @@ const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {
+    postcardText,
+    contactData: {
+      clientFirstName,
+      clientPhone,
+      clientEmail,
+      recipientFirstName,
+      recipientLastName,
+      recipientMiddleName,
+      recipientPhone,
+    },
+    deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+    paymentData: { payment },
+  } = orderData;
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -37,16 +51,16 @@ const OrderInfo = ({ orderData }) => {
     let receiverPhone = '';
 
     if (orderData.contactData.recipient === 'I') {
-      receiverName = orderData.contactData.clientFirstName;
-      receiverPhone = formattedPhone(orderData.contactData.clientPhone);
+      receiverName = clientFirstName;
+      receiverPhone = formattedPhone(clientPhone);
     } else {
       receiverName =
-        orderData.contactData.recipientLastName +
+        recipientLastName +
         ' ' +
-        orderData.contactData.recipientFirstName +
+        recipientFirstName +
         ' ' +
-        orderData.contactData.recipientMiddleName;
-      receiverPhone = formattedPhone(orderData.contactData.recipientPhone);
+        recipientMiddleName;
+      receiverPhone = formattedPhone(recipientPhone);
     }
 
     return { receiverName, receiverPhone };
@@ -73,13 +87,6 @@ const OrderInfo = ({ orderData }) => {
   };
 
   const sendOrder = async () => {
-    const {
-      postcardText,
-      contactData: { clientFirstName, clientPhone, clientEmail },
-      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
-      paymentData: { payment },
-    } = orderData;
-
     const { receiverName, receiverPhone } = getReceiverInfo();
     const orderItems = getOrderItems();
 
