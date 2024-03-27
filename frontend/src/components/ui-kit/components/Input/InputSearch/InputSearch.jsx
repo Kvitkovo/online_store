@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useCallback } from 'react';
 import styles from './InputSearch.module.scss';
 
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
@@ -87,15 +87,15 @@ const InputSearch = memo(({ isActive = false, setActive = null }) => {
 
     return name;
   };
-  const handleGoToProduct = () => {
+  const clearQuery = useCallback(() => {
+    setQuery('');
     setSuggestions(null);
-    setQuery('');
+  }, []);
+  const goBack = useCallback(() => {
+    setSuggestions(null);
     setActive(false);
-  };
-  const goBack = () => {
-    setActive(false);
     setQuery('');
-  };
+  }, [setActive]);
   useEffect(() => {
     if (isActive) {
       document.body.style.overflow = 'hidden';
@@ -119,12 +119,9 @@ const InputSearch = memo(({ isActive = false, setActive = null }) => {
               className={query || isFocused ? styles.iconGreen : styles.icon}
             />
           )}
-          {query && (
+          {query.length > 0 && (
             <div className={styles.clearBtn}>
-              <IconButton
-                onClick={handleGoToProduct}
-                icon={<ICONS.CloseIcon />}
-              />
+              <IconButton onClick={clearQuery} icon={<ICONS.CloseIcon />} />
             </div>
           )}
           {width <= 510 && !query && (
@@ -164,7 +161,7 @@ const InputSearch = memo(({ isActive = false, setActive = null }) => {
                   <Link
                     to={`/product/${suggestion.id}`}
                     className={styles.link}
-                    onClick={handleGoToProduct}
+                    onClick={goBack}
                   >
                     {highlightWord(suggestion.title)}
                   </Link>

@@ -5,7 +5,7 @@ import styles from './SearchResult.module.scss';
 import ProductList from '../../components/common/ProductList';
 import { useParams } from 'react-router-dom';
 import { GetProductsFilter } from '../../services/products/productsAccess.service';
-import RecentlyViewed from '../../components/common/RecentlyViewed/RecentlyViewed';
+import RecentlyViewed from '../../components/common/RecentlyViewed';
 
 const SearchResult = () => {
   const { query } = useParams();
@@ -37,10 +37,10 @@ const SearchResult = () => {
         title: query,
       });
       setData({
-        data: data.content,
-        totalAmount: data.totalElements,
+        data: data?.content || [],
+        totalAmount: data?.totalElements || 0,
       });
-      setQuantity(data.totalElements);
+      setQuantity(data?.totalElements || 0);
     } catch (error) {
       console.error(error);
     } finally {
@@ -82,7 +82,7 @@ const SearchResult = () => {
           )}
           {!isResultFound && (
             <>
-              <p>
+              <p className={styles.noResultBlock}>
                 За запитом <span className={styles.query}>{query}</span>
                 <span className={styles.noResult}> Нічого не знайдено</span>
               </p>

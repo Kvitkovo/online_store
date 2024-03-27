@@ -27,7 +27,7 @@ import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
 import CategoryPage from './pages/CategoryPage';
-import SearchResult from './pages/SearchResult/SearchResult';
+import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 
 function App() {

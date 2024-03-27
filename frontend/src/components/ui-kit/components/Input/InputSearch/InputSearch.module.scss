@@ -30,8 +30,9 @@
 
 .clearBtn {
   position: absolute;
-  top: 8px;
-  right: 6px;
+  right: 0px;
+  padding: 6px;
+  height: 36px;
 }
 
 .input {
@@ -128,6 +129,7 @@
     left: 0;
     width: 100%;
     background-color: $white-color;
+    z-index: 3;
   }
   .root {
     gap: 10px;

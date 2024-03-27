@@ -6,7 +6,7 @@ import { GetProducts } from '../../../services/products/productsAccess.service';
 
 const RecentlyViewed = React.memo(() => {
   const recentlyViewed = useMemo(
-    () => Array.from(JSON.parse(localStorage.getItem('recentlyViewed') || '')),
+    () => Array.from(JSON.parse(localStorage.getItem('recentlyViewed')) || {}),
     [],
   );
   const { myId } = useParams();
@@ -19,9 +19,7 @@ const RecentlyViewed = React.memo(() => {
       setLoading(true);
       try {
         const requests = recentlyViewed
-          .filter((item) => {
-            return item.id !== +myId;
-          })
+          .filter((item) => item !== myId)
           .map(async (id) => {
             return await GetProducts(id);
           });
