@@ -147,13 +147,13 @@ const FilterSidebar = ({
                 }
                 index={1}
               />
-            </div>
-            <div className={styles.rangeContainer}>
               {activeFilter === 'price' && (
                 <PointerButton
                   handleFilter={() => handleFilter(selectedFilter)}
                 />
               )}
+            </div>
+            <div className={styles.rangeContainer}>
               <RangeSlider
                 min={selectedFilter.priceFrom}
                 max={selectedFilter.priceTo}
