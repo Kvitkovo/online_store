@@ -1,6 +1,13 @@
+@import '/src/mixins';
+
 .slider {
   width: 220px;
   display: flex;
   margin-left: 8px;
-  // margin: 0 auto;
+}
+
+@include sm {
+  .slider {
+    width: 203px;
+  }
 }
