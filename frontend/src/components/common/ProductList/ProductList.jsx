@@ -109,7 +109,7 @@ const ProductList = React.memo(
     }, [categoryId, data, query]);
 
     const getFilteredData = useCallback(
-      async (selected) => {
+      async (selected, sortingIndex = sortValue) => {
         try {
           const data = await GetProductsFilter({
             page: 1,
@@ -118,7 +118,7 @@ const ProductList = React.memo(
               categoryId !== 'discounted' ? categoryId : selected.categories,
             discount: categoryId === 'discounted' || selected.discount,
             ...selected,
-            sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+            sortDirection: sortingIndex === 0 ? 'ASC' : 'DESC',
             title: query,
           });
           setTotalAmount(data.totalElements);
@@ -132,6 +132,10 @@ const ProductList = React.memo(
       },
       [categoryId, query, setTotalAmount, sortValue],
     );
+    const handleDataSorting = (value) => {
+      setSortValue(value);
+      getFilteredData(selectedFilter, value);
+    };
 
     useEffect(() => {
       getFilterData();
@@ -150,17 +154,11 @@ const ProductList = React.memo(
 
           return () => clearTimeout(timeoutId);
         } else {
-          const sortedList = Array.from(data?.data || []).sort(
-            (a, b) => a.priceWithDiscount - b.priceWithDiscount,
-          );
-          if (sortValue === 1) {
-            setFilteredList(sortedList.reverse());
-          }
-          setFilteredList(sortedList);
-          setActiveFilter(null);
+          getFilteredData(selectedFilter, 0);
+          setSortValue(0);
         }
       }
-    }, [data, getFilteredData, selectedFilter, sortValue]);
+    }, [data, getFilteredData, selectedFilter]);
 
     return (
       <div className={styles.mainContainer}>
@@ -184,7 +182,7 @@ const ProductList = React.memo(
               <span className={styles.sortTitle}>Виводити:</span>
               <Select
                 value={sortValue}
-                setValue={setSortValue}
+                setValue={handleDataSorting}
                 options={sortOptions}
               />
             </div>
@@ -207,7 +205,7 @@ const ProductList = React.memo(
             <div className={styles.sortSmallDevices}>
               <DropDown
                 sortValue={sortValue}
-                setValue={setSortValue}
+                setValue={handleDataSorting}
                 options={sortOptions}
               />
             </div>
