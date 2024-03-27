@@ -1,3 +1,5 @@
+@import '/src/_mixins.scss';
+
 .container {
   margin-top: auto;
 }
@@ -6,4 +8,10 @@
   padding: 0 6px;
   margin-bottom: 32px;
   font-weight: 500;
+}
+
+@include md {
+  .title {
+    padding: 0;
+  }
 }
