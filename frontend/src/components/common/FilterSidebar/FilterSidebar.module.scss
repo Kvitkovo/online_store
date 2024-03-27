@@ -21,6 +21,7 @@
 }
 
 .displayPrice {
+  position: relative;
   display: flex;
   gap: 8px;
   margin: 16px 0;
@@ -31,7 +32,6 @@
 }
 
 .rangeContainer {
-  position: relative;
   width: 220px;
   margin-bottom: 16px;
 }
@@ -113,6 +113,7 @@
   .filterContainer {
     width: 252px;
     padding-left: 16px;
+    padding-right: 16px;
   }
   .mobileButton {
     padding: 15px 16px;
