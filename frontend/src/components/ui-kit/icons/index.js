@@ -56,6 +56,7 @@ import { ReactComponent as branchWithLeaves } from './about-us/insights/branch-w
 import { ReactComponent as insightsFlower } from './about-us/insights/insights-flower.svg';
 import { ReactComponent as insightsLeaves } from './about-us/insights/insights-leaf.svg';
 import { ReactComponent as chamomile } from './about-us/insights/chamomile.svg';
+import { ReactComponent as yesIcon } from './yes-icon.svg';
 
 export const ICONS = {
   addComponent,
@@ -115,4 +116,5 @@ export const ICONS = {
   insightsFlower,
   insightsLeaves,
   chamomile,
+  yesIcon,
 };

@@ -6,6 +6,10 @@
   column-gap: 26px;
   padding: 16px 59px 16px 32px;
   align-items: center;
+
+  .image {
+    max-width: 96px;
+  }
 }
 
 .imageAndTitle {
