@@ -38,6 +38,7 @@ const ProductList = React.memo(
     };
     const resetFilter = () => {
       setSelectedFilter({});
+      setSortValue(0);
       setCurrentPage(1);
       setTotalAmount(data.totalAmount);
       setFilteredList(data.data);
@@ -154,8 +155,7 @@ const ProductList = React.memo(
 
           return () => clearTimeout(timeoutId);
         } else {
-          getFilteredData(selectedFilter, 0);
-          setSortValue(0);
+          getFilteredData(selectedFilter);
         }
       }
     }, [data, getFilteredData, selectedFilter]);
