@@ -12,22 +12,22 @@ const InsightsAnimation = () => {
     mass: 1,
   };
   const valuesLeaves = [
-    { rightPos: [475, 132], topPos: [-190, 223], rotate: -172, scaleY: -1 },
-    { rightPos: [483, -63], topPos: [-32, 387], rotate: 0 },
-    { rightPos: [563, 169], topPos: [67, 443], rotate: 0 },
-    { rightPos: [406, 130], topPos: [166, 173], rotate: 75, scaleY: -1 },
+    { rightPos: [371, 236], topPos: [10, 13], rotate: 172, scaleY: -1 },
+    { rightPos: [379, 42], topPos: [168, 219], rotate: 0 },
+    { rightPos: [458, 169], topPos: [267, 274], rotate: 0 },
+    { rightPos: [310, 235], topPos: [366, -27], rotate: 75, scaleY: -1 },
   ];
   const valuesFlowers = [
-    { rightPos: [371, 56], topPos: [-167, 265], rotate: 0 },
+    { rightPos: [264, 163], topPos: [26, 72], rotate: 0 },
     {
-      rightPos: [483, 48],
-      topPos: [-115, 259],
+      rightPos: [368, 163],
+      topPos: [88, 53],
       rotate: 20,
       scale: 0.745,
-      scaleX: -1,
+      scaleY: -1,
     },
-    { rightPos: [563, -75], topPos: [-62, 293], rotate: -13, scaleX: -1 },
-    { rightPos: [523, 12], topPos: [152, 337], rotate: -13, scaleX: -1 },
+    { rightPos: [450, 32], topPos: [137, 94], rotate: -13, scaleY: -1 },
+    { rightPos: [413, 90], topPos: [351, 138], rotate: -13, scaleY: -1 },
   ];
 
   const createAnimation = useCallback(
@@ -35,7 +35,7 @@ const InsightsAnimation = () => {
       return {
         initial: {
           x: 0,
-          right: '-100%',
+          right: '-60%',
           ...aditionalStylesStart,
         },
         animated: {
@@ -59,8 +59,8 @@ const InsightsAnimation = () => {
             stiffness: 321,
             damping: 20,
           },
-          { x: 65 },
-          { top: '31%' },
+          { right: '-4%' },
+          { top: '32%' },
         )}
       >
         <ICONS.branchWithLeaves />
@@ -72,7 +72,7 @@ const InsightsAnimation = () => {
             stiffness: 510,
             damping: 26,
           },
-          { x: 10 },
+          { right: '-1%' },
           { top: '-2%' },
         )}
       >
@@ -80,7 +80,7 @@ const InsightsAnimation = () => {
       </InsightsAnimationUnit>
       <InsightsAnimationUnit
         variants={createAnimation(
-          { delay: 2.42, ...thirdStepTransition },
+          { delay: 3.52, ...thirdStepTransition },
           {
             right: '288px',
             scale: 1.64,
