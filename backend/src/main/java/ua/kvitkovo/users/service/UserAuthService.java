@@ -260,6 +260,9 @@ public class UserAuthService {
                 () -> new ItemNotFoundException("User email not found")
         );
         user.setEmailConfirmCode(UUID.randomUUID().toString());
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime dateEnding = currentDate.plusHours(1);
+        user.setCodeVerificationEnd(dateEnding);
         userRepository.save(user);
 
         NotificationUser notificationUser = NotificationUser.build(user);
