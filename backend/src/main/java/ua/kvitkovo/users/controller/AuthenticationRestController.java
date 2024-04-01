@@ -28,6 +28,8 @@ import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.service.UserAuthService;
 import ua.kvitkovo.users.service.UserService;
 
+import java.time.LocalDateTime;
+
 @Tag(name = "Authentication", description = "the user authentication API")
 @RequiredArgsConstructor
 @RestController
@@ -49,8 +51,12 @@ public class AuthenticationRestController {
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getEmail();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByUsername(username);
+            if (!user.isEmailConfirmed() && user.getCodeVerificationEnd().isBefore(LocalDateTime.now().minusHours(2))) {
+                userService.delete(user.getId());
+                throw new UsernameNotFoundException("User with email: " + username + " not found");
+            }
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
 
             if (user == null) {
                 throw new UsernameNotFoundException("User with email: " + username + " not found");
