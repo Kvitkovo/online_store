@@ -91,6 +91,11 @@ public class EmailService implements NotificationService {
                 fields,
                 user
             );
+            case REGISTER_BY_GOOGLE -> sendEmailMessage("Вас було зареєстровано на сайті",
+                    "email/register_by_google.html",
+                    fields,
+                    user
+            );
         }
     }
 

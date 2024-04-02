@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ua.kvitkovo.users.entity.LoginProvider;
 
 /**
  * @author Andriy Gaponov
@@ -18,6 +19,7 @@ public class JwtResponseDto {
     private String email;
     private String token;
     private Long id;
+    private LoginProvider loginProvider;
 
     @Schema(example = "andriy@mail.com", description = "Authenticated user email")
     public String getEmail() {
@@ -34,5 +36,9 @@ public class JwtResponseDto {
     @Schema(example = "1", description = "User ID")
     public Long getId() {
         return id;
+    }
+
+    public LoginProvider getLoginProvider() {
+        return loginProvider;
     }
 }
