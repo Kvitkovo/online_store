@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.kvitkovo.annotations.ApiResponseBadRequest;
 import ua.kvitkovo.annotations.ApiResponseSuccessful;
+import ua.kvitkovo.annotations.ApiResponseUnauthorized;
+import ua.kvitkovo.errorhandling.UserNotVerifiedException;
 import ua.kvitkovo.security.jwt.AuthenticationGoogleRequestDto;
 import ua.kvitkovo.security.jwt.AuthenticationRequestDto;
 import ua.kvitkovo.security.jwt.JwtResponseDto;
@@ -47,24 +49,24 @@ public class AuthenticationRestController {
             @Schema(implementation = JwtResponseDto.class))
     })
     @ApiResponseBadRequest
+    @ApiResponseUnauthorized
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getEmail();
             User user = userService.findByUsername(username);
-            if (!user.isEmailConfirmed() && user.getCodeVerificationEnd().isBefore(LocalDateTime.now().minusHours(2))) {
-                userService.delete(user.getId());
-                throw new UsernameNotFoundException("User with email: " + username + " not found");
-            }
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-
             if (user == null) {
                 throw new UsernameNotFoundException("User with email: " + username + " not found");
             }
+            if (!user.isEmailConfirmed()) {
+                throw new UserNotVerifiedException("User with email: " + username + " not verified");
+            }
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
+
 
             String token = jwtTokenProvider.createToken(username, user.getRoles());
 
-            JwtResponseDto response = new JwtResponseDto(username, token, user.getId());
+            JwtResponseDto response = new JwtResponseDto(username, token, user.getId(), user.getLoginProvider());
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
@@ -102,7 +104,7 @@ public class AuthenticationRestController {
         try {
             User user = userAuthService.loginGoogle(requestDto);
             String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
-            JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId());
+            JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId(), user.getLoginProvider());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid token");

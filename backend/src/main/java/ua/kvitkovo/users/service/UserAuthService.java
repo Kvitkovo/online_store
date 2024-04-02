@@ -29,6 +29,7 @@ import ua.kvitkovo.shop.entity.Shop;
 import ua.kvitkovo.shop.service.ShopService;
 import ua.kvitkovo.users.converter.UserDtoMapper;
 import ua.kvitkovo.users.dto.*;
+import ua.kvitkovo.users.entity.LoginProvider;
 import ua.kvitkovo.users.entity.Role;
 import ua.kvitkovo.users.entity.User;
 import ua.kvitkovo.users.entity.UserStatus;
@@ -89,6 +90,7 @@ public class UserAuthService {
         user.setId(null);
         user.setEmailConfirmCode(UUID.randomUUID().toString());
         user.setEmailConfirmed(false);
+        user.setLoginProvider(LoginProvider.LOCAL);
 
         LocalDateTime currentDate = LocalDateTime.now();
         LocalDateTime dateEnding = currentDate.plusHours(1);
@@ -396,15 +398,26 @@ public class UserAuthService {
             userRoles.add(roleUser);
             user.setEmail(email);
 
-            user.setPassword(passwordEncoder.encode(Helper.getRandomString(10)));
+            String password = Helper.getRandomString(10);
+            user.setPassword(passwordEncoder.encode(password));
             user.setRoles(userRoles);
             user.setStatus(UserStatus.ACTIVE);
             user.setId(null);
+            user.setLoginProvider(LoginProvider.GOOGLE);
 
             user.setEmailConfirmed(true);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             userRepository.save(user);
+
+            NotificationUser notificationUser = NotificationUser.build(user);
+            Shop shop = shopService.findById(1L);
+            Map<String, Object> fields = Map.of(
+                    "password", password,
+                    "baseSiteUrl", baseSiteUrl,
+                    "shop", shop
+            );
+            emailService.send(NotificationType.REGISTER_BY_GOOGLE, fields, notificationUser);
 
         } else {
             user = byEmail.get();
