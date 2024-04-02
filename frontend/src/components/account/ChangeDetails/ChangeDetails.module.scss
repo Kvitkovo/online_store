@@ -35,3 +35,8 @@
   gap: 32px;
   margin-top: 32px;
 }
+label {
+  span {
+    color: $discount-color;
+  }
+}

@@ -49,6 +49,7 @@ const ChangeDetails = () => {
                   id="firstName"
                   className={styles.dataInput}
                   type="text"
+                  placeholder="Введіть ваше ім’я"
                   value={correctUserData.firstName}
                   onChange={handleChange}
                 />
@@ -59,6 +60,7 @@ const ChangeDetails = () => {
                   id="lastName"
                   className={styles.dataInput}
                   type="text"
+                  placeholder="Введіть ваше прізвище"
                   value={correctUserData.lastName}
                   onChange={handleChange}
                 />
@@ -69,6 +71,7 @@ const ChangeDetails = () => {
                   id="surname"
                   className={styles.dataInput}
                   type="text"
+                  placeholder="Введіть ваше по батькові"
                   value={correctUserData.surname}
                   onChange={handleChange}
                 />
@@ -89,11 +92,14 @@ const ChangeDetails = () => {
                 />
               </div>
               <div className={styles.dataContainer}>
-                <label htmlFor="email">Ел. пошта</label>
+                <label htmlFor="email">
+                  Ел. пошта <span>*</span>
+                </label>
                 <input
                   id="email"
                   className={styles.dataInput}
                   type="email"
+                  placeholder="Введіть електрону пошту"
                   value={correctUserData.email}
                   onChange={handleChange}
                 />
