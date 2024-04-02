@@ -12,6 +12,9 @@ export const changePassword = async ({ email, oldPassword, newPassword }) => {
       return { success: true };
     }
   } catch (error) {
+    if (error.response && error.response.status === 400) {
+      return { error: 'Невірний пароль!' };
+    }
     console.error(
       'Error updating user details:',
       error.response?.data || error.message,

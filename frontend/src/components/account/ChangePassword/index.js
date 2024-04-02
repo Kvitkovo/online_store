@@ -1,1 +1,1 @@
-export { default } from './OldPasswordForm';
+export { default } from './ChangePasswordForm';
