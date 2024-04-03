@@ -66,7 +66,6 @@ const OrderInfo = ({ orderData }) => {
   const getOrderItems = () => {
     return cartItems.map((item) => {
       const orderItem = {
-        productId: item.id,
         productTitle: item.title,
         price: item.price,
         qty: item.cardQuantity,
@@ -78,7 +77,7 @@ const OrderInfo = ({ orderData }) => {
             qty: compositionItem.cardQuantity,
           }),
         );
-      }
+      } else orderItem.productId = item.id;
       return orderItem;
     });
   };
