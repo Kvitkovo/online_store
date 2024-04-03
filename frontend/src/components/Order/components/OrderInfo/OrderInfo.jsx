@@ -35,14 +35,16 @@ const OrderInfo = ({ orderData }) => {
   const getReceiverInfo = () => {
     let receiverName = '';
     let receiverPhone = '';
-    let {
-      recipient,
-      clientFirstName,
-      clientPhone,
-      recipientFirstName,
-      recipientLastName,
-      recipientMiddleName,
-      recipientPhone,
+    const {
+      contactData: {
+        recipient,
+        clientFirstName,
+        clientPhone,
+        recipientFirstName,
+        recipientLastName,
+        recipientMiddleName,
+        recipientPhone,
+      },
     } = orderData;
 
     if (recipient === 'I') {
