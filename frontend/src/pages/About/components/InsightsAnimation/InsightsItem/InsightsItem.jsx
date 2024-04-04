@@ -9,13 +9,14 @@ const InsightsItem = ({ unit, animation, children }) => {
     mass: 1,
   };
   const variantsForthStep = (item) => {
-    const { rightPos, topPos, rotate, scaleY, scale } = item;
+    const { rightPos, topPos, rotate, scaleY, scaleX, scale } = item;
     return {
       initial: {
         right: 0,
         top: 0,
         rotate: rotate,
         scale: scale,
+        scaleX: scaleX,
         scaleY: scaleY,
       },
       animated: {

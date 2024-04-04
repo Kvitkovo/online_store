@@ -1,4 +1,5 @@
 @import '/src/variables';
+@import '/src/mixins';
 @import '../../extention';
 .servicesList {
   display: flex;
@@ -7,12 +8,10 @@
 }
 .img {
   position: relative;
-  width: 565px;
 
-  &:hover image {
-    transform: scale(1.5);
-  }
   &__stroke {
+    width: 612px;
+    height: 620px;
     overflow: visible;
     position: absolute;
     left: -20px;
@@ -22,6 +21,14 @@
     background-color: rgba(108, 194, 94, 0.26);
   }
 }
+
+.shapedImage {
+  position: relative;
+  z-index: 2;
+  width: 570px;
+  height: 577px;
+}
+
 .lotus {
   display: flex;
   justify-content: center;
@@ -29,6 +36,7 @@
 .service {
   display: flex;
   gap: 100px;
+  justify-content: space-between;
 
   &__textSide {
     display: flex;
@@ -37,6 +45,7 @@
   }
   &:nth-child(2n) {
     flex-direction: row-reverse;
+    justify-self: flex-start;
   }
   &__title {
     margin-top: 130px;
@@ -44,5 +53,27 @@
   }
   &__description {
     @extend %description;
+  }
+}
+
+@include lg {
+  .service {
+    gap: 60px;
+    // &__textSide {
+    //   flex-basis: 47%;
+    // }
+    &__title {
+      margin-top: 110px;
+    }
+  }
+  .shapedImage {
+    width: 420px;
+    height: 425px;
+  }
+  .img {
+    &__stroke {
+      width: 462px;
+      height: 467px;
+    }
   }
 }

@@ -12,7 +12,7 @@ const InsightsAnimation = () => {
     mass: 1,
   };
   const valuesLeaves = [
-    { rightPos: [371, 236], topPos: [10, 13], rotate: 172, scaleY: -1 },
+    { rightPos: [371, 236], topPos: [10, 13], rotate: 186, scaleY: -1 },
     { rightPos: [379, 42], topPos: [168, 219], rotate: 0 },
     { rightPos: [458, 169], topPos: [267, 274], rotate: 0 },
     { rightPos: [310, 235], topPos: [366, -27], rotate: 75, scaleY: -1 },
@@ -24,10 +24,10 @@ const InsightsAnimation = () => {
       topPos: [88, 53],
       rotate: 20,
       scale: 0.745,
-      scaleY: -1,
+      scaleX: -1,
     },
-    { rightPos: [450, 32], topPos: [137, 94], rotate: -13, scaleY: -1 },
-    { rightPos: [413, 90], topPos: [351, 138], rotate: -13, scaleY: -1 },
+    { rightPos: [450, 32], topPos: [137, 94], rotate: -13, scaleX: -1 },
+    { rightPos: [413, 90], topPos: [351, 138], rotate: -13, scaleX: -1 },
   ];
 
   const createAnimation = useCallback(
@@ -59,7 +59,7 @@ const InsightsAnimation = () => {
             stiffness: 321,
             damping: 20,
           },
-          { right: '-4%' },
+          { right: '-7%' },
           { top: '32%' },
         )}
       >

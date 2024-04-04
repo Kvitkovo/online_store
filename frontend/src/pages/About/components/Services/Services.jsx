@@ -61,7 +61,7 @@ const Services = ({ data }) => {
                     clipPath: 'circle(0px at 50% 50%)',
                   }}
                   whileInView={{
-                    borderRadius: '0%',
+                    // borderRadius: '0%',
                     clipPath: 'circle(382px at 50% 50%)',
                     transition: {
                       delay: 0.9,
@@ -77,12 +77,11 @@ const Services = ({ data }) => {
             </div>
             <motion.div className={styles.img}>
               <svg
-                width="570"
-                height="577"
                 viewBox="0 0 570 577"
+                preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ position: 'relative', zIndex: 2 }}
+                className={styles.shapedImage}
               >
                 <defs>
                   <pattern
@@ -121,7 +120,7 @@ const Services = ({ data }) => {
                         floodOpacity: 0,
                         transition: { duration: 0.15 },
                       }}
-                      viewport={{ once: true, margin: '0% 0px -20%' }}
+                      viewport={{ once: true, margin: '0% 0% 50%' }}
                     />
                     <feComposite
                       in="color"
@@ -155,9 +154,8 @@ const Services = ({ data }) => {
                 )}
               </svg>
               <motion.svg
-                width="612"
-                height="620"
                 viewBox="0 0 612 620"
+                preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={styles.img__stroke}

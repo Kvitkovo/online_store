@@ -9,7 +9,13 @@ const MissionScreen = () => {
   };
   return (
     <motion.div className={styles.image}>
-      <img src="/images/about-us/second_screen.jpg" alt="Оранжерея" />
+      <picture>
+        <source
+          media="(max-width: 1180px)"
+          srcSet="/images/about-us/second_screen__tablet.jpg"
+        />
+        <img src="/images/about-us/second_screen.jpg" alt="Оранжерея" />
+      </picture>
       <motion.div
         layout
         variants={animationPoints}

@@ -1,3 +1,5 @@
+@import '/src/mixins';
+
 .image {
   position: relative;
   border-radius: 4%;
@@ -16,12 +18,23 @@
   }
   &__smallCopy {
     position: absolute;
-    left: calc(50% - 160px);
-    top: calc(50% - 190px);
+    left: 23%;
+    top: 10%;
     transform: rotate(-5deg);
-    border: 10px solid #fff;
+    border: 10px solid $white-color;
     width: 320px;
     height: 330px;
     object-fit: cover;
+  }
+}
+
+@include lg {
+  .image {
+    &__smallCopy {
+      width: 237px;
+      height: 240px;
+      top: 14%;
+      border-width: 7px;
+    }
   }
 }

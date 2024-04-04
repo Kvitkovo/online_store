@@ -9,7 +9,11 @@ import MissionScreen from './components/MissionScreen';
 import { motion } from 'framer-motion';
 
 const About = () => {
-  const lastPosition = (window.innerWidth - 1250) / 2;
+  const maxContainerWidth = 1180;
+  const lastPosition =
+    window.innerWidth >= maxContainerWidth + 20
+      ? (window.innerWidth - maxContainerWidth - 50) / 2
+      : 0;
 
   return (
     <>
