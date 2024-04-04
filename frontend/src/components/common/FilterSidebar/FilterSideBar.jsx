@@ -132,8 +132,8 @@ const FilterSidebar = ({
                 value={minPrice}
                 minValue={priceFrom}
                 maxValue={maxPrice}
-                handleInputChange={(e) =>
-                  setPrice(priceFrom, 'priceFrom', +e.target.value)
+                handleInputChange={(value) =>
+                  setPrice(priceFrom, 'priceFrom', value)
                 }
                 index={0}
               />
@@ -142,18 +142,18 @@ const FilterSidebar = ({
                 value={maxPrice}
                 minValue={minPrice}
                 maxValue={priceTo}
-                handleInputChange={(e) =>
-                  setPrice(priceTo, 'priceTo', +e.target.value)
+                handleInputChange={(value) =>
+                  setPrice(priceTo, 'priceTo', value)
                 }
                 index={1}
               />
-            </div>
-            <div className={styles.rangeContainer}>
               {activeFilter === 'price' && (
                 <PointerButton
                   handleFilter={() => handleFilter(selectedFilter)}
                 />
               )}
+            </div>
+            <div className={styles.rangeContainer}>
               <RangeSlider
                 min={selectedFilter.priceFrom}
                 max={selectedFilter.priceTo}
