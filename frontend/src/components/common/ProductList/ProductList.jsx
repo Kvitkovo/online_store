@@ -127,7 +127,7 @@ const ProductList = React.memo(
         } catch (error) {
           console.error(error);
         } finally {
-          toggleFilter();
+          setFilterOpen(false);
           setActiveFilter(null);
         }
       },
