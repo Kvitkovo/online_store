@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Account from '../Account';
 import styles from './ChangePasswordForm.module.scss';
 import Button from '../../ui-kit/components/Button';
@@ -8,7 +8,7 @@ import { changePassword } from '../../../services/userData/changePassword.servic
 import ReactPasswordChecklist from 'react-password-checklist';
 
 const ChangePasswordForm = () => {
-  const [oldPassword, setOldPassword] = useState('');
+  const oldPasswordRef = useRef(null);
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [oldPasswordError, setOldPasswordError] = useState('');
@@ -29,6 +29,8 @@ const ChangePasswordForm = () => {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+
+    const oldPassword = oldPasswordRef.current.value;
 
     if (!oldPassword) {
       setOldPasswordError('Введіть пароль');
@@ -68,8 +70,7 @@ const ChangePasswordForm = () => {
                 name="oldPassword"
                 type="password"
                 placeholder="Введіть ваш пароль"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
+                ref={oldPasswordRef}
               />
               {submitted && oldPasswordError && (
                 <p className={styles.errorMessage}>{oldPasswordError}</p>
