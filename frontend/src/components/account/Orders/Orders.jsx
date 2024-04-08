@@ -121,17 +121,19 @@ const Orders = () => {
               {showOrdersDetails === order.id && (
                 <>
                   <div className={styles.item}></div>
-                  {order.orderItems.map((item, index) => (
-                    <OrderItem
-                      key={index}
-                      number={index + 1}
-                      code={item.product?.id}
-                      item={item.productTitle}
-                      img={item.product?.mainImageSmallUrl}
-                      itemQuantity={item.qty}
-                      price={item.price}
-                    />
-                  ))}
+                  <div className={styles.orderItemsBlock}>
+                    {order.orderItems.map((item, index) => (
+                      <OrderItem
+                        key={index}
+                        number={index + 1}
+                        code={item.product?.id}
+                        item={item.productTitle}
+                        img={item.product?.mainImageSmallUrl}
+                        itemQuantity={item.qty}
+                        price={item.price}
+                      />
+                    ))}
+                  </div>
                   <div className={styles.item}></div>
                   <RecipientDetails
                     delivery={order.delivery}
