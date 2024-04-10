@@ -98,4 +98,11 @@
   .mainSection {
     margin-bottom: 140px;
   }
+  .conclusion__images {
+    & img {
+      box-sizing: content-box;
+      width: 372px;
+      height: 372px;
+    }
+  }
 }

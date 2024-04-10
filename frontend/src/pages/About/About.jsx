@@ -91,6 +91,7 @@ const About = () => {
                 src={src}
                 alt="Kvitkovo"
                 key={src}
+                className={styles.conclusionImg}
                 initial={initial}
                 whileInView={animated}
                 viewport={{ once: true, margin: '0px 0px -150px' }}

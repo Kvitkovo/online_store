@@ -80,7 +80,7 @@ const InsightsAnimation = () => {
       </InsightsAnimationUnit>
       <InsightsAnimationUnit
         variants={createAnimation(
-          { delay: 3.52, ...thirdStepTransition },
+          { delay: 3.63, ...thirdStepTransition },
           {
             right: '288px',
             scale: 1.64,
@@ -100,7 +100,7 @@ const InsightsAnimation = () => {
             borderRadius: '0%',
             clipPath: 'circle(150px at 50% 50%)',
             transition: {
-              delay: 1.2,
+              delay: 1.4,
               ...thirdStepTransition,
             },
           }}

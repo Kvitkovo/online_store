@@ -8,7 +8,7 @@ const MissionScreen = () => {
     animated: { opacity: 1 },
   };
   return (
-    <motion.div className={styles.image}>
+    <div className={styles.image}>
       <picture>
         <source
           media="(max-width: 1180px)"
@@ -28,14 +28,14 @@ const MissionScreen = () => {
             ease: 'easeInOut',
           },
         }}
-        viewport={{ once: true, margin: '-150px 0px' }}
+        viewport={{ once: true, margin: '-50% 0%' }}
         className={styles.image__cover}
       ></motion.div>
       <motion.img
         variants={animationPoints}
         initial="initial"
         whileInView="animated"
-        viewport={{ once: true, margin: '-150px 0px' }}
+        viewport={{ once: true, margin: '-50% 0%' }}
         transition={{
           delay: 0.8,
         }}
@@ -43,7 +43,7 @@ const MissionScreen = () => {
         alt="Оранжерея"
         className={styles.image__smallCopy}
       />
-    </motion.div>
+    </div>
   );
 };
 
