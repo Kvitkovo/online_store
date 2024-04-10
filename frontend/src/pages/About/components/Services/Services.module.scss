@@ -34,7 +34,8 @@
   justify-content: center;
 }
 .service {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 100px;
   justify-content: space-between;
 
@@ -44,8 +45,12 @@
     flex-basis: 50%;
   }
   &:nth-child(2n) {
-    flex-direction: row-reverse;
-    justify-self: flex-start;
+    .img {
+      grid-column: 1;
+    }
+    .service__textSide {
+      grid-column: 2;
+    }
   }
   &__title {
     margin-top: 130px;
@@ -58,22 +63,20 @@
 
 @include lg {
   .service {
+    grid-template-columns: 1fr 420px;
     gap: 60px;
-    // &__textSide {
-    //   flex-basis: 47%;
-    // }
     &__title {
       margin-top: 110px;
     }
+    &:nth-child(2n) {
+      grid-template-columns: 420px 1fr;
+    }
   }
   .shapedImage {
-    width: 420px;
-    height: 425px;
+    // transform: scale(0.74);
   }
   .img {
-    &__stroke {
-      width: 462px;
-      height: 467px;
-    }
+    transform: scale(0.75);
+    justify-self: center;
   }
 }
