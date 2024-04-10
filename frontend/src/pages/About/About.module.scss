@@ -69,8 +69,10 @@
     color: $page-accent-color;
   }
   &__description {
-    @extend %description;
-    width: 942px;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 49px;
+    max-width: 942px;
     margin: 0 auto 54px;
     text-align: center;
   }
