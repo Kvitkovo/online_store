@@ -14,10 +14,10 @@
 .itemBlock {
   display: grid;
   grid-template-areas:
-    'image image image image image . caption caption caption caption caption caption'
-    'image image image image image .  stock stock stock stock stock stock'
-    'image image image image image .  features features features features features features'
-    'image image image image image .  price price price price price price'
+    'image image image image image caption caption caption caption caption caption .'
+    'image image image image image stock stock stock stock stock stock .'
+    'image image image image image features features features features features features .'
+    'image image image image image price price price price price price .'
     'image image image image image . . . . . . .'
     'description description description description description description description description description description description description';
 
