@@ -1,7 +1,15 @@
+@import '/src/mixins';
+
 .container {
   position: absolute;
   width: 100vw;
   height: 100%;
   margin-left: calc((100% - 100vw) / 2);
   top: 0;
+}
+
+@include lg {
+  .container {
+    right: -242px;
+  }
 }
