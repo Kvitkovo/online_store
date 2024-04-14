@@ -6,6 +6,7 @@ public enum NotificationType {
     RESET_PASSWORD,
     CHANGE_PASSWORD,
     CREATE_NEW_USER,
+    REGISTER_BY_GOOGLE,
     ANSWER_FEEDBACK_MESSAGE,
     NEW_ORDER
 }

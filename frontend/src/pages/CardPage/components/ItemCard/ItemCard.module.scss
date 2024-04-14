@@ -14,12 +14,12 @@
 .itemBlock {
   display: grid;
   grid-template-areas:
-    'image image image image image . caption caption caption caption caption caption'
-    'image image image image image .  stock stock stock stock stock stock'
-    'image image image image image .  description description description description description description'
-    'image image image image image .  features features features features features features'
-    'image image image image image .  price price price price price price'
-    'image image image image image . . . . . . .';
+    'image image image image image caption caption caption caption caption caption .'
+    'image image image image image stock stock stock stock stock stock .'
+    'image image image image image features features features features features features .'
+    'image image image image image price price price price price price .'
+    'image image image image image . . . . . . .'
+    'description description description description description description description description description description description description';
 
   padding: 32px 20px 32px 16px;
   margin: 22px 0 32px;
@@ -71,7 +71,6 @@
 @include md {
   .itemBlock {
     margin-top: 0;
-    column-gap: 92px;
     grid-template-columns: 1fr 1fr;
     padding: 32px 25px;
     margin-left: -25px;

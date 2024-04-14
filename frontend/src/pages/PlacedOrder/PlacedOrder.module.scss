@@ -1,0 +1,108 @@
+@import '../../variables';
+@import '../../mixins';
+
+.placedOrder {
+  position: relative;
+
+  &::before {
+    background: no-repeat url(../../../public/images/flower.svg);
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 64vh;
+    width: 430px;
+    transform: rotate(-14.48deg);
+  }
+  &::after {
+    background: url(../../../public/images/flowers.svg) no-repeat;
+    content: '';
+    position: fixed;
+    bottom: 95px;
+    left: 0;
+    width: 1087px;
+    height: 64vh;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  @include title;
+  margin: 170px 0 52px;
+}
+
+.orderInformation {
+  @include subtitle;
+  margin-bottom: 46px;
+
+  span {
+    color: $green-dark-color;
+    text-decoration: underline;
+    line-height: 26px;
+  }
+}
+
+@include lg {
+  .title {
+    margin-top: 295px;
+  }
+}
+
+@include md {
+  .placedOrder {
+    &::after {
+      background-size: cover;
+      height: 450px;
+      width: 615px;
+      bottom: 315px;
+    }
+    &::before {
+      background-size: cover;
+      height: 290px;
+      width: 260px;
+    }
+  }
+  .title {
+    margin-top: 162px;
+  }
+}
+
+@include sm {
+  .placedOrder {
+    &::before {
+      background-size: cover;
+      height: 200px;
+      width: 180px;
+    }
+    &::after {
+      background-size: cover;
+      height: 300px;
+      width: 400px;
+      bottom: 250px;
+    }
+    .container {
+      height: 55vh;
+    }
+    .btn {
+      width: 100%;
+      margin-top: auto;
+    }
+  }
+
+  .title {
+    margin-top: 95px;
+    font-size: 26px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .orderInformation {
+    text-align: center;
+  }
+}

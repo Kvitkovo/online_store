@@ -21,48 +21,36 @@ const Services = ({ data }) => {
             type: 'spring',
             stiffness: 14.73,
             damping: 8.57,
-            delay: 0.84,
+            delay: 1.84,
           },
         },
       },
     },
     second: {
-      initial: { scale: 1, opacity: 1 },
+      initial: { scale: 0.9, opacity: 0 },
       animated: {
-        scale: 1.15,
-        opacity: 0,
+        scale: 1,
+        opacity: [1, 0],
         transition: {
           delay: 0.25,
-          duration: 1,
+          duration: 0.54,
           ease: 'linear',
+          opacity: {
+            delay: 1.05,
+          },
         },
       },
     },
   };
+  const waveDelay = [1, 1.7, 2.4, 3.1, 3.8];
 
-  const textSlide = {
-    initial: { marginTop: 0 },
-    animated: {
-      marginTop: [0, 67, 0],
-      transition: {
-        times: [0, 0.4, 1],
-        duration: 2,
-        ease: 'linear',
-      },
-    },
-  };
   return (
     <ul className={styles.servicesList}>
       {data.map((service) => {
         const { id, title, description, shape, strokeShape } = service;
         return (
           <li className={styles.service} key={id}>
-            <motion.div
-              className={styles.service__textSide}
-              variants={id === 3 ? textSlide : {}}
-              initial="initial"
-              whileInView="animated"
-            >
+            <div className={styles.service__textSide}>
               <h3 className={styles.service__title}>{title}</h3>
               <p className={styles.service__description}>{description}</p>
               {id === 1 && (
@@ -73,13 +61,11 @@ const Services = ({ data }) => {
                     clipPath: 'circle(0px at 50% 50%)',
                   }}
                   whileInView={{
-                    borderRadius: '0%',
                     clipPath: 'circle(382px at 50% 50%)',
                     transition: {
                       delay: 0.9,
                       type: 'spring',
-                      stiffness: 35.73,
-                      Damping: 13.33,
+                      duration: 6,
                     },
                   }}
                   viewport={{ once: true, margin: '-10% 0px' }}
@@ -87,15 +73,13 @@ const Services = ({ data }) => {
                   <ICONS.lotus />
                 </motion.div>
               )}
-            </motion.div>
-            <motion.div className={styles.img}>
+            </div>
+            <div className={styles.img}>
               <svg
-                width="570"
-                height="577"
-                viewBox="0 0 570 577"
+                preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ position: 'relative', zIndex: 2 }}
+                className={styles.shapedImage}
               >
                 <defs>
                   <pattern
@@ -112,11 +96,15 @@ const Services = ({ data }) => {
                       width="100%"
                       height="100%"
                       initial={{ scale: 1 }}
+                      style={{ originX: '50%', originY: '50%' }}
                       whileInView={{
                         scale: 1.1,
-                        transition: { duration: 0.64 },
+                        transition: {
+                          duration: 0.64,
+                          delay: 0.25,
+                        },
                       }}
-                      viewport={{ once: true, margin: '-30% 0px' }}
+                      viewport={{ once: true, margin: '-40% 0%' }}
                     />
                   </pattern>
                 </defs>
@@ -130,7 +118,7 @@ const Services = ({ data }) => {
                         floodOpacity: 0,
                         transition: { duration: 0.15 },
                       }}
-                      viewport={{ once: true, margin: '0% 0px -20%' }}
+                      viewport={{ once: true, margin: '-40% 0%' }}
                     />
                     <feComposite
                       in="color"
@@ -164,9 +152,7 @@ const Services = ({ data }) => {
                 )}
               </svg>
               <motion.svg
-                width="612"
-                height="620"
-                viewBox="0 0 612 620"
+                preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={styles.img__stroke}
@@ -186,7 +172,7 @@ const Services = ({ data }) => {
                       opacity: 1,
                       transition: { duration: 0.64, delay: 0.25 },
                     }}
-                    viewport={{ once: true, margin: '-20% 0px' }}
+                    viewport={{ once: true, margin: '-40% 0%' }}
                   />
                 ) : (
                   <>
@@ -208,36 +194,34 @@ const Services = ({ data }) => {
                       stroke="#6CC25E"
                       initial={'initial'}
                       whileInView={'animated'}
-                      viewport={{ once: true }}
+                      viewport={{ once: true, margin: '-40% 0%' }}
                     />
                     {id === 4 && (
-                      <motion.use
-                        href="#myCircle"
-                        stroke="#6CC25E"
-                        variants={circleAnimation.second}
-                        initial={{ scale: 0.9 }}
-                        whileInView={{
-                          scale: 1.15,
-                          opacity: [0, 1, 0],
-                          transition: {
-                            delay: 1.15,
-                            repeat: 3,
-                            repeatDelay: -0.15,
-                            duration: 1.1,
-                            ease: 'linear',
-                          },
-                          transitionEnd: {
-                            opacity: 1,
-                            scale: [1.15, 1],
-                          },
-                        }}
-                        viewport={{ once: true }}
-                      />
+                      <>
+                        {waveDelay.map((delay, idx) => (
+                          <motion.use
+                            href="#myCircle"
+                            stroke="#6CC25E"
+                            key={delay}
+                            initial={{ scale: idx === 0 ? 1 : 0.9 }}
+                            whileInView={{
+                              scale: idx === 4 ? 1 : 1.2,
+                              opacity: idx === 4 ? [0, 1] : [0, 1, 0],
+                              transition: {
+                                delay: delay,
+                                duration: idx === 4 ? 0.8 : 1.6,
+                                ease: 'linear',
+                              },
+                            }}
+                            viewport={{ once: true, margin: '-40% 0%' }}
+                          />
+                        ))}
+                      </>
                     )}
                   </>
                 )}
               </motion.svg>
-            </motion.div>
+            </div>
           </li>
         );
       })}

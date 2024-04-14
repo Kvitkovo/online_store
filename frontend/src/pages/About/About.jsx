@@ -9,6 +9,12 @@ import MissionScreen from './components/MissionScreen';
 import { motion } from 'framer-motion';
 
 const About = () => {
+  const maxContainerWidth = 1180;
+  const lastPosition =
+    window.innerWidth >= maxContainerWidth + 20
+      ? (window.innerWidth - maxContainerWidth - 50) / 2
+      : 0;
+
   return (
     <>
       <Path currentPageData={{ name: 'Про Нас' }} currentPageType={'section'} />
@@ -29,7 +35,10 @@ const About = () => {
           покупок, але і куточок, де кожен квітковий букет стає часткою Ваших
           емоцій та важливих подій.
         </p>
-        <RevealAnimation data={infoData.mainScreenImgs} />
+        <RevealAnimation
+          data={infoData.mainScreenImgs}
+          lastPosition={lastPosition}
+        />
       </section>
       <section className={styles.mission}>
         <div className={styles.mission__text}>
@@ -61,18 +70,35 @@ const About = () => {
           яскравішим разом із нами!
         </p>
         <div className={styles.conclusion__images}>
-          {infoData.conclusionImages.map((image) => (
-            <motion.img
-              src={image.src}
-              alt="Kvitkovo"
-              key={image.scr}
-              variants={image.variants}
-              initial="initial"
-              whileInView="animated"
-              viewport={{ once: true, margin: '-150px 0px' }}
-              transition={{ type: 'spring', stiffness: 100, damping: 15 }}
-            />
-          ))}
+          {infoData.conclusionImages.map((image) => {
+            const { initial, name, src } = image;
+            const lastPositionInPercent =
+              ((lastPosition - 20) * 100) / window.innerWidth;
+            const animated =
+              name !== 'main'
+                ? {
+                    top: 80,
+                    rotate: name === 'left' ? -18 : 18,
+                    [name]:
+                      lastPosition < 150
+                        ? `${-lastPositionInPercent}%`
+                        : '-10%',
+                  }
+                : {};
+
+            return (
+              <motion.img
+                src={src}
+                alt="Kvitkovo"
+                key={src}
+                className={styles.conclusionImg}
+                initial={initial}
+                whileInView={animated}
+                viewport={{ once: true, margin: '0px 0px -150px' }}
+                transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+              />
+            );
+          })}
         </div>
       </section>
     </>

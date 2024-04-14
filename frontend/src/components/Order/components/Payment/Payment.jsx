@@ -5,11 +5,11 @@ import Button from '../../../ui-kit/components/Button';
 
 const Payment = ({ paymentData, setDataOnSubmit }) => {
   const { register, handleSubmit } = useForm({
-    defaultValues: { payment: paymentData?.payment || 'Payment by cash' },
+    defaultValues: { payment: paymentData?.payment || 'PAYMENT_UPON_RECEIPT' },
   });
   const onSubmit = (data) => {
     let dataForOutput;
-    if (data.payment === 'Payment by cash') {
+    if (data.payment === 'PAYMENT_UPON_RECEIPT') {
       dataForOutput = 'Oплата під час отримання';
     } else {
       dataForOutput = 'Oплата Visa/MaterCard';
@@ -23,7 +23,7 @@ const Payment = ({ paymentData, setDataOnSubmit }) => {
           <label>Оплата під час отримання</label>
           <input
             type="radio"
-            value="Payment by cash"
+            value="PAYMENT_UPON_RECEIPT"
             {...register('payment')}
           />
         </div>
@@ -34,11 +34,7 @@ const Payment = ({ paymentData, setDataOnSubmit }) => {
 
         <div className={styles.radioBtn}>
           <label>Visa / MasterCard</label>
-          <input
-            type="radio"
-            value="Payment by card"
-            {...register('payment')}
-          />
+          <input type="radio" value="CARD" {...register('payment')} />
         </div>
         <p className={styles.description}>
           Після оформлення замовлення з вами зв’яжеться оператор та надішле

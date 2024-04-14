@@ -8,8 +8,14 @@ const MissionScreen = () => {
     animated: { opacity: 1 },
   };
   return (
-    <motion.div className={styles.image}>
-      <img src="/images/about-us/second_screen.jpg" alt="Оранжерея" />
+    <div className={styles.image}>
+      <picture>
+        <source
+          media="(max-width: 1180px)"
+          srcSet="/images/about-us/second_screen__tablet.jpg"
+        />
+        <img src="/images/about-us/second_screen.jpg" alt="Оранжерея" />
+      </picture>
       <motion.div
         layout
         variants={animationPoints}
@@ -17,30 +23,27 @@ const MissionScreen = () => {
         whileInView={{
           opacity: [0, 1, 0],
           transition: {
-            duration: 2.4,
+            times: [0, 0.2, 1],
+            duration: 3,
             ease: 'easeInOut',
           },
         }}
-        viewport={{ once: true, margin: '-150px 0px' }}
+        viewport={{ once: true, margin: '-50% 0%' }}
         className={styles.image__cover}
       ></motion.div>
       <motion.img
         variants={animationPoints}
         initial="initial"
         whileInView="animated"
-        viewport={{ once: true, margin: '-150px 0px' }}
+        viewport={{ once: true, margin: '-50% 0%' }}
         transition={{
-          delay: 0.5,
-          type: 'spring',
-          mass: 1,
-          stiffness: 5.96,
-          damping: 5.45,
+          delay: 0.8,
         }}
         src="/images/about-us/second_screen.jpg"
         alt="Оранжерея"
         className={styles.image__smallCopy}
       />
-    </motion.div>
+    </div>
   );
 };
 

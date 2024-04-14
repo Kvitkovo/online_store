@@ -27,7 +27,8 @@ import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
 import CategoryPage from './pages/CategoryPage';
-import SearchResult from './pages/SearchResult/SearchResult';
+import SearchResult from './pages/SearchResult';
+import PlacedOrder from './pages/PlacedOrder';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ function App() {
             <Route path={ROUTES.card} element={<CardPage />} />
             <Route path={ROUTES.order} element={<Order />} />
             <Route path={ROUTES.search} element={<SearchResult />} />
+            <Route path={ROUTES.placedOrder} element={<PlacedOrder />} />
             <Route
               path={ROUTES.emailConfirmation}
               element={<RegisterConfirm />}

@@ -82,6 +82,10 @@ public class User {
     @JoinColumn(name = "position_id")
     private Position position;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "login_provider")
+    private LoginProvider loginProvider;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

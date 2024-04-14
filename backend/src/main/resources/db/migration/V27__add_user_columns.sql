@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD login_provider VARCHAR(50) NULL DEFAULT 'LOCAL';
