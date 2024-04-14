@@ -3,6 +3,7 @@ package ua.kvitkovo.users.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import ua.kvitkovo.users.entity.LoginProvider;
 import ua.kvitkovo.users.entity.Position;
 import ua.kvitkovo.users.entity.Role;
 import ua.kvitkovo.users.entity.UserStatus;
@@ -32,6 +33,8 @@ public class UserResponseDto {
 
     @Schema(example = "test@mail.com", description = "User email")
     private String email;
+
+    private LoginProvider loginProvider;
 
     @Schema(example = "099-123-45-67", description = "User phone")
     private String phone;

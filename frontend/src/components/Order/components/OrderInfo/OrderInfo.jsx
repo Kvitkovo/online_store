@@ -12,20 +12,6 @@ const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    postcardText,
-    contactData: {
-      clientFirstName,
-      clientPhone,
-      clientEmail,
-      recipientFirstName,
-      recipientLastName,
-      recipientMiddleName,
-      recipientPhone,
-    },
-    deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
-    paymentData: { payment },
-  } = orderData;
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
@@ -49,8 +35,19 @@ const OrderInfo = ({ orderData }) => {
   const getReceiverInfo = () => {
     let receiverName = '';
     let receiverPhone = '';
+    const {
+      contactData: {
+        recipient,
+        clientFirstName,
+        clientPhone,
+        recipientFirstName,
+        recipientLastName,
+        recipientMiddleName,
+        recipientPhone,
+      },
+    } = orderData;
 
-    if (orderData.contactData.recipient === 'I') {
+    if (recipient === 'I') {
       receiverName = clientFirstName;
       receiverPhone = formattedPhone(clientPhone);
     } else {
@@ -69,7 +66,6 @@ const OrderInfo = ({ orderData }) => {
   const getOrderItems = () => {
     return cartItems.map((item) => {
       const orderItem = {
-        productId: item.id,
         productTitle: item.title,
         price: item.price,
         qty: item.cardQuantity,
@@ -81,7 +77,7 @@ const OrderInfo = ({ orderData }) => {
             qty: compositionItem.cardQuantity,
           }),
         );
-      }
+      } else orderItem.productId = item.id;
       return orderItem;
     });
   };
@@ -89,6 +85,12 @@ const OrderInfo = ({ orderData }) => {
   const sendOrder = async () => {
     const { receiverName, receiverPhone } = getReceiverInfo();
     const orderItems = getOrderItems();
+    const {
+      postcardText,
+      contactData: { clientFirstName, clientPhone, clientEmail },
+      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+      paymentData: { payment },
+    } = orderData;
 
     const result = await addOrderToDB({
       postcardText,
