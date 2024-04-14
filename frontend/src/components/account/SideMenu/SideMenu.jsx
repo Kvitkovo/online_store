@@ -8,7 +8,8 @@ const SideMenu = () => {
   const dispatch = useDispatch();
 
   const userLogout = () => {
-    localStorage.clear();
+    const itemsToRemove = ['authToken', 'authId', 'userfetchedData', 'email'];
+    itemsToRemove.forEach((item) => localStorage.removeItem(item));
     dispatch(logout());
   };
   return (
