@@ -16,7 +16,9 @@ export const fetchUserData = async () => {
 
     if (response.status === 200) {
       const fetchedData = response.data;
+      const email = fetchedData.email;
       localStorage.setItem('userfetchedData', JSON.stringify(fetchedData));
+      localStorage.setItem('email', email);
       return fetchedData;
     }
   } catch (error) {

@@ -1,74 +1,106 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
 import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
-import { getUsersOrders, cancelUserOrder } from '../../../services/order';
-import ConfirmCancellationModal from './components/ConfirmCancellationModal';
-import OrderDeletedModal from './components/OrderDeletedModal';
+import { useSelector } from 'react-redux';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const [data, setData] = useState([]);
-  const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
-  const [cancelOrderId, setCancellOrderId] = useState(null);
-  const statusMapping = {
-    NEW: 'Новий',
-    ACCEPT: 'Прийнятий',
-    IS_DELIVERED: 'Доставляється',
-    DONE: 'Виконаний',
-    CANCELED: 'Скасований',
-  };
+  const userData = useSelector((state) => state.user.user);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getUsersOrders();
-        setData(response);
-      } catch (error) {
-        console.error(
-          'Помилка при отриманні замовлень коричтувача: ',
-          error.message,
-        )();
-      }
-    };
-    fetchData();
-  }, []);
-
-  const toggleShowModal = () => {
-    setShowCancelModal((prev) => !prev);
-  };
-
-  const toggleShowModalDeleted = () => {
-    setShowOrderDeletedModal((prev) => !prev);
-  };
-
-  const cancelOrder = (id) => {
-    setCancellOrderId(id);
-    toggleShowModal();
-  };
-
-  const autoCloseModal = () => {
-    setTimeout(() => {
-      toggleShowModalDeleted();
-    }, 3000);
-  };
-
-  const handleCancellOrder = async () => {
-    await cancelUserOrder(cancelOrderId);
-    toggleShowModal();
-    toggleShowModalDeleted();
-    autoCloseModal();
-    const response = await getUsersOrders();
-    setData(response);
-  };
+  const data = [
+    {
+      orderNumber: '№0000001',
+      date: '01.10.2023',
+      recipient: 'Шевченко Олена Олегівна',
+      totalPrice: '0000000',
+      status: 'Новий',
+      orderItems: [
+        {
+          code: '3',
+          item: 'Букет весняний',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '200',
+        },
+        {
+          code: '4',
+          item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '300',
+        },
+        {
+          code: '13',
+          item: 'Букет осіння мрія',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '500',
+        },
+      ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
+    },
+    {
+      orderNumber: '№0000002',
+      date: '02.10.2023',
+      recipient: 'Сидорчук Валерія',
+      totalPrice: '0000000',
+      status: 'Новий',
+      orderItems: [
+        {
+          code: '5',
+          item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '300',
+        },
+        {
+          code: '6',
+          item: 'Букет тюльпанів',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '700',
+        },
+      ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
+    },
+    {
+      orderNumber: '№0000003',
+      date: '03.10.2023',
+      recipient: 'Корнійчук Наталія',
+      totalPrice: '0000000',
+      status: 'В обробці',
+      orderItems: [
+        {
+          code: '7',
+          item: 'Букет 101 троянда',
+          img: '/images/bouquet_order.jpg',
+          quantity: '1',
+          price: '400',
+        },
+      ],
+      city: 'Київ',
+      street: 'Михайла Грушевського',
+      house: '30',
+      apartment: '329',
+      phone: '+38(067)0000000',
+    },
+  ];
 
   return (
-    <Account title="Вітаємо, Олена">
+    <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
       <div>
         <h2 className={styles.title}> Мої замовлення</h2>
         <div className={`${styles.gridTable}` + ' ' + `${styles.line}`}>
@@ -81,68 +113,58 @@ const Orders = () => {
         </div>
         {data &&
           data.map((order) => (
-            <div key={order.id}>
+            <div key={order.orderNumber}>
               <div className={styles.gridTable}>
                 <div
                   className={
-                    showOrdersDetails === order.id
+                    showOrdersDetails === order.orderNumber
                       ? `${styles.number}`
                       : `${styles.numberActive}  + ' ' + ${styles.number}`
                   }
                   onClick={() => {
                     setShowOrderDetails(
-                      order.id === showOrdersDetails ? null : order.id,
+                      order.orderNumber === showOrdersDetails
+                        ? null
+                        : order.orderNumber,
                     );
                     setQuantity(order.orderItems.length);
                   }}
                 >
-                  {order.id}
+                  {order.orderNumber}
                 </div>
-                <div>
-                  {order.dateOfShipment.substring(8, 10) +
-                    '.' +
-                    order.dateOfShipment.substring(5, 7) +
-                    '.' +
-                    order.dateOfShipment.substring(0, 4)}
-                </div>
-                <div>{order.receiverName}</div>
-                <div>{order.totalSum} грн</div>
-                <div>{statusMapping[order.status]}</div>
+                <div>{order.date}</div>
+                <div>{order.recipient}</div>
+                <div>{order.totalPrice} грн</div>
+                <div>{order.status}</div>
 
-                {statusMapping[order.status] === 'Новий' ? (
-                  <IconButton
-                    icon={<ICONS.deleteIcon />}
-                    onClick={() => cancelOrder(order.id)}
-                  ></IconButton>
+                {order.status === 'Новий' ? (
+                  <IconButton icon={<ICONS.deleteIcon />}></IconButton>
                 ) : (
                   ''
                 )}
               </div>
-              {showOrdersDetails === order.id && (
+              {showOrdersDetails === order.orderNumber && (
                 <>
                   <div className={styles.item}></div>
-                  <div className={styles.orderItemsBlock}>
-                    {order.orderItems.map((item, index) => (
-                      <OrderItem
-                        key={index}
-                        number={index + 1}
-                        code={item.product?.id}
-                        item={item.productTitle}
-                        img={item.product?.mainImageSmallUrl}
-                        itemQuantity={item.qty}
-                        price={item.price}
-                      />
-                    ))}
-                  </div>
+                  {order.orderItems.map((item, index) => (
+                    <OrderItem
+                      key={index}
+                      number={index + 1}
+                      code={item.code}
+                      item={item.item}
+                      img={item.img}
+                      itemQuantity={item.quantity}
+                      price={item.price}
+                    />
+                  ))}
                   <div className={styles.item}></div>
                   <RecipientDetails
-                    delivery={order.delivery}
-                    city={order.addressCity}
-                    street={order.addressStreet}
-                    house={order.addressHouse}
-                    apartment={order.addressApartment}
-                    recipient={order.receiverName}
-                    phone={order.receiverPhone}
+                    city={order.city}
+                    street={order.street}
+                    house={order.house}
+                    apartment={order.apartment}
+                    recipient={order.recipient}
+                    phone={order.phone}
                     quantity={quantity}
                   />
                 </>
@@ -150,18 +172,20 @@ const Orders = () => {
               <div className={styles.arrowDown}>
                 <button
                   className={
-                    showOrdersDetails === order.id
+                    showOrdersDetails === order.orderNumber
                       ? `${styles.btnArrowUp} + ' ' + ${styles.btn}`
                       : `${styles.btnArrowDown}  + ' ' + ${styles.btn}`
                   }
                   onClick={() => {
                     setShowOrderDetails(
-                      order.id === showOrdersDetails ? null : order.id,
+                      order.orderNumber === showOrdersDetails
+                        ? null
+                        : order.orderNumber,
                     );
                     setQuantity(order.orderItems.length);
                   }}
                 >
-                  {showOrdersDetails === order.id ? (
+                  {showOrdersDetails === order.orderNumber ? (
                     <ICONS.arrowUpWhite />
                   ) : (
                     <ICONS.arrowDown />
@@ -178,16 +202,6 @@ const Orders = () => {
           </div>
         )}
       </div>
-      {showCancelModal && (
-        <ConfirmCancellationModal
-          toggleShowModal={toggleShowModal}
-          onClose={toggleShowModal}
-          onCancelOrder={handleCancellOrder}
-        />
-      )}
-      {showOrderDeletedModal && (
-        <OrderDeletedModal toggleShowModalDeleted={toggleShowModalDeleted} />
-      )}
     </Account>
   );
 };
