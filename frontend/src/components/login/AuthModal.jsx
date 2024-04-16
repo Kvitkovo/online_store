@@ -3,18 +3,25 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import Modals from '../common/Modals';
 
-const AuthModal = () => {
-  const [modalType, setModalType] = useState('login');
+const AuthModal = ({ isOpen, toggleModal }) => {
+  const [isLogin, setIsLogin] = useState(true);
 
-  const toggleModal = (type) => {
-    setModalType(type);
+  const toggleAuthState = () => {
+    setIsLogin((prev) => !prev);
   };
+
   return (
-    <Modals type={modalType} onClick={() => toggleModal('login')}>
-      {modalType === 'login' ? (
-        <LoginModal toggleModal={toggleModal} />
+    <Modals type="login" isOpen={isOpen} toggleModal={toggleModal}>
+      {isLogin ? (
+        <LoginModal
+          toggleModal={toggleModal}
+          toggleAuthState={toggleAuthState}
+        />
       ) : (
-        <RegisterModal toggleModal={toggleModal} />
+        <RegisterModal
+          toggleModal={toggleModal}
+          toggleAuthState={toggleAuthState}
+        />
       )}
     </Modals>
   );

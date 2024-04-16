@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Modals from '../../common/Modals';
 import styles from './RegisterModal.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
@@ -9,7 +8,7 @@ import PasswordChecklist from 'react-password-checklist';
 /* eslint-disable max-len */
 import { registerUser } from '../../../services/registration/registration.service';
 
-const RegisterModal = ({ toggleRegister, toggleLogin }) => {
+const RegisterModal = ({ toggleModal, toggleAuthState }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -72,21 +71,18 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
   return (
     <>
       {registrationSuccess ? (
-        <RegisterLetter userEmail={email} toggleModal={toggleRegister} />
+        <RegisterLetter userEmail={email} toggleModal={toggleAuthState} />
       ) : (
-        <Modals type="login" onClick={toggleRegister}>
+        <>
           <div className={styles.header}>
             <div className={styles.headerContent}>
-              <p className={styles.loginBtn} onClick={toggleLogin}>
+              <p className={styles.loginBtn} onClick={toggleAuthState}>
                 Вхід
               </p>
               <p className={styles.registerBtn}>Реєстрація</p>
             </div>
             <div className={styles.closeBtn}>
-              <IconButton
-                icon={<ICONS.closeMobile />}
-                onClick={toggleRegister}
-              />
+              <IconButton icon={<ICONS.closeMobile />} onClick={toggleModal} />
             </div>
           </div>
 
@@ -191,7 +187,7 @@ const RegisterModal = ({ toggleRegister, toggleLogin }) => {
               </div>
             </form>
           </div>
-        </Modals>
+        </>
       )}
     </>
   );
