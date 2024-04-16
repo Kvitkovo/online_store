@@ -14,8 +14,13 @@ const loginUser = async ({ email, password }) => {
       return { success: true };
     }
   } catch (error) {
-    if (error.response && error.response.status === 400) {
+    if (
+      error.response &&
+      (error.response.status === 400 || error.response.status === 404)
+    ) {
       return { error: 'Невірна пошта та/або пароль!' };
+    } else if (error.response && error.response.status === 401) {
+      return { error: 'Будь ласка, підтвердіть свою пошту!' };
     }
   }
 };
