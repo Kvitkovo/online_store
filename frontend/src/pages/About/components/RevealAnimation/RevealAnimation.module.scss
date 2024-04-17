@@ -1,15 +1,39 @@
+@use 'sass:math';
 @import '/src/variables';
 @import '/src/mixins';
 
+@mixin spaceToTheEdge($name, $smallDevices) {
+  @if $smallDevices {
+    #{$name}: 0px;
+  } @else {
+    #{$name}: max(((100vw - 1200px) / -2), -150px);
+  }
+}
+
+.animated {
+  .mainImgs {
+    &__main::after {
+      background: transparent;
+    }
+    &__left {
+      @include spaceToTheEdge(left, false);
+      transform: rotate(-3.73deg);
+    }
+    &__right {
+      @include spaceToTheEdge(right, false);
+      transform: rotate(3.73deg);
+    }
+  }
+}
 .mainImgs {
   position: relative;
-  margin-bottom: 20px;
   & img {
     box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.26);
     border: 10px solid $white-color;
     width: 100%;
     height: 100%;
   }
+
   &__main {
     position: relative;
     display: block;
@@ -17,8 +41,7 @@
     height: 574px;
     margin: 0 auto;
     z-index: 2;
-
-    &_cover {
+    &::after {
       position: absolute;
       content: '';
       display: block;
@@ -26,19 +49,22 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.5);
+      transition: all 0.5s ease-in-out 0.15s;
     }
   }
-  &__left {
-    position: absolute;
-    bottom: 0;
-    transform: rotate(-3.73deg);
-  }
+  &__left,
   &__right {
     position: absolute;
     bottom: 0;
-    transform: rotate(3.73deg);
-    right: 0;
+  }
+  &__left {
+    left: 30%;
+    transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1.15) 1.5s;
+  }
+  &__right {
+    right: 30%;
+    transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1.15) 0.82s;
   }
 }
 
@@ -52,6 +78,74 @@
     &__right {
       width: 330px;
       height: 330px;
+    }
+  }
+  .animated {
+    .mainImgs {
+      &__left {
+        @include spaceToTheEdge(left, true);
+      }
+      &__right {
+        @include spaceToTheEdge(right, true);
+      }
+    }
+  }
+}
+
+@include md {
+  .mainImgs {
+    height: 660px;
+    &__main {
+      width: 430px;
+      height: 355px;
+    }
+    &__left,
+    &__right {
+      bottom: 320px;
+      width: 320px;
+      height: 320px;
+    }
+  }
+  .animated {
+    .mainImgs {
+      &__left {
+        bottom: 0;
+      }
+      &__right {
+        bottom: 0;
+      }
+    }
+  }
+}
+
+@include sm {
+  .mainImgs {
+    padding-top: 15px;
+    height: 570px;
+    &__main {
+      width: 344px;
+      height: 287px;
+    }
+    &__left,
+    &__right {
+      width: 224px;
+      height: 224px;
+      bottom: 250px;
+    }
+    &__left {
+      left: 0;
+      transition: all 0.68s ease-out 0.82s;
+    }
+    &__right {
+      right: 0;
+      transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1.15) 1.5s;
+    }
+  }
+  .animated {
+    .mainImgs {
+      &__left {
+        bottom: 58px;
+      }
     }
   }
 }

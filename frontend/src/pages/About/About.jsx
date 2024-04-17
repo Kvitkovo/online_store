@@ -24,7 +24,7 @@ const About = () => {
             Ласкаво просимо до
             <span className={styles.highlighted}> Kvitkovo!</span>
           </div>
-          <div>
+          <div className={styles.secondLineTitle}>
             <span className={styles.highlighted}>Ваш </span>
             особистий квітковий арт-простір!
           </div>

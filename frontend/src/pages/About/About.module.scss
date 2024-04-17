@@ -108,3 +108,18 @@
     }
   }
 }
+
+@include md {
+  .mainSection {
+    margin-bottom: 100px;
+    &__title {
+      margin: 24px auto;
+    }
+    &__description {
+      margin-bottom: 40px;
+    }
+  }
+  .secondLineTitle {
+    margin-top: 8px;
+  }
+}
