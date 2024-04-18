@@ -8,6 +8,7 @@ import RecipientDetails from './components/RecipientDetails/RecipientDetails';
 import { getUsersOrders, cancelUserOrder } from '../../../services/order';
 import ConfirmCancellationModal from './components/ConfirmCancellationModal';
 import OrderDeletedModal from './components/OrderDeletedModal';
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
@@ -117,6 +118,7 @@ const Orders = () => {
                 ) : (
                   ''
                 )}
+                <Link to={`/account/orders/${order.id}`}> Детально</Link>
               </div>
               {showOrdersDetails === order.id && (
                 <>

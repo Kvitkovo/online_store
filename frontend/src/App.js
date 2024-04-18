@@ -29,6 +29,7 @@ import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPag
 import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
+import OrderItemDetailed from './components/account/Orders/components/OrderItemDetailed/OrderItemDetailed';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -86,6 +87,10 @@ function App() {
                 element={<ChangePassword />}
               />
               <Route path={ROUTES.orders} element={<Orders />} />
+              <Route
+                path={ROUTES.orderDetailed}
+                element={<OrderItemDetailed />}
+              />
             </Route>
           </Routes>
           <SupportModal />
