@@ -107,6 +107,16 @@
       height: 372px;
     }
   }
+  .mission {
+    &__title {
+      color: $text-color;
+      font-size: 28px;
+      line-height: 36px;
+    }
+    &__description {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @include md {
@@ -121,5 +131,25 @@
   }
   .secondLineTitle {
     margin-top: 8px;
+  }
+  .mission {
+    flex-direction: column;
+    gap: 40px;
+    &__text {
+      text-align: center;
+    }
+    &__title {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@include md {
+  .mission {
+    margin-bottom: 80px;
+    gap: 44px;
+    &__title {
+      tab-size: 22px;
+    }
   }
 }

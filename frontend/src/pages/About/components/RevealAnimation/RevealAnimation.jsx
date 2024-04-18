@@ -3,9 +3,8 @@ import styles from './RevealAnimation.module.scss';
 import { useInView } from 'framer-motion';
 
 const RevealAnimation = ({ data }) => {
-  const ref = useRef(null);
   const container = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-40% 0%' });
+  const isInView = useInView(container, { once: true, margin: '-40% 0%' });
 
   return (
     <ul
@@ -16,11 +15,7 @@ const RevealAnimation = ({ data }) => {
         const { name, src } = img;
 
         return (
-          <li
-            ref={ref}
-            className={`${styles[`mainImgs__${img.name}`]} `}
-            key={name}
-          >
+          <li className={`${styles[`mainImgs__${img.name}`]} `} key={name}>
             <img src={src} alt="Працівники Kvitkovo " />
           </li>
         );
