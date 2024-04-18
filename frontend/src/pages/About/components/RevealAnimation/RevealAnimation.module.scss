@@ -96,14 +96,14 @@
   .mainImgs {
     height: 660px;
     &__main {
-      width: 430px;
-      height: 355px;
+      width: 450px;
+      height: 375px;
     }
     &__left,
     &__right {
       bottom: 320px;
-      width: 320px;
-      height: 320px;
+      width: 340px;
+      height: 340px;
     }
   }
   .animated {
@@ -130,7 +130,7 @@
     &__right {
       width: 224px;
       height: 224px;
-      bottom: 250px;
+      bottom: 270px;
     }
     &__left {
       left: 0;
@@ -144,7 +144,7 @@
   .animated {
     .mainImgs {
       &__left {
-        bottom: 58px;
+        bottom: 64px;
       }
     }
   }
