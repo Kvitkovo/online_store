@@ -68,7 +68,7 @@ const Services = ({ data }) => {
                       duration: 6,
                     },
                   }}
-                  viewport={{ once: true, margin: '-10% 0px' }}
+                  viewport={{ once: true, margin: '-5% 0px' }}
                 >
                   <ICONS.lotus />
                 </motion.div>
@@ -76,6 +76,7 @@ const Services = ({ data }) => {
             </div>
             <div className={styles.img}>
               <svg
+                viewBox="0 0 570 577"
                 preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +119,7 @@ const Services = ({ data }) => {
                         floodOpacity: 0,
                         transition: { duration: 0.15 },
                       }}
-                      viewport={{ once: true, margin: '-40% 0%' }}
+                      viewport={{ once: true }}
                     />
                     <feComposite
                       in="color"
@@ -152,6 +153,7 @@ const Services = ({ data }) => {
                 )}
               </svg>
               <motion.svg
+                viewBox="0 0 612 620"
                 preserveAspectRatio="xMidYMid slice"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

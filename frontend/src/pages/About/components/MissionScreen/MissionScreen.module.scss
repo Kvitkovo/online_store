@@ -36,6 +36,9 @@
       top: 14%;
       border-width: 7px;
     }
+    picture img {
+      width: 450px;
+    }
   }
 }
 @include md {

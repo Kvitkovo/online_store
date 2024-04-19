@@ -31,7 +31,7 @@
 
 .lotus {
   display: flex;
-  justify-content: center;
+  width: min-content;
 }
 .service {
   display: grid;
@@ -42,7 +42,6 @@
   &__textSide {
     display: flex;
     flex-direction: column;
-    flex-basis: 50%;
   }
   &:nth-child(2n) {
     .img {
@@ -62,11 +61,21 @@
 }
 
 @include lg {
+  .servicesList {
+    gap: 20px;
+  }
   .service {
     grid-template-columns: 1fr 420px;
     gap: 60px;
+    &__textSide {
+      position: relative;
+      justify-content: center;
+    }
     &__title {
-      margin-top: 110px;
+      margin-top: 0px;
+    }
+    &:first-child &__textSide {
+      justify-content: flex-end;
     }
     &:nth-child(2n) {
       grid-template-columns: 420px 1fr;
@@ -75,5 +84,109 @@
   .img {
     transform: scale(0.75);
     justify-self: center;
+    margin-top: -55px;
+  }
+  .lotus {
+    margin-top: -65px;
+    margin-left: -20px;
+    svg {
+      width: 267px;
+      height: 267px;
+    }
+  }
+}
+
+@include md {
+  .service {
+    position: relative;
+    display: flex;
+    gap: 0;
+    &__title {
+      margin-bottom: 24px;
+      font-size: 24px;
+    }
+    &__textSide {
+      justify-content: flex-start;
+      width: 385px;
+    }
+    .img {
+      position: absolute;
+      z-index: -1;
+    }
+    &:first-child {
+      .service__textSide {
+        justify-content: flex-start;
+        width: 330px;
+      }
+      .img {
+        top: 75px;
+        right: -75px;
+      }
+    }
+    &:not(:first-child) {
+      height: 690px;
+      .img {
+        top: 200px;
+      }
+    }
+    &:nth-child(2n) {
+      .service__textSide {
+        margin-left: auto;
+      }
+      .img {
+        left: -75px;
+      }
+    }
+    &:nth-child(3) {
+      .img {
+        right: -75px;
+      }
+    }
+
+    .lotus {
+      margin-top: 120px;
+    }
+  }
+}
+
+@include sm {
+  .service {
+    flex-direction: column;
+    &__textSide {
+      width: 100%;
+    }
+    &__title {
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+    &__description {
+      margin-bottom: 40px;
+    }
+    &:first-child &__textSide {
+      width: 100%;
+    }
+    &:not(:first-child) {
+      height: min-content;
+      margin-top: 56px;
+    }
+    .img:nth-child(n) {
+      position: relative;
+      top: 0;
+      left: 17px;
+      right: 0;
+      transform: scale(1);
+      margin-top: 40px;
+    }
+  }
+  .img__stroke {
+    width: 100%;
+    height: 110%;
+  }
+  .shapedImage {
+    width: 90%;
+    height: 98%;
+  }
+  .lotus {
+    display: none;
   }
 }

@@ -117,6 +117,9 @@
       margin-bottom: 0;
     }
   }
+  .services {
+    padding-bottom: 30px;
+  }
 }
 
 @include md {
@@ -150,6 +153,13 @@
     gap: 44px;
     &__title {
       tab-size: 22px;
+    }
+  }
+  .services {
+    padding: 80px 0;
+    margin-bottom: 0px;
+    &__title {
+      margin-bottom: 56px;
     }
   }
 }
