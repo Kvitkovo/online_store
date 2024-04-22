@@ -11,24 +11,32 @@ const RecipientDetails = ({
   phone,
   quantity,
 }) => {
+  if (city === null) {
+    city = 'Київ';
+  }
   return (
     <>
       <div className={styles.flexData}>
         <div>
-          <div className={styles.address}>
+          <div className={styles.delivery}>
             <div>Доставка:</div>
             {delivery === 'PICKUP' ? (
               <p>Самовивіз</p>
             ) : (
-              <>
+              <div className={styles.address}>
+                <span>місто</span> {city}
                 <div>
-                  <span>місто</span> {city}
+                  <div>
+                    <span>вул.</span> {street}
+                  </div>
+                  <div>
+                    <span>буд.</span> {house}
+                  </div>
+                  <div>
+                    <span> кв.</span> {apartment}
+                  </div>
                 </div>
-                <div>
-                  <span>вул.</span> {street} <span>буд.</span> {house}{' '}
-                  <span>кв.</span> {apartment}
-                </div>
-              </>
+              </div>
             )}
           </div>
           <div className={styles.recipient}>
@@ -44,6 +52,7 @@ const RecipientDetails = ({
           <div>{quantity} шт</div>
         </div>
       </div>
+      <div className={styles.item}></div>
     </>
   );
 };
