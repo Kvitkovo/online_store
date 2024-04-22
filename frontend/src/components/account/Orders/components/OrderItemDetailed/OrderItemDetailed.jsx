@@ -5,10 +5,12 @@ import styles from './OrderItemDetailed.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
+import RecipientDetails from '../RecipientDetails/RecipientDetails';
 
 const OrderItemDetailed = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
+  const [quantity, setQuantity] = useState(0);
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -22,6 +24,7 @@ const OrderItemDetailed = () => {
       try {
         const response = await getOrderById(orderDetails);
         setOrder(response);
+        setQuantity(response.orderItems.length);
       } catch (error) {
         console.error(
           'Помилка при отриманні замовлень коричтувача: ',
@@ -35,11 +38,10 @@ const OrderItemDetailed = () => {
   return (
     <div className={styles.orderDetailed}>
       <div className={styles.title}>
-        <div>
+        <div className={styles.flexColumnAndGap}>
           <div>Номер</div>
-          <div>{orderDetails}</div>
+          <div>№ {orderDetails}</div>
         </div>
-
         {order && statusMapping[order.status] === 'Новий' ? (
           <div className={styles.deleteIconWithText}>
             Скасувати
@@ -52,22 +54,39 @@ const OrderItemDetailed = () => {
           ''
         )}
       </div>
-
       <div>
         {order && (
-          <div key={order.id}>
-            <div className={styles.gridTable}>
-              <div>
-                {order.dateOfShipment.substring(8, 10) +
-                  '.' +
-                  order.dateOfShipment.substring(5, 7) +
-                  '.' +
-                  order.dateOfShipment.substring(0, 4)}
+          <div>
+            <div className={styles.dateAndStatus}>
+              <div className={styles.flexColumnAndGap}>
+                <div>Дата</div>
+                <div>
+                  {order.dateOfShipment.substring(8, 10) +
+                    '.' +
+                    order.dateOfShipment.substring(5, 7) +
+                    '.' +
+                    order.dateOfShipment.substring(0, 4)}
+                </div>
               </div>
-              <div>{order.receiverName}</div>
-              <div>{order.totalSum} грн</div>
-              <div>{statusMapping[order.status]}</div>
+              <div className={styles.flexColumnAndGap}>
+                <div>Статус</div>
+                <div>{statusMapping[order.status]}</div>
+              </div>
             </div>
+            <div className={styles.flexColumnAndGap}>
+              <div>Сума</div>
+              <div className={styles.totalSum}>{order.totalSum} грн</div>
+            </div>
+            <RecipientDetails
+              delivery={order.delivery}
+              city={order.addressCity}
+              street={order.addressStreet}
+              house={order.addressHouse}
+              apartment={order.addressApartment}
+              recipient={order.receiverName}
+              phone={order.receiverPhone}
+              quantity={quantity}
+            />
 
             <div className={styles.item}></div>
             <div className={styles.orderItemsBlock}>
@@ -83,17 +102,6 @@ const OrderItemDetailed = () => {
                 />
               ))}
             </div>
-            {/* <div className={styles.item}></div> */}
-            {/* <RecipientDetails
-                    delivery={order.delivery}
-                    city={order.addressCity}
-                    street={order.addressStreet}
-                    house={order.addressHouse}
-                    apartment={order.addressApartment}
-                    recipient={order.receiverName}
-                    phone={order.receiverPhone}
-                    quantity={quantity}
-                  /> */}
           </div>
         )}
       </div>
