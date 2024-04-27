@@ -60,9 +60,6 @@
   .mainContainer {
     width: inherit;
   }
-  .cardImage {
-    margin-right: 92px;
-  }
 }
 
 @include md {
@@ -75,13 +72,11 @@
     margin-bottom: 38px;
     overflow: hidden;
     border-radius: 0;
+    column-gap: 30px;
   }
   .path {
     margin-top: 16px;
     font-size: 14px;
-  }
-  .cardImage {
-    margin-right: 30px;
   }
   .itemDescription {
     padding-bottom: 32px;
@@ -109,7 +104,6 @@
     margin: 0 16px 26px;
   }
   .cardImage {
-    margin-right: 0;
     align-self: center;
   }
 }
