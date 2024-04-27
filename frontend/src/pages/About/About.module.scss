@@ -63,7 +63,7 @@
   }
 }
 .conclusion {
-  margin-bottom: 232px;
+  margin-bottom: 198px;
   &__title {
     @extend %title;
     color: $page-accent-color;
@@ -78,34 +78,12 @@
   }
   &__images {
     position: relative;
-    & img {
-      border: 12px solid $white-color;
-      border-bottom: 64px solid $white-color;
-      border-radius: 2px;
-      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.1);
-      &:not(:nth-child(1)) {
-        position: absolute;
-      }
-      &:first-child {
-        position: relative;
-        display: block;
-        margin: 0 auto;
-        z-index: 2;
-      }
-    }
   }
 }
 
 @include lg {
   .mainSection {
     margin-bottom: 140px;
-  }
-  .conclusion__images {
-    & img {
-      box-sizing: content-box;
-      width: 372px;
-      height: 372px;
-    }
   }
   .mission {
     &__title {
@@ -145,9 +123,16 @@
       margin-bottom: 24px;
     }
   }
+  .conclusion {
+    &__description {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 37px;
+    }
+  }
 }
 
-@include md {
+@include sm {
   .mission {
     margin-bottom: 80px;
     gap: 44px;

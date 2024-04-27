@@ -6,7 +6,7 @@ import Services from './components/Services';
 import InsightList from './components/InsightList';
 import RevealAnimation from './components/RevealAnimation';
 import MissionScreen from './components/MissionScreen';
-import { motion } from 'framer-motion';
+import ConclusionAnimation from './components/ConclusionAnimation';
 
 const About = () => {
   const maxContainerWidth = 1180;
@@ -70,35 +70,10 @@ const About = () => {
           яскравішим разом із нами!
         </p>
         <div className={styles.conclusion__images}>
-          {infoData.conclusionImages.map((image) => {
-            const { initial, name, src } = image;
-            const lastPositionInPercent =
-              ((lastPosition - 20) * 100) / window.innerWidth;
-            const animated =
-              name !== 'main'
-                ? {
-                    top: 80,
-                    rotate: name === 'left' ? -18 : 18,
-                    [name]:
-                      lastPosition < 150
-                        ? `${-lastPositionInPercent}%`
-                        : '-10%',
-                  }
-                : {};
-
-            return (
-              <motion.img
-                src={src}
-                alt="Kvitkovo"
-                key={src}
-                className={styles.conclusionImg}
-                initial={initial}
-                whileInView={animated}
-                viewport={{ once: true, margin: '0px 0px -150px' }}
-                transition={{ type: 'spring', stiffness: 100, damping: 15 }}
-              />
-            );
-          })}
+          <ConclusionAnimation
+            data={infoData.conclusionImages}
+            lastPosition={lastPosition}
+          />
         </div>
       </section>
     </>

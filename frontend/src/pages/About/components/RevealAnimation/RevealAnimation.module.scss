@@ -60,11 +60,11 @@
   }
   &__left {
     left: 30%;
-    transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1.15) 1.5s;
+    transition: all 0.75s cubic-bezier(0.25, 0.1, 0.25, 1.15) 1.5s;
   }
   &__right {
     right: 30%;
-    transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1.15) 0.82s;
+    transition: all 0.75s cubic-bezier(0.25, 0.1, 0.25, 1.15) 0.82s;
   }
 }
 
