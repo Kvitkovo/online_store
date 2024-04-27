@@ -13,6 +13,7 @@
 }
 .itemBlock {
   display: grid;
+  grid-template-columns: 50% 50%;
   grid-template-areas:
     'image image image image image caption caption caption caption caption caption .'
     'image image image image image stock stock stock stock stock stock .'
