@@ -27,6 +27,7 @@ const ChangeDetails = () => {
 
     try {
       const updatedUserData = await editUserData(correctUserData, dispatch);
+      localStorage.setItem('userfetchedData', JSON.stringify(updatedUserData));
       navigate('/account', updatedUserData);
     } catch (error) {
       console.error('Error updating user details:', error);

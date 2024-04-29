@@ -14,11 +14,12 @@ const ContactDetails = () => {
   const [userData, setUserData] = useState(storedUserData);
 
   useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
     if (storedUserData) {
       dispatch(login(storedUserData));
       setUserData(storedUserData);
     }
-  }, [dispatch, storedUserData]);
+  }, [dispatch]);
 
   const navigateToEdit = () => {
     navigate('/account/change-details');
