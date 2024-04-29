@@ -17,7 +17,7 @@ import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../../redux/slices/userSlice';
+/* import { getUser } from '../../../redux/slices/userSlice'; */
 import { GetProducts } from '../../../services/products/productsAccess.service';
 import TotalItems from './components/TotalItems';
 import { initiateCart } from '../../../redux/slices/cartSlice';
@@ -29,11 +29,11 @@ const Header = () => {
   const [isOpenAuthModal, setIsOpenAuthModal] = useState(false);
 
   const navigate = useNavigate();
-  const user = useSelector(getUser);
+  const authToken = localStorage.getItem('authToken');
   const dispatch = useDispatch();
 
   const toggleModal = () => {
-    if (user && user.loggedIn) {
+    if (authToken) {
       navigate('/account');
     } else {
       setIsOpenAuthModal((prev) => !prev);
@@ -246,7 +246,7 @@ const Header = () => {
             <div className={styles.login}>
               <Button
                 variant="no-border"
-                label={user && user.loggedIn ? 'Профіль' : 'Увійти'}
+                label={authToken ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
                 onClick={toggleModal}
               />
