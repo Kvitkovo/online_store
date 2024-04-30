@@ -1,0 +1,34 @@
+@import '/src/mixins';
+
+.title {
+  margin: 16px 0 32px;
+  font-size: 32px;
+  line-height: 41px;
+  font-weight: 500;
+}
+.description {
+  display: grid;
+  grid-template-columns: 58% 41%;
+  column-gap: 20px;
+  row-gap: 32px;
+  grid-template-areas:
+    'text secondImg'
+    'firstImg secondImg';
+  margin-bottom: 56px;
+  &__text {
+    grid-area: text;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+  }
+  &__img1,
+  &__img2 {
+    border-radius: 8px;
+  }
+  &__img1 {
+    grid-area: firstImg;
+  }
+  &__img2 {
+    grid-area: secondImg;
+  }
+}
