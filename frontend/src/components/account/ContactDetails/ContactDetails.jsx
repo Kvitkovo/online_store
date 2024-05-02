@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './ContactDetails.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import Account from '../Account';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../redux/slices/userSlice';
 
 const ContactDetails = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
-  const [userData, setUserData] = useState(storedUserData);
-
-  useEffect(() => {
-    const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
-    if (storedUserData) {
-      dispatch(login(storedUserData));
-      setUserData(storedUserData);
-    }
-  }, [dispatch]);
 
   const navigateToEdit = () => {
     navigate('/account/change-details');
@@ -30,7 +18,9 @@ const ContactDetails = () => {
   };
 
   return (
-    <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
+    <Account
+      title={`Вітаємо, ${storedUserData ? storedUserData.firstName : ''}`}
+    >
       <div className={styles.block}>
         <h2 className={styles.accountTitle}> Контактні дані</h2>
         <div className={styles.flexFieldsAndData}>
@@ -42,14 +32,14 @@ const ContactDetails = () => {
             <p>Ел. пошта</p>
             <p>Дата народження</p>
           </div>
-          {userData && (
-            <div className={styles.data} key={userData.id}>
-              <p>{userData.firstName || 'не вказано'}</p>
-              <p>{userData.lastName || 'не вказано'}</p>
-              <p>{userData.surname || 'не вказано'}</p>
-              <p>{userData.phone || 'не вказано'}</p>
-              <p>{userData.email || 'не вказано'}</p>
-              <p>{userData.birthday || 'не вказано'}</p>
+          {storedUserData && (
+            <div className={styles.data} key={storedUserData.id}>
+              <p>{storedUserData.firstName || 'не вказано'}</p>
+              <p>{storedUserData.lastName || 'не вказано'}</p>
+              <p>{storedUserData.surname || 'не вказано'}</p>
+              <p>{storedUserData.phone || 'не вказано'}</p>
+              <p>{storedUserData.email || 'не вказано'}</p>
+              <p>{storedUserData.birthday || 'не вказано'}</p>
             </div>
           )}
         </div>
