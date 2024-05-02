@@ -1,4 +1,5 @@
 @import 'src/_variables.scss';
+@import 'src/_mixins.scss';
 
 .mainContainer {
   padding-left: 32px;
@@ -22,7 +23,7 @@
 }
 
 .dataInput {
-  width: 292px;
+  width: 316px;
   height: 40px;
   padding: 8px 12px;
   border-radius: 8px;
@@ -38,5 +39,23 @@
 label {
   span {
     color: $discount-color;
+  }
+}
+
+@include lg {
+  .formContainer {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .birthday {
+    width: 141px;
+  }
+}
+
+@include md {
+  .btnContainer {
+    display: flex;
+    flex-direction: column;
+    width: 316px;
   }
 }

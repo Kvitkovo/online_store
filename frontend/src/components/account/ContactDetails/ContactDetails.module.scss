@@ -1,4 +1,5 @@
 @import '../../../variables';
+@import 'src/_mixins.scss';
 
 .block {
   padding-left: 40px;
@@ -35,5 +36,16 @@
 
   & :first-child {
     padding-left: 0;
+  }
+}
+@include md {
+  .flexFieldsAndData {
+    gap: 38px;
+  }
+  .flexButtons {
+    display: block;
+    button {
+      padding: 0;
+    }
   }
 }
