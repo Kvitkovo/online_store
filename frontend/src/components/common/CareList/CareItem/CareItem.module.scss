@@ -1,42 +1,71 @@
 @import '/src/variables';
+@import '/src/mixins';
 
 .wrapper {
   position: relative;
   max-width: fit-content;
   cursor: pointer;
-  .numberWrapper {
-    position: absolute;
-    z-index: 0;
-    display: inline-flex;
-    background-color: $white-color;
-    box-shadow: $box-shadow;
-    outline: none;
-    transition: all 0.7s linear;
-    width: 57px;
-    height: 57px;
-    border-radius: 28px;
-    transition: all 0.7s ease-in-out;
-  }
+}
+.numberWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: inline-flex;
+  background-color: $white-color;
+  box-shadow: $box-shadow;
+  outline: none;
+  transition: all 0.7s linear;
+  border-radius: 28px;
+  transition: all 0.7s ease-in-out;
 }
 .titleWrapper {
   padding-left: 73px;
   position: relative;
   display: flex;
+  height: 57px;
   align-items: center;
   z-index: 1;
   text-decoration: underline solid $page-accent-color;
 }
-.closed:hover {
+.hideBtn {
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  padding: 8px 12px;
+  color: $page-accent-color;
+  text-decoration: underline solid $page-accent-color;
+}
+.closed {
+  .titleWrapper,
   .numberWrapper {
-    background: $page-background-color;
-    // border: 1px solid $page-accent-color;
+    pointer-events: all;
   }
-  .title {
-    color: #97cf8e;
-    text-decoration-color: $green-80-color;
+  .titleWrapper:hover {
+    & ~ .numberWrapper {
+      border: 1px solid $page-accent-color;
+      transition: transform 0.1ms ease-in;
+    }
+    .title {
+      color: $green-80-color;
+      text-decoration: underline solid $green-80-color;
+    }
   }
 }
-
+.open {
+  .titleWrapper,
+  .numberWrapper {
+    pointer-events: none;
+  }
+  .numberWrapper {
+    transition: transform 0.1ms ease-in;
+    transform: scale(1);
+  }
+  .title,
+  .number {
+    color: $green-dark-color;
+  }
+}
 .number {
   line-height: 24px;
   font-size: 32px;
@@ -50,52 +79,24 @@
   color: $page-accent-color;
   font-size: 32px;
   font-weight: 500;
-  line-height: 57px;
-
-  &::after {
-    position: absolute;
-    bottom: 8px;
-    display: block;
-    content: '';
-    width: max-content;
-    height: 1px;
-    background-color: $page-accent-color;
-    z-index: 2;
-  }
 }
-
 .content {
   position: relative;
   z-index: 2;
   margin: 16px 32px 16px 73px;
   color: $text-color;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 26px;
   overflow: hidden;
   display: none;
 }
 
-.content.expanded {
-  max-height: 500px; // Adjust this value as needed to fit your content
+@include md {
+  .title {
+    font-size: 22px;
+  }
+  .content {
+    font-size: 16px;
+  }
 }
-// .open .content__text {
-//   opacity: 1;
-// }
-
-// .open {
-//   &::before {
-//     width: 100%;
-//     height: 115%;
-
-//   }
-//   .title {
-//     box-shadow: none;
-//     border: none;
-//     overflow: unset;
-
-//     &::after {
-//       width: 0;
-//     }
-//   }
-// }

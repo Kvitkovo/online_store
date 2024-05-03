@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './CareItem.module.scss';
 import { motion } from 'framer-motion';
 
-export default function CareItem({ item, setSelected, selected }) {
+const CareItem = React.memo(({ item, setSelected, selected }) => {
   const isOpen = selected.includes(item.id);
+  const [animationComplete, setAnimationComplete] = useState(true);
+  const ref = useRef(null);
   const toggle = (id) => {
     setSelected((prevSelected) => {
       if (prevSelected.includes(id)) {
@@ -13,33 +15,55 @@ export default function CareItem({ item, setSelected, selected }) {
       }
     });
   };
+  const handleAnimationStart = () => {
+    if (isOpen) {
+      setAnimationComplete(false);
+      ref.current.addEventListener('transitionend', handleTransitionEnd);
+    }
+    ref.current.addEventListener('transitionend', handleTransitionEnd);
+  };
+
+  const handleTransitionEnd = () => {
+    ref.current.removeEventListener('transitionend', handleTransitionEnd);
+    setAnimationComplete(true);
+  };
+
   return (
     <motion.li
-      className={`${styles.wrapper} ${isOpen ? styles.open : styles.closed}`}
-      onClick={() => toggle(item.id)}
+      className={`${styles.wrapper} ${
+        !isOpen && animationComplete ? styles.closed : styles.open
+      }`}
+      onClick={() => !isOpen && toggle(item.id)}
       animate={{ height: '100%' }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 1.2 }}
     >
       <motion.div
+        className={styles.titleWrapper}
+        animate={isOpen ? { textDecorationColor: 'rgba(108, 194, 94, 0)' } : {}}
+        transition={{ duration: 1 }}
+      >
+        <h3 className={styles.title}>{item.title}</h3>
+      </motion.div>
+      <motion.div
+        ref={ref}
         className={styles.numberWrapper}
         initial={{ width: 57, height: 57 }}
         animate={
           isOpen
-            ? { width: '100%', height: '100%' }
+            ? {
+                width: '100%',
+                height: '100%',
+                transition: { height: { duration: 0.85 }, duration: 0.7 },
+              }
             : {
                 width: 57,
                 height: 57,
                 transition: { width: { delay: 0.3 }, duration: 0.3 },
               }
         }
+        onAnimationStart={handleAnimationStart}
       >
         <span className={styles.number}>{item.id}</span>
-      </motion.div>
-      <motion.div
-        className={styles.titleWrapper}
-        animate={isOpen ? { textDecorationColor: 'transparent' } : {}}
-      >
-        <h3 className={styles.title}>{item.title}</h3>
       </motion.div>
       <motion.p
         initial={{ display: 'none', height: 0 }}
@@ -61,7 +85,12 @@ export default function CareItem({ item, setSelected, selected }) {
         className={styles.content}
       >
         {item.content}
+        <span className={styles.hideBtn} onClick={() => toggle(item.id)}>
+          Згорнути
+        </span>
       </motion.p>
     </motion.li>
   );
-}
+});
+
+export default CareItem;
