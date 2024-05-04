@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './Care.module.scss';
 import Path from '../CardPage/components/Path';
-import CareList from '../../components/common/CareList/CareList';
+import QuestionList from '../../components/common/QuestionList';
+import data from '../../data/careListData';
 
 const Care = () => {
   return (
@@ -30,7 +31,7 @@ const Care = () => {
           className={styles.description__img2}
         />
       </div>
-      <CareList />
+      <QuestionList data={data} />
     </>
   );
 };
