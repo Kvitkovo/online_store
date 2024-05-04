@@ -28,8 +28,13 @@
   }
 }
 
-@include sm {
+@include md {
   .root {
+    height: 894px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 46px;
     p {
       text-align: center;
     }
@@ -38,6 +43,23 @@
       p {
         font-size: 18px;
       }
+    }
+  }
+}
+
+@include sm {
+  .root {
+    height: 397px;
+    gap: 0;
+    & p {
+      margin-top: 0;
+      padding-bottom: 10px;
+    }
+  }
+  .centered {
+    p {
+      margin-top: 0;
+      padding-bottom: 0;
     }
   }
 }

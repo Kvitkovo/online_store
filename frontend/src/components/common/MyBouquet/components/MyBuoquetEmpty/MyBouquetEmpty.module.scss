@@ -3,6 +3,7 @@
 
 .root {
   padding-top: 84.5px;
+  min-height: 816px;
 }
 
 .block {
@@ -24,14 +25,29 @@
     line-height: 31.2px;
   }
 }
+@include md {
+  .root {
+    padding-top: 146px;
+    background: $background-gradient;
+  }
+  .block {
+    width: 100%;
+  }
+}
 
 @include sm {
+  .root {
+    padding-top: 24px;
+    min-height: 325px;
+    overflow-y: auto;
+  }
   .block {
     width: 309px;
   }
   .centered {
     p {
-      font-size: 20px;
+      padding-top: 16px;
+      font-size: 18px;
     }
   }
 }

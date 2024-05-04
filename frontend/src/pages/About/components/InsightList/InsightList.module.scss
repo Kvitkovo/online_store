@@ -1,0 +1,29 @@
+@import '/src/variables';
+@import '/src/mixins';
+@import '../../extention';
+
+.list {
+  position: relative;
+  padding: 60px 0;
+}
+.item {
+  padding-left: 55px;
+  background: url('../../../../components/ui-kit/icons/flower.svg') no-repeat
+    left 3px;
+  background-size: auto;
+}
+.title {
+  @extend %subtitle;
+  margin-bottom: 16px;
+}
+.description {
+  @extend %description;
+  margin-bottom: 32px;
+  width: 661px;
+}
+
+@include lg {
+  .description {
+    width: 543px;
+  }
+}

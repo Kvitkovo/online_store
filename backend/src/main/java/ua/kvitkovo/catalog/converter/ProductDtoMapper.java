@@ -4,7 +4,6 @@ import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import ua.kvitkovo.catalog.dto.request.ProductRequestDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseDto;
 import ua.kvitkovo.catalog.dto.response.ProductResponseForCardDto;
 import ua.kvitkovo.catalog.entity.Product;

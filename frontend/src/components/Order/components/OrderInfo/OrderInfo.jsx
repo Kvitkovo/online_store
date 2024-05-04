@@ -1,18 +1,22 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './OrderInfo.module.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../../../common/Cart/components/CartItem';
 import Divider from '../../../ui-kit/components/Divider';
 import Button from '../../../ui-kit/components/Button';
+import { addOrderToDB } from '../../../../services/order';
+import { clearCart } from '../../../../redux/slices/cartSlice';
 
-const OrderInfo = () => {
+const OrderInfo = ({ orderData }) => {
   const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const productTotal = useMemo(() => {
     const total = cartItems.reduce(
       (accumulator, element) =>
-        accumulator + element.cardQuantity * element.price,
+        accumulator + element.cardQuantity * element.priceWithDiscount,
       0,
     );
     return total;
@@ -25,6 +29,90 @@ const OrderInfo = () => {
     );
     return quantity;
   }, [cartItems]);
+
+  const formattedPhone = (phoneNumber) => phoneNumber.replace(/[\s()]/g, '');
+
+  const getReceiverInfo = () => {
+    let receiverName = '';
+    let receiverPhone = '';
+    const {
+      contactData: {
+        recipient,
+        clientFirstName,
+        clientPhone,
+        recipientFirstName,
+        recipientLastName,
+        recipientMiddleName,
+        recipientPhone,
+      },
+    } = orderData;
+
+    if (recipient === 'I') {
+      receiverName = clientFirstName;
+      receiverPhone = formattedPhone(clientPhone);
+    } else {
+      receiverName =
+        recipientLastName +
+        ' ' +
+        recipientFirstName +
+        ' ' +
+        recipientMiddleName;
+      receiverPhone = formattedPhone(recipientPhone);
+    }
+
+    return { receiverName, receiverPhone };
+  };
+
+  const getOrderItems = () => {
+    return cartItems.map((item) => {
+      const orderItem = {
+        productTitle: item.title,
+        price: item.price,
+        qty: item.cardQuantity,
+      };
+      if (item.orderItemsCompositions) {
+        orderItem.orderItemsCompositions = item.orderItemsCompositions.map(
+          (compositionItem) => ({
+            productId: compositionItem.id,
+            qty: compositionItem.cardQuantity,
+          }),
+        );
+      } else orderItem.productId = item.id;
+      return orderItem;
+    });
+  };
+
+  const sendOrder = async () => {
+    const { receiverName, receiverPhone } = getReceiverInfo();
+    const orderItems = getOrderItems();
+    const {
+      postcardText,
+      contactData: { clientFirstName, clientPhone, clientEmail },
+      deliveryData: { clientStreet, clientHouse, clientFlat, delivery },
+      paymentData: { payment },
+    } = orderData;
+
+    const result = await addOrderToDB({
+      postcardText,
+      customerName: clientFirstName,
+      customerPhone: formattedPhone(clientPhone),
+      customerEmail: clientEmail,
+      addressStreet: clientStreet,
+      addressHous: clientHouse,
+      addressApartment: clientFlat,
+      receiverName,
+      receiverPhone,
+      delivery,
+      pay: payment,
+      shopId: 1,
+      orderItems,
+    });
+
+    if (result) {
+      dispatch(clearCart({ type: 'cart' }));
+      navigate(`/order/${result}`);
+    }
+  };
 
   return (
     <div className={styles.cart}>
@@ -58,7 +146,9 @@ const OrderInfo = () => {
           <Button
             label="Оформити замовлення"
             padding="padding-even"
-            variant="disabled"
+            variant={orderData.paymentData ? 'primary' : 'disabled'}
+            disabled={orderData.paymentData ? false : true}
+            onClick={() => sendOrder()}
           ></Button>
         </div>
       </div>

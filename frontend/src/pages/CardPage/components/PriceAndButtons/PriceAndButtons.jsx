@@ -10,13 +10,14 @@ const PriceAndButtons = ({
   actualPrice,
   oldPrice,
   stockInfo,
-  addToConstructor,
-  addToCart,
+  canUseInBouquet,
+  addToStack,
+  deleteFromStack,
   inCart,
+  inBouquet,
 }) => {
   const isInStock = stockInfo === 'AVAILABLE';
 
-  const addToBouquete = addToConstructor === true;
   return (
     <div className={styles.desktopContainer}>
       {isInStock ? (
@@ -31,7 +32,7 @@ const PriceAndButtons = ({
                 label="Додати у кошик"
                 padding="padding-sm"
                 icon={<ICONS.toCart />}
-                onClick={addToCart}
+                onClick={() => addToStack('cart')}
               />
             )}
             {inCart && (
@@ -40,24 +41,50 @@ const PriceAndButtons = ({
                 label="У кошику"
                 padding="padding-bg"
                 icon={<ICONS.cartChecked />}
-                onClick={addToCart}
+                onClick={() => deleteFromStack('cart')}
               />
             )}
-            {addToBouquete ? (
+            {canUseInBouquet ? (
               <>
-                <div className={styles.bouquetDesktop}>
-                  <Button
-                    variant="no-border"
-                    label="Додати до букету"
-                    padding="padding-header-sm"
-                    reverse="true"
-                    icon={<ICONS.toBouquet />}
-                  />
-                </div>
-                <div className={styles.bouquetTablet}>
-                  {' '}
-                  <IconButton icon={<ICONS.BouquetIcon />} />
-                </div>
+                {inBouquet ? (
+                  <>
+                    <div className={styles.bouquetDesktop}>
+                      <Button
+                        variant="no-border"
+                        label="Додано в букет"
+                        padding="padding-header-sm"
+                        reverse="true"
+                        icon={<ICONS.inBouquet />}
+                        onClick={() => deleteFromStack('bouquet')}
+                      />
+                    </div>
+                    <div className={styles.bouquetMobile}>
+                      <IconButton
+                        icon={<ICONS.inBouquet />}
+                        onClick={() => deleteFromStack('bouquet')}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.bouquetDesktop}>
+                      <Button
+                        variant="no-border"
+                        label="Додати до букету"
+                        padding="padding-header-sm"
+                        reverse="true"
+                        icon={<ICONS.toBouquet />}
+                        onClick={() => addToStack('bouquet')}
+                      />
+                    </div>
+                    <div className={styles.bouquetMobile}>
+                      <IconButton
+                        icon={<ICONS.BouquetIcon />}
+                        onClick={() => addToStack('bouquet')}
+                      />
+                    </div>
+                  </>
+                )}
               </>
             ) : null}
           </div>

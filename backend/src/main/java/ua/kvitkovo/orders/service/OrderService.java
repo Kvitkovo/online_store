@@ -3,6 +3,7 @@ package ua.kvitkovo.orders.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,14 @@ import org.springframework.validation.BindingResult;
 import ua.kvitkovo.catalog.service.ProductService;
 import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.errorhandling.ItemNotUpdatedException;
-import ua.kvitkovo.orders.converter.OrderItemDtoMapper;
+import ua.kvitkovo.notifications.NotificationService;
+import ua.kvitkovo.notifications.NotificationType;
+import ua.kvitkovo.notifications.NotificationUser;
+import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.dto.OrderItemCompositionRequestDto;
 import ua.kvitkovo.orders.dto.OrderItemRequestDto;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
+import ua.kvitkovo.orders.dto.OrderResponseDto;
 import ua.kvitkovo.orders.dto.admin.*;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderItem;
@@ -29,10 +34,7 @@ import ua.kvitkovo.users.service.UserService;
 import ua.kvitkovo.utils.Helper;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -45,6 +47,10 @@ public class OrderService {
     private final ShopService shopService;
     private final UserService userService;
     private final ProductService productService;
+    private final NotificationService emailService;
+    private final OrderDtoMapper orderDtoMapper;
+    @Value("${site.base.url}")
+    private String baseSiteUrl;
 
     public Order findById(Long id) throws ItemNotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("Order not found"));
@@ -75,7 +81,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order addOrder(OrderRequestDto dto, BindingResult bindingResult) {
+    public OrderResponseDto addOrder(OrderRequestDto dto, BindingResult bindingResult) {
         orderDtoValidator.validate(dto, bindingResult);
 
         Order order = new Order();
@@ -95,18 +101,51 @@ public class OrderService {
             //NOP
         }
         orderRepository.save(order);
+        OrderResponseDto orderResponseDto = orderDtoMapper.mapEntityToDto(order);
+
+        int productsCount = order.getOrderItems().stream().mapToInt(i -> i.getQty()).sum();
+        NotificationUser notificationUser = null;
+
+        if (order.getCustomer()!=null){
+            notificationUser = NotificationUser.build(order.getCustomer());
+        }
+
+        if (order.getCustomerEmail() != null && !order.getCustomerEmail().isEmpty()){
+            notificationUser = NotificationUser.build(order.getCustomerEmail(),
+                    order.getCustomerPhone(),
+                    order.getCustomerName()
+            );
+        }
+
+        if (notificationUser != null){
+            Map<String, Object> fields = Map.of(
+                    "order", orderResponseDto,
+                    "productsCount", productsCount,
+                    "shop", order.getShop(),
+                    "baseSiteUrl", baseSiteUrl
+            );
+            emailService.send(NotificationType.NEW_ORDER, fields, notificationUser);
+        }
 
         log.info("The Order was created");
-        return order;
+        return orderResponseDto;
     }
 
     private String getFullTextAddress(Order order) {
-        return String.join(", ",
-                order.getAddressCity(),
-                order.getAddressStreet(),
-                order.getAddressHouse(),
-                order.getAddressApartment()
-        );
+        List<String> addressItems = new ArrayList<>();
+        if (order.getAddressCity() != null){
+            addressItems.add(order.getAddressCity());
+        }
+        if (order.getAddressStreet() != null){
+            addressItems.add(order.getAddressStreet());
+        }
+        if (order.getAddressHouse() != null){
+            addressItems.add(order.getAddressHouse());
+        }
+        if (order.getAddressApartment() != null){
+            addressItems.add(order.getAddressApartment());
+        }
+        return String.join(", ", addressItems);
     }
 
     private BigDecimal calculateTotalSum(Order order) {
@@ -167,19 +206,13 @@ public class OrderService {
     }
 
     @Transactional
-    public List<Order> updateOrdersStatus(List<Long> ordersID, OrderStatus status) {
-        List<Order> orders = ordersID.stream()
-                .map(id -> orderRepository.findById(id)
-                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
-                .toList();
-
+    public void updateOrdersStatus(List<Order> orders, OrderStatus status) {
         for (Order order : orders) {
             checkIfCanChangeOrder(order);
             order.setStatus(status);
             orderRepository.save(order);
             changeStocks(order);
         }
-        return orders;
     }
 
     private void checkIfCanChangeOrder(Order order) {
@@ -218,8 +251,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order cancelOrder(Long id) {
-        Order order = findById(id);
+    public Order cancelOrder(Order order) {
         order.setStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
         return order;
@@ -252,5 +284,12 @@ public class OrderService {
         } else {
             return orders;
         }
+    }
+
+    public List<Order> getAllOrdersByIds(List<Long> ordersID) {
+        return ordersID.stream()
+                .map(id -> orderRepository.findById(id)
+                        .orElseThrow(() -> new ItemNotFoundException("Order not found")))
+                .toList();
     }
 }

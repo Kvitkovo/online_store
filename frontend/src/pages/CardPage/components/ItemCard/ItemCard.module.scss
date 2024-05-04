@@ -13,23 +13,24 @@
 }
 .itemBlock {
   display: grid;
+  grid-template-columns: 45% 50%;
   grid-template-areas:
-    'image image image image image . caption caption caption caption caption caption'
-    'image image image image image .  stock stock stock stock stock stock'
-    'image image image image image .  description description description description description description'
-    'image image image image image .  features features features features features features'
-    'image image image image image .  price price price price price price'
-    'image image image image image . . . . . . .';
-
+    'image caption '
+    'image  stock'
+    'image features'
+    'image price'
+    'image .'
+    'description description';
+  column-gap: 87px;
   padding: 32px 20px 32px 16px;
-  margin-top: 22px;
+  margin: 22px 0 32px;
   border-radius: 8px;
   background: $white-color;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.04);
 }
 .cardImage {
   grid-area: image;
-  margin-right: 74px;
+  max-width: 555px;
 }
 .caption {
   grid-area: caption;
@@ -51,28 +52,13 @@
   padding: 6px 0;
 }
 
-.previous {
-  font-size: 32px;
-  padding: 0 6px;
-  margin-top: 28px;
-  margin-bottom: 32px;
-  font-weight: 500;
-}
-
 @include lg {
   .itemBlock {
-    grid-template-areas:
-      'image caption'
-      'image stock'
-      'image features'
-      'image price'
-      'description description';
+    grid-template-columns: 44% 44%;
+    column-gap: 92px;
   }
   .mainContainer {
     width: inherit;
-  }
-  .cardImage {
-    margin-right: 92px;
   }
 }
 
@@ -80,18 +66,17 @@
   .itemBlock {
     margin-top: 0;
     grid-template-columns: 1fr 1fr;
-    margin-bottom: 46px;
-    padding: 32px 0;
+    padding: 32px 25px;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 38px;
     overflow: hidden;
-    background-color: transparent;
-    box-shadow: none;
+    border-radius: 0;
+    column-gap: 30px;
   }
   .path {
     margin-top: 16px;
     font-size: 14px;
-  }
-  .cardImage {
-    margin-right: 30px;
   }
   .itemDescription {
     padding-bottom: 32px;
@@ -103,7 +88,7 @@
   }
   .itemBlock {
     display: flex;
-    margin-bottom: 38px;
+    margin: 0 -15px 38px;
     flex-direction: column;
     padding: 16px;
   }
@@ -119,7 +104,6 @@
     margin: 0 16px 26px;
   }
   .cardImage {
-    margin-right: 0;
     align-self: center;
   }
 }

@@ -22,6 +22,36 @@
   top: 0;
   bottom: 0;
   margin: auto;
+  animation-name: zoomIn;
+  animation-duration: 0.3s;
+}
+.zoomOut {
+  animation-name: zoomOut;
+  animation-duration: 0.3s;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .cart {
@@ -52,10 +82,16 @@
   width: 634px;
   height: fit-content;
 }
+.confirmationPopup {
+  width: 460px;
+  height: fit-content;
+}
 
-@include sm {
+@include md {
   .drawer {
     overflow-y: auto;
     max-height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
   }
 }

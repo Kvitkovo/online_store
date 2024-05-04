@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-import React, { useEffect, useState, useMemo } from 'react';
-import { NavLink, useLocation, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
 import logo from '../../ui-kit/icons/logo/logo.svg';
@@ -16,99 +16,49 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
-import LoginModal from '../../login/LoginModal';
-import RegisterModal from '../../login/RegisterModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/slices/userSlice';
-import { GetProductsFilter } from '../../../services/products/productsAccess.service';
-import Divider from '../../ui-kit/components/Divider';
+import { GetProducts } from '../../../services/products/productsAccess.service';
+import TotalItems from './components/TotalItems';
+import { initiateCart } from '../../../redux/slices/cartSlice';
+import AuthModal from '../../login/AuthModal';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+  const [isOpenAuthModal, setIsOpenAuthModal] = useState(false);
 
   const navigate = useNavigate();
   const user = useSelector(getUser);
+  const dispatch = useDispatch();
 
-  const toggleLogin = () => {
+  const toggleModal = () => {
     if (user && user.loggedIn) {
       navigate('/account');
     } else {
-      setIsOpenLogin((prev) => !prev);
-      setIsOpenRegister(false);
+      setIsOpenAuthModal((prev) => !prev);
     }
   };
 
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState(null);
-  const handleSearch = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const showResults = () => {
-    const link = `search/${query}`;
-    setQuery('');
-    navigate(link);
-  };
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        if (query.length >= 4) {
-          const data = await GetProductsFilter({
-            size: 3,
-            sortDirection: 'ASC',
-            title: query,
-          });
-          setSuggestions(
-            data.content.map((suggestion) => {
-              const { id, title } = suggestion;
-
-              return { id, title };
-            }),
-          );
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, [query]);
-
-  const highlightWord = (name) => {
-    const lowerCaseName = name.toLowerCase();
-    const indexOfTerm = lowerCaseName.indexOf(query.toLowerCase());
-
-    if (indexOfTerm !== -1) {
-      const beforeTerm = name.slice(0, indexOfTerm);
-      const term = name.slice(indexOfTerm, indexOfTerm + query.length);
-      const afterTerm = name.slice(indexOfTerm + query.length);
-
-      return (
-        <>
-          {beforeTerm}
-          <span className={styles.highlightWord}>{term}</span>
-          {afterTerm}
-        </>
-      );
-    }
-
-    return name;
-  };
-  const handleGoToProduct = () => {
-    setSuggestions(null);
-    setQuery('');
-  };
-
-  const cartItems = useSelector((state) => state.cartSliceReducer.cartItems);
+  const { cartItems, bouquetItems } = useSelector(
+    (state) => state.cartSliceReducer,
+  );
 
   const productQuantity = useMemo(() => {
     const quantity = cartItems.reduce(
-      (accumulator, item) => accumulator + item.cardQuantity,
+      (accumulator, item) => accumulator + +item.cardQuantity,
       0,
     );
     return quantity;
   }, [cartItems]);
+  const flowerQuantity = useMemo(
+    () =>
+      bouquetItems.reduce(
+        (accumulator, item) => accumulator + +item.cardQuantity,
+        0,
+      ),
+    [bouquetItems],
+  );
 
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
@@ -116,21 +66,15 @@ const Header = () => {
 
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
 
-  const toggleCart = () => {
+  const toggleCart = useCallback(() => {
     setIsOpenCart((prev) => !prev);
-  };
+  }, []);
 
-  const toggleMyBouquet = () => {
+  const toggleMyBouquet = useCallback(() => {
     setIsOpenMyBouquet((prev) => !prev);
-  };
+  }, []);
 
-  const toggleRegister = () => {
-    setIsOpenLogin(false);
-    setIsOpenRegister((prev) => !prev);
-  };
   const openGoogleMaps = () => {
     const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
 
@@ -145,11 +89,11 @@ const Header = () => {
 
   useEffect(() => {
     if (openLoginModal) {
-      setIsOpenLogin(true);
+      setIsOpenAuthModal(true);
     }
   }, [openLoginModal]);
 
-  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
+  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenAuthModal);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -163,13 +107,67 @@ const Header = () => {
       window.onscroll = null;
     };
   }, []);
+  const getPrevData = useCallback(
+    async (type) => {
+      const prevList = JSON.parse(localStorage.getItem(type)) || [];
+      const cartList = [];
+      for (const item of prevList) {
+        const { id, cardQuantity, orderItemsCompositions } = item;
+        if (orderItemsCompositions) {
+          const price = orderItemsCompositions.reduce((acc, item) => {
+            acc + item.cardQuantity * item.priceWithDiscount;
+          }, 0);
+          const newItem = {
+            id: id,
+            title: `Свій букет #${id}`,
+            cardQuantity: cardQuantity,
+            discount: 0,
+            image: '/images/new_bouquet.jpg',
+            price: price,
+            priceWithDiscount: price,
+            orderItemsCompositions: orderItemsCompositions,
+          };
+
+          cartList.push(newItem);
+        } else {
+          const info = await GetProducts(item.id);
+          const { id, images, title, price, priceWithDiscount } = info;
+          const newItem = {
+            id: id,
+            title: title,
+            price: price,
+            priceWithDiscount: priceWithDiscount,
+            image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
+            cardQuantity: item.cardQuantity,
+          };
+
+          cartList.push(newItem);
+        }
+      }
+
+      dispatch(
+        initiateCart({
+          items: cartList,
+          type: type,
+        }),
+      );
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    getPrevData('bouquet');
+    getPrevData('cart');
+  }, [dispatch, getPrevData]);
+
   return (
     <div>
       <BurgerMenu
         toggleCart={toggleCart}
         toggleMyBouquet={toggleMyBouquet}
-        toggleLogin={toggleLogin}
+        toggleLogin={toggleModal}
         cartQuantity={productQuantity}
+        flowerQuantity={flowerQuantity}
       />
       <header>
         <div className={styles.containerTop}>
@@ -232,41 +230,7 @@ const Header = () => {
           </div>
 
           <div className={styles.searchField}>
-            <InputSearch
-              search={query}
-              changeInput={handleSearch}
-              clearInput={handleGoToProduct}
-            />
-
-            <ul
-              className={`${styles.suggestions} ${
-                suggestions?.length > 0 && query.length >= 4
-                  ? styles.visible
-                  : ''
-              }`}
-            >
-              <li className={styles.searchResults}>
-                <Button
-                  label="Всі рeзультати пошуку"
-                  variant="no-border"
-                  icon={<ICONS.hideList />}
-                  onClick={showResults}
-                  tabIndex={-1}
-                />
-                <Divider />
-              </li>
-              {suggestions?.map((suggestion) => (
-                <li key={suggestion.id} className={styles.suggestion}>
-                  <Link
-                    to={`/product/${suggestion.id}`}
-                    className={styles.link}
-                    onClick={handleGoToProduct}
-                  >
-                    {highlightWord(suggestion.title)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <InputSearch />
           </div>
           <div className={styles.containerBottomRight}>
             <div className={styles.bouquete}>
@@ -276,6 +240,7 @@ const Header = () => {
                 icon={<ICONS.toBouquet />}
                 onClick={toggleMyBouquet}
               />
+              <TotalItems productQuantity={flowerQuantity} type={'Bouquet'} />
             </div>
 
             <div className={styles.login}>
@@ -283,31 +248,27 @@ const Header = () => {
                 variant="no-border"
                 label={user && user.loggedIn ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
-                onClick={toggleLogin}
+                onClick={toggleModal}
               />
             </div>
             <div className={styles.cart}>
               <IconButton onClick={toggleCart} icon={<ICONS.CartIcon />}>
-                {productQuantity !== 0 ? (
-                  <div className={styles.cartQuantity}>{productQuantity}</div>
-                ) : (
-                  <div className={styles.cartQuantityHide} />
-                )}
+                <TotalItems productQuantity={productQuantity} />
               </IconButton>
             </div>
           </div>
         </div>
       </header>
-      {isOpenCart && <CartPopup toggleCart={toggleCart} />}
-      {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
-      {isOpenLogin && (
-        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
-      )}
-      {isOpenRegister && (
-        <RegisterModal
-          toggleLogin={toggleLogin}
-          toggleRegister={toggleRegister}
+      {isOpenCart && (
+        <CartPopup
+          toggleCart={toggleCart}
+          toggleMyBouquet={toggleMyBouquet}
+          getBouquetData={getPrevData}
         />
+      )}
+      {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
+      {isOpenAuthModal && (
+        <AuthModal isOpen={isOpenAuthModal} toggleModal={toggleModal} />
       )}
       <Modal
         isOpen={isCatalogOpened}

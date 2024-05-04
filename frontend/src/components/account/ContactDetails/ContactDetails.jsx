@@ -44,13 +44,13 @@ const ContactDetails = () => {
         </div>
         <div className={styles.flexButtons}>
           <Button
-            variant="no-border"
+            variant="no-border-hovered"
             label="Редагувати"
             icon={<ICONS.PencilIcon />}
             onClick={navigateToEdit}
           />
           <Button
-            variant="no-border"
+            variant="no-border-hovered"
             label="Змінити пароль"
             icon={<ICONS.changePassword />}
             onClick={navigateToChangePassword}

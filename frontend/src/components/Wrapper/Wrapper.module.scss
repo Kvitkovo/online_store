@@ -3,13 +3,16 @@
 
 .wrapper {
   width: 100%;
-  min-height: 64vh;
   background: $background-gradient;
+  overflow-x: hidden;
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: 1180px;
+  min-height: 66vh;
   padding: 20px 0 46px;
 }
 
@@ -20,12 +23,12 @@
 }
 @include md {
   .container {
+    min-height: 64vh;
     margin: 0 25px;
   }
 }
 @include sm {
   .container {
-    min-width: 343px;
     margin: 0 16px;
   }
 }

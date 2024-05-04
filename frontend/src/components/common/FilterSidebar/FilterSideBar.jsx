@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import styles from './FilterSidebar.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import DropDownList from '../../ui-kit/components/DropDownList';
@@ -27,6 +27,14 @@ const FilterSidebar = ({
   const { categoryId } = useParams();
   const { priceFrom, priceTo } = data;
   const filterOn = Object.keys(selectedFilter).length > 0;
+  const maxPrice = useMemo(
+    () => (selectedFilter.priceTo ? selectedFilter.priceTo : priceTo),
+    [priceTo, selectedFilter.priceTo],
+  );
+  const minPrice = useMemo(
+    () => (selectedFilter.priceFrom ? selectedFilter.priceFrom : priceFrom),
+    [priceFrom, selectedFilter.priceFrom],
+  );
 
   const handleDiscountChange = (event) => {
     const { checked } = event.target;
@@ -65,24 +73,22 @@ const FilterSidebar = ({
     });
   };
 
-  const changePrice = (e, price) => {
-    setData((prev) => {
-      return { ...prev, [price]: e.target.value };
-    });
-    setActiveFilter('price');
+  const setPrice = (initialvalue, type, newValue) => {
+    if (initialvalue !== newValue) {
+      setData((prev) => ({ ...prev, [type]: newValue }));
+      setActiveFilter('price');
+    } else {
+      setData((prev) => {
+        const dataCopy = { ...prev };
+        delete dataCopy[type];
+        return dataCopy;
+      });
+    }
   };
+
   const handleSliderChange = (e) => {
-    const price = {};
-    if (priceFrom !== e[0]) {
-      price.priceFrom = e[0];
-    }
-
-    if (priceTo !== e[1]) {
-      price.priceTo = e[1];
-    }
-
-    setData((prev) => ({ ...prev, ...price }));
-    setActiveFilter('price');
+    setPrice(priceFrom, 'priceFrom', e[0]);
+    setPrice(priceTo, 'priceTo', e[1]);
   };
 
   return (
@@ -123,29 +129,31 @@ const FilterSidebar = ({
           <DropDownList title={'Ціна, діапазон'}>
             <div className={styles.displayPrice}>
               <InputPrice
-                value={
-                  selectedFilter.priceFrom
-                    ? selectedFilter.priceFrom
-                    : priceFrom
+                value={minPrice}
+                minValue={priceFrom}
+                maxValue={maxPrice}
+                handleInputChange={(value) =>
+                  setPrice(priceFrom, 'priceFrom', value)
                 }
-                handleInputChange={(e) => changePrice(e, 'priceFrom')}
                 index={0}
               />
               <ICONS.dash className={styles.priceDevider} />
               <InputPrice
-                value={
-                  selectedFilter.priceTo ? selectedFilter.priceTo : priceTo
+                value={maxPrice}
+                minValue={minPrice}
+                maxValue={priceTo}
+                handleInputChange={(value) =>
+                  setPrice(priceTo, 'priceTo', value)
                 }
-                handleInputChange={(e) => changePrice(e, 'priceTo')}
                 index={1}
               />
-            </div>
-            <div className={styles.rangeContainer}>
               {activeFilter === 'price' && (
                 <PointerButton
                   handleFilter={() => handleFilter(selectedFilter)}
                 />
               )}
+            </div>
+            <div className={styles.rangeContainer}>
               <RangeSlider
                 min={selectedFilter.priceFrom}
                 max={selectedFilter.priceTo}

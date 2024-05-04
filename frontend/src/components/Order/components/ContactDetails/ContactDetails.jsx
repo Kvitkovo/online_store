@@ -9,6 +9,8 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
     contactData?.recipient ? contactData?.recipient === 'anotherPerson' : false,
   );
 
+  const userData = JSON.parse(localStorage.getItem('userfetchedData'));
+
   const {
     register,
     formState: { errors },
@@ -18,9 +20,9 @@ const ContactDetails = ({ contactData, setDataOnSubmit }) => {
   } = useForm({
     defaultValues: {
       recipient: contactData?.recipient ? contactData.recipient : 'I',
-      clientFirstName: contactData?.clientFirstName,
-      clientEmail: contactData?.clientEmail,
-      clientPhone: contactData?.clientPhone,
+      clientFirstName: contactData?.clientFirstName || userData?.firstName,
+      clientEmail: contactData?.clientEmail || userData?.email,
+      clientPhone: contactData?.clientPhone || userData?.phone,
       recipientFirstName: contactData?.recipientFirstName,
       recipientLastName: contactData?.recipientLastName,
       recipientMiddleName: contactData?.recipientMiddleName,

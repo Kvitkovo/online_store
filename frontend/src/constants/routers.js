@@ -17,6 +17,7 @@ const ROUTES = {
   emailConfirmation: '/user/email/:code/confirm/',
   category: '/category',
   order: '/order',
+  placedOrder: '/order/:orderNumber',
   passwordReset: '/user/resetPassword/:code',
   specificCategory: '/categories/:categoryId',
   search: '/search/:query',

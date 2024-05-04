@@ -1,7 +1,11 @@
 @import 'src/variables';
 @import 'src/mixins';
 
+.overlayActive {
+  width: inherit;
+}
 .root {
+  position: relative;
   display: flex;
   align-items: center;
   width: 526px;
@@ -19,15 +23,16 @@
 
 .iconGreen {
   margin-left: 5px;
-  path {
+  & path {
     stroke: $page-accent-color;
   }
 }
 
 .clearBtn {
   position: absolute;
-  top: 8px;
-  right: 6px;
+  right: 0px;
+  padding: 6px;
+  height: 36px;
 }
 
 .input {
@@ -40,6 +45,76 @@
   outline: none;
   border: none;
 }
+.searchResults {
+  & span {
+    padding-left: 12px;
+    color: $page-accent-color;
+  }
+
+  & path {
+    stroke: $page-accent-color;
+  }
+}
+.highlightWord {
+  color: $text-color;
+}
+
+.suggestions {
+  position: absolute;
+  top: 115%;
+  left: 0;
+  width: 100%;
+  min-width: 246px;
+  background: $white-color;
+  border-radius: 8px;
+  box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.1);
+  transform: translateY(-20px);
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    transform 0.5s ease-in,
+    opacity 0.5s ease-in,
+    visibility 0.5s ease-in;
+  &.visible {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+    transition:
+      transform 0.5s ease-out,
+      opacity 0.5s ease-out,
+      visibility 0.5s ease-out;
+  }
+}
+.suggestion {
+  padding: 6px 12px;
+  &:first-child {
+    margin-top: 4px;
+  }
+  &:last-child {
+    margin-bottom: 8px;
+  }
+  & a:visited,
+  & a:link {
+    color: $gray-dark-color;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  &:hover,
+  &:focus-within {
+    background: $gray-light-color;
+  }
+  & a:focus-visible {
+    outline: none;
+  }
+}
+.mobileIcon {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 6px;
+}
+
 @include lg {
   .root {
     width: 100%;
@@ -47,12 +122,45 @@
 }
 
 @include sm {
+  .overlayActive {
+    position: fixed;
+    padding: 6px 16px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $white-color;
+    z-index: 3;
+  }
   .root {
-    width: 343px;
+    gap: 10px;
     .input {
-      width: 255px;
       padding: 6px;
       margin-left: 0;
     }
+  }
+  .mobileIcon {
+    display: block;
+  }
+  .backBtn {
+    padding: 6px;
+    height: 36px;
+    margin: 0;
+  }
+  .searchResults {
+    margin: 6px 16px;
+    & span:first-child {
+      padding: 0;
+    }
+  }
+  .suggestions {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    top: 56px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .suggestion {
+    padding: 6px 16px;
   }
 }

@@ -1,5 +1,6 @@
 package ua.kvitkovo.users.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -48,5 +49,6 @@ public class UserRequestDto {
     private String password;
 
     @Schema(example = "2001-09-01", description = "User birthday")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 }

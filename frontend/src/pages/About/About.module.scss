@@ -1,0 +1,110 @@
+@import '/src/variables';
+@import '/src/mixins';
+@import './extention';
+
+.mainSection {
+  @extend %section;
+  &__title {
+    @extend %title;
+  }
+  &__description {
+    @extend %description;
+    text-align: center;
+  }
+}
+
+.highlighted {
+  color: $page-accent-color;
+}
+
+.mission {
+  @extend %section;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  &__title {
+    @extend %subtitle;
+  }
+  &__description {
+    @extend %description;
+  }
+}
+.services {
+  position: relative;
+  padding: 120px 0;
+  @extend %section;
+
+  &__title {
+    @extend %title;
+    margin: 0 0 88px;
+  }
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    margin-left: -50%;
+    background-color: $page-background-color;
+  }
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.insights {
+  position: relative;
+  &__title {
+    @extend %title;
+    margin-bottom: 0;
+    color: $page-accent-color;
+  }
+}
+.conclusion {
+  margin-bottom: 232px;
+  &__title {
+    @extend %title;
+    color: $page-accent-color;
+  }
+  &__description {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 49px;
+    max-width: 942px;
+    margin: 0 auto 54px;
+    text-align: center;
+  }
+  &__images {
+    position: relative;
+    & img {
+      border: 12px solid $white-color;
+      border-bottom: 64px solid $white-color;
+      border-radius: 2px;
+      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.1);
+      &:not(:nth-child(1)) {
+        position: absolute;
+      }
+      &:first-child {
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        z-index: 2;
+      }
+    }
+  }
+}
+
+@include lg {
+  .mainSection {
+    margin-bottom: 140px;
+  }
+  .conclusion__images {
+    & img {
+      box-sizing: content-box;
+      width: 372px;
+      height: 372px;
+    }
+  }
+}

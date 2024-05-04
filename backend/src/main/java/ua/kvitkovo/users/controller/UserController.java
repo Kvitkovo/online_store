@@ -102,7 +102,7 @@ public class UserController {
         User user = userAuthService.confirmEmail(code);
         log.debug("Email confirmed");
         String token = jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
-        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId());
+        JwtResponseDto response = new JwtResponseDto(user.getEmail(), token, user.getId(), user.getLoginProvider());
         return ResponseEntity.ok(response);
     }
 
@@ -231,7 +231,7 @@ public class UserController {
     @PutMapping("/{id}")
     @PreAuthorize("#id == authentication.principal.id or hasRole('ROLE_ADMIN')")
     public UserResponseDto updateUser(
-            @RequestBody @NotNull(message = "Request body is mandatory") final UserRequestDto request,
+            @RequestBody @NotNull(message = "Request body is mandatory") final UpdateUserRequestDto request,
             @Parameter(description = "The ID of the user to update", required = true,
                     schema = @Schema(type = "integer", format = "int64")
             )

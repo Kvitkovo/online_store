@@ -77,3 +77,16 @@
   padding-bottom: 16px;
   margin-bottom: 14px;
 }
+.orderItemsBlock {
+  max-height: 514px;
+  overflow: auto;
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: $page-accent-color;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+}

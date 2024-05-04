@@ -18,7 +18,6 @@ const CategoryPage = React.memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [productsInCategory, setProductsInCategory] = useState(0);
-  const [sortValue, setSortValue] = useState(0);
 
   const getData = useCallback(async () => {
     try {
@@ -28,7 +27,7 @@ const CategoryPage = React.memo(() => {
         products = await GetDiscountedProducts({
           page: currentPage,
           size: 12,
-          sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          sortDirection: 'ASC',
         });
         category = { name: 'Акційна ціна' };
       } else {
@@ -36,19 +35,22 @@ const CategoryPage = React.memo(() => {
           page: currentPage,
           size: 12,
           categoryId: +categoryId,
-          sortDirection: sortValue === 0 ? 'ASC' : 'DESC',
+          sortDirection: 'ASC',
         });
         category = await GetCategory(categoryId);
       }
       setCurrentCategory(category);
-      setCategoryProducts(products.content);
+      setCategoryProducts({
+        data: products.content,
+        totalAmount: products.totalElements,
+      });
       setProductsInCategory(products.totalElements);
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [categoryId, currentPage, sortValue]);
+  }, [categoryId, currentPage]);
   useEffect(() => {
     setCurrentPage(1);
   }, [categoryId]);
@@ -67,8 +69,7 @@ const CategoryPage = React.memo(() => {
           setCurrentPage={setCurrentPage}
           isLoading={isLoading}
           totalAmount={productsInCategory}
-          sortValue={sortValue}
-          setSortValue={setSortValue}
+          setTotalAmount={setProductsInCategory}
         />
       )}
     </>

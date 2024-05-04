@@ -9,7 +9,7 @@ import { ICONS } from '../components/ui-kit/icons';
 import '../scss/Promotions.scss';
 
 function Promotions() {
-  // inputSearch
+  //inputSearch
   const [search, setSearch] = useState('');
 
   const changeInput = (e) => {

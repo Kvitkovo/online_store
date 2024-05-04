@@ -1,6 +1,7 @@
 package ua.kvitkovo.orders.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,14 +11,19 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kvitkovo.annotations.*;
 import ua.kvitkovo.errorhandling.ItemNotCreatedException;
+import ua.kvitkovo.errorhandling.ItemNotFoundException;
 import ua.kvitkovo.orders.converter.OrderDtoMapper;
 import ua.kvitkovo.orders.dto.OrderRequestDto;
 import ua.kvitkovo.orders.dto.OrderResponseDto;
@@ -26,6 +32,7 @@ import ua.kvitkovo.orders.dto.admin.OrderAdminResponseDto;
 import ua.kvitkovo.orders.entity.Order;
 import ua.kvitkovo.orders.entity.OrderStatus;
 import ua.kvitkovo.orders.service.OrderAccessCheckerService;
+import ua.kvitkovo.orders.service.OrderPrint;
 import ua.kvitkovo.orders.service.OrderService;
 import ua.kvitkovo.utils.ErrorUtils;
 
@@ -41,6 +48,7 @@ public class OrderController {
     private static final String SORT_FIELD_NAME = "created";
 
     private final OrderService orderService;
+    private final OrderPrint orderPrint;
     private final OrderDtoMapper orderDtoMapper;
     private final OrderAccessCheckerService accessCheckerService;
 
@@ -138,8 +146,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             throw new ItemNotCreatedException(ErrorUtils.getErrorsString(bindingResult));
         }
-        Order order = orderService.addOrder(request, bindingResult);
-        return orderDtoMapper.mapEntityToDto(order);
+        return orderService.addOrder(request, bindingResult);
     }
 
     @Operation(summary = "Set orders status")
@@ -157,8 +164,9 @@ public class OrderController {
     public List<OrderResponseDto> setOrdersStatus(@PathVariable List<Long> ordersID,
                                                   @RequestParam OrderStatus status) {
         log.debug("Received request to set Orders with ids {} status {}.", ordersID, status);
-        List<Order> orders = orderService.updateOrdersStatus(ordersID, status);
+        List<Order> orders = orderService.getAllOrdersByIds(ordersID);
         accessCheckerService.checkUpdateStatusAccess(orders);
+        orderService.updateOrdersStatus(orders, status);
         return orderDtoMapper.mapEntityToDto(orders);
     }
 
@@ -173,8 +181,9 @@ public class OrderController {
     @PutMapping("/{id}/cancel")
     public OrderResponseDto cancelOrder(@PathVariable Long id) {
         log.debug("Received request to cancel order with id {} status {}.", id);
-        Order order = orderService.cancelOrder(id);
+        Order order = orderService.findById(id);
         accessCheckerService.checkUpdateStatusAccess(order);
+        orderService.cancelOrder(order);
         return orderDtoMapper.mapEntityToDto(order);
     }
 
@@ -199,5 +208,35 @@ public class OrderController {
         accessCheckerService.checkUpdateAccess(order);
         Order updatedOrder = orderService.updateOrder(order, request, bindingResult);
         return orderDtoMapper.mapEntityToDto(updatedOrder);
+    }
+
+    @Operation(summary = "Print order by ID")
+    @ApiResponseSuccessful
+    @ApiResponseUnauthorized
+    @ApiResponseForbidden
+    @ApiResponseNotFound
+    @GetMapping("/print/{id}")
+    public ResponseEntity<InputStreamResource> printOrder(
+            @Parameter(description = "The ID of the order", required = true,
+                    schema = @Schema(type = "integer", format = "int64")
+            )
+            @PathVariable Long id) {
+        log.debug("Received request to print order with id - {}.", id);
+        Order order = orderService.findById(id);
+        accessCheckerService.checkUpdateAccess(order);
+
+        InputStreamResource resource = null;
+        try {
+            resource = orderPrint.printSalesReceipt(order);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
     }
 }

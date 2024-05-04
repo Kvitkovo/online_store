@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Modals from '../../common/Modals/Modals';
+import React, { useCallback, useState } from 'react';
 import styles from './LoginModal.module.scss';
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
@@ -16,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { handleUserData } from '../../../services/userData/handleUserData.service';
 import { useNavigate } from 'react-router-dom';
 
-const LoginModal = ({ toggleLogin, toggleRegister }) => {
+const LoginModal = ({ toggleModal, toggleAuthState }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -58,17 +57,29 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
     const loginResult = await loginUser({ email, password });
     if (loginResult && loginResult.success) {
       handleUserData(loginResult.token, loginResult.id, navigate, dispatch);
-      toggleLogin();
+      toggleModal();
     } else if (loginResult && loginResult.error) {
       setPasswordError(loginResult.error);
     }
   };
-  const handleGoogleLogin = async (token, id) => {
-    const loginSuccess = await googleLoginRequest(token, id);
-    if (loginSuccess) {
-      handleUserData(loginSuccess.token, loginSuccess.id, navigate, dispatch);
-    }
-  };
+  const handleGoogleLogin = useCallback(
+    async (token, id) => {
+      const loginSuccess = await googleLoginRequest(token, id);
+      if (loginSuccess) {
+        handleUserData(loginSuccess.token, loginSuccess.id, navigate, dispatch);
+      }
+    },
+    [navigate, dispatch],
+  );
+
+  const handleGoogleLoginCallback = useCallback(
+    (token) => {
+      handleGoogleLogin(token);
+      toggleModal();
+    },
+    [handleGoogleLogin, toggleModal],
+  );
+
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setEmailError('');
@@ -88,100 +99,93 @@ const LoginModal = ({ toggleLogin, toggleRegister }) => {
 
   return (
     <>
-      <Modals type="login" onClick={toggleLogin}>
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <p className={styles.loginBtn}>Вхід</p>
-            <p className={styles.registerBtn} onClick={toggleRegister}>
-              Реєстрація
-            </p>
-          </div>
-          <div className={styles.closeBtn}>
-            <IconButton icon={<ICONS.closeMobile />} onClick={toggleLogin} />
-          </div>
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <p className={styles.loginBtn}>Вхід</p>
+          <p className={styles.registerBtn} onClick={toggleAuthState}>
+            Реєстрація
+          </p>
         </div>
+        <div className={styles.closeBtn}>
+          <IconButton icon={<ICONS.closeMobile />} onClick={toggleModal} />
+        </div>
+      </div>
 
-        <div className={styles.formContainer}>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.dataContainer}>
-              <div className={styles.emailContainer}>
-                <label className={styles.labelData} htmlFor="email">
-                  Ел. пошта {submitted && !email && <span>*</span>}
-                </label>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.dataContainer}>
+            <div className={styles.emailContainer}>
+              <label className={styles.labelData} htmlFor="email">
+                Ел. пошта {submitted && !email && <span>*</span>}
+              </label>
 
-                <input
-                  id="email"
-                  className={styles.dataInput}
-                  type="email"
-                  pattern="^[a-zA-Z0-9._-]+@[a-zAZ.-]+\.[a-zA-Z]{2,4}$"
-                  placeholder="Введіть електронну пошту"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value.trim());
-                    setEmailError('');
-                  }}
-                />
-                {submitted && emailError && (
-                  <p className={styles.errorMessage}>{emailError}</p>
-                )}
-              </div>
-
-              <div className={styles.passwordContainer}>
-                <label className={styles.labelData} htmlFor="password">
-                  Пароль {submitted && !password && <span>*</span>}
-                </label>
-
-                <input
-                  id="password"
-                  name="password"
-                  className={styles.dataInput}
-                  type="password"
-                  placeholder="Введіть ваш пароль"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {submitted && passwordError && (
-                  <p className={styles.errorMessage}>{passwordError}</p>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.button}>
-              <Button
-                variant="primary"
-                label="Увійти"
-                padding="padding-sm"
-                isFullWidth={true}
-                type="submit"
-                onClick={handleSubmit}
-              />
-            </div>
-            <div>
-              <p>або</p>
-            </div>
-            <div className={styles.googleLogin}>
-              <GoogleLogin
-                handleGoogleLogin={(token) => {
-                  handleGoogleLogin(token);
-                  toggleLogin();
+              <input
+                id="email"
+                className={styles.dataInput}
+                type="email"
+                pattern="^[a-zA-Z0-9._-]+@[a-zAZ.-]+\.[a-zA-Z]{2,4}$"
+                placeholder="Введіть електронну пошту"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value.trim());
+                  setEmailError('');
                 }}
               />
+              {submitted && emailError && (
+                <p className={styles.errorMessage}>{emailError}</p>
+              )}
             </div>
-          </form>
-          <div className={styles.resetPassword}>
-            <button
-              className={styles.resetPassword}
-              onClick={handleResetPassword}
-              type="button"
-            >
-              Забули пароль?
-            </button>
+
+            <div className={styles.passwordContainer}>
+              <label className={styles.labelData} htmlFor="password">
+                Пароль {submitted && !password && <span>*</span>}
+              </label>
+
+              <input
+                id="password"
+                name="password"
+                className={styles.dataInput}
+                type="password"
+                placeholder="Введіть ваш пароль"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {submitted && passwordError && (
+                <p className={styles.errorMessage}>{passwordError}</p>
+              )}
+            </div>
           </div>
-          {isResetPasswordValid && (
-            <ResetPasswordModal toggleReset={toggleReset} userEmail={email} />
-          )}
+
+          <div className={styles.button}>
+            <Button
+              variant="primary"
+              label="Увійти"
+              padding="padding-sm"
+              isFullWidth={true}
+              type="submit"
+              onClick={handleSubmit}
+            />
+          </div>
+          <div>
+            <p>або</p>
+          </div>
+          <div className={styles.googleLogin}>
+            <GoogleLogin handleGoogleLogin={handleGoogleLoginCallback} />
+          </div>
+        </form>
+        <div className={styles.resetPassword}>
+          <button
+            className={styles.resetPassword}
+            onClick={handleResetPassword}
+            type="button"
+          >
+            Забули пароль?
+          </button>
         </div>
-      </Modals>
+        {isResetPasswordValid && (
+          <ResetPasswordModal toggleReset={toggleReset} userEmail={email} />
+        )}
+      </div>
     </>
   );
 };

@@ -1,0 +1,79 @@
+@import '/src/variables';
+@import '/src/mixins';
+@import '../../extention';
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
+}
+.img {
+  position: relative;
+
+  &__stroke {
+    width: 612px;
+    height: 620px;
+    overflow: visible;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+  }
+  &__cover {
+    background-color: rgba(108, 194, 94, 0.26);
+  }
+}
+
+.shapedImage {
+  position: relative;
+  z-index: 2;
+  width: 570px;
+  height: 577px;
+}
+
+.lotus {
+  display: flex;
+  justify-content: center;
+}
+.service {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 100px;
+  justify-content: space-between;
+
+  &__textSide {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+  }
+  &:nth-child(2n) {
+    .img {
+      grid-column: 1;
+    }
+    .service__textSide {
+      grid-column: 2;
+    }
+  }
+  &__title {
+    margin-top: 130px;
+    @extend %subtitle;
+  }
+  &__description {
+    @extend %description;
+  }
+}
+
+@include lg {
+  .service {
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    &__title {
+      margin-top: 110px;
+    }
+    &:nth-child(2n) {
+      grid-template-columns: 420px 1fr;
+    }
+  }
+  .img {
+    transform: scale(0.75);
+    justify-self: center;
+  }
+}

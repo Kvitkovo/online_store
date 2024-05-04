@@ -1,0 +1,54 @@
+@import '../../../../mixins';
+@import '../../../../variables';
+
+.sliderContainer {
+  position: relative;
+}
+
+.arrowContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 215px;
+}
+
+.arrowLeft {
+  left: 4px;
+  z-index: 1;
+}
+
+.arrowRight {
+  right: 4px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.paginationBullet {
+  background-color: $gray-dark-color;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  border: none;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+@include lg {
+  .arrowContainer {
+    display: none;
+  }
+  .pagination {
+    display: none;
+  }
+}
+
+@include sm {
+  .sliderContainer {
+    margin: 0 auto;
+    min-width: 334px;
+  }
+}
