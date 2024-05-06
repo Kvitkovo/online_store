@@ -5,6 +5,8 @@
 .list {
   position: relative;
   padding: 60px 0;
+  display: flex;
+  flex-direction: column;
 }
 .item {
   padding-left: 55px;
@@ -25,5 +27,26 @@
 @include lg {
   .description {
     width: 543px;
+  }
+}
+
+@include md {
+  .list {
+    padding-top: 56px;
+    padding-bottom: 131px;
+    gap: 16px;
+  }
+  .description {
+    width: 100%;
+    font-size: 24px;
+  }
+}
+
+@include sm {
+  .list {
+    padding-bottom: 0;
+  }
+  .description {
+    font-size: 16px;
   }
 }

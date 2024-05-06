@@ -13,3 +13,13 @@
     right: -242px;
   }
 }
+@include md {
+  .container {
+    right: 0px;
+  }
+}
+@include sm {
+  .container {
+    display: none;
+  }
+}

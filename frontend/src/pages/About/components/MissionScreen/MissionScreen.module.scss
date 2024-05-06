@@ -36,5 +36,35 @@
       top: 14%;
       border-width: 7px;
     }
+    picture img {
+      width: 450px;
+    }
+  }
+}
+@include md {
+  .image {
+    width: 612px;
+    height: 485px;
+    &__smallCopy {
+      width: 317px;
+      height: 329px;
+      top: 14%;
+      border-width: 7px;
+    }
+    picture img {
+      width: 100%;
+    }
+  }
+}
+@include sm {
+  .image {
+    width: 100%;
+    height: min-content;
+    &__smallCopy {
+      width: 182px;
+      height: 191px;
+      top: 12.5%;
+      left: 27.5%;
+    }
   }
 }

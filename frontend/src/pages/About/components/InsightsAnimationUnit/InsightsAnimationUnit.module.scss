@@ -1,6 +1,14 @@
+@import '/src/mixins';
+
 .container {
   position: absolute;
   width: 100%;
   display: flex;
   justify-content: flex-end;
+}
+
+@include md {
+  .container {
+    display: none;
+  }
 }
