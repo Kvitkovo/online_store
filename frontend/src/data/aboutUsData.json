@@ -98,7 +98,6 @@
         { "left": "24%", "top": "19px", "rotate": 1 }
       ],
       "animatedSM": [
-        { "rotate": 18, "left": "39%", "width": 316, "height": 316 },
         {
           "rotate": 18,
           "left": "59%",
@@ -106,7 +105,8 @@
           "width": 188,
           "height": 188,
           "z-index": 0
-        }
+        },
+        { "rotate": 18, "left": "39%", "width": 316, "height": 316 }
       ]
     },
     {
@@ -124,19 +124,19 @@
       ],
       "animatedSM": [
         {
-          "rotate": 36,
-          "left": "69%",
-          "top": 146,
-          "width": 280,
-          "height": 280
-        },
-        {
           "rotate": 32,
           "left": "55%",
           "top": 146,
           "width": 188,
           "height": 188,
           "z-index": 1
+        },
+        {
+          "rotate": 36,
+          "left": "69%",
+          "top": 146,
+          "width": 280,
+          "height": 280
         }
       ]
     }

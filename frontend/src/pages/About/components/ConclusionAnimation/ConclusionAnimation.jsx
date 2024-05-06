@@ -15,12 +15,17 @@ const ConclusionAnimation = ({ data, lastPosition }) => {
             [name]: lastPosition < 150 ? `${-lastPositionInPercent}%` : '-10%',
           }
         : {};
-    const device =
-      window.innerWidth < 868 && window.innerWidth > 510
-        ? 0
-        : window.innerWidth <= 510
-        ? 1
-        : 2;
+    let device;
+    switch (true) {
+      case window.innerWidth < 868 && window.innerWidth > 510:
+        device = 1;
+        break;
+      case window.innerWidth <= 510:
+        device = 0;
+        break;
+      default:
+        device = 2;
+    }
     return (
       <motion.img
         src={src}

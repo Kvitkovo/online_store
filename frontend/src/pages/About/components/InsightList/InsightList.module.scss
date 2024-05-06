@@ -41,3 +41,12 @@
     font-size: 24px;
   }
 }
+
+@include sm {
+  .list {
+    padding-bottom: 0;
+  }
+  .description {
+    font-size: 16px;
+  }
+}
