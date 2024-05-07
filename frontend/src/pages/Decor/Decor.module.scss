@@ -1,0 +1,141 @@
+@import '/src/variables';
+@import '/src/mixins';
+@mixin flower {
+  background: no-repeat url(../../../public/images/flower.svg);
+  content: '';
+  position: absolute;
+  height: 368px;
+  width: 368px;
+}
+.decor {
+  margin: 22px auto auto;
+
+  &__title {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    &_second {
+      margin: 42px 0 32px;
+    }
+  }
+  &__description {
+    max-width: 980px;
+    text-align: center;
+  }
+  &__form {
+    display: flex;
+    margin: 0 auto;
+    max-width: 316px;
+    gap: 16px;
+    flex-direction: column;
+    & input {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid $gray-dark-color;
+      line-height: 24px;
+      outline: none;
+    }
+  }
+  &__comment {
+    width: 100%;
+    background-color: transparent;
+    margin-bottom: 32px;
+    outline: none;
+  }
+}
+.imgs {
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.bgImg {
+  position: absolute;
+  width: 345px;
+  height: 230px;
+  border-radius: 4px;
+  opacity: 50%;
+  &:first-child {
+    left: 16px;
+    top: 294px;
+    transform: rotate(-2.5deg);
+  }
+  &:nth-child(2) {
+    left: 16px;
+    top: 520px;
+    transform: rotate(3.92deg);
+  }
+  &:nth-child(3) {
+    width: 440px;
+    height: 319px;
+    right: 0;
+    top: 338px;
+  }
+}
+.error {
+  color: $discount-color;
+  font-size: 12px;
+  padding-top: -15px;
+}
+
+@include lg {
+  .decor {
+    margin: 80px auto 330px;
+    &__description {
+      max-width: 784px;
+    }
+  }
+  .bgImg {
+    width: 290px;
+    height: 195px;
+    &:first-child {
+      top: 410px;
+    }
+    &:nth-child(2) {
+      top: 600px;
+    }
+    &:last-child {
+      width: 319px;
+      height: 231px;
+      top: 500px;
+    }
+  }
+}
+@include md {
+  .decor {
+    margin: 64px auto 179px;
+  }
+  .bgImg {
+    display: none;
+  }
+  .imgs {
+    overflow: hidden;
+    &::before {
+      @include flower;
+      top: -225px;
+      right: -115px;
+    }
+    &::after {
+      @include flower;
+      bottom: -150px;
+      left: -125px;
+    }
+  }
+}
+
+@include sm {
+  .decor {
+    margin: 12px 0 0;
+    &__title_second {
+      margin-bottom: 24px;
+    }
+  }
+  .imgs {
+    display: none;
+  }
+  .path {
+    display: none;
+  }
+}
