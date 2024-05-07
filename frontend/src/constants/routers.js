@@ -10,6 +10,7 @@ const ROUTES = {
   care: '/care',
   faq: '/faq',
   account: '/account',
+  personalData: '/account/personal-data',
   changeDetails: '/account/change-details',
   changePassword: '/account/change-password',
   orders: '/account/orders',

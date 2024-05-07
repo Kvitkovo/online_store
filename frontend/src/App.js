@@ -29,6 +29,7 @@ import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPag
 import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
+import AccountMobile from './components/account/Account/AccountMobile/AccountMobile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -80,6 +81,7 @@ function App() {
                   <ContactDetails updateLoginStatus={updateLoginStatus} />
                 }
               />
+              <Route path={ROUTES.personalData} element={<AccountMobile />} />
               <Route path={ROUTES.changeDetails} element={<ChangeDetails />} />
               <Route
                 path={ROUTES.changePassword}
