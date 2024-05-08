@@ -1,0 +1,105 @@
+@import '/src/variables';
+@mixin title {
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 50px;
+  text-align: center;
+}
+@mixin flower {
+  background: no-repeat url(../../../public/images/flower.svg);
+  content: '';
+  position: absolute;
+  height: 560px;
+  width: 560px;
+}
+.bgCover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  &::before {
+    @include flower;
+    top: -255px;
+    right: -95px;
+  }
+  .flowersBg {
+    position: absolute;
+    bottom: 140px;
+    &:nth-child(2) {
+      right: 0;
+      transform: scaleX(-1);
+    }
+  }
+}
+.section {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 120px;
+  &__title {
+    @include title;
+    margin-bottom: 100px;
+    &_wide {
+      line-height: 58px;
+      margin-bottom: 60px;
+    }
+  }
+  .accent {
+    color: $page-accent-color;
+  }
+}
+.title {
+  margin: 32px 0 56px;
+  @include title;
+
+  &_green {
+    display: block;
+    color: $page-accent-color;
+  }
+}
+.list {
+  width: 1000px;
+}
+.listTitle {
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 41px;
+}
+.whyUs {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  &__item {
+    display: flex;
+    gap: 95px;
+    align-items: center;
+    &:nth-child(2) {
+      flex-direction: row-reverse;
+    }
+    & h4 {
+      margin-bottom: 24px;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 41px;
+      color: $page-accent-color;
+    }
+    & p {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 43px;
+    }
+    & img {
+      border-radius: 8px;
+    }
+  }
+}
+.fromInside {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 56px;
+}
+.text {
+  @include title;
+}
