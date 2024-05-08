@@ -79,22 +79,66 @@
     {
       "name": "main",
       "src": "/images/about-us/conclusion1.jpg",
-      "initial": {}
+      "initial": [{}],
+      "animatedSM": [
+        {
+          "rotate": -6
+        },
+        {
+          "rotate": -6
+        }
+      ]
     },
     {
       "name": "left",
       "src": "/images/about-us/conclusion2.jpg",
-      "initial": { "left": "24%", "top": "19px", "rotate": 1 }
+      "initial": [
+        { "left": "-3%", "top": "20px", "rotate": 0.62 },
+        { "left": "-3%", "top": "20px", "rotate": 0.62 },
+        { "left": "24%", "top": "19px", "rotate": 1 }
+      ],
+      "animatedSM": [
+        {
+          "rotate": 18,
+          "left": "59%",
+          "top": -36,
+          "width": 188,
+          "height": 188,
+          "z-index": 0
+        },
+        { "rotate": 18, "left": "39%", "width": 316, "height": 316 }
+      ]
     },
     {
       "name": "right",
       "src": "/images/about-us/conclusion3.jpg",
-      "initial": {
-        "right": "24.3%",
-        "top": "15px",
-        "transitionOrigin": "right bottom",
-        "rotate": -1
-      }
+      "initial": [
+        { "left": "5%", "top": "20px", "rotate": -1.34 },
+        { "left": "5%", "top": "20px", "rotate": -1.34 },
+        {
+          "right": "24.3%",
+          "top": "15px",
+          "transitionOrigin": "right bottom",
+          "rotate": -1
+        }
+      ],
+      "animatedSM": [
+        {
+          "rotate": 32,
+          "left": "55%",
+          "top": 146,
+          "width": 188,
+          "height": 188,
+          "z-index": 1
+        },
+        {
+          "rotate": 36,
+          "left": "69%",
+          "top": 146,
+          "width": 280,
+          "height": 280
+        }
+      ]
     }
   ]
 }

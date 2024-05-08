@@ -1,15 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useWindowSize } from '../../../../../hooks/useWindowSize';
 
-const InsightsItem = ({ unit, animation, children }) => {
-  const forthStepTransition = {
-    type: 'spring',
-    stiffness: 41,
-    damping: 9,
-    mass: 1,
-  };
+const InsightsItem = ({ unit, animation, inView, children }) => {
+  const { width } = useWindowSize();
+  const parametrs = width < 868 ? unit.mobileVersion : unit;
+
   const variantsForthStep = (item) => {
-    const { rightPos, topPos, rotate, scaleY, scaleX, scale } = item;
+    const { rightPos, topPos, rotate, rotateB, scaleY, scaleX, scale } = item;
     return {
       initial: {
         right: 0,
@@ -22,7 +20,14 @@ const InsightsItem = ({ unit, animation, children }) => {
       animated: {
         right: rightPos[1],
         top: topPos[1],
-        transition: { delay: 2.2, ...forthStepTransition },
+        rotate: rotateB,
+        transition: {
+          delay: 3.5,
+          type: 'spring',
+          stiffness: 41,
+          damping: 9,
+          mass: 1,
+        },
       },
     };
   };
@@ -33,7 +38,7 @@ const InsightsItem = ({ unit, animation, children }) => {
       animated: {
         right: rightPos[0],
         top: topPos[0],
-        transition: { delay: 1.2, ...animation },
+        transition: { delay: 1.5, ...animation },
       },
       initial: {
         right: -100,
@@ -50,17 +55,15 @@ const InsightsItem = ({ unit, animation, children }) => {
         display: 'flex',
         justifyContent: 'flex-end',
       }}
-      variants={variantsThirdStep(unit)}
+      variants={variantsThirdStep(parametrs)}
       initial="initial"
-      whileInView="animated"
-      viewport={{ once: true, margin: '-20px 10px -50px' }}
+      animate={inView ? 'animated' : 'initial'}
     >
       <motion.div
         style={{ position: 'relative' }}
-        variants={variantsForthStep(unit)}
+        variants={variantsForthStep(parametrs)}
         initial="initial"
-        whileInView="animated"
-        viewport={{ once: true, margin: '-20px 10px -50px' }}
+        animate={inView ? 'animated' : 'initial'}
       >
         {children}
       </motion.div>
