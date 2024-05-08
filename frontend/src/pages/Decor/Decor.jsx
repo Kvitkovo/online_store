@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 import Button from '../../components/ui-kit/components/Button';
 import axiosInstance from '../../services/httpClient';
+import { useNavigate } from 'react-router-dom';
 
 const addDecorRequest = async (request) => {
   try {
@@ -23,6 +24,7 @@ const addDecorRequest = async (request) => {
 };
 
 const Decor = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -36,7 +38,19 @@ const Decor = () => {
       comment: '',
     },
   });
-  const onSubmit = (data) => addDecorRequest(data);
+  const onSubmit = async (data) => {
+    const { customerName, customerPhone, customerEmail, comment } = data;
+    const result = await addDecorRequest({
+      customerName,
+      customerPhone: customerPhone.replaceAll(/[-()]/g, ''),
+      customerEmail,
+      comment,
+      shopId: 1,
+    });
+    if (result) {
+      navigate('/', { state: { action: 'decor sended' } });
+    }
+  };
   return (
     <>
       <div className={styles.path}>
@@ -91,13 +105,13 @@ const Decor = () => {
           <IMaskInput
             type="tel"
             inputMode="tel"
-            placeholder="+380 (XX) XXX-XX-XX"
-            mask="+{38\0} {(}00{)} 000 00 00"
+            placeholder="+38(0XX)XXX-XX-XX"
+            mask="+{38\0}{(}00{)}000-00-00"
             onAccept={(value) => setValue('customerPhone', value)}
             {...register('customerPhone', {
               required: 'Вкажіть ваш номер телефону',
               pattern: {
-                value: /^\+380 \(\d{2}\) \d{3} \d{2} \d{2}$/,
+                value: /^\+380\(\d{2}\)\d{3}-\d{2}-\d{2}$/,
                 message: 'Невірний номер телефону',
               },
             })}
@@ -114,6 +128,7 @@ const Decor = () => {
                 value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                 message: 'Невірна адреса електронної пошти',
               },
+              required: 'Вкажіть ваш email',
             })}
             placeholder="Введіть електронну пошту"
           />
