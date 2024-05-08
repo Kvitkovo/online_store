@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 9px 16px;
+  margin-bottom: 24px;
 }
 .accountTitle {
   font-size: 14px;
@@ -12,4 +13,10 @@
 }
 .mobileUser {
   color: $text-color;
+}
+.fields {
+  color: $gray-dark-color;
+  p {
+    padding: 6px 0;
+  }
 }

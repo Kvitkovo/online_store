@@ -1,13 +1,22 @@
 import React from 'react';
 import styles from './AccountMobile.module.scss';
 import { ICONS } from '../../../ui-kit/icons';
-import { useSelector } from 'react-redux';
+
 import Button from '../../../ui-kit/components/Button';
 import { useNavigate } from 'react-router-dom';
+import IconButton from '../../../ui-kit/components/IconButton';
 
 const AccountMobile = () => {
-  const userData = useSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
+
+  const navigateBack = () => {
+    navigate('/account');
+  };
+
+  const navigateToEdit = () => {
+    navigate('/account/change-details');
+  };
 
   const navigateToChangePassword = () => {
     navigate('/account/change-password');
@@ -16,46 +25,48 @@ const AccountMobile = () => {
   return (
     <>
       <div className={styles.mobileHeader}>
-        <ICONS.ArrowLeftIcon />
+        <div>
+          <IconButton icon={<ICONS.ArrowLeftIcon />} onClick={navigateBack} />
+        </div>
         <p className={styles.accountTitle}>Контактні дані</p>
-        <ICONS.PencilIcon />
+        <IconButton icon={<ICONS.PencilIcon />} onClick={navigateToEdit} />
       </div>
       <div className={styles.mobileUserData}>
         <div className={styles.fields}>
           <p>Ім&apos;я</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.firstName || 'не вказано'}
+              {storedUserData.firstName || 'не вказано'}
             </p>
           )}
           <p>Прізвище</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.lastName || 'не вказано'}
+              {storedUserData.lastName || 'не вказано'}
             </p>
           )}
           <p>По батькові</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.surname || 'не вказано'}
+              {storedUserData.surname || 'не вказано'}
             </p>
           )}
           <p>Номер телефону</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.phone || 'не вказано'}
+              {storedUserData.phone || 'не вказано'}
             </p>
           )}
           <p>Ел. пошта</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.email || 'не вказано'}
+              {storedUserData.email || 'не вказано'}
             </p>
           )}
           <p>Дата народження</p>
-          {userData && (
+          {storedUserData && (
             <p className={styles.mobileUser}>
-              {userData.birthday || 'не вказано'}
+              {storedUserData.birthday || 'не вказано'}
             </p>
           )}
         </div>

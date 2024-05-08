@@ -53,25 +53,4 @@
   .flexFieldsAndData {
     display: none;
   }
-  .mobileHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 9px 16px;
-  }
-  .accountTitle {
-    font-size: 14px;
-    line-height: 18px;
-  }
-  .fields {
-    p {
-      margin: 8px;
-    }
-  }
-  .mobileUser {
-    color: $text-color;
-  }
-  .changePassword {
-    padding: 8px;
-  }
 }
