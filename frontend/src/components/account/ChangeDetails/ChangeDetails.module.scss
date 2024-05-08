@@ -42,6 +42,14 @@ label {
   }
 }
 
+.mobileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 16px;
+  margin-bottom: 24px;
+}
+
 @include lg {
   .formContainer {
     grid-template-columns: 1fr;
