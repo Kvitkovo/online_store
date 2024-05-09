@@ -44,10 +44,12 @@ function Delivery() {
           {whyUs.map(({ title, description }, idx) => (
             <li className={styles.whyUs__item} key={title}>
               <div className={styles.whyUs__content}>
-                <h4>{title}</h4>
+                <h3>{title}</h3>
                 <p>{description}</p>
               </div>
-              <img src={`/images/whyus_${idx + 1}.jpg`} alt={title} />
+              <div className={styles.whyUs__imageContainer}>
+                <img src={`/images/whyus_${idx + 1}.jpg`} alt={title} />
+              </div>
             </li>
           ))}
         </ul>
