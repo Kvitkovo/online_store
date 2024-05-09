@@ -67,3 +67,8 @@ label {
     width: 316px;
   }
 }
+@include sm {
+  .cancelBtn {
+    display: none;
+  }
+}

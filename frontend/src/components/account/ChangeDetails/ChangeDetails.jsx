@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import Account from '../Account';
 import styles from './ChangeDetails.module.scss';
-import Button from '../../ui-kit/components/Button';
-import InputMask from 'react-input-mask';
+/* import Button from '../../ui-kit/components/Button';
+import InputMask from 'react-input-mask'; */
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { editUserData } from '../../../services/userData/editUserData';
+/* import { useDispatch, useSelector } from 'react-redux';
+import { editUserData } from '../../../services/userData/editUserData'; */
 import IconButton from '../../ui-kit/components/IconButton';
 import { ICONS } from '../../ui-kit/icons';
+import DataForm from './DataForm';
 
 const ChangeDetails = () => {
-  const userData = useSelector((state) => state.user.user);
+  /*  const userData = useSelector((state) => state.user.user); */
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch(); */
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 510);
 
   const handleResize = () => {
@@ -20,9 +21,9 @@ const ChangeDetails = () => {
   };
 
   window.addEventListener('resize', handleResize);
-  const [correctUserData, setCorrectUserData] = useState(userData);
+  /*  const [correctUserData, setCorrectUserData] = useState(userData); */
 
-  const handleChange = (e) => {
+  /* const handleChange = (e) => {
     const { id, value } = e.target;
     setCorrectUserData((prevUserData) => ({
       ...prevUserData,
@@ -40,15 +41,15 @@ const ChangeDetails = () => {
     } catch (error) {
       console.error('Error updating user details:', error);
     }
-  };
+  }; */
 
   const navigateBack = () => {
     navigate('/account/personal-data');
   };
 
-  const handleCancel = () => {
+  /*   const handleCancel = () => {
     navigate('/account');
-  };
+  }; */
   return (
     <>
       {isMobile ? (
@@ -63,12 +64,14 @@ const ChangeDetails = () => {
             <p className={styles.accountTitle}>Редагування даних</p>
             <IconButton icon={<ICONS.closeMobile />} />
           </div>
+          <DataForm />
         </>
       ) : (
         <Account title="Редагування особистої інформації">
           <div className={styles.mainContainer}>
             <h2 className={styles.header}> Контактні дані</h2>
-            <form onSubmit={handleSubmit}>
+            <DataForm />
+            {/*             <form onSubmit={handleSubmit}>
               <div className={styles.formContainer}>
                 <div className={styles.nameData}>
                   <div className={styles.dataContainer}>
@@ -159,7 +162,7 @@ const ChangeDetails = () => {
                   onClick={handleCancel}
                 />
               </div>
-            </form>
+            </form> */}
           </div>
         </Account>
       )}
