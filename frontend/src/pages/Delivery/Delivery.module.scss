@@ -16,6 +16,13 @@
 }
 .bgCover {
   position: absolute;
+  background: linear-gradient(
+    188deg,
+    #6ec660 -195.86%,
+    #fff 27.91%,
+    #fff 57.77%,
+    #6ec660 412.93%
+  );
   width: 100%;
   height: 100%;
   left: 0;
@@ -34,8 +41,11 @@
 .flowersBg {
   position: absolute;
   bottom: 140px;
+  &:first-child {
+    left: -230px;
+  }
   &:nth-child(2) {
-    right: 0;
+    right: -230px;
     transform: scaleX(-1);
   }
 }
@@ -155,10 +165,12 @@
     }
   }
   .flowersBg {
-    bottom: 60px;
-    left: -150px;
-    width: 100%;
-    height: auto;
+    &:first-child {
+      bottom: 60px;
+      left: -150px;
+      width: 100%;
+      height: auto;
+    }
     &:nth-child(2) {
       display: none;
     }
