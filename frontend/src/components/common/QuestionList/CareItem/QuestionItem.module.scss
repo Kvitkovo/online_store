@@ -1,0 +1,103 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.wrapper {
+  position: relative;
+  max-width: fit-content;
+  cursor: pointer;
+}
+.numberWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: inline-flex;
+  background-color: $white-color;
+  box-shadow: $box-shadow;
+  outline: none;
+  transition: all 0.7s linear;
+  border-radius: 28px;
+  transition: all 0.7s ease-in-out;
+}
+.titleWrapper {
+  padding-left: 73px;
+  position: relative;
+  display: flex;
+  height: 57px;
+  align-items: center;
+  z-index: 1;
+  text-decoration: underline solid $page-accent-color;
+}
+.hideBtn {
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  padding: 8px 12px;
+  color: $page-accent-color;
+  text-decoration: underline solid $page-accent-color;
+}
+.closed {
+  .titleWrapper,
+  .numberWrapper {
+    pointer-events: all;
+  }
+  .titleWrapper:hover {
+    & ~ .numberWrapper {
+      border: 1px solid $page-accent-color;
+      transition: transform 0.1ms ease-in;
+    }
+    .title {
+      color: $green-80-color;
+      text-decoration: underline solid $green-80-color;
+    }
+  }
+}
+.open {
+  .titleWrapper,
+  .numberWrapper {
+    pointer-events: none;
+  }
+  .numberWrapper {
+    transition: transform 0.1ms ease-in;
+    transform: scale(1);
+  }
+  .title,
+  .number {
+    color: $green-dark-color;
+  }
+}
+.number {
+  line-height: 24px;
+  font-size: 32px;
+  font-weight: 500;
+  color: $page-accent-color;
+  padding: 19px;
+}
+
+.title {
+  position: relative;
+
+  color: $page-accent-color;
+  font-size: 32px;
+  font-weight: 500;
+}
+.content {
+  position: relative;
+  z-index: 2;
+  margin: 16px 32px 16px 73px;
+  color: $text-color;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  overflow: hidden;
+  display: none;
+}
+
+@include md {
+  .title {
+    font-size: 22px;
+  }
+  .content {
+    font-size: 16px;
+  }
+}
