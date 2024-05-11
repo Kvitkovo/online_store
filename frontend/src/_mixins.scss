@@ -40,3 +40,11 @@
   line-height: 24px;
   font-weight: 400;
 }
+
+@mixin flower {
+  background: no-repeat url(../../../public/images/flower.svg);
+  content: '';
+  position: absolute;
+  height: 368px;
+  width: 368px;
+}

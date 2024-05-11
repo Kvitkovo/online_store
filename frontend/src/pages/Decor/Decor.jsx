@@ -4,24 +4,8 @@ import Path from '../CardPage/components/Path';
 import { useForm } from 'react-hook-form';
 import { IMaskInput } from 'react-imask';
 import Button from '../../components/ui-kit/components/Button';
-import axiosInstance from '../../services/httpClient';
 import { useNavigate } from 'react-router-dom';
-
-const addDecorRequest = async (request) => {
-  try {
-    const response = await axiosInstance.post('/decor', request);
-    if (response.status === 200) {
-      return response.data.id;
-    } else {
-      throw new Error(`Помилка: Отримано статус відповіді ${response.status}`);
-    }
-  } catch (error) {
-    console.error(
-      'Виникла помилка під час виконання запиту до сервера:',
-      error.message,
-    );
-  }
-};
+import { addDecorRequest } from '../../services/decor/decor.service';
 
 const Decor = () => {
   const navigate = useNavigate();
