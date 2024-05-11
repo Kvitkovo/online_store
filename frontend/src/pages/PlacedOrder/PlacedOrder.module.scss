@@ -1,41 +1,52 @@
 @import '../../variables';
 @import '../../mixins';
 
-.placedOrder {
-  position: relative;
+.coverBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
+  overflow: hidden;
   &::before {
     background: no-repeat url(../../../public/images/flower.svg);
     content: '';
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 64vh;
-    width: 430px;
-    transform: rotate(-14.48deg);
+    position: absolute;
+    top: -240px;
+    right: -150px;
+    height: 560px;
+    width: 560px;
   }
   &::after {
     background: url(../../../public/images/flowers.svg) no-repeat;
     content: '';
-    position: fixed;
-    bottom: 95px;
-    left: 0;
+    position: absolute;
+    bottom: -235px;
+    left: -240px;
     width: 1087px;
-    height: 64vh;
+    height: 824px;
   }
 }
-
+.placedOrder {
+  display: flex;
+  min-height: inherit;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   z-index: 1;
+  height: 100%;
 }
 
 .title {
   @include title;
-  margin: 170px 0 52px;
+  margin-bottom: 52px;
 }
 
 .orderInformation {
@@ -49,46 +60,36 @@
   }
 }
 
-@include lg {
-  .title {
-    margin-top: 295px;
-  }
-}
-
 @include md {
-  .placedOrder {
+  .coverBg {
     &::after {
-      background-size: cover;
-      height: 450px;
-      width: 615px;
-      bottom: 315px;
+      background-size: contain;
+      width: 752px;
+      height: 571px;
+      bottom: -140px;
+      left: -176px;
     }
     &::before {
-      background-size: cover;
-      height: 290px;
-      width: 260px;
+      background-size: contain;
+      width: 328px;
+      height: 328px;
+      top: -120px;
+      right: -110px;
     }
-  }
-  .title {
-    margin-top: 162px;
   }
 }
 
 @include sm {
-  .placedOrder {
+  .coverBg {
     &::before {
-      background-size: cover;
-      height: 200px;
-      width: 180px;
+      height: 217px;
+      width: 217px;
+      top: -78px;
+      right: -67px;
     }
     &::after {
-      background-size: cover;
-      height: 300px;
-      width: 400px;
-      bottom: 250px;
-    }
-    .container {
-      height: 55vh;
+      bottom: -200px;
+      left: -200px;
     }
     .btn {
       width: 100%;
