@@ -57,108 +57,108 @@ const ChangePasswordForm = () => {
   };
 
   return (
-    <div>
-      <Account title="Редагування особистої інформації">
-        <div className={styles.formContainer}>
-          <h2 className={styles.title}> Зміна паролю</h2>
-          <form onSubmit={handlePasswordChange}>
-            <div className={styles.passwordContainer}>
-              <label htmlFor="password">Введіть старий пароль</label>
-              <input
-                className={styles.dataInput}
-                id="oldPassword"
-                name="oldPassword"
-                type="password"
-                placeholder="Введіть ваш пароль"
-                ref={oldPasswordRef}
-              />
-              {submitted && oldPasswordError && (
-                <p className={styles.errorMessage}>{oldPasswordError}</p>
-              )}
-            </div>
+    <div className={styles.maincointainer}>
+      <Account title="Редагування особистої інформації"></Account>
 
-            <div className={styles.passwordContainer}>
-              <label htmlFor="password">Введіть новий пароль</label>
-              <input
-                className={styles.dataInput}
-                id="newPassword"
-                name="newPassword"
-                type="password"
-                placeholder="Введіть новий пароль"
+      <div className={styles.formContainer}>
+        <h2 className={styles.title}> Зміна паролю</h2>
+        <form onSubmit={handlePasswordChange}>
+          <div className={styles.passwordContainer}>
+            <label htmlFor="password">Введіть старий пароль</label>
+            <input
+              className={styles.dataInput}
+              id="oldPassword"
+              name="oldPassword"
+              type="password"
+              placeholder="Введіть ваш пароль"
+              ref={oldPasswordRef}
+            />
+            {submitted && oldPasswordError && (
+              <p className={styles.errorMessage}>{oldPasswordError}</p>
+            )}
+          </div>
+
+          <div className={styles.passwordContainer}>
+            <label htmlFor="password">Введіть новий пароль</label>
+            <input
+              className={styles.dataInput}
+              id="newPassword"
+              name="newPassword"
+              type="password"
+              placeholder="Введіть новий пароль"
+              value={newPassword}
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+                setShowPasswordReq(true);
+              }}
+            />
+
+            {submitted && !validatePassword(newPassword) && (
+              <ReactPasswordChecklist
+                className={styles.errorMessage}
+                rules={[
+                  'minLength',
+                  'number',
+                  'capital',
+                  'lowercase',
+                  'letter',
+                ]}
+                minLength={8}
                 value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                  setShowPasswordReq(true);
+                messages={{
+                  letter: 'Латинські літери.',
+                  minLength: 'Не менше 8 символів.',
+                  number: 'Мінімум одна цифра',
+                  capital: 'Мінімум одна велика літера.',
+                  lowercase: 'Мінімум одна маленька літера.',
                 }}
+                onValid={() => {
+                  setShowPasswordReq(false);
+                }}
+                onInvalid={() => setShowPasswordReq(true)}
               />
+            )}
+            {!submitted && showPasswordReq && (
+              <p className={styles.passwordReq}>
+                Пароль має бути не менше 8 символів, складатись з цифр,
+                маленьких та великих латинських літер.
+              </p>
+            )}
+          </div>
 
-              {submitted && !validatePassword(newPassword) && (
-                <ReactPasswordChecklist
-                  className={styles.errorMessage}
-                  rules={[
-                    'minLength',
-                    'number',
-                    'capital',
-                    'lowercase',
-                    'letter',
-                  ]}
-                  minLength={8}
-                  value={newPassword}
-                  messages={{
-                    letter: 'Латинські літери.',
-                    minLength: 'Не менше 8 символів.',
-                    number: 'Мінімум одна цифра',
-                    capital: 'Мінімум одна велика літера.',
-                    lowercase: 'Мінімум одна маленька літера.',
-                  }}
-                  onValid={() => {
-                    setShowPasswordReq(false);
-                  }}
-                  onInvalid={() => setShowPasswordReq(true)}
-                />
-              )}
-              {!submitted && showPasswordReq && (
-                <p className={styles.passwordReq}>
-                  Пароль має бути не менше 8 символів, складатись з цифр,
-                  маленьких та великих латинських літер.
-                </p>
-              )}
-            </div>
+          <div className={styles.passwordContainer}>
+            <label htmlFor="password">Повторіть новий пароль</label>
+            <input
+              className={styles.dataInput}
+              id="confirmNewPassword"
+              name="confirmNewPassword"
+              type="password"
+              placeholder="Повторіть пароль"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+            {submitted && confirmNewPassword && (
+              <p className={styles.errorMessage}>{confirmPasswordError}</p>
+            )}
+          </div>
 
-            <div className={styles.passwordContainer}>
-              <label htmlFor="password">Повторіть новий пароль</label>
-              <input
-                className={styles.dataInput}
-                id="confirmNewPassword"
-                name="confirmNewPassword"
-                type="password"
-                placeholder="Повторіть пароль"
-                value={confirmNewPassword}
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
-              />
-              {submitted && confirmNewPassword && (
-                <p className={styles.errorMessage}>{confirmPasswordError}</p>
-              )}
-            </div>
-
-            <div className={styles.btnContainer}>
-              <Button
-                variant="primary"
-                label="Підтвердити"
-                padding="padding-sm"
-                type="submit"
-                onClick={handlePasswordChange}
-              />
-              <Button
-                variant="no-border-hovered"
-                label="Скасувати"
-                padding="padding-header-even"
-                onClick={NavigateAccount}
-              />
-            </div>
-          </form>
-        </div>
-      </Account>
+          <div className={styles.btnContainer}>
+            <Button
+              variant="primary"
+              label="Підтвердити"
+              padding="padding-sm"
+              type="submit"
+              onClick={handlePasswordChange}
+            />
+            <Button
+              variant="no-border-hovered"
+              label="Скасувати"
+              padding="padding-header-even"
+              onClick={NavigateAccount}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

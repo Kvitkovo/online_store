@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import styles from './ChangeDetails.module.scss';
 import { editUserData } from '../../../services/userData/editUserData';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import Button from '../../ui-kit/components/Button';
 
 const DataForm = () => {
-  const userData = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [correctUserData, setCorrectUserData] = useState(userData);
+  const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
+  const [correctUserData, setCorrectUserData] = useState(storedUserData || {});
 
   const handleChange = (e) => {
     const { id, value } = e.target;
