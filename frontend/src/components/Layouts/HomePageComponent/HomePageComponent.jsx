@@ -7,9 +7,15 @@ import styles from './HomePageComponent.module.scss';
 import { GetCategories } from '../../../services/catalog/categoryAccess.service';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import SmallCategories from './components/SmallCategories/SmallCategories';
+import { useLocation } from 'react-router-dom';
+import SuccessPopup from '../../common/SuccessPopup';
 
 const HomePageComponent = () => {
   const { width } = useWindowSize();
+  const location = useLocation();
+  const [openPopup, setOpenPopup] = useState(
+    location.state?.action === 'decor sended',
+  );
   const [mainCategories, setMainCategories] = useState(null);
 
   useEffect(() => {
@@ -28,8 +34,21 @@ const HomePageComponent = () => {
       getCategories();
     }
   }, [width]);
+  useEffect(() => {
+    if (openPopup) {
+      setTimeout(() => {
+        setOpenPopup(false);
+      }, 3000);
+    }
+  }, [openPopup]);
+
   return (
     <>
+      {openPopup && (
+        <div className={styles.decorPopup}>
+          <SuccessPopup>Ваша заявка успішно відправлена</SuccessPopup>
+        </div>
+      )}
       <Carousel data={carouselData.slides} />
       {mainCategories && (
         <ul className={styles.categorySlider}>

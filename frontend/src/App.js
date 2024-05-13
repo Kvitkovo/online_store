@@ -29,6 +29,7 @@ import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPag
 import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
+import Decor from './pages/Decor';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,8 +65,7 @@ function App() {
               element={<ResetPasswordPage />}
             />
             <Route path={ROUTES.specificCategory} element={<CategoryPage />} />
-            {/* temporary solurion. Change when decor page created */}
-            <Route path={ROUTES.decor} element={<Home />} />
+            <Route path={ROUTES.decor} element={<Decor />} />
             <Route
               element={
                 <ProtectedRoutes

@@ -1,0 +1,11 @@
+@import '/src/variables';
+
+.popup {
+  margin: 0 auto;
+  color: $white-color;
+  width: 349px;
+  padding: 24px;
+  border-radius: 8px;
+  background: $black-80-color;
+  box-shadow: $box-shadow;
+}

@@ -6,6 +6,7 @@ import ReactPasswordChecklist from 'react-password-checklist';
 /* eslint-disable max-len */
 import { passwordReset } from '../../../services/passwordReset/passwordReset.service';
 import { DecorIcons } from '../../ui-kit/icons/decor-icons';
+import SuccessPopup from '../../common/SuccessPopup';
 
 const ResetPasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -164,11 +165,7 @@ const ResetPasswordPage = () => {
           </form>
         </div>
 
-        {successPopup && (
-          <div className={styles.popup}>
-            <p>Пароль успішно замінено.</p>
-          </div>
-        )}
+        {successPopup && <SuccessPopup>Пароль успішно замінено.</SuccessPopup>}
       </div>
       <div className={styles.iconsContainer}>
         <div className={styles.flowerLeft}>
