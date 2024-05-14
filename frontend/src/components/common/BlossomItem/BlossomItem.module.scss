@@ -1,0 +1,28 @@
+@import '../../../pages/About/extention';
+
+.item {
+  padding-left: 55px;
+  background: url('../../../components/ui-kit/icons/flower.svg') no-repeat left
+    3px;
+  background-size: auto;
+}
+.title {
+  @extend %subtitle;
+  margin-bottom: 16px;
+}
+.description {
+  @extend %description;
+  margin-bottom: 32px;
+}
+
+@include md {
+  .description {
+    font-size: 24px;
+  }
+}
+
+@include sm {
+  .description {
+    font-size: 16px;
+  }
+}
