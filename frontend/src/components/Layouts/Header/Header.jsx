@@ -16,28 +16,27 @@ import { useModalEffect } from '../../../hooks/useModalEffect';
 import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
-import LoginModal from '../../login/LoginModal';
-import RegisterModal from '../../login/RegisterModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../../redux/slices/userSlice';
+/* import { getUser } from '../../../redux/slices/userSlice'; */
 import { GetProducts } from '../../../services/products/productsAccess.service';
 import TotalItems from './components/TotalItems';
 import { initiateCart } from '../../../redux/slices/cartSlice';
+import AuthModal from '../../login/AuthModal';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [isCatalogOpened, setIsCatalogOpened] = useState(false);
+  const [isOpenAuthModal, setIsOpenAuthModal] = useState(false);
 
   const navigate = useNavigate();
-  const user = useSelector(getUser);
+  const authToken = localStorage.getItem('authToken');
   const dispatch = useDispatch();
 
-  const toggleLogin = () => {
-    if (user && user.loggedIn) {
+  const toggleModal = () => {
+    if (authToken) {
       navigate('/account');
     } else {
-      setIsOpenLogin((prev) => !prev);
-      setIsOpenRegister(false);
+      setIsOpenAuthModal((prev) => !prev);
     }
   };
 
@@ -67,8 +66,6 @@ const Header = () => {
 
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
 
   const toggleCart = useCallback(() => {
     setIsOpenCart((prev) => !prev);
@@ -78,10 +75,6 @@ const Header = () => {
     setIsOpenMyBouquet((prev) => !prev);
   }, []);
 
-  const toggleRegister = () => {
-    setIsOpenLogin(false);
-    setIsOpenRegister((prev) => !prev);
-  };
   const openGoogleMaps = () => {
     const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
 
@@ -96,11 +89,11 @@ const Header = () => {
 
   useEffect(() => {
     if (openLoginModal) {
-      setIsOpenLogin(true);
+      setIsOpenAuthModal(true);
     }
   }, [openLoginModal]);
 
-  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenLogin, isOpenRegister);
+  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenAuthModal);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -172,7 +165,7 @@ const Header = () => {
       <BurgerMenu
         toggleCart={toggleCart}
         toggleMyBouquet={toggleMyBouquet}
-        toggleLogin={toggleLogin}
+        toggleLogin={toggleModal}
         cartQuantity={productQuantity}
         flowerQuantity={flowerQuantity}
       />
@@ -253,9 +246,9 @@ const Header = () => {
             <div className={styles.login}>
               <Button
                 variant="no-border"
-                label={user && user.loggedIn ? 'Профіль' : 'Увійти'}
+                label={authToken ? 'Профіль' : 'Увійти'}
                 icon={<ICONS.halfPerson />}
-                onClick={toggleLogin}
+                onClick={toggleModal}
               />
             </div>
             <div className={styles.cart}>
@@ -274,14 +267,8 @@ const Header = () => {
         />
       )}
       {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
-      {isOpenLogin && (
-        <LoginModal toggleLogin={toggleLogin} toggleRegister={toggleRegister} />
-      )}
-      {isOpenRegister && (
-        <RegisterModal
-          toggleLogin={toggleLogin}
-          toggleRegister={toggleRegister}
-        />
+      {isOpenAuthModal && (
+        <AuthModal isOpen={isOpenAuthModal} toggleModal={toggleModal} />
       )}
       <Modal
         isOpen={isCatalogOpened}

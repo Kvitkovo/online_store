@@ -1,22 +1,30 @@
-@import '/src/variables';
-@import '../../extention';
+@import '/src/mixins';
 
 .list {
   position: relative;
   padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  width: 710px;
 }
-.item {
-  padding-left: 55px;
-  background: url('../../../../components/ui-kit/icons/flower.svg') no-repeat
-    left 3px;
-  background-size: auto;
+
+@include lg {
+  .list {
+    width: 587px;
+  }
 }
-.title {
-  @extend %subtitle;
-  margin-bottom: 16px;
+
+@include md {
+  .list {
+    width: 100%;
+    padding-top: 56px;
+    padding-bottom: 131px;
+    gap: 16px;
+  }
 }
-.description {
-  @extend %description;
-  margin-bottom: 32px;
-  width: 685px;
+
+@include sm {
+  .list {
+    padding-bottom: 0;
+  }
 }

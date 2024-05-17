@@ -113,7 +113,7 @@ const ProductList = React.memo(
       async (selected, sortingIndex = sortValue) => {
         try {
           const data = await GetProductsFilter({
-            page: 1,
+            page: currentPage,
             size: 12,
             categories:
               categoryId !== 'discounted' ? categoryId : selected.categories,
@@ -131,7 +131,7 @@ const ProductList = React.memo(
           setActiveFilter(null);
         }
       },
-      [categoryId, query, setTotalAmount, sortValue],
+      [categoryId, currentPage, query, setTotalAmount, sortValue],
     );
     const handleDataSorting = (value) => {
       setSortValue(value);

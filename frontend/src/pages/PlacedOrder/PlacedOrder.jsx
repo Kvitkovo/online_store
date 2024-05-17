@@ -12,6 +12,7 @@ const PlasedOrder = () => {
   };
   return (
     <div className={styles.placedOrder}>
+      <div className={styles.coverBg}></div>
       <div className={styles.container}>
         <h1 className={styles.title}>Дякуємо за замовлення!</h1>
         <p className={styles.orderInformation}>

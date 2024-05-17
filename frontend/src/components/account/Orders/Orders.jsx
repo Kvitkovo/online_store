@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
@@ -8,11 +8,13 @@ import RecipientDetails from './components/RecipientDetails/RecipientDetails';
 import { getUsersOrders, cancelUserOrder } from '../../../services/order';
 import ConfirmCancellationModal from './components/ConfirmCancellationModal';
 import OrderDeletedModal from './components/OrderDeletedModal';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const userData = useSelector((state) => state.user.user);
   const [data, setData] = useState([]);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
@@ -69,7 +71,7 @@ const Orders = () => {
   };
 
   return (
-    <Account title="Вітаємо, Олена">
+    <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
       <div>
         <h2 className={styles.title}> Мої замовлення</h2>
         <div className={`${styles.gridTable}` + ' ' + `${styles.line}`}>

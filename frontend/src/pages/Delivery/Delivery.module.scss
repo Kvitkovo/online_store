@@ -1,0 +1,274 @@
+@import '/src/variables';
+@import '/src/mixins';
+@mixin title {
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 50px;
+  text-align: center;
+  @include md {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  @include sm {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}
+.bgCover {
+  position: absolute;
+  background: linear-gradient(
+    188deg,
+    #6ec660 -195.86%,
+    #fff 27.91%,
+    #fff 57.77%,
+    #6ec660 412.93%
+  );
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  &::before {
+    content: '';
+    position: absolute;
+    height: 560px;
+    width: 560px;
+    background: no-repeat url(../../../public/images/flower.svg);
+    top: -265px;
+    right: -165px;
+  }
+}
+.flowersBg {
+  position: absolute;
+  bottom: 140px;
+  &:first-child {
+    left: -230px;
+  }
+  &:nth-child(2) {
+    right: -230px;
+    transform: scaleX(-1);
+  }
+}
+.section {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 120px;
+  &__title {
+    @include title;
+    margin-bottom: 100px;
+    &_wide {
+      line-height: 58px;
+      margin-bottom: 60px;
+    }
+  }
+  .accent {
+    color: $page-accent-color;
+  }
+}
+.title {
+  margin: 32px 0 56px;
+  @include title;
+
+  &_green {
+    display: block;
+    color: $page-accent-color;
+  }
+}
+.list {
+  max-width: 1000px;
+}
+.listTitle {
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 41px;
+}
+.whyUs {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  &__item {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    align-items: center;
+    &:nth-child(2) {
+      direction: rtl;
+      .whyUs__content {
+        margin: 0 0 0 95px;
+      }
+    }
+    & h3 {
+      margin-bottom: 24px;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 41px;
+      color: $page-accent-color;
+    }
+    & p {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 43px;
+    }
+    & img {
+      border-radius: 8px;
+    }
+  }
+  &__content {
+    margin-right: 95px;
+  }
+}
+.fromInside {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 56px;
+}
+.text {
+  @include title;
+}
+
+@include lg {
+  .section {
+    margin-bottom: 100px;
+    &:last-of-type {
+      margin-bottom: 34px;
+    }
+  }
+  .whyUs {
+    &__content {
+      margin-right: 30px;
+    }
+    &__item {
+      &:nth-child(2) {
+        .whyUs__content {
+          margin: 0 0 0 30px;
+        }
+      }
+      p {
+        font-size: 26px;
+      }
+    }
+    & img {
+      width: 100%;
+    }
+    &__imageContainer {
+      object-fit: contain;
+    }
+  }
+  .fromInside {
+    gap: 30px;
+    margin-bottom: 56px;
+
+    img {
+      width: 48%;
+      height: max-content;
+      border-radius: 8px;
+    }
+  }
+  .flowersBg {
+    &:first-child {
+      bottom: 60px;
+      left: -150px;
+      width: 100%;
+      height: auto;
+    }
+    &:nth-child(2) {
+      display: none;
+    }
+  }
+}
+
+@include md {
+  .section {
+    margin-bottom: 80px;
+    &:last-of-type {
+      margin-bottom: 18px;
+    }
+    &__title {
+      margin-bottom: 64px;
+      &_wide {
+        font-size: 24px;
+        line-height: 37px;
+        margin-bottom: 46px;
+      }
+    }
+    h3 {
+      font-size: 24px;
+    }
+    p {
+      font-size: 18px;
+      line-height: 27px;
+    }
+  }
+  .listTitle {
+    font-size: 28px;
+  }
+  .fromInside {
+    margin-bottom: 46px;
+  }
+  .bgCover::before {
+    background-size: 328px 328px;
+    height: 328px;
+    width: 328px;
+    top: -143px;
+    right: -100px;
+  }
+}
+
+@include sm {
+  .section {
+    margin-bottom: 54px;
+    &:last-of-type {
+      margin-bottom: 0px;
+    }
+    &__title {
+      margin-bottom: 46px;
+      &_wide {
+        font-size: 18px;
+        line-height: 27px;
+        margin-bottom: 34px;
+      }
+    }
+    h3 {
+      font-size: 18px;
+      line-height: 23px;
+    }
+    p {
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+  .listTitle {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .whyUs {
+    gap: 38px;
+    &__item {
+      grid-template-columns: 100%;
+      &:nth-child(2) {
+        .whyUs__content {
+          margin: 0 0 20px;
+        }
+      }
+    }
+    &__content {
+      margin: 0 0 20px;
+    }
+  }
+  .fromInside {
+    position: relative;
+    height: 381px;
+    img {
+      width: 65%;
+      &:nth-child(2) {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+      }
+    }
+  }
+  .bgCover {
+    display: none;
+  }
+}

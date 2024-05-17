@@ -7,7 +7,9 @@ import { logout } from '../../../redux/slices/userSlice';
 const SideMenu = () => {
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const userLogout = () => {
+    const itemsToRemove = ['authToken', 'authId', 'userfetchedData', 'email'];
+    itemsToRemove.forEach((item) => localStorage.removeItem(item));
     dispatch(logout());
   };
   return (
@@ -29,7 +31,7 @@ const SideMenu = () => {
       >
         Мої замовлення
       </NavLink>
-      <NavLink to="/" className={styles.menuItem} onClick={handleLogout}>
+      <NavLink to="/" className={styles.menuItem} onClick={userLogout}>
         Вихід
       </NavLink>
     </div>
