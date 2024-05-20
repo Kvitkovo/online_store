@@ -1,0 +1,89 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.itemTitle {
+  margin-bottom: 26px;
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 500;
+
+  &_number {
+    color: $page-accent-color;
+  }
+}
+
+.description {
+  margin-bottom: 20px;
+  font-size: 22px;
+  line-height: 34px;
+}
+
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  &__item {
+    position: relative;
+    padding-left: 24px;
+    font-size: 18px;
+    line-height: 24px;
+    &::after {
+      position: absolute;
+      content: '';
+      width: 14px;
+      height: 14px;
+      background-color: $page-accent-color;
+      border-radius: 50%;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
+}
+
+@include lg {
+  .itemTitle {
+    font-size: 24px;
+    line-height: 31px;
+  }
+  .description {
+    font-size: 20px;
+    line-height: 31px;
+  }
+  .subList__item {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@include md {
+  .itemTitle {
+    margin-bottom: 22px;
+    font-size: 20px;
+    line-height: 26px;
+  }
+  .description {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+@include sm {
+  .itemTitle {
+    margin-bottom: 18px;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .description {
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .subList {
+    gap: 14px;
+    &__item {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+}
