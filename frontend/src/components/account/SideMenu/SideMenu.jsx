@@ -11,6 +11,7 @@ const SideMenu = () => {
   window.addEventListener('resize', () => {
     setIsMobile();
   });
+
   const userLogout = () => {
     const itemsToRemove = ['authToken', 'authId', 'userfetchedData', 'email'];
     itemsToRemove.forEach((item) => localStorage.removeItem(item));

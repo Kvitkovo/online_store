@@ -35,7 +35,7 @@ const DataForm = () => {
     navigate('/account');
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formContainer}>
         <div className={styles.nameData}>
           <div className={styles.dataContainer}>
@@ -119,6 +119,7 @@ const DataForm = () => {
           type="submit"
           onClick={handleSubmit}
         />
+
         <div className={styles.cancelBtn}>
           <Button
             variant="no-border-hovered"

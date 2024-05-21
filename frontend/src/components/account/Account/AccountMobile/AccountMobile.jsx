@@ -26,7 +26,7 @@ const AccountMobile = () => {
     <>
       <div className={styles.mobileHeader}>
         <div>
-          <IconButton icon={<ICONS.ArrowLeftIcon />} onClick={navigateBack} />
+          <IconButton icon={<ICONS.backMobile />} onClick={navigateBack} />
         </div>
         <p className={styles.accountTitle}>Контактні дані</p>
         <IconButton icon={<ICONS.PencilIcon />} onClick={navigateToEdit} />

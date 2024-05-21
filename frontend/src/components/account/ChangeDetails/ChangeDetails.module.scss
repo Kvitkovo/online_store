@@ -1,7 +1,10 @@
 @import 'src/_variables.scss';
 @import 'src/_mixins.scss';
 
-.mainContainer {
+.mobileContainer {
+  display: none;
+}
+.headerContainer {
   padding-left: 32px;
 }
 .header {
@@ -61,13 +64,26 @@ label {
 }
 
 @include md {
-  .btnContainer {
-    display: flex;
-    flex-direction: column;
+  .form {
     width: 316px;
+  }
+  .btnContainer {
+    flex-direction: column;
+  }
+  .cancelBtn {
+    align-self: center;
   }
 }
 @include sm {
+  .mobileContainer {
+    display: block;
+  }
+  .mainContainer {
+    display: none;
+  }
+  .form {
+    margin: 0 auto;
+  }
   .cancelBtn {
     display: none;
   }
