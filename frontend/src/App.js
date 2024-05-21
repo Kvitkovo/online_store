@@ -31,12 +31,16 @@ import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 import Decor from './pages/Decor';
 import OrderItemDetailed from './components/account/Orders/components/OrderItemDetailed/OrderItemDetailed';
+import { useWindowSize } from './hooks/useWindowSize';
+import AccountMobileMenu from './components/account/AccountMobileMenu';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const updateLoginStatus = (status) => {
     setIsLoggedIn(status);
   };
+
+  const { width } = useWindowSize();
   return (
     <Router>
       <div className="App">
@@ -78,7 +82,11 @@ function App() {
               <Route
                 path={ROUTES.account}
                 element={
-                  <ContactDetails updateLoginStatus={updateLoginStatus} />
+                  width > 510 ? (
+                    <ContactDetails updateLoginStatus={updateLoginStatus} />
+                  ) : (
+                    <AccountMobileMenu />
+                  )
                 }
               />
               <Route path={ROUTES.changeDetails} element={<ChangeDetails />} />
