@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../../../../services/order';
 import styles from './OrderItemDetailed.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
@@ -11,6 +11,8 @@ const OrderItemDetailed = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const navigate = useNavigate();
+
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -37,6 +39,15 @@ const OrderItemDetailed = () => {
 
   return (
     <div className={styles.orderDetailed}>
+      <div className={styles.header}>
+        <ICONS.ArrowLeftIcon
+          className={styles.iconBlack}
+          onClick={() => navigate(-1)}
+        />
+        <div>
+          Замовлення <u>№ {orderDetails}</u>
+        </div>
+      </div>
       <div className={styles.title}>
         <div className={styles.flexColumnAndGap}>
           <div>Номер</div>
