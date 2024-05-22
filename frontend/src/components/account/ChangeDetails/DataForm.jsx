@@ -12,6 +12,8 @@ const DataForm = () => {
   const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
   const [correctUserData, setCorrectUserData] = useState(storedUserData || {});
 
+  const isMobile = window.innerWidth <= 510;
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setCorrectUserData((prevUserData) => ({
@@ -26,7 +28,11 @@ const DataForm = () => {
     try {
       const updatedUserData = await editUserData(correctUserData, dispatch);
       localStorage.setItem('userfetchedData', JSON.stringify(updatedUserData));
-      navigate('/account', updatedUserData);
+      if (isMobile) {
+        navigate('/account/personal-data', updatedUserData);
+      } else {
+        navigate('/account', updatedUserData);
+      }
     } catch (error) {
       console.error('Error updating user details:', error);
     }
@@ -77,7 +83,7 @@ const DataForm = () => {
             <label htmlFor="phoneNumber">Номер телефону</label>
 
             <InputMask
-              id="phone"
+              id="phoneNumber"
               className={styles.dataInput}
               mask="+380 99 9999999"
               maskChar=""
