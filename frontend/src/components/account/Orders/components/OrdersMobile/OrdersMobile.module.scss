@@ -1,0 +1,18 @@
+@import '../../../../../variables';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 19px;
+
+  .iconBlack {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+
+    path {
+      stroke: $text-color;
+    }
+  }
+}
