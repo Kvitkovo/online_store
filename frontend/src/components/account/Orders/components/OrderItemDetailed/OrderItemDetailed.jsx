@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getOrderById } from '../../../../../services/order';
 import styles from './OrderItemDetailed.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
+import TitleMobile from '../TitleMobile/TitleMobile';
 
 const OrderItemDetailed = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const statusMapping = {
     NEW: 'Новий',
@@ -39,15 +40,13 @@ const OrderItemDetailed = () => {
 
   return (
     <div className={styles.orderDetailed}>
-      <div className={styles.header}>
-        <ICONS.ArrowLeftIcon
-          className={styles.iconBlack}
-          onClick={() => navigate(-1)}
-        />
-        <div>
-          Замовлення <u>№ {orderDetails}</u>
-        </div>
-      </div>
+      <TitleMobile
+        title={
+          <span>
+            Замовлення №<u>{orderDetails}</u>
+          </span>
+        }
+      />
       <div className={styles.title}>
         <div className={styles.flexColumnAndGap}>
           <div>Номер</div>
