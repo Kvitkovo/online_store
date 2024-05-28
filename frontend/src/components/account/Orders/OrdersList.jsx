@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Orders.module.scss';
+import styles from './OrdersList.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
 import OrderItem from './components/OrderItem';
