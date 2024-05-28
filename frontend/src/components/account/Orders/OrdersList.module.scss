@@ -7,6 +7,12 @@
   padding-left: 32px;
 }
 
+.line {
+  border-bottom: 1px solid $green-80-color;
+  padding-bottom: 16px;
+  margin-bottom: 14px;
+}
+
 .gridTable {
   display: grid;
   grid-template-columns: 1.5fr 1.5fr 4fr 2fr 1.5fr 0.5fr;
@@ -15,42 +21,6 @@
   align-items: center;
 }
 
-.arrowDown {
-  text-align: center;
-  &::after,
-  &::before {
-    width: calc((100% - 26px) / 2);
-    height: 1px;
-    border-top: 1px solid $green-80-color;
-    display: inline-block;
-    content: '';
-    padding-top: 11px;
-  }
-}
-
-.btn {
-  display: inline-flex;
-  border-radius: 50%;
-  border: 1px solid $page-accent-color;
-  cursor: pointer;
-}
-
-.btnArrowDown {
-  background-color: $white-color;
-}
-
-.btnArrowUp {
-  background-color: $page-accent-color;
-}
-
-.number {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.numberActive {
-  color: $page-accent-color;
-}
 .noOrders {
   display: flex;
   flex-direction: column;
@@ -59,34 +29,5 @@
 
   p {
     padding: 56px 0 44px;
-  }
-}
-
-.item {
-  margin: 10px 0;
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    $gray-light-color 0 16px,
-    #0000 0 32px
-  );
-}
-
-.line {
-  border-bottom: 1px solid $green-80-color;
-  padding-bottom: 16px;
-  margin-bottom: 14px;
-}
-.orderItemsBlock {
-  max-height: 514px;
-  overflow: auto;
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: $page-accent-color;
-  }
-
-  &::-webkit-scrollbar {
-    width: 4px;
   }
 }
