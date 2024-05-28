@@ -2,23 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styles from './Orders.module.scss';
 import Account from '../Account';
 import { ICONS } from '../../ui-kit/icons';
-import IconButton from '../../ui-kit/components/IconButton';
 import OrderItem from './components/OrderItem';
 import RecipientDetails from './components/RecipientDetails/RecipientDetails';
-import { getUsersOrders, cancelUserOrder } from '../../../services/order';
-import ConfirmCancellationModal from './components/ConfirmCancellationModal';
-import OrderDeletedModal from './components/OrderDeletedModal';
+import { getUsersOrders } from '../../../services/order';
+
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import OrderDeleting from './OrderDeleteIcon/OrderDeleteIcon';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const userData = useSelector((state) => state.user.user);
   const [data, setData] = useState([]);
-  const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
-  const [cancelOrderId, setCancellOrderId] = useState(null);
+
   const statusMapping = {
     NEW: 'Новий',
     ACCEPT: 'Прийнятий',
@@ -27,48 +24,21 @@ const Orders = () => {
     CANCELED: 'Скасований',
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await getUsersOrders();
+      setData(response);
+    } catch (error) {
+      console.error(
+        'Помилка при отриманні замовлень коричтувача: ',
+        error.message,
+      )();
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getUsersOrders();
-        setData(response);
-      } catch (error) {
-        console.error(
-          'Помилка при отриманні замовлень коричтувача: ',
-          error.message,
-        )();
-      }
-    };
     fetchData();
   }, []);
-
-  const toggleShowModal = () => {
-    setShowCancelModal((prev) => !prev);
-  };
-
-  const toggleShowModalDeleted = () => {
-    setShowOrderDeletedModal((prev) => !prev);
-  };
-
-  const cancelOrder = (id) => {
-    setCancellOrderId(id);
-    toggleShowModal();
-  };
-
-  const autoCloseModal = () => {
-    setTimeout(() => {
-      toggleShowModalDeleted();
-    }, 3000);
-  };
-
-  const handleCancellOrder = async () => {
-    await cancelUserOrder(cancelOrderId);
-    toggleShowModal();
-    toggleShowModalDeleted();
-    autoCloseModal();
-    const response = await getUsersOrders();
-    setData(response);
-  };
 
   return (
     <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
@@ -113,10 +83,10 @@ const Orders = () => {
                 <div>{statusMapping[order.status]}</div>
 
                 {statusMapping[order.status] === 'Новий' ? (
-                  <IconButton
-                    icon={<ICONS.deleteIcon />}
-                    onClick={() => cancelOrder(order.id)}
-                  ></IconButton>
+                  <OrderDeleting
+                    orderId={order.id}
+                    onSuccessDelete={fetchData}
+                  />
                 ) : (
                   ''
                 )}
@@ -182,16 +152,6 @@ const Orders = () => {
           </div>
         )}
       </div>
-      {showCancelModal && (
-        <ConfirmCancellationModal
-          toggleShowModal={toggleShowModal}
-          onClose={toggleShowModal}
-          onCancelOrder={handleCancellOrder}
-        />
-      )}
-      {showOrderDeletedModal && (
-        <OrderDeletedModal toggleShowModalDeleted={toggleShowModalDeleted} />
-      )}
     </Account>
   );
 };
