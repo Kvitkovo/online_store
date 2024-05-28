@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getOrderById } from '../../../../../services/order';
-import styles from './OrderItemDetailed.module.scss';
+import styles from './OrderItemMobile.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
 import TitleMobile from '../TitleMobile/TitleMobile';
 
-const OrderItemDetailed = () => {
+const OrderItemMobile = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
@@ -119,4 +119,4 @@ const OrderItemDetailed = () => {
   );
 };
 
-export default OrderItemDetailed;
+export default OrderItemMobile;

@@ -30,7 +30,7 @@ import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 import Decor from './pages/Decor';
-import OrderItemDetailed from './components/account/Orders/components/OrderItemDetailed/OrderItemDetailed';
+import OrderItemMobile from './components/account/Orders/components/OrderItemMobile';
 import { useWindowSize } from './hooks/useWindowSize';
 import AccountMobileMenu from './components/account/AccountMobileMenu';
 
@@ -97,7 +97,7 @@ function App() {
               <Route path={ROUTES.orders} element={<Orders />} />
               <Route
                 path={ROUTES.orderDetailed}
-                element={<OrderItemDetailed />}
+                element={<OrderItemMobile />}
               />
             </Route>
           </Routes>
