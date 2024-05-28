@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { cancelUserOrder } from '../../../../services/order';
-import ConfirmCancellationModal from '../components/ConfirmCancellationModal';
-import OrderDeletedModal from '../components/OrderDeletedModal';
-import { ICONS } from '../../../ui-kit/icons';
-import IconButton from '../../../ui-kit/components/IconButton';
+import { cancelUserOrder } from '../../../../../services/order';
+import ConfirmCancellationModal from '../ConfirmCancellationModal';
+import OrderDeletedModal from '../OrderDeletedModal';
+import { ICONS } from '../../../../../components/ui-kit/icons';
+import IconButton from '../../../../../components/ui-kit/components/IconButton';
 
 const OrderDeleting = ({ orderId, onSuccessDelete }) => {
   const [showCancelModal, setShowCancelModal] = useState(false);

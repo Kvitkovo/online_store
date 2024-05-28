@@ -8,7 +8,7 @@ import { getUsersOrders } from '../../../services/order';
 
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import OrderDeleting from './OrderDeleteIcon/OrderDeleteIcon';
+import OrderDeleting from './components/OrderDeleteIcon/OrderDeleteIcon';
 
 const Orders = () => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
