@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICONS } from '../../../../ui-kit/icons';
+import { ICONS } from '../../../ui-kit/icons';
 import styles from './TitleMobile.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
