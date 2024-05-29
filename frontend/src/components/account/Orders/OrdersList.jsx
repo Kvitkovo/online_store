@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './OrdersList.module.scss';
-import Account from '../Account';
 import { getUsersOrders } from '../../../services/order';
-import { useSelector } from 'react-redux';
+
 import OrderDetails from './components/OrderDetails/OrderDetails';
 
 const Orders = () => {
-  const userData = useSelector((state) => state.user.user);
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -26,7 +24,7 @@ const Orders = () => {
   }, []);
 
   return (
-    <Account title={`Вітаємо, ${userData ? userData.firstName : ''}`}>
+    <>
       <div>
         {data && data.length !== 0 ? (
           <>
@@ -54,7 +52,7 @@ const Orders = () => {
           </div>
         )}
       </div>
-    </Account>
+    </>
   );
 };
 

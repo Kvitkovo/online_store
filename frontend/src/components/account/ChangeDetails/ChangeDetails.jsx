@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Account from '../Account';
 import styles from './ChangeDetails.module.scss';
 import Button from '../../ui-kit/components/Button';
 import InputMask from 'react-input-mask';
@@ -38,7 +37,7 @@ const ChangeDetails = () => {
     navigate('/account');
   };
   return (
-    <Account title="Редагування особистої інформації">
+    <>
       <div className={styles.mainContainer}>
         <h2 className={styles.header}> Контактні дані</h2>
         <form onSubmit={handleSubmit}>
@@ -51,7 +50,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше ім’я"
-                  value={correctUserData.firstName}
+                  value={correctUserData?.firstName}
                   onChange={handleChange}
                 />
               </div>
@@ -62,7 +61,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше прізвище"
-                  value={correctUserData.lastName}
+                  value={correctUserData?.lastName}
                   onChange={handleChange}
                 />
               </div>
@@ -73,7 +72,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше по батькові"
-                  value={correctUserData.surname}
+                  value={correctUserData?.surname}
                   onChange={handleChange}
                 />
               </div>
@@ -88,7 +87,7 @@ const ChangeDetails = () => {
                   mask="+380 99 9999999"
                   maskChar=""
                   placeholder="+380 XX XXXXXXX"
-                  value={correctUserData.phone}
+                  value={correctUserData?.phone}
                   onChange={handleChange}
                 />
               </div>
@@ -101,7 +100,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="email"
                   placeholder="Введіть електрону пошту"
-                  value={correctUserData.email}
+                  value={correctUserData?.email}
                   onChange={handleChange}
                 />
               </div>
@@ -111,7 +110,7 @@ const ChangeDetails = () => {
                   id="birthday"
                   className={styles.dataInput}
                   type="date"
-                  value={correctUserData.birthday}
+                  value={correctUserData?.birthday}
                   onChange={handleChange}
                 />
               </div>
@@ -134,7 +133,7 @@ const ChangeDetails = () => {
           </div>
         </form>
       </div>
-    </Account>
+    </>
   );
 };
 

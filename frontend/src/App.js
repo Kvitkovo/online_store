@@ -31,8 +31,6 @@ import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 import Decor from './pages/Decor';
 import OrderItemMobile from './components/account/Orders/components/OrderItemMobile';
-import { useWindowSize } from './hooks/useWindowSize';
-import AccountMobileMenu from './components/account/AccountMobileMenu';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,7 +38,6 @@ function App() {
     setIsLoggedIn(status);
   };
 
-  const { width } = useWindowSize();
   return (
     <Router>
       <div className="App">
@@ -79,26 +76,27 @@ function App() {
                 />
               }
             >
-              <Route
-                path={ROUTES.account}
-                element={
-                  width > 510 ? (
+              <Routes>
+                <Route
+                  path={ROUTES.account}
+                  element={
                     <ContactDetails updateLoginStatus={updateLoginStatus} />
-                  ) : (
-                    <AccountMobileMenu />
-                  )
-                }
-              />
-              <Route path={ROUTES.changeDetails} element={<ChangeDetails />} />
-              <Route
-                path={ROUTES.changePassword}
-                element={<ChangePassword />}
-              />
-              <Route path={ROUTES.orders} element={<Orders />} />
-              <Route
-                path={ROUTES.orderDetailed}
-                element={<OrderItemMobile />}
-              />
+                  }
+                />
+                <Route
+                  path={ROUTES.changeDetails}
+                  element={<ChangeDetails />}
+                />
+                <Route
+                  path={ROUTES.changePassword}
+                  element={<ChangePassword />}
+                />
+                <Route path={ROUTES.orders} element={<Orders />} />
+                <Route
+                  path={ROUTES.orderDetailed}
+                  element={<OrderItemMobile />}
+                />
+              </Routes>
             </Route>
           </Routes>
           <SupportModal />
