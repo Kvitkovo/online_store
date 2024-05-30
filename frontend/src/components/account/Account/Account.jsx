@@ -4,6 +4,7 @@ import SideMenu from '../SideMenu';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import AccountMobileMenu from '../AccountMobileMenu';
 import TitleMobile from './TitleMobile/TitleMobile';
+import Path from '../../../pages/CardPage/components/Path';
 
 const Account = ({ children }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(true);
@@ -23,6 +24,10 @@ const Account = ({ children }) => {
         <div>
           {showMobileMenu ? (
             <>
+              <Path
+                currentPageData={{ name: 'Кабінет' }}
+                currentPageType={'section'}
+              />
               <h2 className={styles.accountTitle}>
                 Вітаємо, {storedUserData ? storedUserData.firstName : ''}
               </h2>
