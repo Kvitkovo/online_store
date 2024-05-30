@@ -5,11 +5,11 @@ import { useWindowSize } from '../../../hooks/useWindowSize';
 import AccountMobileMenu from '../AccountMobileMenu';
 import TitleMobile from './TitleMobile/TitleMobile';
 
-const Account = ({ children, title }) => {
+const Account = ({ children }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(true);
   const { width } = useWindowSize();
-
   const isMobile = width <= 510;
+  const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
 
   const handleShowMobileMenu = () => {
     setShowMobileMenu((prev) => {
@@ -22,7 +22,12 @@ const Account = ({ children, title }) => {
       {isMobile ? (
         <div>
           {showMobileMenu ? (
-            <AccountMobileMenu onCloseMobileMenu={handleShowMobileMenu} />
+            <>
+              <h2 className={styles.accountTitle}>
+                Вітаємо, {storedUserData ? storedUserData.firstName : ''}
+              </h2>
+              <AccountMobileMenu onCloseMobileMenu={handleShowMobileMenu} />
+            </>
           ) : (
             <>
               <TitleMobile onShowMobileMenu={handleShowMobileMenu} />
@@ -32,7 +37,9 @@ const Account = ({ children, title }) => {
         </div>
       ) : (
         <div>
-          <h2 className={styles.accountTitle}>{title}</h2>
+          <h2 className={styles.accountTitle}>
+            Вітаємо, {storedUserData ? storedUserData.firstName : ''}
+          </h2>
           <div className={styles.gridTwoBlocks}>
             <SideMenu />
             <div className={styles.rightBlock}>{children}</div>

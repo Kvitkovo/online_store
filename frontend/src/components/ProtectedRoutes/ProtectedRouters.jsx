@@ -12,9 +12,7 @@ const ProtectedRoutes = ({ isLoggedIn, updateLoginStatus }) => {
   handleAuthentication();
   return (
     <>
-      <Account title={'fefgewf'}>
-        {auth.token ? <Outlet /> : <Navigate to="/" />}
-      </Account>
+      <Account>{auth.token ? <Outlet /> : <Navigate to="/" />}</Account>
     </>
   );
 };
