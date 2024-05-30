@@ -1,10 +1,11 @@
-@import '../../../../../variables';
+@import '../../../../variables';
 
 .header {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 19px;
+  background-color: $white-color;
 
   .iconBlack {
     position: absolute;

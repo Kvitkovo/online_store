@@ -3,10 +3,29 @@ import { ICONS } from '../../../ui-kit/icons';
 import styles from './TitleMobile.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const TitleMobile = ({ title, onShowMobileMenu }) => {
+const TitleMobile = ({ onShowMobileMenu }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const TitleDefinition = () => {
+    if (/\/account\/orders\/[0-9]/.test(location.pathname)) {
+      const orderId = location.pathname.split('/')[3];
+      return `Замовлення № ${orderId}`;
+    }
+
+    switch (location.pathname) {
+      case '/account':
+        return 'Контакти';
+      case '/account/orders':
+        return 'Мої замовлення';
+      default:
+        return '';
+      case '/account/change-details':
+        return 'Редагування данних';
+      case '/account/change-password':
+        return 'Заміна паролю';
+    }
+  };
   const handleLeftIconClick = () => {
     if (
       location.pathname == '/account' ||
@@ -24,7 +43,7 @@ const TitleMobile = ({ title, onShowMobileMenu }) => {
         className={styles.iconBlack}
         onClick={handleLeftIconClick}
       />
-      <div>{title}</div>
+      <div>{TitleDefinition()}</div>
     </div>
   );
 };

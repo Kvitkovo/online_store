@@ -6,13 +6,11 @@ import OrderItem from '../OrderItem/OrderItem';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import { ICONS } from '../../../../ui-kit/icons';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
-import TitleMobile from '../TitleMobile/TitleMobile';
 
 const OrderItemMobile = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  // const navigate = useNavigate();
 
   const statusMapping = {
     NEW: 'Новий',
@@ -40,13 +38,6 @@ const OrderItemMobile = () => {
 
   return (
     <div className={styles.orderDetailed}>
-      <TitleMobile
-        title={
-          <span>
-            Замовлення №<u>{orderDetails}</u>
-          </span>
-        }
-      />
       <div className={styles.title}>
         <div className={styles.flexColumnAndGap}>
           <div>Номер</div>

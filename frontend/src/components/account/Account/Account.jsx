@@ -3,10 +3,10 @@ import styles from './Account.module.scss';
 import SideMenu from '../SideMenu';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import AccountMobileMenu from '../AccountMobileMenu';
-import TitleMobile from '../Orders/components/TitleMobile/TitleMobile';
+import TitleMobile from './TitleMobile/TitleMobile';
 
 const Account = ({ children, title }) => {
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(true);
   const { width } = useWindowSize();
 
   const isMobile = width <= 510;
@@ -25,10 +25,7 @@ const Account = ({ children, title }) => {
             <AccountMobileMenu onCloseMobileMenu={handleShowMobileMenu} />
           ) : (
             <>
-              <TitleMobile
-                title={'TitleMobile'}
-                onShowMobileMenu={handleShowMobileMenu}
-              />
+              <TitleMobile onShowMobileMenu={handleShowMobileMenu} />
               <div className={styles.rightBlock}>{children}</div>
             </>
           )}
