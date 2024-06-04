@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../../../../services/order';
 import styles from './OrderItemMobile.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
-import IconButton from '../../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../../ui-kit/icons';
+import OrderDeleting from '../OrderDeleteIcon';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
 
 const OrderItemMobile = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const navigate = useNavigate();
 
   const statusMapping = {
     NEW: 'Новий',
@@ -46,10 +46,10 @@ const OrderItemMobile = () => {
         {order && statusMapping[order.status] === 'Новий' ? (
           <div className={styles.deleteIconWithText}>
             Скасувати
-            <IconButton
-              icon={<ICONS.deleteIcon />}
-              // onClick={() => cancelOrder(order.id)}
-            ></IconButton>
+            <OrderDeleting
+              orderId={order.id}
+              onSuccessDelete={() => navigate('/account/orders')}
+            />
           </div>
         ) : (
           ''
