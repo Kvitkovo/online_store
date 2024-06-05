@@ -8,7 +8,10 @@
 .dateAndStatus {
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+}
+
+.title {
+  padding-bottom: 16px;
 }
 
 .cancelOrder {
@@ -16,14 +19,22 @@
   align-items: center;
   gap: 8px;
   padding-right: 8px;
+  padding-top: 16px;
 
   & div:first-child {
     color: $gray-dark-color;
   }
 }
 
-.number div:first-child {
-  padding-bottom: 8px;
+.number,
+.date,
+.status,
+.totalAmount,
+.receiver {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px 0;
 }
 
 .number div:last-child {
@@ -33,4 +44,14 @@
 
 .status {
   width: 120px;
+}
+
+.details {
+  padding: 24px 16px 25px;
+  border-bottom: 1px solid $gray-light-color;
+}
+
+.link {
+  border-bottom: 1px solid $page-accent-color;
+  color: $page-accent-color;
 }
