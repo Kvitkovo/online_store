@@ -28,37 +28,39 @@ const Orders = () => {
 
   return (
     <>
-      {isMobile ? (
-        <OrdersListMobile data={data} />
-      ) : (
-        <div>
-          {data && data.length !== 0 ? (
-            <>
-              <h2 className={styles.title}> Мої замовлення</h2>
-              <div className={`${styles.gridTable}` + ' ' + `${styles.line}`}>
-                <div>Номер</div>
-                <div>Дата</div>
-                <div>Отримувач</div>
-                <div>Сума</div>
-                <div>Статус</div>
-                <div></div>
+      <div>
+        {data && data.length !== 0 ? (
+          <div>
+            {isMobile ? (
+              <OrdersListMobile data={data} />
+            ) : (
+              <div>
+                <h2 className={styles.title}> Мої замовлення</h2>
+                <div className={`${styles.gridTable}` + ' ' + `${styles.line}`}>
+                  <div>Номер</div>
+                  <div>Дата</div>
+                  <div>Отримувач</div>
+                  <div>Сума</div>
+                  <div>Статус</div>
+                  <div></div>
+                </div>
+                {data.map((order) => (
+                  <OrderDetails
+                    key={order.id}
+                    order={order}
+                    fetchData={fetchData}
+                  />
+                ))}
               </div>
-              {data.map((order) => (
-                <OrderDetails
-                  key={order.id}
-                  order={order}
-                  fetchData={fetchData}
-                />
-              ))}
-            </>
-          ) : (
-            <div className={styles.noOrders}>
-              <p>У вас поки що немає замовлень.</p>
-              <img src="/images/no_orders.jpg" alt="no orders" />
-            </div>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        ) : (
+          <div className={styles.noOrders}>
+            <p>У вас поки що немає замовлень.</p>
+            <img src="/images/no_orders.jpg" alt="no orders" />
+          </div>
+        )}
+      </div>
     </>
   );
 };

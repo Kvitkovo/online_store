@@ -1,4 +1,5 @@
 @import '../../../variables';
+@import '../../../mixins';
 
 .title {
   font-size: 20px;
@@ -29,5 +30,11 @@
 
   p {
     padding: 56px 0 44px;
+  }
+}
+
+@include sm {
+  .noOrders {
+    height: 51vh;
   }
 }
