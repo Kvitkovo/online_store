@@ -57,7 +57,7 @@ const OrderItemMobile = () => {
       </div>
       <div>
         {order && (
-          <div>
+          <div className={styles.orderDetails}>
             <div className={styles.dateAndStatus}>
               <div className={styles.flexColumnAndGap}>
                 <div>Дата</div>

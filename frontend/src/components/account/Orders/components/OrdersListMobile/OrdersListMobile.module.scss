@@ -26,6 +26,15 @@
   }
 }
 
+.number div:first-child,
+.date div:first-child,
+.status div:first-child,
+.totalAmount div:first-child,
+.receiver div:first-child {
+  font-size: 14px;
+  line-height: 18.2px;
+}
+
 .number,
 .date,
 .status,
