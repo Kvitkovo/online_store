@@ -28,7 +28,7 @@ const OrderItemMobile = () => {
         setQuantity(response.orderItems.length);
       } catch (error) {
         console.error(
-          'Помилка при отриманні замовлень коричтувача: ',
+          'Помилка при отриманні замовлень кориcтувача: ',
           error.message,
         );
       }

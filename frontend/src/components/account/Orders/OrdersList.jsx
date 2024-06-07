@@ -32,7 +32,7 @@ const Orders = () => {
         {data && data.length !== 0 ? (
           <div>
             {isMobile ? (
-              <OrdersListMobile data={data} />
+              <OrdersListMobile data={data} fetchData={fetchData} />
             ) : (
               <div>
                 <h2 className={styles.title}> Мої замовлення</h2>

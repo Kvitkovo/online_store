@@ -4,20 +4,25 @@ import styles from './OrdersListMobile.module.scss';
 import OrderDeleting from '../OrderDeleteIcon/OrderDeleteIcon';
 import { statusMapping } from '../../../../../constants/statusMapping';
 
-const OrdersListMobile = ({ data }) => {
+const OrdersListMobile = ({ data, fetchData }) => {
   return (
-    <div>
+    <div className={styles.ordersListMobile}>
       {data.map((order) => (
         <div key={order.id} className={styles.orderList}>
           <div className={styles.blockNumber}>
             <div className={styles.title}>
               <div className={styles.number}>
                 <div>Номер</div>
-                <div>№ {order.id}</div>
+                <Link
+                  to={`/account/orders/${order.id}`}
+                  className={styles.link}
+                >
+                  № {order.id}
+                </Link>
               </div>
               <div className={styles.cancelOrder}>
                 <div>Скасувати</div>
-                <OrderDeleting orderId={order.id} />
+                <OrderDeleting orderId={order.id} onSuccessDelete={fetchData} />
               </div>
             </div>
           </div>
