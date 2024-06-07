@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './OrderDetails.module.scss';
 import OrderDeleting from '../OrderDeleteIcon/OrderDeleteIcon';
-import { Link } from 'react-router-dom';
 import OrderItem from '../OrderItem';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
 import { ICONS } from '../../../../ui-kit/icons';
@@ -52,7 +51,6 @@ const OrderDetails = ({ order, fetchData }) => {
         ) : (
           ''
         )}
-        <Link to={`/account/orders/${order.id}`}> Детально</Link>
       </div>
       {showOrdersDetails === order.id && (
         <>
