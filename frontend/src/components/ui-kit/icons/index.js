@@ -57,6 +57,8 @@ import { ReactComponent as insightsFlower } from './about-us/insights/insights-f
 import { ReactComponent as insightsLeaves } from './about-us/insights/insights-leaf.svg';
 import { ReactComponent as chamomile } from './about-us/insights/chamomile.svg';
 import { ReactComponent as yesIcon } from './yes-icon.svg';
+import { ReactComponent as nextButton } from './arrow-next.svg';
+import { ReactComponent as prevButton } from './arrow-prev.svg';
 
 export const ICONS = {
   addComponent,
@@ -117,4 +119,6 @@ export const ICONS = {
   insightsLeaves,
   chamomile,
   yesIcon,
+  nextButton,
+  prevButton,
 };

@@ -1,0 +1,90 @@
+@import '/src/mixins';
+$section_mb: 96px;
+%sectionTitle {
+  margin-bottom: 54px;
+  font-size: 32px;
+  line-height: 49px;
+  font-weight: 500;
+  text-align: center;
+  color: $page-accent-color;
+}
+%flower {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 103px;
+  height: 89px;
+  background-image: url('../../../public/images/rose.svg');
+}
+.main {
+  position: relative;
+  padding: 32px 0 96px;
+  &::after {
+    @extend %flower;
+    bottom: -30px;
+  }
+}
+.title {
+  margin-bottom: 44px;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 41px;
+  text-align: center;
+}
+
+.description {
+  font-size: 24px;
+  line-height: 37px;
+  text-align: center;
+}
+
+.advantages {
+  margin-bottom: $section_mb;
+  &__title {
+    @extend %sectionTitle;
+  }
+}
+.becomePartner {
+  position: relative;
+  margin-bottom: $section_mb;
+  &::before {
+    @extend %flower;
+    right: 0;
+    top: -30px;
+    transform: scaleX(-1);
+  }
+  &__title {
+    @extend %sectionTitle;
+  }
+  &__container {
+    display: flex;
+    gap: 20px;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    p {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 37px;
+    }
+  }
+}
+.conclusions {
+  margin-bottom: $section_mb;
+  &__title {
+    @extend %sectionTitle;
+    color: $text-color;
+    &_accent {
+      color: $page-accent-color;
+    }
+  }
+  &__imgContainer {
+    display: flex;
+    gap: 20px;
+    img {
+      border-radius: 8px;
+    }
+  }
+}
