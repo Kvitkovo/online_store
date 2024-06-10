@@ -136,7 +136,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedOrigins(List.of("https://delicate-sopapillas-73d2b2.netlify.app", "http://localhost:3000"));
+        cors.setAllowedOrigins(List.of("https://delicate-sopapillas-73d2b2.netlify.app", "http://localhost:3000", "https://api.imperiaholoda.com.ua"));
         cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"));
         cors.setAllowedHeaders(List.of("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
         cors.setExposedHeaders(List.of("Content-Type", "Cache-Control", "Content-Language", "Content-Length", "Last-Modified"));
