@@ -59,6 +59,11 @@ import { ReactComponent as chamomile } from './about-us/insights/chamomile.svg';
 import { ReactComponent as yesIcon } from './yes-icon.svg';
 import { ReactComponent as nextButton } from './arrow-next.svg';
 import { ReactComponent as prevButton } from './arrow-prev.svg';
+import { ReactComponent as messageAnimation } from './message__animation.svg';
+import { ReactComponent as phoneAnimation } from './phone__animation.svg';
+import { ReactComponent as dollar } from './dollar.svg';
+import { ReactComponent as goldGear } from './gold_gear.svg';
+import { ReactComponent as blueGear } from './blue_gear.svg';
 
 export const ICONS = {
   addComponent,
@@ -121,4 +126,9 @@ export const ICONS = {
   yesIcon,
   nextButton,
   prevButton,
+  messageAnimation,
+  phoneAnimation,
+  dollar,
+  goldGear,
+  blueGear,
 };
