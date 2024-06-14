@@ -3,7 +3,8 @@ import React from 'react';
 import Account from '../account/Account';
 
 const ProtectedRoutes = ({ isLoggedIn, updateLoginStatus }) => {
-  let auth = { token: true };
+  let auth = { token: localStorage.getItem('authToken') };
+
   const handleAuthentication = () => {
     if (!auth.token && isLoggedIn) {
       updateLoginStatus(false);
