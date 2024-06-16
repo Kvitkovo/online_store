@@ -15,7 +15,7 @@ const Orders = () => {
       console.error(
         'Помилка при отриманні замовлень коричтувача: ',
         error.message,
-      )();
+      );
     }
   };
 
