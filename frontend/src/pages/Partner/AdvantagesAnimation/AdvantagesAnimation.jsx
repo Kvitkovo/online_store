@@ -6,7 +6,7 @@ import IconButton from '../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../components/ui-kit/icons';
 
 const AdvantagesAnimation = () => {
-  const [activeId, setActiveId] = useState(0);
+  const [activeId, setActiveId] = useState(1);
   const [rotation, setRotation] = useState(0);
   const { advantages } = data;
 
@@ -39,6 +39,15 @@ const AdvantagesAnimation = () => {
     delay: 1,
     repeat: Infinity,
     repeatType: 'loop',
+  };
+  const springTransitionMoney = {
+    type: 'spring',
+    stiffness: 80,
+    damping: 20,
+    delay: 1,
+    repeat: Infinity,
+    repeatType: 'loop',
+    repeatDelay: 0.3,
   };
 
   return (
@@ -135,7 +144,7 @@ const AdvantagesAnimation = () => {
           transition={{ duration: 1, delay: 0.35 }}
         >
           <motion.div
-            className={styles.icon__inner}
+            className={`${styles.icon__inner} ${styles.icon__inner_money}`}
             animate={
               activeId === 2
                 ? { scale: 2.2, transition: { delay: 1, duration: 0.3 } }
@@ -143,20 +152,23 @@ const AdvantagesAnimation = () => {
             }
             transition={{ delay: 1 }}
           >
-            <ICONS.messageAnimation className={styles.icon__message} />
+            <div className={styles.icon__money}>
+              <ICONS.money />
+            </div>
 
             <motion.div
-              style={{ position: 'absolut', bottom: -7, right: -10 }}
+              className={styles.icon__repeat}
               animate={
                 activeId === 2
                   ? {
-                      rotate: 4,
-                      transition: springTransitionPhone,
+                      transformOrigin: 'center center',
+                      rotate: -180,
+                      transition: springTransitionMoney,
                     }
                   : {}
               }
             >
-              <ICONS.phoneAnimation className={styles.icon__phone} />
+              <ICONS.repeat />
             </motion.div>
           </motion.div>
         </motion.div>

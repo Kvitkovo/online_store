@@ -64,6 +64,8 @@ import { ReactComponent as phoneAnimation } from './phone__animation.svg';
 import { ReactComponent as dollar } from './dollar.svg';
 import { ReactComponent as goldGear } from './gold_gear.svg';
 import { ReactComponent as blueGear } from './blue_gear.svg';
+import { ReactComponent as money } from './money.svg';
+import { ReactComponent as repeat } from './repeat.svg';
 
 export const ICONS = {
   addComponent,
@@ -131,4 +133,6 @@ export const ICONS = {
   dollar,
   goldGear,
   blueGear,
+  money,
+  repeat,
 };

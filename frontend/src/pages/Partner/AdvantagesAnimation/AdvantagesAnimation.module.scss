@@ -70,6 +70,10 @@
         #518c47 100%
       );
     }
+    &_money {
+      display: flex;
+      align-items: center;
+    }
   }
   &__message {
     width: 38px;
@@ -101,6 +105,25 @@
     left: 20px;
     width: 4px;
     height: 8px;
+  }
+  &__money {
+    width: 58px;
+    height: 39px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  &__repeat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 59px;
+    height: 58px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
   }
 }
 .hidden {
