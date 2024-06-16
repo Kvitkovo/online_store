@@ -1,18 +1,15 @@
-import axios from 'axios';
+import axiosInstance from '../httpClient';
 
 export const fetchUserData = async () => {
   const id = localStorage.getItem('authId');
   const token = localStorage.getItem('authToken');
 
   try {
-    const response = await axios.get(
-      `https://api.imperiaholoda.com.ua:4446/v1/users/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const response = await axiosInstance.get(`/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
 
     if (response.status === 200) {
       const fetchedData = response.data;
