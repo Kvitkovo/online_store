@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './Account.module.scss';
 import SideMenu from '../SideMenu';
 import { useWindowSize } from '../../../hooks/useWindowSize';
-import AccountMobileMenu from '../AccountMobileMenu';
 import TitleMobile from './TitleMobile/TitleMobile';
 import Path from '../../../pages/CardPage/components/Path';
 
@@ -31,7 +30,7 @@ const Account = ({ children }) => {
               <h2 className={styles.accountTitle}>
                 Вітаємо, {storedUserData ? storedUserData.firstName : ''}
               </h2>
-              <AccountMobileMenu onCloseMobileMenu={handleShowMobileMenu} />
+              <SideMenu onCloseMobileMenu={handleShowMobileMenu} />
             </>
           ) : (
             <>
