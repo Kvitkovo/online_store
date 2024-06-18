@@ -1,0 +1,22 @@
+@import '../../../../variables';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 19px 0;
+  margin: -19px -16px 0;
+  background-color: $white-color;
+  position: relative;
+  box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.1);
+
+  .iconBlack {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+
+    path {
+      stroke: $text-color;
+    }
+  }
+}

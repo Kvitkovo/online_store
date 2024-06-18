@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/slices/userSlice';
 
-const SideMenu = () => {
+const SideMenu = ({ onCloseMobileMenu }) => {
   const dispatch = useDispatch();
 
   const userLogout = () => {
@@ -16,6 +16,7 @@ const SideMenu = () => {
     <div className={styles.menuAccount}>
       <NavLink
         to="/account"
+        onClick={onCloseMobileMenu}
         className={({ isActive }) =>
           isActive ? `${styles.active}` : `${styles.inactive}`
         }
@@ -25,6 +26,7 @@ const SideMenu = () => {
       </NavLink>
       <NavLink
         to="/account/orders"
+        onClick={onCloseMobileMenu}
         className={({ isActive }) =>
           isActive ? `${styles.active}` : `${styles.inactive}`
         }

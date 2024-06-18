@@ -30,12 +30,14 @@ import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 import Decor from './pages/Decor';
+import OrderItemMobile from './components/account/Orders/components/OrderItemMobile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const updateLoginStatus = (status) => {
     setIsLoggedIn(status);
   };
+
   return (
     <Router>
       <div className="App">
@@ -74,18 +76,27 @@ function App() {
                 />
               }
             >
-              <Route
-                path={ROUTES.account}
-                element={
-                  <ContactDetails updateLoginStatus={updateLoginStatus} />
-                }
-              />
-              <Route path={ROUTES.changeDetails} element={<ChangeDetails />} />
-              <Route
-                path={ROUTES.changePassword}
-                element={<ChangePassword />}
-              />
-              <Route path={ROUTES.orders} element={<Orders />} />
+              <Routes>
+                <Route
+                  path={ROUTES.account}
+                  element={
+                    <ContactDetails updateLoginStatus={updateLoginStatus} />
+                  }
+                />
+                <Route
+                  path={ROUTES.changeDetails}
+                  element={<ChangeDetails />}
+                />
+                <Route
+                  path={ROUTES.changePassword}
+                  element={<ChangePassword />}
+                />
+                <Route path={ROUTES.orders} element={<Orders />} />
+                <Route
+                  path={ROUTES.orderDetailed}
+                  element={<OrderItemMobile />}
+                />
+              </Routes>
             </Route>
           </Routes>
           <SupportModal />

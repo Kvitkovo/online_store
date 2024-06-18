@@ -3,7 +3,6 @@ import styles from './ContactDetails.module.scss';
 import { ICONS } from '../../ui-kit/icons';
 import Button from '../../ui-kit/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import Account from '../Account';
 
 const ContactDetails = () => {
   const navigate = useNavigate();
@@ -18,9 +17,7 @@ const ContactDetails = () => {
   };
 
   return (
-    <Account
-      title={`Вітаємо, ${storedUserData ? storedUserData.firstName : ''}`}
-    >
+    <>
       <div className={styles.block}>
         <h2 className={styles.accountTitle}> Контактні дані</h2>
         <div className={styles.flexFieldsAndData}>
@@ -58,7 +55,7 @@ const ContactDetails = () => {
           />
         </div>
       </div>
-    </Account>
+    </>
   );
 };
 export default ContactDetails;
