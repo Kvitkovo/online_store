@@ -1,0 +1,32 @@
+@import './../../../../../variables';
+
+.orderDetailed {
+  margin: 0 -16px;
+  padding: 0 16px;
+  background-color: $white-color;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid $gray-light-color;
+}
+
+.deleteIconWithText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateAndStatus {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 62px 16px 0;
+}
+
+.flexColumnAndGap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

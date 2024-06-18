@@ -29,6 +29,19 @@ export const getUsersOrders = async () => {
     throw error;
   }
 };
+export const getOrderById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/orders/${id}`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Помилка: Отримано статус відповіді ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Помилка отримання данних', error.message);
+    throw error;
+  }
+};
 
 export const cancelUserOrder = async (id) => {
   try {

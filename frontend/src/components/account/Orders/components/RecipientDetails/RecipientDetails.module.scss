@@ -1,3 +1,5 @@
+@import '../../../../../mixins';
+
 .flexData {
   display: flex;
   align-items: flex-end;
@@ -10,8 +12,7 @@
     padding-top: 8px;
   }
 }
-
-.address div,
+.address,
 .recipient div {
   padding-top: 8px;
 }
@@ -26,5 +27,25 @@
 
   &div:nth-of-type(2) {
     padding-left: 36px;
+  }
+}
+
+@include sm {
+  .flexData {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 0 16px;
+  }
+  .delivery,
+  .quantity {
+    margin-top: 16px;
+  }
+  .item {
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      $gray-light-color 0 16px,
+      #0000 0 32px
+    );
   }
 }

@@ -98,7 +98,7 @@ const OrderInfo = ({ orderData }) => {
       customerPhone: formattedPhone(clientPhone),
       customerEmail: clientEmail,
       addressStreet: clientStreet,
-      addressHous: clientHouse,
+      addressHouse: clientHouse,
       addressApartment: clientFlat,
       receiverName,
       receiverPhone,

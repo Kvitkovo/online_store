@@ -13,6 +13,7 @@ const ROUTES = {
   changeDetails: '/account/change-details',
   changePassword: '/account/change-password',
   orders: '/account/orders',
+  orderDetailed: '/account/orders/:orderDetails',
   card: '/product/:myId',
   emailConfirmation: '/user/email/:code/confirm/',
   category: '/category',

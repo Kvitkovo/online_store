@@ -1,4 +1,5 @@
 @import './../../../variables';
+@import '../../../mixins';
 
 .accountTitle {
   font-size: 20px;
@@ -16,5 +17,10 @@
 .rightBlock {
   background-color: $white-color;
   border-radius: 8px;
-  padding: 32px 0;
+}
+
+@include sm {
+  .accountTitle {
+    margin-bottom: 16px;
+  }
 }

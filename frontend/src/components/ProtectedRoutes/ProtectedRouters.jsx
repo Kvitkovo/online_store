@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import React from 'react';
+import Account from '../account/Account';
 
 const ProtectedRoutes = ({ isLoggedIn, updateLoginStatus }) => {
   let auth = { token: true };
@@ -9,7 +10,11 @@ const ProtectedRoutes = ({ isLoggedIn, updateLoginStatus }) => {
     }
   };
   handleAuthentication();
-  return <>{auth.token ? <Outlet /> : <Navigate to="/" />}</>;
+  return (
+    <>
+      <Account>{auth.token ? <Outlet /> : <Navigate to="/" />}</Account>
+    </>
+  );
 };
 
 export default ProtectedRoutes;
