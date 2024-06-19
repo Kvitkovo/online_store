@@ -31,9 +31,12 @@ import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
 import Decor from './pages/Decor';
 import OrderItemMobile from './components/account/Orders/components/OrderItemMobile';
+import { useWindowSize } from './hooks/useWindowSize';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { width } = useWindowSize();
+  const isMobile = width <= 510;
   const updateLoginStatus = (status) => {
     setIsLoggedIn(status);
   };
@@ -92,10 +95,12 @@ function App() {
                   element={<ChangePassword />}
                 />
                 <Route path={ROUTES.orders} element={<Orders />} />
-                <Route
-                  path={ROUTES.orderDetailed}
-                  element={<OrderItemMobile />}
-                />
+                {isMobile && (
+                  <Route
+                    path={ROUTES.orderDetailed}
+                    element={<OrderItemMobile />}
+                  />
+                )}
               </Routes>
             </Route>
           </Routes>
