@@ -5,20 +5,13 @@ import styles from './OrderItemMobile.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
 import OrderDeleting from '../OrderDeleteIcon';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
+import { statusMapping } from '../../../../../constants/statusMapping';
 
 const OrderItemMobile = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const navigate = useNavigate();
-
-  const statusMapping = {
-    NEW: 'Новий',
-    ACCEPT: 'Прийнятий',
-    IS_DELIVERED: 'Доставляється',
-    DONE: 'Виконаний',
-    CANCELED: 'Скасований',
-  };
 
   useEffect(() => {
     const fetchData = async () => {
