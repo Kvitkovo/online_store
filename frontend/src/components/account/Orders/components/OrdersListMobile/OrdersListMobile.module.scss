@@ -15,15 +15,8 @@
 }
 
 .cancelOrder {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-right: 8px;
+  padding-right: 16px;
   padding-top: 16px;
-
-  & div:first-child {
-    color: $gray-dark-color;
-  }
 }
 
 .number div:first-child,
@@ -52,7 +45,7 @@
 }
 
 .status {
-  width: 120px;
+  width: 146px;
 }
 
 .details {

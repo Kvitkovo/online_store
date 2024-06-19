@@ -44,13 +44,10 @@ const OrderItemMobile = () => {
           <div>№ {orderDetails}</div>
         </div>
         {order && statusMapping[order.status] === 'Новий' ? (
-          <div className={styles.deleteIconWithText}>
-            Скасувати
-            <OrderDeleting
-              orderId={order.id}
-              onSuccessDelete={() => navigate('/account/orders')}
-            />
-          </div>
+          <OrderDeleting
+            orderId={order.id}
+            onSuccessDelete={() => navigate('/account/orders')}
+          />
         ) : (
           ''
         )}

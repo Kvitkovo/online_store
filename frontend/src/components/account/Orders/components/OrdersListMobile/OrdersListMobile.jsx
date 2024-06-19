@@ -21,7 +21,6 @@ const OrdersListMobile = ({ data, fetchData }) => {
                 </Link>
               </div>
               <div className={styles.cancelOrder}>
-                <div>Скасувати</div>
                 <OrderDeleting orderId={order.id} onSuccessDelete={fetchData} />
               </div>
             </div>
