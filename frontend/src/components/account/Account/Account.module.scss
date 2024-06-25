@@ -17,10 +17,15 @@
 .rightBlock {
   background-color: $white-color;
   border-radius: 8px;
+  padding-top: 32px;
 }
 
 @include sm {
   .accountTitle {
     margin-bottom: 16px;
+  }
+  .rightBlock {
+    margin: 0 -16px -46px;
+    min-height: 58vh;
   }
 }

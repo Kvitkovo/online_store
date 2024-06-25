@@ -3,11 +3,15 @@ import { cancelUserOrder } from '../../../../../services/order';
 import ConfirmCancellationModal from '../ConfirmCancellationModal';
 import OrderDeletedModal from '../OrderDeletedModal';
 import { ICONS } from '../../../../../components/ui-kit/icons';
-import IconButton from '../../../../../components/ui-kit/components/IconButton';
+import Button from '../../../../ui-kit/components/Button/Button';
+import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import IconButton from '../../../../ui-kit/components/IconButton';
 
 const OrderDeleting = ({ orderId, onSuccessDelete }) => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
+  const { width } = useWindowSize();
+  const isMobile = width <= 510;
 
   const toggleShowModal = () => {
     setShowCancelModal((prev) => !prev);
@@ -52,10 +56,19 @@ const OrderDeleting = ({ orderId, onSuccessDelete }) => {
           toggleShowModalDeleted={hideSuccessInformationModal}
         />
       )}
-      <IconButton
-        icon={<ICONS.deleteIcon />}
-        onClick={() => cancelOrder(orderId)}
-      ></IconButton>
+      {isMobile ? (
+        <Button
+          variant="no-border-gray"
+          label="Скасувати"
+          icon={<ICONS.deleteIcon />}
+          onClick={() => cancelOrder(orderId)}
+        />
+      ) : (
+        <IconButton
+          icon={<ICONS.deleteIcon />}
+          onClick={() => cancelOrder(orderId)}
+        ></IconButton>
+      )}
     </>
   );
 };

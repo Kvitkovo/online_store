@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
 import styles from './OrderDetails.module.scss';
 import OrderDeleting from '../OrderDeleteIcon/OrderDeleteIcon';
-import { Link } from 'react-router-dom';
 import OrderItem from '../OrderItem';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
 import { ICONS } from '../../../../ui-kit/icons';
+import { statusMapping } from '../../../../../constants/statusMapping';
 
 const OrderDetails = ({ order, fetchData }) => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   const [quantity, setQuantity] = useState(0);
-
-  const statusMapping = {
-    NEW: 'Новий',
-    ACCEPT: 'Прийнятий',
-    IS_DELIVERED: 'Доставляється',
-    DONE: 'Виконаний',
-    CANCELED: 'Скасований',
-  };
 
   return (
     <div>
@@ -52,7 +44,6 @@ const OrderDetails = ({ order, fetchData }) => {
         ) : (
           ''
         )}
-        <Link to={`/account/orders/${order.id}`}> Детально</Link>
       </div>
       {showOrdersDetails === order.id && (
         <>

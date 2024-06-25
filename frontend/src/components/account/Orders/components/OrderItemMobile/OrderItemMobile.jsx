@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../../../../../services/order';
 import styles from './OrderItemMobile.module.scss';
 import OrderItem from '../OrderItem/OrderItem';
-import IconButton from '../../../../ui-kit/components/IconButton';
-import { ICONS } from '../../../../ui-kit/icons';
+import OrderDeleting from '../OrderDeleteIcon';
 import RecipientDetails from '../RecipientDetails/RecipientDetails';
+import { statusMapping } from '../../../../../constants/statusMapping';
 
 const OrderItemMobile = () => {
   const { orderDetails } = useParams();
   const [order, setOrder] = useState(null);
   const [quantity, setQuantity] = useState(0);
-
-  const statusMapping = {
-    NEW: 'Новий',
-    ACCEPT: 'Прийнятий',
-    IS_DELIVERED: 'Доставляється',
-    DONE: 'Виконаний',
-    CANCELED: 'Скасований',
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +21,7 @@ const OrderItemMobile = () => {
         setQuantity(response.orderItems.length);
       } catch (error) {
         console.error(
-          'Помилка при отриманні замовлень коричтувача: ',
+          'Помилка при отриманні замовлень кориcтувача: ',
           error.message,
         );
       }
@@ -44,20 +37,17 @@ const OrderItemMobile = () => {
           <div>№ {orderDetails}</div>
         </div>
         {order && statusMapping[order.status] === 'Новий' ? (
-          <div className={styles.deleteIconWithText}>
-            Скасувати
-            <IconButton
-              icon={<ICONS.deleteIcon />}
-              // onClick={() => cancelOrder(order.id)}
-            ></IconButton>
-          </div>
+          <OrderDeleting
+            orderId={order.id}
+            onSuccessDelete={() => navigate('/account/orders')}
+          />
         ) : (
           ''
         )}
       </div>
       <div>
         {order && (
-          <div>
+          <div className={styles.orderDetails}>
             <div className={styles.dateAndStatus}>
               <div className={styles.flexColumnAndGap}>
                 <div>Дата</div>

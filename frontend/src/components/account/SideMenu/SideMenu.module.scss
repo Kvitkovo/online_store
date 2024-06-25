@@ -2,8 +2,10 @@
 @import '../../../mixins';
 
 .menuAccount {
-  background-color: white;
+  background-color: $white-color;
   border-radius: 8px;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .menuItem {
@@ -38,8 +40,11 @@
 @include sm {
   .active {
     border-left: none;
+    padding: 8px 16px;
   }
   .menuAccount {
-    margin: 0 -16px;
+    margin: 0 -16px -46px;
+    background-color: $white-color;
+    min-height: 52vh;
   }
 }
