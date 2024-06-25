@@ -10,7 +10,6 @@ export const kvitkovoLinks = [
 ];
 
 export const clientLinks = [
-  { route: ROUTES.orderStatus, text: 'Статус замовлення' },
   { route: ROUTES.delivery, text: 'Доставка та оплата' },
   { route: ROUTES.about, text: 'Акції в Kvitkovo' },
   { route: ROUTES.care, text: 'Догляд за квітами' },
