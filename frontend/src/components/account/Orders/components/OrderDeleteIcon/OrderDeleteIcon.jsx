@@ -12,6 +12,7 @@ const OrderDeleting = ({ orderId, onSuccessDelete }) => {
   const [showOrderDeletedModal, setShowOrderDeletedModal] = useState(false);
   const { width } = useWindowSize();
   const isMobile = width <= 510;
+  const isTablet = width > 510 && width <= 868;
 
   const toggleShowModal = () => {
     setShowCancelModal((prev) => !prev);
@@ -56,7 +57,7 @@ const OrderDeleting = ({ orderId, onSuccessDelete }) => {
           toggleShowModalDeleted={hideSuccessInformationModal}
         />
       )}
-      {isMobile ? (
+      {isMobile || isTablet ? (
         <Button
           variant="no-border-gray"
           label="Скасувати"

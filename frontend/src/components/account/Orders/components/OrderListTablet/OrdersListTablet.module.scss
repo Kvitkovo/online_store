@@ -1,0 +1,64 @@
+@import '../../../../../variables';
+
+.blockNumber {
+  border-bottom: 1px solid $gray-light-color;
+}
+
+.title,
+.dateAndStatus {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  padding-bottom: 16px;
+}
+
+.cancelOrder {
+  padding-right: 16px;
+  padding-top: 16px;
+}
+
+.number div:first-child,
+.date div:first-child,
+.status div:first-child,
+.totalAmount div:first-child,
+.receiver div:first-child {
+  font-size: 14px;
+  line-height: 18.2px;
+}
+
+.number,
+.date,
+.status,
+.totalAmount,
+.receiver {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px 0;
+}
+
+.number div:last-child {
+  color: $page-accent-color;
+  text-decoration: underline;
+}
+
+.status {
+  width: 146px;
+}
+
+.details {
+  padding: 24px 16px 25px;
+  border-bottom: 1px solid $gray-light-color;
+}
+
+.link {
+  border-bottom: 1px solid $page-accent-color;
+  color: $page-accent-color;
+  line-height: 16px;
+}
+
+.ordersListMobile {
+  padding-bottom: 63px;
+}
