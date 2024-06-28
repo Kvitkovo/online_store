@@ -59,19 +59,19 @@ const OrdersListTablet = ({ data, fetchData }) => {
             <div>{order.receiverName}</div>
           </div>
           {showOrdersDetails === order.id ? (
-            <div>
-              <div>
+            <div className={styles.addressDetails}>
+              <div className={styles.phone}>
                 <span>Тел.</span> {order.receiverPhone}
               </div>
               <div className={styles.delivery}>
-                <div>Доставка:</div>
+                <div className={styles.deliveryTitle}>Доставка:</div>
                 {order.delivery === 'PICKUP' ? (
                   <p>Самовивіз</p>
                 ) : (
-                  <div className={styles.address}>
+                  <div>
                     <span>місто</span>{' '}
                     {order.addressCity ? order.addressCity : 'Київ'}
-                    <div>
+                    <div className={styles.address}>
                       <div>
                         <span>вул.</span> {order.addressStreet}
                       </div>
@@ -84,16 +84,6 @@ const OrdersListTablet = ({ data, fetchData }) => {
                     </div>
                   </div>
                 )}
-              </div>
-              <div
-                className={styles.details}
-                onClick={() => {
-                  setShowOrderDetails(
-                    order.id === showOrdersDetails ? null : order.id,
-                  );
-                }}
-              >
-                <p className={styles.link}>Згорнути</p>
               </div>
             </div>
           ) : (
@@ -124,7 +114,18 @@ const OrdersListTablet = ({ data, fetchData }) => {
                   />
                 ))}
               </div>
-              <div className={styles.item}></div>
+              {showOrdersDetails === order.id && (
+                <div
+                  className={styles.details}
+                  onClick={() => {
+                    setShowOrderDetails(
+                      order.id === showOrdersDetails ? null : order.id,
+                    );
+                  }}
+                >
+                  <p className={styles.link}>Згорнути</p>
+                </div>
+              )}
             </>
           )}
         </div>

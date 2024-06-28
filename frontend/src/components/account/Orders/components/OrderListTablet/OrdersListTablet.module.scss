@@ -23,7 +23,9 @@
 .date div:first-child,
 .status div:first-child,
 .totalAmount div:first-child,
-.receiver div:first-child {
+.receiver div:first-child,
+.addressDetails span,
+.deliveryTitle {
   font-size: 14px;
   line-height: 18.2px;
 }
@@ -66,4 +68,45 @@
 
 .numberActive {
   color: $page-accent-color;
+}
+
+.addressDetails {
+  padding-top: 8px;
+}
+
+.delivery,
+.phone {
+  padding-left: 16px;
+}
+
+.delivery {
+  padding: 16px 16px 0;
+}
+
+.delivery span {
+  padding-top: 8px;
+}
+
+.deliveryTitle {
+  padding-bottom: 8px;
+}
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.item {
+  margin: 10px 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    $gray-light-color 0 16px,
+    #0000 0 32px
+  );
+}
+
+.orderItemsBlock {
+  padding: 0 16px;
 }
