@@ -71,16 +71,11 @@
 }
 
 .addressDetails {
-  padding-top: 8px;
-}
-
-.delivery,
-.phone {
-  padding-left: 16px;
+  padding: 8px 0 0 16px;
 }
 
 .delivery {
-  padding: 16px 16px 0;
+  padding-top: 16px;
 }
 
 .delivery span {
@@ -109,4 +104,14 @@
 
 .orderItemsBlock {
   padding: 0 16px;
+}
+
+.quantity {
+  display: flex;
+  gap: 8px;
+  padding: 16px 0 0;
+
+  &div:nth-of-type(2) {
+    padding-left: 36px;
+  }
 }

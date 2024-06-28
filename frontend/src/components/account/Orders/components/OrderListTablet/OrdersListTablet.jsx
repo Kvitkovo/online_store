@@ -6,6 +6,8 @@ import OrderItem from '../OrderItem';
 
 const OrdersListTablet = ({ data, fetchData }) => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
+  const [quantity, setQuantity] = useState(0);
+
   return (
     <div className={styles.ordersListTablet}>
       {data.map((order) => (
@@ -24,6 +26,7 @@ const OrdersListTablet = ({ data, fetchData }) => {
                     setShowOrderDetails(
                       order.id === showOrdersDetails ? null : order.id,
                     );
+                    setQuantity(order.orderItems.length);
                   }}
                 >
                   № {order.id}
@@ -85,6 +88,10 @@ const OrdersListTablet = ({ data, fetchData }) => {
                   </div>
                 )}
               </div>
+              <div className={styles.quantity}>
+                <div>Кількість товарів: </div>
+                <div>{quantity} шт</div>
+              </div>
             </div>
           ) : (
             <div
@@ -93,6 +100,7 @@ const OrdersListTablet = ({ data, fetchData }) => {
                 setShowOrderDetails(
                   order.id === showOrdersDetails ? null : order.id,
                 );
+                setQuantity(order.orderItems.length);
               }}
             >
               <p className={styles.link}>Детально</p>
