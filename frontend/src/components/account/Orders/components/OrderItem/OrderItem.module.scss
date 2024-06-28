@@ -19,7 +19,7 @@
   gap: 20px;
 }
 
-@include sm {
+@include md {
   .gridOrder {
     padding: 16px 0;
     grid-template-columns: 0.1fr 4.4fr 1.5fr;

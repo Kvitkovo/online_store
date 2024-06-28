@@ -39,26 +39,31 @@
   padding: 16px 16px 0;
 }
 
-.number div:last-child {
-  color: $page-accent-color;
-  text-decoration: underline;
-}
-
 .status {
   width: 146px;
 }
 
 .details {
   padding: 24px 16px 25px;
-  border-bottom: 1px solid $gray-light-color;
+  border-bottom: 1px solid $page-accent-color;
 }
 
 .link {
   border-bottom: 1px solid $page-accent-color;
   color: $page-accent-color;
   line-height: 16px;
+  display: inline;
 }
 
-.ordersListMobile {
-  padding-bottom: 63px;
+.ordersListTablet {
+  margin-top: -32px;
+}
+
+.orderNumber {
+  color: $text-color;
+  text-decoration: underline;
+}
+
+.numberActive {
+  color: $page-accent-color;
 }

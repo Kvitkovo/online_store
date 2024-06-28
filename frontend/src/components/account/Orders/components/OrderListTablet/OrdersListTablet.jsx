@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './OrdersListTablet.module.scss';
-import { Link } from 'react-router-dom';
 import OrderDeleting from '../OrderDeleteIcon/OrderDeleteIcon';
 import { statusMapping } from '../../../../../constants/statusMapping';
 import OrderItem from '../OrderItem';
@@ -8,19 +7,27 @@ import OrderItem from '../OrderItem';
 const OrdersListTablet = ({ data, fetchData }) => {
   const [showOrdersDetails, setShowOrderDetails] = useState(null);
   return (
-    <div className={styles.ordersListMobile}>
+    <div className={styles.ordersListTablet}>
       {data.map((order) => (
         <div key={order.id} className={styles.orderList}>
           <div className={styles.blockNumber}>
             <div className={styles.title}>
               <div className={styles.number}>
                 <div>Номер</div>
-                <Link
-                  to={`/account/orders/${order.id}`}
-                  className={styles.link}
+                <div
+                  className={
+                    showOrdersDetails === order.id
+                      ? `${styles.orderNumber}`
+                      : `${styles.numberActive}  + ' ' + ${styles.orderNumber}`
+                  }
+                  onClick={() => {
+                    setShowOrderDetails(
+                      order.id === showOrdersDetails ? null : order.id,
+                    );
+                  }}
                 >
                   № {order.id}
-                </Link>
+                </div>
               </div>
               <div className={styles.cancelOrder}>
                 <OrderDeleting orderId={order.id} onSuccessDelete={fetchData} />
@@ -51,16 +58,56 @@ const OrdersListTablet = ({ data, fetchData }) => {
             <div>Отримувач</div>
             <div>{order.receiverName}</div>
           </div>
-          <div
-            className={styles.details}
-            onClick={() => {
-              setShowOrderDetails(
-                order.id === showOrdersDetails ? null : order.id,
-              );
-            }}
-          >
-            Детально
-          </div>
+          {showOrdersDetails === order.id ? (
+            <div>
+              <div>
+                <span>Тел.</span> {order.receiverPhone}
+              </div>
+              <div className={styles.delivery}>
+                <div>Доставка:</div>
+                {order.delivery === 'PICKUP' ? (
+                  <p>Самовивіз</p>
+                ) : (
+                  <div className={styles.address}>
+                    <span>місто</span>{' '}
+                    {order.addressCity ? order.addressCity : 'Київ'}
+                    <div>
+                      <div>
+                        <span>вул.</span> {order.addressStreet}
+                      </div>
+                      <div>
+                        <span>буд.</span> {order.addressHouse}
+                      </div>
+                      <div>
+                        <span> кв.</span> {order.addressApartment}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div
+                className={styles.details}
+                onClick={() => {
+                  setShowOrderDetails(
+                    order.id === showOrdersDetails ? null : order.id,
+                  );
+                }}
+              >
+                <p className={styles.link}>Згорнути</p>
+              </div>
+            </div>
+          ) : (
+            <div
+              className={styles.details}
+              onClick={() => {
+                setShowOrderDetails(
+                  order.id === showOrdersDetails ? null : order.id,
+                );
+              }}
+            >
+              <p className={styles.link}>Детально</p>
+            </div>
+          )}
           {showOrdersDetails === order.id && (
             <>
               <div className={styles.item}></div>
