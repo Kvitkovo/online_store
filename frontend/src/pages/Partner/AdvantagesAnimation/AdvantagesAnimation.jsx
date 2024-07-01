@@ -6,7 +6,7 @@ import IconButton from '../../../components/ui-kit/components/IconButton';
 import { ICONS } from '../../../components/ui-kit/icons';
 
 const AdvantagesAnimation = () => {
-  const [activeId, setActiveId] = useState(1);
+  const [activeId, setActiveId] = useState(0);
   const [rotation, setRotation] = useState(0);
   const { advantages } = data;
 
@@ -179,7 +179,7 @@ const AdvantagesAnimation = () => {
           transition={{ duration: 1, delay: 0.35 }}
         >
           <motion.div
-            className={styles.icon__inner}
+            className={styles.icon__arror}
             animate={
               activeId === 3
                 ? { scale: 2.2, transition: { delay: 1, duration: 0.3 } }
@@ -187,20 +187,20 @@ const AdvantagesAnimation = () => {
             }
             transition={{ delay: 1 }}
           >
-            <ICONS.messageAnimation className={styles.icon__message} />
-
-            <motion.div
-              style={{ position: 'absolut', bottom: -7, right: -10 }}
+            <ICONS.arrowAnimated
+              className={styles.icon__coins}
+              initial={{ scale: 0 }}
               animate={
                 activeId === 3
                   ? {
-                      rotate: 4,
-                      transition: springTransitionPhone,
+                      scale: 2,
                     }
-                  : {}
+                  : { scale: 1 }
               }
-            >
-              <ICONS.phoneAnimation className={styles.icon__phone} />
+            />
+
+            <motion.div style={{ position: 'absolut', bottom: -7, right: -10 }}>
+              <ICONS.coins className={styles.icon__phone} />
             </motion.div>
           </motion.div>
         </motion.div>

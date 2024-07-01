@@ -66,6 +66,8 @@ import { ReactComponent as goldGear } from './gold_gear.svg';
 import { ReactComponent as blueGear } from './blue_gear.svg';
 import { ReactComponent as money } from './money.svg';
 import { ReactComponent as repeat } from './repeat.svg';
+import { ReactComponent as coins } from './coins.svg';
+import { ReactComponent as arrowAnimated } from './arrow-animated.svg';
 
 export const ICONS = {
   addComponent,
@@ -135,4 +137,6 @@ export const ICONS = {
   blueGear,
   money,
   repeat,
+  coins,
+  arrowAnimated,
 };
