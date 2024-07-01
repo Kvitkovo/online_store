@@ -20,6 +20,10 @@
   padding-top: 32px;
 }
 
+.menuBlock {
+  height: auto;
+}
+
 @include sm {
   .accountTitle {
     margin-bottom: 16px;

@@ -45,7 +45,9 @@ const Account = ({ children }) => {
             Вітаємо, {storedUserData ? storedUserData.firstName : ''}
           </h2>
           <div className={styles.gridTwoBlocks}>
-            <SideMenu />
+            <div className={styles.menuBlock}>
+              <SideMenu />
+            </div>
             <div className={styles.rightBlock}>{children}</div>
           </div>
         </div>

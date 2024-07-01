@@ -1,0 +1,117 @@
+@import '../../../../../variables';
+
+.blockNumber {
+  border-bottom: 1px solid $gray-light-color;
+}
+
+.title,
+.dateAndStatus {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  padding-bottom: 16px;
+}
+
+.cancelOrder {
+  padding-right: 16px;
+  padding-top: 16px;
+}
+
+.number div:first-child,
+.date div:first-child,
+.status div:first-child,
+.totalAmount div:first-child,
+.receiver div:first-child,
+.addressDetails span,
+.deliveryTitle {
+  font-size: 14px;
+  line-height: 18.2px;
+}
+
+.number,
+.date,
+.status,
+.totalAmount,
+.receiver {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px 0;
+}
+
+.status {
+  width: 146px;
+}
+
+.details {
+  padding: 24px 16px 25px;
+  border-bottom: 1px solid $page-accent-color;
+}
+
+.link {
+  border-bottom: 1px solid $page-accent-color;
+  color: $page-accent-color;
+  line-height: 16px;
+  display: inline;
+}
+
+.ordersListTablet {
+  margin-top: -32px;
+}
+
+.orderNumber {
+  color: $text-color;
+  text-decoration: underline;
+}
+
+.numberActive {
+  color: $page-accent-color;
+}
+
+.addressDetails {
+  padding: 8px 0 0 16px;
+}
+
+.delivery {
+  padding-top: 16px;
+}
+
+.delivery span {
+  padding-top: 8px;
+}
+
+.deliveryTitle {
+  padding-bottom: 8px;
+}
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.item {
+  margin: 10px 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    $gray-light-color 0 16px,
+    #0000 0 32px
+  );
+}
+
+.orderItemsBlock {
+  padding: 0 16px;
+}
+
+.quantity {
+  display: flex;
+  gap: 8px;
+  padding: 16px 0 0;
+
+  &div:nth-of-type(2) {
+    padding-left: 36px;
+  }
+}
