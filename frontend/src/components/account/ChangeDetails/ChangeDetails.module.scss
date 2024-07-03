@@ -2,8 +2,7 @@
 @import 'src/_mixins.scss';
 
 .mainContainer {
-  padding-left: 32px;
-  padding-bottom: 31px;
+  padding: 0 32px 32px;
 }
 .header {
   font-size: 20px;
@@ -24,7 +23,8 @@
 }
 
 .dataInput {
-  width: 292px;
+  width: 100%;
+  max-width: 316px;
   height: 40px;
   padding: 8px 12px;
   border-radius: 8px;
@@ -51,5 +51,19 @@ label {
   .formContainer {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+@include md {
+  .mainContainer {
+    padding: 0 26px 26px;
+  }
+
+  .btnContainer {
+    flex-direction: column;
+    width: 100%;
+    max-width: 316px;
+    margin-top: 10px;
+    gap: 26px;
   }
 }

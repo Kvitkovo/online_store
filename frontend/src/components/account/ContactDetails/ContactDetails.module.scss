@@ -1,7 +1,8 @@
-@import '../../../variables';
+@import 'src/_variables';
+@import 'src/_mixins.scss';
 
 .block {
-  padding-left: 40px;
+  padding: 0 32px 32px;
 }
 
 .accountTitle {
@@ -35,5 +36,23 @@
 
   & :first-child {
     padding-left: 0;
+  }
+}
+
+@include md {
+  .block {
+    padding: 0 26px 26px;
+  }
+  .flexFieldsAndData {
+    gap: 38px;
+    padding: 34px 0 16px;
+  }
+  .flexButtons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    button {
+      padding: 0;
+    }
   }
 }
