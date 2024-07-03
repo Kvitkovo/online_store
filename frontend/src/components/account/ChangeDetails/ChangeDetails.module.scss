@@ -67,3 +67,10 @@ label {
     gap: 26px;
   }
 }
+@include sm {
+  .btnContainer {
+    button:last-child {
+      display: none;
+    }
+  }
+}

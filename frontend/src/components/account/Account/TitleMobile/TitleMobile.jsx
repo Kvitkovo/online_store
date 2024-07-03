@@ -7,25 +7,46 @@ const TitleMobile = ({ onShowMobileMenu }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const navigateToEdit = () => {
+    navigate('/account/change-details');
+  };
+
   const TitleDefinition = () => {
+    let title = '';
+    let IconComponent = null;
+    let IconClickHandler = null;
+
     if (/\/account\/orders\/[0-9]/.test(location.pathname)) {
       const orderId = location.pathname.split('/')[3];
-      return `Замовлення № ${orderId}`;
+      title = `Замовлення № ${orderId}`;
+    } else {
+      switch (location.pathname) {
+        case '/account':
+          title = 'Контакти';
+          IconComponent = ICONS.PencilIcon;
+          IconClickHandler = navigateToEdit;
+          break;
+        case '/account/orders':
+          title = 'Мої замовлення';
+          break;
+        case '/account/change-details':
+          title = 'Редагування данних';
+          IconComponent = ICONS.closeMobile;
+          IconClickHandler = handleLeftIconClick;
+          break;
+        case '/account/change-password':
+          title = 'Заміна паролю';
+          IconComponent = ICONS.closeMobile;
+          IconClickHandler = handleLeftIconClick;
+          break;
+        default:
+          title = '';
+          IconComponent = null;
+      }
     }
-
-    switch (location.pathname) {
-      case '/account':
-        return 'Контакти';
-      case '/account/orders':
-        return 'Мої замовлення';
-      default:
-        return '';
-      case '/account/change-details':
-        return 'Редагування данних';
-      case '/account/change-password':
-        return 'Заміна паролю';
-    }
+    return { title, IconComponent, IconClickHandler };
   };
+
   const handleLeftIconClick = () => {
     if (
       location.pathname == '/account' ||
@@ -37,13 +58,23 @@ const TitleMobile = ({ onShowMobileMenu }) => {
     }
   };
 
+  const { title, IconComponent, IconClickHandler } = TitleDefinition();
+
   return (
     <div className={styles.header}>
       <ICONS.ArrowLeftIcon
         className={styles.iconBlack}
         onClick={handleLeftIconClick}
       />
-      <div>{TitleDefinition()}</div>
+      <div>{title}</div>
+      <div>
+        {IconComponent && (
+          <IconComponent
+            className={styles.titleIcon}
+            onClick={IconClickHandler}
+          />
+        )}
+      </div>
     </div>
   );
 };
