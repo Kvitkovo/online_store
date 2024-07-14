@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Order.module.scss';
 import OrderInfo from './components/OrderInfo';
 import DeliveryForm from './components/DeliveryForm/DeliveryForm';
@@ -10,6 +10,10 @@ import Payment from './components/Payment';
 const Order = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [orderData, setOrderData] = useState({});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChangeStep = (sourceStep) => {
     setCurrentStep(sourceStep);
