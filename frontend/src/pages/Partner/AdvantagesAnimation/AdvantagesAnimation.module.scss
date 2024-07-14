@@ -125,6 +125,23 @@
       height: inherit;
     }
   }
+  &__arrow {
+    width: 100%;
+  }
+  &__coins {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+  }
+}
+.btn {
+  position: relative;
+  margin-top: 59px;
+}
+.shade {
+  position: absolute;
+  top: -14px;
+  right: 46%;
 }
 .hidden {
   visibility: hidden;

@@ -68,6 +68,7 @@ import { ReactComponent as money } from './money.svg';
 import { ReactComponent as repeat } from './repeat.svg';
 import { ReactComponent as coins } from './coins.svg';
 import { ReactComponent as arrowAnimated } from './arrow-animated.svg';
+import { ReactComponent as nextHighlighted } from './next-button-highlighted.svg';
 
 export const ICONS = {
   addComponent,
@@ -139,4 +140,5 @@ export const ICONS = {
   repeat,
   coins,
   arrowAnimated,
+  nextHighlighted,
 };

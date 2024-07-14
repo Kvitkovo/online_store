@@ -9,6 +9,10 @@ const AdvantagesAnimation = () => {
   const [activeId, setActiveId] = useState(0);
   const [rotation, setRotation] = useState(0);
   const { advantages } = data;
+  const loop = {
+    repeat: Infinity,
+    repeatType: 'loop',
+  };
 
   const handleChangeContent = (step) => {
     setActiveId((prev) => {
@@ -22,14 +26,14 @@ const AdvantagesAnimation = () => {
     });
     setRotation((prev) => prev - 90 * step);
   };
+
   const springTransitionPhone = {
     type: 'spring',
     mass: 1,
     stiffness: 2880,
     damping: 2.4,
     delay: 1,
-    repeat: Infinity,
-    repeatType: 'loop',
+    ...loop,
   };
   const springTransitionGears = {
     type: 'spring',
@@ -37,18 +41,17 @@ const AdvantagesAnimation = () => {
     stiffness: 11.25,
     damping: 7.5,
     delay: 1,
-    repeat: Infinity,
-    repeatType: 'loop',
+    ...loop,
   };
   const springTransitionMoney = {
     type: 'spring',
     stiffness: 80,
     damping: 20,
     delay: 1,
-    repeat: Infinity,
-    repeatType: 'loop',
+    ...loop,
     repeatDelay: 0.3,
   };
+  const btnTransition = { delay: 1, type: 'linear', duration: 2.66, ...loop };
 
   return (
     <div className={styles.animated}>
@@ -161,7 +164,7 @@ const AdvantagesAnimation = () => {
               animate={
                 activeId === 2
                   ? {
-                      transformOrigin: 'center center',
+                      transformOrigin: '29.5 29.5',
                       rotate: -180,
                       transition: springTransitionMoney,
                     }
@@ -179,7 +182,7 @@ const AdvantagesAnimation = () => {
           transition={{ duration: 1, delay: 0.35 }}
         >
           <motion.div
-            className={styles.icon__arror}
+            className={styles.icon__inner}
             animate={
               activeId === 3
                 ? { scale: 2.2, transition: { delay: 1, duration: 0.3 } }
@@ -187,21 +190,31 @@ const AdvantagesAnimation = () => {
             }
             transition={{ delay: 1 }}
           >
-            <ICONS.arrowAnimated
-              className={styles.icon__coins}
-              initial={{ scale: 0 }}
+            <motion.div
+              initial={{ width: 65, height: 25 }}
               animate={
                 activeId === 3
                   ? {
-                      scale: 2,
+                      width: [0, 65],
+                      transformOrigin: '0 50%',
+                      transition: {
+                        delay: 1,
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatType: 'loop',
+                      },
                     }
-                  : { scale: 1 }
+                  : {}
               }
-            />
-
-            <motion.div style={{ position: 'absolut', bottom: -7, right: -10 }}>
-              <ICONS.coins className={styles.icon__phone} />
+              style={{ position: 'absolute', top: -14 }}
+            >
+              <ICONS.arrowAnimated
+                initial={{ scale: 0 }}
+                className={styles.icon__arrow}
+              />
             </motion.div>
+
+            <ICONS.coins className={styles.icon__coins} />
           </motion.div>
         </motion.div>
       </motion.div>
@@ -229,12 +242,35 @@ const AdvantagesAnimation = () => {
             </p>
           </div>
           <div
-            className={activeId === advantages.length - 1 ? styles.hidden : ''}
+            className={
+              activeId === advantages.length - 1 ? styles.hidden : styles.btn
+            }
           >
-            <IconButton
-              icon={<ICONS.nextButton />}
-              onClick={() => handleChangeContent(1)}
-            />
+            <motion.div
+              animate={
+                activeId === 0
+                  ? {
+                      scale: 1.2,
+                    }
+                  : { scale: 1 }
+              }
+              transition={btnTransition}
+            >
+              <IconButton
+                icon={<ICONS.nextButton />}
+                onClick={() => handleChangeContent(1)}
+              />
+            </motion.div>
+            {activeId === 0 && (
+              <motion.div
+                className={styles.shade}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                transition={btnTransition}
+              >
+                <ICONS.nextHighlighted />
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </AnimatePresence>
