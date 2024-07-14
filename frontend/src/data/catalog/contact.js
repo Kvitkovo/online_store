@@ -1,19 +1,18 @@
-import React from 'react';
-import { ICONS } from '../../components/ui-kit/icons';
+// import { ICONS } from '../../components/ui-kit/icons';
 
 export const mockContacts = [
-  {
-    id: 97,
-    name: '(093) 777-77-77',
-    bg: '/images/catalog-images/background/akciyna_cena.png',
-    icon: <ICONS.akciyna_cena />,
-  },
-  {
-    id: 98,
-    name: 'Київ',
-    bg: '/images/catalog-images/background/akciyna_cena.png',
-    icon: <ICONS.akciyna_cena />,
-  },
+  // {
+  //   id: 97,
+  //   name: '(093) 777-77-77',
+  //   bg: '/images/catalog-images/background/akciyna_cena.png',
+  //   icon: <ICONS.akciyna_cena />,
+  // },
+  // {
+  //   id: 98,
+  //   name: 'Київ',
+  //   bg: '/images/catalog-images/background/akciyna_cena.png',
+  //   icon: <ICONS.akciyna_cena />,
+  // },
 ];
 
 export const mockCategories = [
