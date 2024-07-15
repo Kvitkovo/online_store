@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useScroll } from '../../hooks';
 import Path from '../CardPage/components';
 
 import { GoogleMap, Contacts } from './components';
@@ -10,6 +11,13 @@ const googleMapsLink =
   `&destination=${encodeURIComponent('вул. Мазепи, 11, Київ, Україна')}`;
 
 const ContactUs = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
+
   return (
     <>
       <Path
