@@ -1,0 +1,34 @@
+@import '/src/variables';
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: $text-color;
+
+  & > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.gMap {
+  position: relative;
+  text-align: right;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 32px;
+
+  &-canvas {
+    overflow: hidden;
+    background: none !important;
+    width: 100%;
+    height: 400px;
+  }
+
+  &-iframe {
+    border: none;
+  }
+}

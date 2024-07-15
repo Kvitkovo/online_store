@@ -1,0 +1,23 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.sectionTitle {
+  display: none;
+}
+
+.contactSection {
+  background-color: $white-color;
+  padding: 10px 20px 32px;
+  border-radius: 8px;
+  margin-top: 22px;
+
+  @include md {
+    margin-top: 0;
+  }
+
+  @include sm {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

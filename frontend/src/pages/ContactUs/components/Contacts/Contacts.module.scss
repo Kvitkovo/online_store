@@ -1,0 +1,84 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+%text {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.contacts {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+
+  @include lg {
+    margin-bottom: 32px;
+    justify-content: flex-start;
+    gap: 72px;
+  }
+
+  @include sm {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &-title {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  &-address {
+    &-text {
+      @extend %text;
+      margin-bottom: 4px;
+      color: $text-color;
+    }
+
+    &-schedule {
+      @extend %text;
+      color: $gray-dark-color;
+      display: flex;
+      gap: 6px;
+    }
+  }
+
+  &-contact {
+    &-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      & > a {
+        @extend %text;
+        color: $text-color;
+      }
+    }
+  }
+
+  &-routeLaying {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+
+    @include lg {
+      display: none;
+    }
+  }
+}
+
+.routeLaying {
+  display: none;
+
+  @include lg {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    border-top: 1px solid $gray-10-color;
+  }
+}
+
+.route-link {
+  text-decoration: underline;
+  color: $page-accent-color;
+}
