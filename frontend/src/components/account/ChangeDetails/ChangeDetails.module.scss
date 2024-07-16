@@ -1,7 +1,8 @@
 @import 'src/_variables.scss';
+@import 'src/_mixins.scss';
 
 .mainContainer {
-  padding-left: 32px;
+  padding: 0 32px 32px;
 }
 .header {
   font-size: 20px;
@@ -22,13 +23,18 @@
 }
 
 .dataInput {
-  width: 292px;
+  width: 100%;
+  max-width: 316px;
   height: 40px;
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid $gray-dark-color;
   background: $white-color;
   margin-bottom: 16px;
+
+  &.birthday {
+    width: 141px;
+  }
 }
 .btnContainer {
   display: flex;
@@ -38,5 +44,33 @@
 label {
   span {
     color: $discount-color;
+  }
+}
+
+@include lg {
+  .formContainer {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@include md {
+  .mainContainer {
+    padding: 0 26px 26px;
+  }
+
+  .btnContainer {
+    flex-direction: column;
+    width: 100%;
+    max-width: 316px;
+    margin-top: 10px;
+    gap: 26px;
+  }
+}
+@include sm {
+  .btnContainer {
+    button:last-child {
+      display: none;
+    }
   }
 }

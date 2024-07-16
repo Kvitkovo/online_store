@@ -108,7 +108,7 @@ const ChangeDetails = () => {
                 <label htmlFor="date">Дата народження</label>
                 <input
                   id="birthday"
-                  className={styles.dataInput}
+                  className={`${styles.dataInput} ${styles.birthday}`}
                   type="date"
                   value={correctUserData?.birthday}
                   onChange={handleChange}

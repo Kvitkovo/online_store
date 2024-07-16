@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 /* eslint-disable max-len */
 import { changePassword } from '../../../services/userData/changePassword.service';
 import ReactPasswordChecklist from 'react-password-checklist';
+import SuccessPopup from '../../common/SuccessPopup';
 
 const ChangePasswordForm = () => {
   const oldPasswordRef = useRef(null);
@@ -14,6 +15,7 @@ const ChangePasswordForm = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [showPasswordReq, setShowPasswordReq] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [successPopup, setSuccessPopup] = useState(false);
   const navigate = useNavigate();
 
   const NavigateAccount = () => {
@@ -48,7 +50,11 @@ const ChangePasswordForm = () => {
         newPassword,
       });
       if (response.success) {
-        navigate('/account');
+        setSuccessPopup(true);
+        setTimeout(() => {
+          setSuccessPopup(false);
+          navigate('/account');
+        }, 2000);
       } else if (response.error === 'Невірний пароль!') {
         setOldPasswordError(response.error);
       }
@@ -57,6 +63,9 @@ const ChangePasswordForm = () => {
 
   return (
     <div>
+      <div className={styles.popupMobile}>
+        {successPopup && <SuccessPopup>Пароль успішно замінено.</SuccessPopup>}
+      </div>
       <div className={styles.formContainer}>
         <h2 className={styles.title}> Зміна паролю</h2>
         <form onSubmit={handlePasswordChange}>
@@ -155,6 +164,9 @@ const ChangePasswordForm = () => {
             />
           </div>
         </form>
+      </div>
+      <div className={styles.popup}>
+        {successPopup && <SuccessPopup>Пароль успішно замінено.</SuccessPopup>}
       </div>
     </div>
   );
