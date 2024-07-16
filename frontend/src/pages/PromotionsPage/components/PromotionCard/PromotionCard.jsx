@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useScroll } from '../../../../hooks';
+import { getDayWord, getRemainingDays } from '../../../../utils';
 import styles from './PromotionCard.module.scss';
 
 const PromotionCard = ({
@@ -8,7 +10,27 @@ const PromotionCard = ({
   promotionDuration,
   discount,
 }) => {
+  const [targetDay, setTargetDay] = useState(
+    getRemainingDays(promotionDuration),
+  );
+
+  const dayWord = getDayWord(targetDay);
   const parts = text.split(discount);
+
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setTargetDay(getRemainingDays(promotionDuration));
+    }, 1000 * 60);
+
+    return () => clearInterval(t);
+  }, [promotionDuration]);
 
   return (
     <div className={styles['promotion']}>
@@ -33,7 +55,9 @@ const PromotionCard = ({
         </div>
         <div className={styles['promotion-duration']}>
           <p className={styles['duration-text']}>До кінця акції залишилось:</p>
-          <p className={styles['duration-value']}>{promotionDuration}</p>
+          <p className={styles['duration-value']}>
+            {targetDay} {dayWord}
+          </p>
         </div>
       </div>
     </div>

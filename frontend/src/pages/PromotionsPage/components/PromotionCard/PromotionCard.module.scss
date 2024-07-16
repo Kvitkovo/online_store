@@ -80,6 +80,7 @@
 .duration {
   &-text {
     @extend %subtext;
+    padding-top: 0.3rem;
   }
 
   &-value {
