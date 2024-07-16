@@ -13,10 +13,15 @@ const PromotionCard = ({
   return (
     <div className={styles['promotion']}>
       <div className={styles['promotion-thumb']}>
-        <img alt={text} src={imageUrl} className={styles['promotion-banner']} />
+        <img
+          alt={text}
+          src={imageUrl}
+          className={styles['promotion-banner']}
+          width="690px"
+        />
       </div>
       <div className={styles['promotion-content']}>
-        <div>
+        <div className={styles['content']}>
           {title ? (
             <h2 className={styles['promotion-title']}>{title}</h2>
           ) : null}
