@@ -17,7 +17,7 @@ const PromotionCard = ({
           alt={text}
           src={imageUrl}
           className={styles['promotion-banner']}
-          width="690px"
+          width="690"
         />
       </div>
       <div className={styles['promotion-content']}>
