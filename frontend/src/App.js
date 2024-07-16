@@ -10,7 +10,7 @@ import ROUTES from './constants/routers';
 import Header from './components/Layouts/Header';
 import CardPage from './pages/CardPage';
 import Care from './pages/Care';
-import ContactUs from './pages/ContactUs';
+import ContactUsPage from './pages/ContactUsPage';
 import Faq from './pages/Faq';
 import Partner from './pages/Partner';
 import Privacy from './pages/Privacy';
@@ -51,7 +51,7 @@ function App() {
             <Route path={ROUTES.about} element={<About />} />
             <Route path={ROUTES.delivery} element={<Delivery />} />
             <Route path={ROUTES.care} element={<Care />} />
-            <Route path={ROUTES.contacts} element={<ContactUs />} />
+            <Route path={ROUTES.contacts} element={<ContactUsPage />} />
             <Route path={ROUTES.faq} element={<Faq />} />
             <Route path={ROUTES.partner} element={<Partner />} />
             <Route path={ROUTES.privacy} element={<Privacy />} />

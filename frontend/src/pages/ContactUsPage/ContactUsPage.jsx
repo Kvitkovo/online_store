@@ -4,7 +4,7 @@ import { useScroll } from '../../hooks';
 import Path from '../CardPage/components';
 
 import { GoogleMap, Contacts } from './components';
-import styles from './ContactUs.module.scss';
+import styles from './ContactUsPage.module.scss';
 
 const googleMapsLink =
   'https://www.google.com/maps/dir/?api=1' +
