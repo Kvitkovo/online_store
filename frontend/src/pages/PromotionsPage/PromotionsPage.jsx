@@ -12,7 +12,7 @@ const PromotionsPage = () => {
       <Path currentPageData={{ name: 'Акції' }} currentPageType={'section'} />
       <section className={styles['section']}>
         <h1 className={styles['section-title']}>Акції в Kvitkovo</h1>
-        <ul>
+        <ul className={styles['promotion-cards']}>
           {promotions.map((promotion) => (
             <li key={promotion.text}>
               <PromotionCard {...promotion} />

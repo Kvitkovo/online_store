@@ -2,12 +2,24 @@
 @import '/src/mixins';
 
 .section {
-  padding: 16px 0 32px;
+  padding: 16px 0 140px;
 
   &-title {
     font-weight: 500;
     font-size: 32px;
     line-height: 41.6px;
     margin-bottom: 38px;
+  }
+}
+
+.promotion-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+  & > li {
+    display: flex;
+    align-items: stretch;
   }
 }
