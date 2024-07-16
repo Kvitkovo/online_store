@@ -1,0 +1,60 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+%text {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 28.6px;
+  color: $text-color;
+}
+
+%subtext {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20.8px;
+  color: $text-color;
+}
+
+.promotion {
+  width: 100%;
+  max-width: 528px;
+  &-thumb {
+    width: 100%;
+    height: 426px;
+    overflow: hidden;
+    border-radius: 8px 8px 0px 0px;
+  }
+
+  &-banner {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-content {
+    padding: 20px;
+    border-radius: 0px 0px 8px 8px;
+    background: $white-color;
+    box-shadow: $box-shadow;
+  }
+
+  &-text {
+    @extend %text;
+
+    &-accent {
+      color: $discount-color;
+    }
+  }
+
+  &-duration {
+  }
+}
+
+.duration {
+  &-text {
+    @extend %subtext;
+  }
+
+  &-value {
+    @extend %text;
+  }
+}

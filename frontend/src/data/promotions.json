@@ -1,0 +1,14 @@
+[
+  {
+    "imageUrl": "/images/offers/offer-banner.jpg",
+    "text": "Знижки 15% на всі букети тижня!",
+    "discount": "15%",
+    "promotionDuration": "7 днів"
+  },
+  {
+    "imageUrl": "/images/offers/svt-banner.jpg",
+    "text": "До дня закоханих! Знижки до 10% на всі букети з троянд!",
+    "discount": "10%",
+    "promotionDuration": "7 днів"
+  }
+]
