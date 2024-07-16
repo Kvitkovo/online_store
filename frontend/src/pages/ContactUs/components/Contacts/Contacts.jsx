@@ -10,14 +10,9 @@ const Contacts = ({ href }) => {
       <div className={styles.contacts}>
         <div className={styles['contacts-address']}>
           <h2 className={styles['contacts-title']}>Адреса:</h2>
-          <a
-            href="https://maps.app.goo.gl/wrLFE4cKVVh2Xtuu9"
-            rel="noopener noreferrer"
-            className={styles['contacts-address-text']}
-            target="_blank"
-          >
+          <p className={styles['contacts-address-text']}>
             м. Київ, вул. Івана Мазепи 11
-          </a>
+          </p>
           <p className={styles['contacts-address-schedule']}>
             <span>пн-нд</span>
             <span>10:00 - 20:00</span>
