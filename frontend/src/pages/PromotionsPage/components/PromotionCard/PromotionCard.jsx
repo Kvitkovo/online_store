@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useScroll } from '../../../../hooks';
+
 import { getDayWord, getRemainingDays } from '../../../../utils';
 import styles from './PromotionCard.module.scss';
 
@@ -17,13 +17,6 @@ const PromotionCard = ({
   const dayWord = getDayWord(targetDay);
   const parts = text.split(discount);
 
-  useScroll({
-    top: 0,
-    left: 0,
-    behavior: 'smooth',
-    scrollOnMount: true,
-  });
-
   useEffect(() => {
     const t = setInterval(() => {
       setTargetDay(getRemainingDays(promotionDuration));
@@ -34,14 +27,12 @@ const PromotionCard = ({
 
   return (
     <div className={styles['promotion']}>
-      <div className={styles['promotion-thumb']}>
-        <img
-          alt={text}
-          src={imageUrl}
-          className={styles['promotion-banner']}
-          width="690"
-        />
-      </div>
+      <img
+        alt={text}
+        src={imageUrl}
+        className={styles['promotion-banner']}
+        width="690"
+      />
       <div className={styles['promotion-content']}>
         <div className={styles['content']}>
           {title ? (
