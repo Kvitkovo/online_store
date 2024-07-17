@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import styles from './QuestionItem.module.scss';
 import { motion } from 'framer-motion';
 
-const CareItem = React.memo(({ item, setSelected, selected }) => {
+const CareItem = React.memo(({ item, setSelected, selected, customIcon }) => {
   const isOpen = selected.includes(item.id);
   const [animationComplete, setAnimationComplete] = useState(true);
   const ref = useRef(null);
@@ -63,7 +63,7 @@ const CareItem = React.memo(({ item, setSelected, selected }) => {
         }
         onAnimationStart={handleAnimationStart}
       >
-        <span className={styles.number}>{item.id}</span>
+        <span className={styles.number}>{customIcon || item.id}</span>
       </motion.div>
       <motion.p
         initial={{ display: 'none', height: 0 }}
