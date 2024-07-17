@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const useScroll = ({ scrollOnMount = false, ...options }) => {
-  useEffect(() => {
-    scrollOnMount && window.scrollTo(options);
-  }, [options, scrollOnMount]);
+  const scroll = useCallback(() => window.scrollTo(options), [options]);
 
-  return () => window.scrollTo(options);
+  useEffect(() => {
+    scrollOnMount && scroll();
+  }, [scroll, scrollOnMount]);
+
+  return scroll;
 };
