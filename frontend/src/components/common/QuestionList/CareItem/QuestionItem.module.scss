@@ -91,6 +91,11 @@
   line-height: 26px;
   overflow: hidden;
   display: none;
+  white-space: pre-wrap;
+
+  &.indent {
+    margin-left: 20px;
+  }
 }
 
 @include md {

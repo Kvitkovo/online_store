@@ -84,7 +84,15 @@ const CareItem = React.memo(({ item, setSelected, selected, customIcon }) => {
         }
         className={styles.content}
       >
-        {item.content}
+        {item.content.split('\n').map((text, index) => (
+          <span
+            key={index}
+            className={text.trim().startsWith('-') ? styles.indent : ''}
+          >
+            {text}
+            <br />
+          </span>
+        ))}
         <span className={styles.hideBtn} onClick={() => toggle(item.id)}>
           Згорнути
         </span>
