@@ -18,6 +18,18 @@ const Account = ({ children }) => {
       return !prev;
     });
   };
+  const getPageData = () => {
+    switch (location.pathname) {
+      case '/account/orders':
+        return { name: 'Мої замовлення' };
+      case '/account/change-details':
+        return { name: 'Контактні дані' };
+      case '/account/change-password':
+        return { name: 'Зміна паролю' };
+      default:
+        return { name: 'Кабінет' };
+    }
+  };
 
   const getTitle = () => {
     switch (location.pathname) {
@@ -52,6 +64,7 @@ const Account = ({ children }) => {
         </div>
       ) : (
         <div>
+          <Path currentPageData={getPageData()} currentPageType={'profile'} />
           <h2 className={styles.accountTitle}>{getTitle()}</h2>
           <div className={styles.gridTwoBlocks}>
             <div className={styles.menuBlock}>

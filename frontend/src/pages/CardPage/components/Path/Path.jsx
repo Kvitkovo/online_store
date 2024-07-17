@@ -11,7 +11,7 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
   const { categoryId } = useParams();
 
   useEffect(() => {
-    if (currentPageType !== 'section') {
+    if (currentPageType !== 'section' && currentPageType !== 'profile') {
       const fetchCategoryAndSubcategory = async (categoryId) => {
         const category = (await GetCategory(categoryId)) || [];
         const parents = [];
@@ -40,42 +40,65 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
         </Link>
         {currentPageData && (
           <>
-            {parents.length < 1 && (
+            {currentPageType === 'profile' ? (
               <>
                 <div className={styles.arrow}>
                   <ICONS.pathArrow />
                 </div>
-                <span className={styles.navigation}>
-                  {currentPageData.name}
-                </span>
-              </>
-            )}
-            {parents.length >= 1 &&
-              parents.map((parent, index) => {
-                return (
-                  <div key={index}>
+                <Link to="/account" className={styles.navigationLink}>
+                  Кабінет
+                </Link>
+                {currentPageData.name !== 'Кабінет' && (
+                  <>
                     <div className={styles.arrow}>
                       <ICONS.pathArrow />
                     </div>
-                    <Link
-                      key={parent.id}
-                      to={`/categories/${parent.id}`}
-                      className={styles.navigationLink}
-                    >
-                      {parent.name}
-                    </Link>
-                  </div>
-                );
-              })}
-
-            {currentPageType === 'product' && (
+                    <span className={styles.navigation}>
+                      {currentPageData.name}
+                    </span>
+                  </>
+                )}
+              </>
+            ) : (
               <>
-                <div className={styles.arrow}>
-                  <ICONS.pathArrow />
-                </div>
-                <span className={styles.navigation}>
-                  {currentPageData.title}
-                </span>
+                {parents.length < 1 && (
+                  <>
+                    <div className={styles.arrow}>
+                      <ICONS.pathArrow />
+                    </div>
+                    <span className={styles.navigation}>
+                      {currentPageData.name}
+                    </span>
+                  </>
+                )}
+                {parents.length >= 1 &&
+                  parents.map((parent, index) => {
+                    return (
+                      <div key={index}>
+                        <div className={styles.arrow}>
+                          <ICONS.pathArrow />
+                        </div>
+                        <Link
+                          key={parent.id}
+                          to={`/categories/${parent.id}`}
+                          className={styles.navigationLink}
+                        >
+                          {parent.name}
+                        </Link>
+                      </div>
+                    );
+                  })}
+
+                {currentPageType === 'product' && (
+                  <>
+                    <div className={styles.arrow}>
+                      <ICONS.pathArrow />
+                    </div>
+                    <span className={styles.navigation}>
+                      {currentPageData.title}
+                    </span>
+                  </>
+                )}
               </>
             )}
           </>
