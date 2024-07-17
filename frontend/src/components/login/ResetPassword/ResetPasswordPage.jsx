@@ -7,6 +7,7 @@ import ReactPasswordChecklist from 'react-password-checklist';
 import { passwordReset } from '../../../services/passwordReset/passwordReset.service';
 import { DecorIcons } from '../../ui-kit/icons/decor-icons';
 import SuccessPopup from '../../common/SuccessPopup';
+import Path from '../../../pages/CardPage/components/Path';
 
 const ResetPasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -72,6 +73,10 @@ const ResetPasswordPage = () => {
 
   return (
     <div className={styles.mainContainer}>
+      <Path
+        currentPageData={{ name: 'Відновлення паролю' }}
+        currentPageType={'section'}
+      />
       <div className={styles.flowerRight}>
         <DecorIcons.flowerRight />
       </div>
