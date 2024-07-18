@@ -72,10 +72,7 @@ function App() {
             <Route path={ROUTES.decor} element={<Decor />} />
             <Route
               element={
-                <ProtectedRoutes
-                  isLoggedIn={isLoggedIn}
-                  updateLoginStatus={updateLoginStatus}
-                />
+                <ProtectedRoutes updateLoginStatus={updateLoginStatus} />
               }
             >
               <Routes>

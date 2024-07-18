@@ -1,20 +1,38 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import React from 'react';
-import Account from '../account/Account';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slices/userSlice';
 
-const ProtectedRoutes = ({ isLoggedIn, updateLoginStatus }) => {
-  let auth = { token: true };
-  const handleAuthentication = () => {
-    if (!auth.token && isLoggedIn) {
-      updateLoginStatus(false);
-    }
+const ProtectedRoutes = ({ updateLoginStatus }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = localStorage.getItem('authToken');
+  const itemsToRemove = ['authToken', 'authId', 'userfetchedData', 'email'];
+
+  const onExpire = () => {
+    dispatch(logout());
+    itemsToRemove.forEach((item) => localStorage.removeItem(item));
+    updateLoginStatus(false);
+    navigate('/');
   };
-  handleAuthentication();
-  return (
-    <>
-      <Account>{auth.token ? <Outlet /> : <Navigate to="/" />}</Account>
-    </>
-  );
+
+  useEffect(() => {
+    if (token) {
+      const decodedTocken = jwtDecode(token);
+      const currentTime = new Date().getTime();
+      const expiryTime = new Date(decodedTocken.exp * 1000).getTime();
+      const timeout = expiryTime - currentTime;
+
+      if (timeout > 0) {
+        setTimeout(onExpire, timeout);
+      } else {
+        onExpire();
+      }
+    }
+  });
+
+  return <>{token ? <Outlet /> : <Navigate to="/" />}</>;
 };
 
 export default ProtectedRoutes;
