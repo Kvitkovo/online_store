@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/userSlice';
+import Account from '../account/Account';
 
 const ProtectedRoutes = ({ updateLoginStatus }) => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const ProtectedRoutes = ({ updateLoginStatus }) => {
     }
   });
 
-  return <>{token ? <Outlet /> : <Navigate to="/" />}</>;
+  return <Account>{token ? <Outlet /> : <Navigate to="/" />}</Account>;
 };
 
 export default ProtectedRoutes;
