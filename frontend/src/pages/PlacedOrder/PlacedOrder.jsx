@@ -1,9 +1,16 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui-kit/components/Button';
+import { useScroll } from '../../hooks/useScroll';
 import styles from './PlacedOrder.module.scss';
 
 const PlasedOrder = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    scrollOnMount: true,
+  });
+
   const { orderNumber } = useParams();
   const navigate = useNavigate();
 
