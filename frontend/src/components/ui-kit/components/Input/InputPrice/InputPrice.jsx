@@ -3,7 +3,7 @@ import styles from './InputPrice.module.scss';
 
 const InputPrice = memo(
   ({ value, handleInputChange, index, minValue, maxValue }) => {
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState(value || 0);
     const inputName = useMemo(
       () => (index === 0 ? 'input1' : 'input2'),
       [index],
@@ -29,7 +29,7 @@ const InputPrice = memo(
       }
     };
     useEffect(() => {
-      setPrice(value);
+      setPrice(value || 0);
     }, [value]);
 
     return (
