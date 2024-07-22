@@ -20,7 +20,7 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
     dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
   };
 
-  const handleEditing = useCallback(
+  const handleSetConfirmation = useCallback(
     (item) => {
       setConfirmationOpen(false);
       editBouquet(item);
@@ -28,7 +28,7 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
     [editBouquet],
   );
 
-  const handleSetConfirmation = (item) => {
+  const handleEditing = (item) => {
     if (bouquetItems.length > 0) {
       setConfirmationOpen(true);
     } else {
@@ -61,12 +61,12 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                   <IconButton
                     icon={<ICONS.PencilIcon />}
                     isBorderYellow={width > 767}
-                    onClick={() => handleSetConfirmation(item)}
+                    onClick={() => handleEditing(item)}
                   />
                   {isConfirmationOpen && (
                     <ConfirmationPopup
                       setIsOpen={setConfirmationOpen}
-                      confirmedAction={() => handleEditing(item)}
+                      confirmedAction={() => handleSetConfirmation(item)}
                       action={'Продовжити'}
                     />
                   )}
