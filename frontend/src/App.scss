@@ -18,3 +18,7 @@ ul {
 a {
   text-decoration: none;
 }
+
+.disableScroll {
+  overflow: hidden !important;
+}

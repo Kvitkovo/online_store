@@ -14,7 +14,7 @@ const SupportButton = ({
   const toggleButton = () => {
     setIsOpen((prev) => !prev);
   };
-  useModalEffect(isPhoneModalOpen, isMessageModalOpen);
+  useModalEffect(isPhoneModalOpen || isMessageModalOpen);
 
   return (
     <div className={styles.supportButtonContainer}>

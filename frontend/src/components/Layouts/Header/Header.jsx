@@ -89,7 +89,7 @@ const Header = () => {
     }
   }, [openLoginModal]);
 
-  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenAuthModal);
+  useModalEffect(isOpenCart || isOpenMyBouquet || isOpenAuthModal);
 
   useEffect(() => {
     window.onscroll = () => {

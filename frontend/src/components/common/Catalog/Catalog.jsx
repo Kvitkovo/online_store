@@ -20,10 +20,10 @@ const Catalog = React.memo(({ setIsOpen }) => {
     [navigate, setIsOpen],
   );
   useEffect(() => {
-    document.body.classList.add(styles.disableScroll);
+    document.body.classList.add('disableScroll');
 
     return () => {
-      document.body.classList.remove(styles.disableScroll);
+      document.body.classList.remove('disableScroll');
     };
   }, []);
   useEffect(() => {
