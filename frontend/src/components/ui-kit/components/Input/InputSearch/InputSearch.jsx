@@ -25,22 +25,17 @@ const InputSearch = memo(({ isActive = false, setActive = null }) => {
   const showResults = () => {
     const link = `search/${query}`;
     setQuery('');
-    if (setActive) {
-      setActive(false);
-    }
+
+    setActive && setActive(false);
+
     navigate(link);
   };
   const handleFocus = () => {
     setIsFocused(true);
-    if (setActive) {
-      setActive(true);
-    }
+    setActive && setActive(true);
   };
   const handleBlur = () => {
     setIsFocused(false);
-    if (setActive) {
-      setActive(false);
-    }
   };
 
   useEffect(() => {
