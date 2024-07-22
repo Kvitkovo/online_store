@@ -26,6 +26,12 @@
   box-shadow: $box-shadow;
   overflow: hidden;
   margin: 0 auto;
+  transition: box-shadow 0.3s;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0px 6px 16px 0px rgba(0, 233, 0, 0.14);
+  }
 
   @include sm {
     max-width: none;
