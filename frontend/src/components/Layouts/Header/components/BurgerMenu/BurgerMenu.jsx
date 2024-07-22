@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import OpenMenu from './OpenMenu';
-import ClosedMenu from './ClosedMenu';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { closeMenu } from '../../../../../redux/slices/catalogSlice';
+import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import OpenMenu from './OpenMenu';
+import ClosedMenu from './ClosedMenu';
+import styles from './BurgerMenu.module.scss';
 
 const BurgerMenu = ({
   toggleCart,
@@ -15,6 +17,7 @@ const BurgerMenu = ({
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
+  const screen = useWindowSize();
 
   const toggleMenu = useCallback(() => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -23,7 +26,17 @@ const BurgerMenu = ({
 
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+    if (screen.width > 868) setIsOpen(false);
+  }, [location.pathname, screen.width]);
+
+  useEffect(() => {
+    isOpen && document.body.classList.add(styles.disableScroll);
+
+    return () => {
+      document.body.classList.remove(styles.disableScroll);
+    };
+  }, [isOpen, screen.width]);
+
   return (
     <>
       {isOpen ? (
