@@ -26,12 +26,13 @@ const BurgerMenu = ({
 
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+    if (screen.width > 868)
+      document.body.classList.remove(styles.disableScroll);
+  }, [location.pathname, screen.width]);
 
   useEffect(() => {
     isOpen && document.body.classList.add(styles.disableScroll);
-    if (screen.width > 868)
-      document.body.classList.remove(styles.disableScroll);
+
     return () => {
       document.body.classList.remove(styles.disableScroll);
     };
