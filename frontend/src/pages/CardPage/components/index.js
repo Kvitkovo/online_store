@@ -1,1 +1,1 @@
-export { default } from './Path/Path';
+export { default } from './Path';
