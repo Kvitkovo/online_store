@@ -28,16 +28,13 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
     [editBouquet],
   );
 
-  const handleSetConfirmation = useCallback(
-    (item) => {
-      if (bouquetItems.length > 0) {
-        setConfirmationOpen(true);
-      } else {
-        editBouquet(item);
-      }
-    },
-    [bouquetItems.length, editBouquet],
-  );
+  const handleSetConfirmation = (item) => {
+    if (bouquetItems.length > 0) {
+      setConfirmationOpen(true);
+    } else {
+      editBouquet && editBouquet(item);
+    }
+  };
 
   return (
     <div
