@@ -31,13 +31,13 @@
     max-width: none;
   }
 
-  &-banner {
+  &Banner {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  &-content {
+  &Content {
     flex: 1;
     height: 100%;
     display: flex;
@@ -48,19 +48,19 @@
     background: $white-color;
   }
 
-  &-title {
+  &Title {
     @extend %text;
   }
 
-  &-text {
+  &Text {
     @extend %text;
 
-    &-accent {
+    &Accent {
       color: $discount-color;
     }
   }
 
-  &-duration {
+  &Duration {
     display: flex;
     justify-content: space-between;
     justify-items: baseline;
@@ -74,12 +74,12 @@
 }
 
 .duration {
-  &-text {
+  &Text {
     @extend %subtext;
     padding-top: 0.3rem;
   }
 
-  &-value {
+  &Value {
     @extend %text;
   }
 }

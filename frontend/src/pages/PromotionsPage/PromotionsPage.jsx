@@ -3,7 +3,7 @@ import React from 'react';
 import { useScroll } from '../../hooks';
 import promotions from '../../data/promotions.json';
 import Path from '../CardPage/components/Path';
-import PromotionCard from './components/PromotionCard/PromotionCard';
+import { PromotionCard } from './components';
 import styles from './PromotionsPage.module.scss';
 
 const PromotionsPage = () => {
@@ -17,9 +17,9 @@ const PromotionsPage = () => {
   return (
     <>
       <Path currentPageData={{ name: 'Акції' }} currentPageType={'section'} />
-      <section className={styles['section']}>
-        <h1 className={styles['section-title']}>Акції в Kvitkovo</h1>
-        <ul className={styles['promotion-cards']}>
+      <section className={styles.section}>
+        <h1 className={styles.sectionTitle}>Акції в Kvitkovo</h1>
+        <ul className={styles.promotionCards}>
           {promotions.map((promotion) => (
             <li key={promotion.text}>
               <PromotionCard {...promotion} />

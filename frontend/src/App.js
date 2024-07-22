@@ -25,7 +25,7 @@ import Order from './components/Order/Order';
 import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
-import PromotionsPage from './pages/PromotionsPage/PromotionsPage';
+import PromotionsPage from './pages/PromotionsPage';
 import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';

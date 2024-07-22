@@ -26,27 +26,20 @@ const PromotionCard = ({
   }, [promotionDuration]);
 
   return (
-    <div className={styles['promotion']}>
-      <img
-        alt={text}
-        src={imageUrl}
-        className={styles['promotion-banner']}
-        width="690"
-      />
-      <div className={styles['promotion-content']}>
-        <div className={styles['content']}>
-          {title ? (
-            <h2 className={styles['promotion-title']}>{title}</h2>
-          ) : null}
-          <p className={styles['promotion-text']}>
+    <div className={styles.promotion}>
+      <img alt={text} src={imageUrl} className={styles.promotionBanner} />
+      <div className={styles.promotionContent}>
+        <div className={styles.content}>
+          {title ? <h2 className={styles.promotionTitle}>{title}</h2> : null}
+          <p className={styles.promotionText}>
             {parts[0]}
-            <span className={styles['promotion-text-accent']}>{discount}</span>
+            <span className={styles.promotionTextAccent}>{discount}</span>
             {parts[1]}
           </p>
         </div>
-        <div className={styles['promotion-duration']}>
-          <p className={styles['duration-text']}>До кінця акції залишилось:</p>
-          <p className={styles['duration-value']}>
+        <div className={styles.promotionDuration}>
+          <p className={styles.durationText}>До кінця акції залишилось:</p>
+          <p className={styles.durationValue}>
             {targetDay} {dayWord}
           </p>
         </div>
