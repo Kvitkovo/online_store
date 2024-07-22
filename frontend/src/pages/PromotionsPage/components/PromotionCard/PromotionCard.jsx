@@ -33,7 +33,9 @@ const PromotionCard = ({
           {title ? <h2 className={styles.promotionTitle}>{title}</h2> : null}
           <p className={styles.promotionText}>
             {parts[0]}
-            <span className={styles.promotionTextAccent}>{discount}</span>
+            {discount ? (
+              <span className={styles.promotionTextAccent}>{discount}</span>
+            ) : null}
             {parts[1]}
           </p>
         </div>
