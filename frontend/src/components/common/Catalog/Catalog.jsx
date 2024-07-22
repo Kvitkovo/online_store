@@ -19,7 +19,13 @@ const Catalog = React.memo(({ setIsOpen }) => {
     },
     [navigate, setIsOpen],
   );
+  useEffect(() => {
+    document.body.classList.add(styles.disableScroll);
 
+    return () => {
+      document.body.classList.remove(styles.disableScroll);
+    };
+  }, []);
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
