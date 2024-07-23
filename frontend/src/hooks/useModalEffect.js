@@ -1,24 +1,10 @@
 import { useEffect } from 'react';
 
-export const useModalEffect = ({
-  isOpenCart,
-  isOpenMyBouquet,
-  isPhoneModalOpen,
-  isMessageModalOpen,
-}) => {
+export const useModalEffect = (isActive) => {
   useEffect(() => {
-    if (
-      isOpenCart ||
-      isOpenMyBouquet ||
-      isPhoneModalOpen ||
-      isMessageModalOpen
-    ) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    if (isActive) document.body.classList.add('disableScroll');
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.classList.remove('disableScroll');
     };
-  }, [isOpenCart, isOpenMyBouquet, isPhoneModalOpen, isMessageModalOpen]);
+  }, [isActive]);
 };

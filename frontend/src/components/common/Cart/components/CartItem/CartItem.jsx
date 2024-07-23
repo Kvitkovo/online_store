@@ -1,26 +1,47 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import DiscountPrice from '../../../../ui-kit/components/DiscountPrice';
+import { ICONS } from '../../../../ui-kit/icons';
 import Divider from '../../../../ui-kit/components/Divider';
 import IconButton from '../../../../ui-kit/components/IconButton';
 import CountBlock from '../../../CountBlock';
-
-import styles from './CartItem.module.scss';
-import { ICONS } from '../../../../ui-kit/icons';
-import { removeFromCart } from '../../../../../redux/slices/cartSlice';
+import { usePopups } from '../../../../../hooks/usePopups';
+import {
+  clearCart,
+  removeFromCart,
+} from '../../../../../redux/slices/cartSlice';
 import ConfirmationPopup from '../../../MyBouquet/components/ConfirmationPopup';
+import { useModalEffect } from '../../../../../hooks/useModalEffect';
+import MyBouquet from '../../../MyBouquet';
+import styles from './CartItem.module.scss';
 
 const CartItem = ({ items, cartClassName, editBouquet }) => {
   const dispatch = useDispatch();
-  const { bouquetItems } = useSelector((state) => state.cartSliceReducer);
+
   const { width } = useWindowSize();
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart({ info: cartItem, type: 'cart' }));
   };
 
-  const handleEditing = useCallback(
+  const { isOpenMyBouquet, toggleMyBouquet, getPrevData } = usePopups();
+
+  const editOrderedBouquet = (item) => {
+    dispatch(clearCart({ type: 'bouquet' }));
+    localStorage.setItem(
+      'bouquet',
+      JSON.stringify(item.orderItemsCompositions),
+    );
+    getPrevData('bouquet');
+    dispatch(removeFromCart({ info: item, type: 'cart' }));
+    toggleMyBouquet();
+  };
+
+  useModalEffect(isOpenMyBouquet);
+
+  const handleSetConfirmation = useCallback(
     (item) => {
       setConfirmationOpen(false);
       editBouquet(item);
@@ -28,16 +49,13 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
     [editBouquet],
   );
 
-  const handleSetConfirmation = useCallback(
-    (item) => {
-      if (bouquetItems.length > 0) {
-        setConfirmationOpen(true);
-      } else {
-        editBouquet(item);
-      }
-    },
-    [bouquetItems.length, editBouquet],
-  );
+  const handleEditing = (item) => {
+    if (editBouquet) {
+      editBouquet(item);
+    } else {
+      editOrderedBouquet(item);
+    }
+  };
 
   return (
     <div
@@ -64,12 +82,12 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                   <IconButton
                     icon={<ICONS.PencilIcon />}
                     isBorderYellow={width > 767}
-                    onClick={() => handleSetConfirmation(item)}
+                    onClick={() => handleEditing(item)}
                   />
                   {isConfirmationOpen && (
                     <ConfirmationPopup
                       setIsOpen={setConfirmationOpen}
-                      confirmedAction={() => handleEditing(item)}
+                      confirmedAction={() => handleSetConfirmation(item)}
                       action={'Продовжити'}
                     />
                   )}
@@ -97,7 +115,6 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
                     : ''
                 }
               >
-                {/* {console.log(item)} */}
                 <DiscountPrice
                   oldPrice={item.price}
                   actualPrice={item.priceWithDiscount}
@@ -108,6 +125,7 @@ const CartItem = ({ items, cartClassName, editBouquet }) => {
           {index < items.length - 1 && <Divider />}
         </React.Fragment>
       ))}
+      {isOpenMyBouquet && <MyBouquet toggleMyBouquet={toggleMyBouquet} />}
     </div>
   );
 };

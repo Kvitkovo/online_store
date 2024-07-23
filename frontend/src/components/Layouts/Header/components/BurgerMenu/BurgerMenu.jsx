@@ -5,7 +5,6 @@ import { closeMenu } from '../../../../../redux/slices/catalogSlice';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 import OpenMenu from './OpenMenu';
 import ClosedMenu from './ClosedMenu';
-import styles from './BurgerMenu.module.scss';
 
 const BurgerMenu = ({
   toggleCart,
@@ -30,10 +29,10 @@ const BurgerMenu = ({
   }, [location.pathname, screen.width]);
 
   useEffect(() => {
-    isOpen && document.body.classList.add(styles.disableScroll);
+    isOpen && document.body.classList.add('disableScroll');
 
     return () => {
-      document.body.classList.remove(styles.disableScroll);
+      document.body.classList.remove('disableScroll');
     };
   }, [isOpen, screen.width]);
 
