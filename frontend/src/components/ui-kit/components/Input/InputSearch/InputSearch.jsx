@@ -93,9 +93,9 @@ const InputSearch = memo(({ isActive = false, setActive = null }) => {
   }, [setActive]);
   useEffect(() => {
     if (isActive) {
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('disableScroll');
     }
-    return () => (document.body.style.overflow = 'unset');
+    return () => document.body.classList.remove('disableScroll');
   }, [isActive]);
   return (
     <div className={styles.overlayActive}>

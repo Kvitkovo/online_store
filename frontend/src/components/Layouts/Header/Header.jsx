@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import BurgerMenu from './components/BurgerMenu';
 import styles from './Header.module.scss';
@@ -17,11 +17,11 @@ import MyBouquet from '../../common/MyBouquet';
 import Modal from '../../ui-kit/components/Modal';
 import Catalog from '../../common/Catalog';
 import { useDispatch, useSelector } from 'react-redux';
-/* import { getUser } from '../../../redux/slices/userSlice'; */
-import { GetProducts } from '../../../services/products/productsAccess.service';
+
 import TotalItems from './components/TotalItems';
-import { initiateCart } from '../../../redux/slices/cartSlice';
+
 import AuthModal from '../../login/AuthModal';
+import { usePopups } from '../../../hooks/usePopups';
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -63,17 +63,13 @@ const Header = () => {
   const catalogHandler = () => {
     setIsCatalogOpened((prev) => !prev);
   };
-
-  const [isOpenCart, setIsOpenCart] = useState(false);
-  const [isOpenMyBouquet, setIsOpenMyBouquet] = useState(false);
-
-  const toggleCart = useCallback(() => {
-    setIsOpenCart((prev) => !prev);
-  }, []);
-
-  const toggleMyBouquet = useCallback(() => {
-    setIsOpenMyBouquet((prev) => !prev);
-  }, []);
+  const {
+    isOpenCart,
+    isOpenMyBouquet,
+    toggleCart,
+    toggleMyBouquet,
+    getPrevData,
+  } = usePopups();
 
   const openGoogleMaps = () => {
     const destination = 'вул. Квіткова, 18, Київ, Україна, 02000';
@@ -93,7 +89,7 @@ const Header = () => {
     }
   }, [openLoginModal]);
 
-  useModalEffect(isOpenCart, isOpenMyBouquet, isOpenAuthModal);
+  useModalEffect(isOpenCart || isOpenMyBouquet || isOpenAuthModal);
 
   useEffect(() => {
     window.onscroll = () => {
@@ -107,53 +103,6 @@ const Header = () => {
       window.onscroll = null;
     };
   }, []);
-  const getPrevData = useCallback(
-    async (type) => {
-      const prevList = JSON.parse(localStorage.getItem(type)) || [];
-      const cartList = [];
-      for (const item of prevList) {
-        const { id, cardQuantity, orderItemsCompositions } = item;
-        if (orderItemsCompositions) {
-          const price = orderItemsCompositions.reduce((acc, item) => {
-            acc + item.cardQuantity * item.priceWithDiscount;
-          }, 0);
-          const newItem = {
-            id: id,
-            title: `Свій букет #${id}`,
-            cardQuantity: cardQuantity,
-            discount: 0,
-            image: '/images/new_bouquet.jpg',
-            price: price,
-            priceWithDiscount: price,
-            orderItemsCompositions: orderItemsCompositions,
-          };
-
-          cartList.push(newItem);
-        } else {
-          const info = await GetProducts(item.id);
-          const { id, images, title, price, priceWithDiscount } = info;
-          const newItem = {
-            id: id,
-            title: title,
-            price: price,
-            priceWithDiscount: priceWithDiscount,
-            image: images[0] ? images[0].urlSmall : '/images/no_image.jpg',
-            cardQuantity: item.cardQuantity,
-          };
-
-          cartList.push(newItem);
-        }
-      }
-
-      dispatch(
-        initiateCart({
-          items: cartList,
-          type: type,
-        }),
-      );
-    },
-    [dispatch],
-  );
 
   useEffect(() => {
     getPrevData('bouquet');
