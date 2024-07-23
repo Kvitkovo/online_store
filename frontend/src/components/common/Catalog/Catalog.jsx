@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './Catalog.module.scss';
 import CategoryList from './components/CatalogList/CatalogList';
 import SubCategoryList from './components/SubCategoryList/SubCategoryList';
-import { mockCategories as categoriesData } from '../../../data/catalog';
-import { useDispatch } from 'react-redux';
+import { mockCategories as categoriesData } from '../../../data/catalog/';
 import { fetchCategories } from '../../../redux/slices/catalogSlice';
 
 const Catalog = React.memo(({ setIsOpen }) => {
