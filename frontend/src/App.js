@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Promotions from './pages/Promotions';
+
 import About from './pages/About';
 import Delivery from './pages/Delivery';
 import './App.scss';
@@ -25,6 +25,7 @@ import Order from './components/Order/Order';
 import RegisterConfirm from './components/login/RegisterConfirm';
 /* eslint-disable max-len */
 import ResetPasswordPage from './components/login/ResetPassword/ResetPasswordPage';
+import PromotionsPage from './pages/PromotionsPage';
 import CategoryPage from './pages/CategoryPage';
 import SearchResult from './pages/SearchResult';
 import PlacedOrder from './pages/PlacedOrder';
@@ -47,7 +48,7 @@ function App() {
         <Wrapper>
           <Routes>
             <Route path={ROUTES.home} element={<Home />} />
-            <Route path={ROUTES.promotions} element={<Promotions />} />
+            <Route path={ROUTES.promotions} element={<PromotionsPage />} />
             <Route path={ROUTES.about} element={<About />} />
             <Route path={ROUTES.delivery} element={<Delivery />} />
             <Route path={ROUTES.care} element={<Care />} />
