@@ -1,0 +1,55 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+.section {
+  padding: 16px 0 140px;
+
+  @include md {
+    padding: 24px 0 44px;
+  }
+
+  @include sm {
+    padding: 36px 0 44px;
+  }
+
+  &Title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 41.6px;
+    margin-bottom: 38px;
+
+    @include lg {
+      margin-bottom: 38px;
+    }
+
+    @include md {
+      margin-bottom: 38px;
+    }
+
+    @include sm {
+      display: none;
+    }
+  }
+}
+
+.promotionCards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+
+  @include lg {
+    gap: 30px;
+  }
+
+  @include md {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  & > li {
+    display: flex;
+    align-items: stretch;
+  }
+}
