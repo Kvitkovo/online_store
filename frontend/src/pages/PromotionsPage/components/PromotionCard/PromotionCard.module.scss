@@ -1,0 +1,91 @@
+@import '/src/variables';
+@import '/src/mixins';
+
+%text {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 28.6px;
+  color: $text-color;
+}
+
+%subtext {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20.8px;
+  color: $text-color;
+}
+
+.promotion {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+  height: 100%;
+  border-radius: 8px 8px 8px 8px;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+  margin: 0 auto;
+  transition: box-shadow 0.3s;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0px 6px 16px 0px rgba(0, 233, 0, 0.14);
+  }
+
+  @include sm {
+    max-width: none;
+  }
+
+  &Banner {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  &Content {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    min-height: 148px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background: $white-color;
+  }
+
+  &Title {
+    @extend %text;
+  }
+
+  &Text {
+    @extend %text;
+
+    &Accent {
+      color: $discount-color;
+    }
+  }
+
+  &Duration {
+    display: flex;
+    justify-content: space-between;
+    justify-items: baseline;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.duration {
+  &Text {
+    @extend %subtext;
+    padding-top: 0.3rem;
+  }
+
+  &Value {
+    @extend %text;
+  }
+}
