@@ -1,3 +1,8 @@
+export const mockContacts = [
+  { href: 'tel:+380937777777', text: '+38 (093) 777-77-77' },
+  { href: 'mailto:kvitkovo@gmail.com', text: 'kvitkovo@gmail.com' },
+];
+
 export const mockCategories = [
   {
     sortValue: 0,
