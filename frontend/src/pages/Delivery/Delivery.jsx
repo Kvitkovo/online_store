@@ -1,10 +1,17 @@
 import React from 'react';
+import { useScroll } from '../../hooks/useScroll';
 import Path from '../CardPage/components/Path';
 import styles from './Delivery.module.scss';
 import data from '../../data/delivery.json';
 import BlossomItem from '../../components/common/BlossomItem/BlossomItem';
 
 function Delivery() {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   const { payment, delivery, whyUs } = data;
   return (
     <>
