@@ -22,7 +22,7 @@ const FAQPage = () => {
         currentPageType={'section'}
       />
       <section className={styles.section}>
-        <h1 className={styles.sectionTitle}>Поширенні запитання</h1>
+        <h1 className={styles.sectionTitle}>Поширені запитання</h1>
         <QuestionList data={data} customIcon="?" />
       </section>
     </>
