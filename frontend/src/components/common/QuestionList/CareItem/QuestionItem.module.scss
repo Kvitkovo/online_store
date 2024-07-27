@@ -96,12 +96,22 @@
     margin-left: 20px;
   }
 }
-
+@include lg {
+  .title {
+    font-size: 26px;
+  }
+}
 @include md {
   .title {
     font-size: 22px;
   }
   .content {
     font-size: 16px;
+  }
+
+  @include sm {
+    .title {
+      font-size: 16px;
+    }
   }
 }

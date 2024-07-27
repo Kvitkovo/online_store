@@ -12,22 +12,19 @@
     padding: 36px 0 44px;
   }
 
-  &-title {
+  &Title {
     font-weight: 500;
     font-size: 32px;
     line-height: 41.6px;
-    margin-bottom: 38px;
-
-    @include lg {
-      margin-bottom: 38px;
-    }
+    margin-bottom: 32px;
 
     @include md {
-      margin-bottom: 38px;
+      margin-bottom: 24px;
+      font-size: 22px;
+      line-height: 28.6px;
     }
 
     @include sm {
-      display: none;
     }
   }
 }

@@ -21,8 +21,8 @@ const FAQPage = () => {
         currentPageData={{ name: 'Поширені запитання' }}
         currentPageType={'section'}
       />
-      <section className={styles['section']}>
-        <h1 className={styles['section-title']}>Поширенні запитання</h1>
+      <section className={styles.section}>
+        <h1 className={styles.sectionTitle}>Поширенні запитання</h1>
         <QuestionList data={data} customIcon="?" />
       </section>
     </>
