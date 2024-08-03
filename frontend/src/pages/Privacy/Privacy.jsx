@@ -1,10 +1,17 @@
 import React from 'react';
-import styles from './Privacy.module.scss';
-import Path from '../CardPage/components/Path';
+import { useScroll } from '../../hooks/useScroll';
 import data from '../../data/privacyData.json';
+import Path from '../CardPage/components/Path';
 import PrivacyListItem from './PrivacyListItem';
+import styles from './Privacy.module.scss';
 
 const Privacy = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   return (
     <>
       <img className={styles.coverImg} src="/images/privacyPolicy.svg" />

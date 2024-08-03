@@ -1,10 +1,18 @@
 import React from 'react';
-import styles from './Care.module.scss';
+
+import { useScroll } from '../../hooks/useScroll';
 import Path from '../CardPage/components/Path';
 import QuestionList from '../../components/common/QuestionList';
 import data from '../../data/careListData';
+import styles from './Care.module.scss';
 
 const Care = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   return (
     <>
       <Path

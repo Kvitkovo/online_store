@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './About.module.scss';
+import { useScroll } from '../../hooks/useScroll';
 import Path from '../CardPage/components/Path';
 import infoData from '../../data/aboutUsData.json';
 import Services from './components/Services';
@@ -7,8 +7,15 @@ import InsightList from './components/InsightList';
 import RevealAnimation from './components/RevealAnimation';
 import MissionScreen from './components/MissionScreen';
 import ConclusionAnimation from './components/ConclusionAnimation';
+import styles from './About.module.scss';
 
 const About = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   const maxContainerWidth = 1180;
   const lastPosition =
     window.innerWidth >= maxContainerWidth + 20
