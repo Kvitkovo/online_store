@@ -74,7 +74,7 @@ const Path = React.memo(({ currentPageData, currentPageType }) => {
                 {parents.length >= 1 &&
                   parents.map((parent, index) => {
                     return (
-                      <div key={index}>
+                      <div className={styles.navWrapper} key={index}>
                         <div className={styles.arrow}>
                           <ICONS.pathArrow />
                         </div>
