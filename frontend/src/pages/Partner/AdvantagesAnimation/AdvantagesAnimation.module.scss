@@ -1,0 +1,148 @@
+@import '/src/mixins';
+
+.animated {
+  position: relative;
+  padding: 29px 10px 29px 300px;
+  display: flex;
+  width: 100%;
+  height: 469px;
+  background-color: $white-color;
+  box-shadow: $box-shadow;
+  border-radius: 24px;
+  overflow: hidden;
+  &__container {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 346px;
+    height: 346px;
+    transform: translate(-40%, -50%);
+    border-radius: 50%;
+    border: 1px dashed $green-80-color;
+  }
+  &__content {
+    margin: auto 0;
+    max-width: 848px;
+    font-size: 26px;
+    line-height: 41px;
+    button {
+      display: block;
+      margin: 0 auto;
+      &:first-child {
+        margin-bottom: 29px;
+      }
+      &:last-child {
+        margin-top: 29px;
+      }
+    }
+  }
+  &__title {
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  &__text {
+    padding: 5px 0;
+    height: max-content;
+    border-top: 1px solid #daf0d6;
+    border-bottom: 1px solid #daf0d6;
+  }
+}
+.icon {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__inner {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    z-index: 1;
+    &_gears {
+      background: linear-gradient(
+        90deg,
+        #baeeb2 0%,
+        #6cc25e 59.3%,
+        #518c47 100%
+      );
+    }
+    &_money {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__message {
+    width: 38px;
+    height: 33px;
+  }
+  &__phone {
+    width: 51px;
+    height: 51px;
+  }
+  &__goldGear {
+    width: 25px;
+    height: 25px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  &__blueGear {
+    width: 18px;
+    height: 18px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  &__dollar {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+    width: 4px;
+    height: 8px;
+  }
+  &__money {
+    width: 58px;
+    height: 39px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  &__repeat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 59px;
+    height: 58px;
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+  &__arrow {
+    width: 100%;
+  }
+  &__coins {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+  }
+}
+.btn {
+  position: relative;
+  margin-top: 59px;
+}
+.shade {
+  position: absolute;
+  top: -14px;
+  right: 46%;
+}
+.hidden {
+  visibility: hidden;
+}
