@@ -3,7 +3,7 @@ import styles from './QuestionList.module.scss';
 
 import QuestionItem from './CareItem/QuestionItem';
 
-const QuestionList = ({ data }) => {
+const QuestionList = ({ data, ...props }) => {
   const [selected, setSelected] = useState([]);
 
   const contentRefs = useRef([]);
@@ -22,6 +22,7 @@ const QuestionList = ({ data }) => {
     <ul className={styles.list}>
       {data.map((item) => (
         <QuestionItem
+          {...props}
           item={item}
           setSelected={setSelected}
           selected={selected}
