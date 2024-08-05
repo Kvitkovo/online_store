@@ -5,12 +5,19 @@ import { useWindowSize } from '../../../hooks/useWindowSize';
 import TitleMobile from './TitleMobile/TitleMobile';
 import Path from '../../../pages/CardPage/components/Path';
 import { useLocation } from 'react-router-dom';
+import { useScroll } from '../../../hooks';
 
 const Account = ({ children }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(true);
   const { width } = useWindowSize();
   const isMobile = width <= 510;
   const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   const location = useLocation();
 
   const handleShowMobileMenu = () => {
