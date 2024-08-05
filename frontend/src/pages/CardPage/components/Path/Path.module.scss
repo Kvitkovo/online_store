@@ -1,6 +1,17 @@
 @import '../../../../variables';
 @import '../../../../mixins';
 
+.pathContainer {
+  @include md {
+    padding-top: 62px;
+    padding-bottom: 25px;
+  }
+
+  @include sm {
+    margin-bottom: 25px;
+  }
+}
+
 .path {
   display: flex;
   align-items: center;
@@ -24,14 +35,12 @@
 @include md {
   .path {
     font-size: 14px;
-    margin: 5px 0 25px;
   }
 }
 @include sm {
   .pathContainer {
-    overflow: auto;
+    overflow-x: scroll;
     white-space: nowrap;
-    max-height: 63px;
     scrollbar-width: 128px;
     scroll-margin-top: 16px;
     scrollbar-color: $page-accent-color transparent;
@@ -56,6 +65,10 @@
   }
   .path {
     position: relative;
-    margin: 0 0px 15px;
   }
+}
+
+.navWrapper {
+  display: flex;
+  align-items: center;
 }
