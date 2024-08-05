@@ -2,18 +2,16 @@ import React, { useRef, useState } from 'react';
 import styles from './QuestionItem.module.scss';
 import { motion } from 'framer-motion';
 
-const CareItem = React.memo(({ item, setSelected, selected, customIcon }) => {
+const CareItem = ({ item, setSelected, selected, customIcon }) => {
   const isOpen = selected.includes(item.id);
   const [animationComplete, setAnimationComplete] = useState(true);
   const ref = useRef(null);
   const toggle = (id) => {
-    setSelected((prevSelected) => {
-      if (prevSelected.includes(id)) {
-        return prevSelected.filter((selectedId) => selectedId !== id);
-      } else {
-        return [...prevSelected, id];
-      }
-    });
+    setSelected((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((selectedId) => selectedId !== id)
+        : [...prevSelected, id],
+    );
   };
   const handleAnimationStart = () => {
     if (isOpen) {
@@ -99,6 +97,6 @@ const CareItem = React.memo(({ item, setSelected, selected, customIcon }) => {
       </motion.p>
     </motion.li>
   );
-});
+};
 
 export default CareItem;
