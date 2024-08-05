@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 
 const CareItem = ({ item, setSelected, selected, customIcon }) => {
   const isOpen = selected.includes(item.id);
+
   const [animationComplete, setAnimationComplete] = useState(true);
+
   const ref = useRef(null);
   const toggle = (id) => {
+    if (!animationComplete) return;
     setSelected((prevSelected) =>
       prevSelected.includes(id)
         ? prevSelected.filter((selectedId) => selectedId !== id)
@@ -14,16 +17,13 @@ const CareItem = ({ item, setSelected, selected, customIcon }) => {
     );
   };
   const handleAnimationStart = () => {
-    if (isOpen) {
-      setAnimationComplete(false);
-      ref.current.addEventListener('transitionend', handleTransitionEnd);
-    }
+    setAnimationComplete(false);
     ref.current.addEventListener('transitionend', handleTransitionEnd);
   };
 
   const handleTransitionEnd = () => {
     ref.current.removeEventListener('transitionend', handleTransitionEnd);
-    setAnimationComplete(true);
+    setTimeout(() => setAnimationComplete(true), 900);
   };
 
   return (
@@ -45,7 +45,7 @@ const CareItem = ({ item, setSelected, selected, customIcon }) => {
       <motion.div
         ref={ref}
         className={styles.numberWrapper}
-        initial={{ width: 57, height: 57 }}
+        initial={false}
         animate={
           isOpen
             ? {
