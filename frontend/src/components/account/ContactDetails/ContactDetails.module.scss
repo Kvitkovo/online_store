@@ -17,8 +17,18 @@
   padding: 34px 0 16px;
 
   p {
-    padding-bottom: 18px;
     line-height: 24px;
+  }
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+
+  & > p {
+    word-break: break-all;
   }
 }
 
