@@ -3,15 +3,16 @@ import styles from './ChangeDetails.module.scss';
 import Button from '../../ui-kit/components/Button';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editUserData } from '../../../services/userData/editUserData';
 
 const ChangeDetails = () => {
-  const userData = useSelector((state) => state.user.user);
+  const storedUserData = JSON.parse(localStorage.getItem('userfetchedData'));
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [correctUserData, setCorrectUserData] = useState(userData);
+  const [correctUserData, setCorrectUserData] = useState(storedUserData);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -50,7 +51,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше ім’я"
-                  value={correctUserData?.firstName}
+                  value={correctUserData?.firstName || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -61,7 +62,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше прізвище"
-                  value={correctUserData?.lastName}
+                  value={correctUserData?.lastName || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -72,7 +73,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="text"
                   placeholder="Введіть ваше по батькові"
-                  value={correctUserData?.surname}
+                  value={correctUserData?.surname || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -87,7 +88,7 @@ const ChangeDetails = () => {
                   mask="+380 99 9999999"
                   maskChar=""
                   placeholder="+380 XX XXXXXXX"
-                  value={correctUserData?.phone}
+                  value={correctUserData?.phone || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -100,7 +101,7 @@ const ChangeDetails = () => {
                   className={styles.dataInput}
                   type="email"
                   placeholder="Введіть електрону пошту"
-                  value={correctUserData?.email}
+                  value={correctUserData?.email || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -110,7 +111,7 @@ const ChangeDetails = () => {
                   id="birthday"
                   className={`${styles.dataInput} ${styles.birthday}`}
                   type="date"
-                  value={correctUserData?.birthday}
+                  value={correctUserData?.birthday || ''}
                   onChange={handleChange}
                 />
               </div>

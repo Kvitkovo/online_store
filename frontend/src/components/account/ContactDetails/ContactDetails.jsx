@@ -21,7 +21,7 @@ const ContactDetails = () => {
       <div className={styles.block}>
         <h2 className={styles.accountTitle}> Контактні дані</h2>
         <div className={styles.flexFieldsAndData}>
-          <div className={styles.fields}>
+          <div className={`${styles.fields} ${styles.box}`}>
             <p>Ім&apos;я</p>
             <p>Прізвище</p>
             <p>По батькові</p>
@@ -30,7 +30,7 @@ const ContactDetails = () => {
             <p>Дата народження</p>
           </div>
           {storedUserData && (
-            <div className={styles.data} key={storedUserData.id}>
+            <div className={styles.box} key={storedUserData.id}>
               <p>{storedUserData.firstName || 'не вказано'}</p>
               <p>{storedUserData.lastName || 'не вказано'}</p>
               <p>{storedUserData.surname || 'не вказано'}</p>
