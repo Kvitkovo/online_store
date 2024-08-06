@@ -21,17 +21,24 @@ const AdvantagesAnimation = () => {
         animate={{ rotate: rotation }}
         transition={{ ease: 'easeInOut', duration: 0.5 }}
       >
-        {data.map(({ icon, classNames }, index) => {
+        {data.map(({ icon, classNames, id }, index) => {
           const IconComponent = ICONS[icon];
+
           return (
-            <button
-              style={{ transform: `rotate(${-rotation}deg)` }}
+            <motion.button
               key={index}
               className={`${styles.button} ${styles[classNames]}`}
               onClick={() => handleRotate(index)}
+              initial={{ scale: 0.8 }}
+              animate={
+                id === selectedData.id
+                  ? { scale: 1.5, rotate: -rotation }
+                  : { rotate: -rotation }
+              }
+              transition={{ duration: 0.5 }}
             >
               <IconComponent />
-            </button>
+            </motion.button>
           );
         })}
       </motion.div>

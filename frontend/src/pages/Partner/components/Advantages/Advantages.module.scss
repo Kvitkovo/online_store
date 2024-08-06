@@ -30,21 +30,21 @@
   cursor: pointer;
   transition: transform 0.5s ease-in-out;
 
+  &Right {
+    top: 40%;
+    right: -8%;
+  }
+  &Bottom {
+    bottom: -4%;
+    left: 50%;
+  }
+  &Left {
+    top: 30%;
+    left: -16%;
+  }
   &Top {
     top: -10%;
     left: 40%;
-  }
-  &Right {
-    top: 44%;
-    right: -2%;
-  }
-  &Left {
-    top: 35%;
-    left: -10%;
-  }
-  &Bottom {
-    bottom: -15%;
-    left: 35%;
   }
 }
 
