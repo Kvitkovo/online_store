@@ -25,7 +25,7 @@ const AdvantagesAnimation = () => {
           const IconComponent = ICONS[icon];
           return (
             <button
-              style={{ transform: `rotate(${rotation}deg)` }}
+              style={{ transform: `rotate(${-rotation}deg)` }}
               key={index}
               className={`${styles.button} ${styles[classNames]}`}
               onClick={() => handleRotate(index)}
