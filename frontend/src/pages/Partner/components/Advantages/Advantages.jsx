@@ -13,6 +13,7 @@ const AdvantagesAnimation = () => {
     setRotation((state) => (state += 90));
     setSelectedData(data[id]);
   };
+
   return (
     <div className={styles.wrapper}>
       <motion.div
