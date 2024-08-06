@@ -8,6 +8,7 @@ import data from '../../../../data/partnerData.json';
 const AdvantagesAnimation = () => {
   const [rotation, setRotation] = useState(0);
   const [selectedData, setSelectedData] = useState(data[0]);
+  const isRotationAt180 = rotation % 90 === 0;
 
   const handleRotate = (id) => {
     setRotation((state) => (state += 90));
@@ -23,18 +24,17 @@ const AdvantagesAnimation = () => {
       >
         {data.map(({ icon, classNames, id }, index) => {
           const IconComponent = ICONS[icon];
-
+          const isActive = id === selectedData.id;
           return (
             <motion.button
               key={index}
               className={`${styles.button} ${styles[classNames]}`}
               onClick={() => handleRotate(index)}
               initial={{ scale: 0.8 }}
-              animate={
-                id === selectedData.id
-                  ? { scale: 1.5, rotate: -rotation }
-                  : { rotate: -rotation }
-              }
+              animate={{
+                scale: isActive && isRotationAt180 ? 1.5 : 0.8,
+                rotate: -rotation,
+              }}
               transition={{ duration: 0.5 }}
             >
               <IconComponent />
