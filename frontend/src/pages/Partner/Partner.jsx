@@ -1,7 +1,8 @@
 import React from 'react';
 import Path from '../CardPage/components/Path';
 import styles from './Partner.module.scss';
-import AdvantagesAnimation from './AdvantagesAnimation';
+// import AdvantagesAnimation from './AdvantagesAnimation';
+import Advantages from './components';
 
 const Partner = () => {
   return (
@@ -25,7 +26,8 @@ const Partner = () => {
         <h2 className={styles.advantages__title}>
           Переваги Партнерства з Квітково:
         </h2>
-        <AdvantagesAnimation />
+        {/* <AdvantagesAnimation /> */}
+        <Advantages />
       </section>
       <section className={styles.becomePartner}>
         <h2 className={styles.becomePartner__title}>Як Стати Партнером:</h2>
