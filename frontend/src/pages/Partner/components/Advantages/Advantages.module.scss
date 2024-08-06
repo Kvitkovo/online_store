@@ -28,26 +28,23 @@
   border: none;
   z-index: 800;
   cursor: pointer;
+  transition: transform 0.5s ease-in-out;
 
   &Top {
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &Left {
-    top: 50%;
-    left: 0;
-    transform: translate(-50%, -50%);
+    top: -10%;
+    left: 40%;
   }
   &Right {
-    top: 50%;
-    right: 0;
-    transform: translate(50%, -50%);
+    top: 44%;
+    right: -2%;
+  }
+  &Left {
+    top: 35%;
+    left: -10%;
   }
   &Bottom {
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 50%);
+    bottom: -15%;
+    left: 35%;
   }
 }
 
