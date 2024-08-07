@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { ICONS } from '../../../../components/ui-kit/icons';
@@ -8,12 +8,15 @@ import data from '../../../../data/partnerData.json';
 const AdvantagesAnimation = () => {
   const [rotation, setRotation] = useState(0);
   const [selectedData, setSelectedData] = useState(data[0]);
-  const isRotationAt180 = rotation % 90 === 0;
 
-  const handleRotate = (id) => {
+  const handleRotate = () => {
     setRotation((state) => (state += 90));
-    setSelectedData(data[id]);
   };
+
+  useEffect(() => {
+    const rotationIndex = Math.floor((rotation % 360) / 90);
+    setSelectedData(data[rotationIndex]);
+  }, [rotation]);
 
   return (
     <div className={styles.wrapper}>
@@ -32,7 +35,7 @@ const AdvantagesAnimation = () => {
               onClick={() => handleRotate(index)}
               initial={{ scale: 0.8 }}
               animate={{
-                scale: isActive && isRotationAt180 ? 1.5 : 0.8,
+                scale: isActive ? 1.5 : 0.8,
                 rotate: -rotation,
               }}
               transition={{ duration: 0.5 }}
