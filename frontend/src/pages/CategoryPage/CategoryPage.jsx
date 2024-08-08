@@ -10,6 +10,7 @@ import Path from '../CardPage/components/Path';
 import { useParams } from 'react-router-dom';
 
 import ProductList from '../../components/common/ProductList';
+import { useScroll } from '../../hooks/useScroll';
 
 const CategoryPage = React.memo(() => {
   const { categoryId } = useParams();
@@ -18,6 +19,12 @@ const CategoryPage = React.memo(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [productsInCategory, setProductsInCategory] = useState(0);
+
+  const scroll = useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
 
   const getData = useCallback(async () => {
     try {
@@ -49,7 +56,9 @@ const CategoryPage = React.memo(() => {
       console.error(err);
     } finally {
       setIsLoading(false);
+      scroll();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, currentPage]);
   useEffect(() => {
     setCurrentPage(1);
