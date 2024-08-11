@@ -246,11 +246,25 @@ const AdvantagesAnimation = () => {
               activeId === advantages.length - 1 ? styles.hidden : styles.btn
             }
           >
+            {activeId === 0 && (
+              <motion.div
+                className={styles.shade}
+                // initial={{ opacity: 0 }}
+                animate={{
+                  opacity: [0, 0.3],
+                  repeatCount: Infinity,
+                  delay: 0.2,
+                }}
+                transition={btnTransition}
+              >
+                <ICONS.nextHighlighted />
+              </motion.div>
+            )}
             <motion.div
               animate={
                 activeId === 0
                   ? {
-                      scale: 1.2,
+                      scale: 1.3,
                     }
                   : { scale: 1 }
               }
@@ -261,16 +275,6 @@ const AdvantagesAnimation = () => {
                 onClick={() => handleChangeContent(1)}
               />
             </motion.div>
-            {activeId === 0 && (
-              <motion.div
-                className={styles.shade}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                transition={btnTransition}
-              >
-                <ICONS.nextHighlighted />
-              </motion.div>
-            )}
           </div>
         </motion.div>
       </AnimatePresence>
