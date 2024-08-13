@@ -1,9 +1,16 @@
 import React from 'react';
 import Path from '../CardPage/components/Path';
+import { useScroll } from '../../hooks/useScroll';
 import styles from './Partner.module.scss';
 import AdvantagesAnimation from './AdvantagesAnimation';
 
 const Partner = () => {
+  useScroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+    scrollOnMount: true,
+  });
   return (
     <>
       <Path
