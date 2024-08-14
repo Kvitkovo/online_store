@@ -45,11 +45,9 @@ const Partner = () => {
               квітів.
             </p>
           </div>
-          <img
-            className={styles.becomePartner__img}
-            src="/images/partners_1.jpg"
-            alt=" Партнерство"
-          />
+          <div className={styles.becomePartner__img}>
+            <img src="/images/partners_1.jpg" alt=" Партнерство" />
+          </div>
         </div>
       </section>
       <section className={styles.conclusions}>

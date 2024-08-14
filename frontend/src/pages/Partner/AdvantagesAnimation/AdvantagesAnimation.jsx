@@ -61,6 +61,9 @@ const AdvantagesAnimation = () => {
         animate={{ rotate: rotation }}
         transition={{ duration: 1, delay: 0.35 }}
       >
+        <motion.div className={styles.animated__chamomile}>
+          <ICONS.chamomile />
+        </motion.div>
         <motion.div
           className={styles.icon}
           style={{ right: '-17%', top: '32%' }}
@@ -242,14 +245,14 @@ const AdvantagesAnimation = () => {
             </p>
           </div>
           <div
-            className={
-              activeId === advantages.length - 1 ? styles.hidden : styles.btn
-            }
+            className={`${styles.animatedBtn} 
+              ${
+                activeId === advantages.length - 1 ? styles.hidden : styles.btn
+              }`}
           >
             {activeId === 0 && (
               <motion.div
                 className={styles.shade}
-                // initial={{ opacity: 0 }}
                 animate={{
                   opacity: [0, 0.3],
                   repeatCount: Infinity,
@@ -264,7 +267,8 @@ const AdvantagesAnimation = () => {
               animate={
                 activeId === 0
                   ? {
-                      scale: 1.3,
+                      scale: [1, 1.3],
+                      repeatCount: Infinity,
                     }
                   : { scale: 1 }
               }

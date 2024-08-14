@@ -10,6 +10,16 @@
   box-shadow: $box-shadow;
   border-radius: 24px;
   overflow: hidden;
+  &__chamomile {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 37%;
+    left: 39%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   &__container {
     position: absolute;
     left: 0;
@@ -141,9 +151,24 @@
 .shade {
   position: absolute;
   top: -14px;
-  right: 44.5%;
+  right: 50%;
+  transform: translateX(50%);
   z-index: 0;
+}
+.animatedBtn {
+  position: relative;
 }
 .hidden {
   visibility: hidden;
+}
+
+@include lg {
+  .animated {
+    &__content {
+      font-size: 22px;
+    }
+  }
+  .shade {
+    top: -13px;
+  }
 }
