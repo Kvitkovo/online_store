@@ -194,12 +194,12 @@ const AdvantagesAnimation = () => {
             transition={{ delay: 1 }}
           >
             <motion.div
+              className={styles.icon__arrow}
               initial={{ width: 65, height: 25 }}
               animate={
                 activeId === 3
                   ? {
                       width: [0, 65],
-                      transformOrigin: '0 50%',
                       transition: {
                         delay: 1,
                         duration: 3,
@@ -209,12 +209,8 @@ const AdvantagesAnimation = () => {
                     }
                   : {}
               }
-              style={{ position: 'absolute', top: -14 }}
             >
-              <ICONS.arrowAnimated
-                initial={{ scale: 0 }}
-                className={styles.icon__arrow}
-              />
+              <ICONS.arrowAnimated initial={{ scale: 0 }} />
             </motion.div>
 
             <ICONS.coins className={styles.icon__coins} />
