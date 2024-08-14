@@ -172,3 +172,14 @@
     top: -13px;
   }
 }
+
+@include md {
+  .animated {
+    &__title {
+      font-size: 22px;
+    }
+    &__text {
+      font-size: 18px;
+    }
+  }
+}
