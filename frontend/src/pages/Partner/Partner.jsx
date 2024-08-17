@@ -45,6 +45,9 @@ const Partner = () => {
               партнерство. Наш менеджер
               {` зв'яжеться з вами найближчим часом для подальшої інформації.`}
             </p>
+            <div className={styles.becomePartner__img}>
+              <img src="/images/partners_1.jpg" alt=" Партнерство" />
+            </div>
             <p>
               Зокрема, ми запрошуємо партнерів, які працюють у нашій галузі та
               надають послуги доставки з використанням автомобілів, які
@@ -52,11 +55,6 @@ const Partner = () => {
               квітів.
             </p>
           </div>
-          <img
-            className={styles.becomePartner__img}
-            src="/images/partners_1.jpg"
-            alt=" Партнерство"
-          />
         </div>
       </section>
       <section className={styles.conclusions}>

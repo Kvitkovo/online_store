@@ -61,6 +61,9 @@ const AdvantagesAnimation = () => {
         animate={{ rotate: rotation }}
         transition={{ duration: 1, delay: 0.35 }}
       >
+        <motion.div className={styles.animated__chamomile}>
+          <ICONS.chamomile />
+        </motion.div>
         <motion.div
           className={styles.icon}
           style={{ right: '-17%', top: '32%' }}
@@ -191,12 +194,12 @@ const AdvantagesAnimation = () => {
             transition={{ delay: 1 }}
           >
             <motion.div
+              className={styles.icon__arrow}
               initial={{ width: 65, height: 25 }}
               animate={
                 activeId === 3
                   ? {
                       width: [0, 65],
-                      transformOrigin: '0 50%',
                       transition: {
                         delay: 1,
                         duration: 3,
@@ -206,12 +209,8 @@ const AdvantagesAnimation = () => {
                     }
                   : {}
               }
-              style={{ position: 'absolute', top: -14 }}
             >
-              <ICONS.arrowAnimated
-                initial={{ scale: 0 }}
-                className={styles.icon__arrow}
-              />
+              <ICONS.arrowAnimated initial={{ scale: 0 }} />
             </motion.div>
 
             <ICONS.coins className={styles.icon__coins} />
@@ -242,15 +241,30 @@ const AdvantagesAnimation = () => {
             </p>
           </div>
           <div
-            className={
-              activeId === advantages.length - 1 ? styles.hidden : styles.btn
-            }
+            className={`${styles.animatedBtn} 
+              ${
+                activeId === advantages.length - 1 ? styles.hidden : styles.btn
+              }`}
           >
+            {activeId === 0 && (
+              <motion.div
+                className={styles.shade}
+                animate={{
+                  opacity: [0, 0.3],
+                  repeatCount: Infinity,
+                  delay: 0.2,
+                }}
+                transition={btnTransition}
+              >
+                <ICONS.nextHighlighted />
+              </motion.div>
+            )}
             <motion.div
               animate={
                 activeId === 0
                   ? {
-                      scale: 1.2,
+                      scale: [1, 1.3],
+                      repeatCount: Infinity,
                     }
                   : { scale: 1 }
               }
@@ -261,16 +275,6 @@ const AdvantagesAnimation = () => {
                 onClick={() => handleChangeContent(1)}
               />
             </motion.div>
-            {activeId === 0 && (
-              <motion.div
-                className={styles.shade}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                transition={btnTransition}
-              >
-                <ICONS.nextHighlighted />
-              </motion.div>
-            )}
           </div>
         </motion.div>
       </AnimatePresence>
