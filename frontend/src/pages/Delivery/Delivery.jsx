@@ -15,15 +15,16 @@ function Delivery() {
   const { payment, delivery, whyUs } = data;
   return (
     <>
-      <Path
-        currentPageData={{ name: 'Доставка та оплата' }}
-        currentPageType={'section'}
-      />
       <div className={styles.bgCover}>
         <img className={styles.flowersBg} src="/images/flowers.svg" />
         <img className={styles.flowersBg} src="/images/flowers.svg" />
       </div>
+
       <section className={styles.section}>
+        <Path
+          currentPageData={{ name: 'Доставка та оплата' }}
+          currentPageType={'section'}
+        />
         <h1 className={styles.title}>
           Способи Оплати та Доставка:{' '}
           <span className={styles.title_green}>
